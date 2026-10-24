@@ -28,6 +28,13 @@ jobs:
             echo "This run validates the framework and example fixtures. It does not establish V5.2 script, image, audio, video, copyright, or final-production approval."
             echo "All seven manual gates remain required."
           } >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify production gate fails closed without evidence
+        run: |
+          if python run_evidence_audit.py evidence-template.json --output v5.2-evidence-report.json; then
+            echo "Empty production evidence unexpectedly passed" >&2
+            exit 1
+          fi
+          python -c "import json; d=json.load(open('v5.2-evidence-report.json', encoding='utf-8')); assert d['status']=='FAIL'; assert any(x['code']=='FINAL_FILMS_INCOMPLETE' for x in d['issues'])"
       - name: Upload baseline self-test report
         if: always()
         uses: actions/upload-artifact@v4
