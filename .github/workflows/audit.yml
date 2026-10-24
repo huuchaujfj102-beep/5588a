@@ -1,4 +1,4 @@
-name: Film audit baseline
+name: Film audit baseline self-test (not production QA)
 on:
   push:
   pull_request:
@@ -6,7 +6,8 @@ on:
 permissions:
   contents: read
 jobs:
-  baseline:
+  baseline-self-test:
+    name: Baseline framework self-test only
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,9 +18,19 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Run example audit
         run: python -m film_audit.audit --srt examples/sample.srt --assets examples/assets.csv --output audit-report.json
-      - name: Upload report
+      - name: Assert example remains review-required
+        run: |
+          python -c "import json; d=json.load(open('audit-report.json', encoding='utf-8')); assert d['status']=='REVIEW_REQUIRED'; assert len(d['manual_review_required'])==7"
+      - name: Write workflow notice
+        run: |
+          {
+            echo "## Baseline self-test only"
+            echo "This run validates the framework and example fixtures. It does not establish V5.2 script, image, audio, video, copyright, or final-production approval."
+            echo "All seven manual gates remain required."
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload baseline self-test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: film-audit-report
+          name: film-audit-baseline-self-test-not-production-qa
           path: audit-report.json
