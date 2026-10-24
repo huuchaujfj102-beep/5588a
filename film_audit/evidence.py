@@ -16,6 +16,11 @@ def issue(code, message, path=None):
     return item
 
 
+def is_real(value):
+    text = str(value or "").strip().upper()
+    return bool(text) and not any(token in text for token in ("UNKNOWN", "MISSING", "PENDING", "待确认", "待批准", "待成片"))
+
+
 def sha256(path):
     h = hashlib.sha256()
     with path.open("rb") as stream:
@@ -51,7 +56,7 @@ def verify_evidence(manifest_path):
     if numbers != list(range(1, 68)):
         problems.append(issue("RULES_NOT_67", "必须提供按1至67连续编号的规则原文"))
     for r in rules:
-        if not all(str(r.get(k, "")).strip() for k in ("text", "version", "approved_by", "approved_at")):
+        if not all(is_real(r.get(k)) for k in ("text", "version", "approved_by", "approved_at")):
             problems.append(issue("RULE_APPROVAL_INCOMPLETE", f"规则{r.get('number')}缺原文或批准信息"))
 
     assets = data.get("approved_assets", [])
@@ -61,7 +66,7 @@ def verify_evidence(manifest_path):
     for a in assets:
         aid = str(a.get("asset_id", "")).strip()
         required = (aid, a.get("category"), a.get("approved_by"), a.get("approved_at"))
-        if not all(str(v or "").strip() for v in required):
+        if not all(is_real(v) for v in required):
             problems.append(issue("ASSET_APPROVAL_INCOMPLETE", f"资产{aid or '[无ID]'}批准信息不完整"))
         if aid in seen:
             problems.append(issue("DUPLICATE_ASSET_ID", f"资产ID重复：{aid}"))
@@ -80,7 +85,7 @@ def verify_evidence(manifest_path):
         problems.append(issue("GENERATION_PARAMETERS_INCOMPLETE", "必须提交四回各32镜生成参数"))
     fields = ("platform", "model", "model_version", "seed", "prompt", "duration", "fps", "output_sha256")
     for s in shots:
-        if not all(str(s.get(k, "")).strip() for k in fields):
+        if not all(is_real(s.get(k)) for k in fields):
             problems.append(issue("SHOT_PARAMETERS_INCOMPLETE", f"第{s.get('episode')}回第{s.get('shot')}镜参数不完整"))
 
     films = data.get("final_films", [])
