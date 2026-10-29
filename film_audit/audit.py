@@ -84,7 +84,11 @@ def main():
     p = argparse.ArgumentParser()
     for k in ("video", "srt", "assets", "config", "output"):
         p.add_argument("--" + k, type=Path)
+    p.add_argument("--glm-input", type=Path, help="Locked rules and shot text JSON")
+    p.add_argument("--glm-live", action="store_true", help="Send text to Runpod (billable); default is dry run")
     args = p.parse_args()
+    if args.glm_live and not args.glm_input:
+        p.error("--glm-live requires --glm-input")
     config_path = args.config or Path("audit-config.json")
     cfg = json.loads(config_path.read_text(encoding="utf8")) if config_path.exists() else {}
     issues = []
@@ -100,11 +104,21 @@ def main():
       "issues": issues,
       "disclaimer": "自动技术检测不能证明人物一致性、口型、隐水印或版权合法性"
     }
+    if args.glm_input:
+        from .glm import review
+        try:
+            bundle = json.loads(args.glm_input.read_text(encoding="utf-8-sig"))
+            model_result = review(bundle, result, live=args.glm_live)
+        except (OSError, ValueError):
+            model_result = {"status": "ERROR", "error": "Invalid or unreadable GLM input"}
+        result["glm_review"] = model_result
+        if result["status"] != "FAIL" and model_result["status"] in ("FAIL", "ERROR"):
+            result["status"] = "FAIL" if model_result["status"] == "FAIL" else "REVIEW_REQUIRED"
     output = args.output or Path("audit-report.json")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf8")
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    return int(result["status"] == "FAIL")
+    return int(result["status"] == "FAIL" or result.get("glm_review", {}).get("status") == "ERROR")
 
 if __name__ == "__main__":
     raise SystemExit(main())

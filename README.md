@@ -22,3 +22,9 @@ python -m film_audit.audit --video path/to/clip.mp4 --srt path/to/clip.srt --ass
 push / PR 触发 GitHub Actions 的单元测试与示例审核，审核 JSON 保存在 Actions artifacts。视频与秘密授权材料不要提交到公开仓库。模型检测、口型一致性、版权实质审核尚未集成，须人工验收。
 
 **安全原则：** 不上传 API key、医疗患者信息、未公开剧本和个人肖像参考资产。
+
+## GLM-5.3 文本审核（可选）
+
+已增加提示词预检、跨镜头文本设定比对、审核报告归纳接口。默认离线预演；仅显式使用 `--glm-live` 时发送文本并计费，须在运行环境配置 `RUNPOD_API_KEY`。模型建议不替代视觉/音频检查或人工签核；现有阻断项不会被撤销。
+
+使用方法、费用估算及验证边界见 [接入说明](docs/glm-runpod.md)。

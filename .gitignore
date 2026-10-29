@@ -5,3 +5,6 @@ __pycache__/
 *.mov
 *.wav
 audit-report.json
+audit-report*.json
+glm-input.json
+private-inputs/
