@@ -34,3 +34,19 @@
 
 ## 逐镜头图生视频总提示词
 Exact same car as uploaded reference, original design strictly preserved, 16:9 cinematic photoreal film. Scene evolves: both scissor doors fully close and automatically lock, an extreme macro shot of latch confirms closure; vehicle smoothly accelerates on the desert floor; four original wheel assemblies independently deploy blue-white downward ion jets; vehicle rises level into the air, atmospheric dust waves and physically coherent lighting; camera tracks behind as it flies toward distant desert canyons under a star-filled night sky. Smooth slow camera moves, crisp material details, high-budget cinematic lighting and sound design. Negative: changing car design, extra wheels, open doors after lock, additional wings, extra jet engines, floating without thrust, daytime, city, text, logos, watermark.
+
+## V2 comparison audit — 2026-10-30
+Source images: original JPG (600x400) and uploaded flying-car PNG (1376x768).
+**Critical visual discontinuity:** The flying render alters the original concept vehicle silhouette, roof/cockpit contour, rear wing/light bar and wheel geometry. The second image is *not* an exact model lock. Before generating a final AI film, correct the flying frame using the initial design as strict geometry reference.
+
+### V2 provisional offline edit
+Six editorial keyframes were cropped from the two supplied user images. A 15.000-second, 450-frame, 960x540 H.264/AAC preview with camera motion, glow overlays and synthesised sound was created outside GitHub. THIS IS NOT A MODEL-GENERATED DOOR-LOCK / JET-TRANSFORMATION / FLIGHT ANIMATION. The MP4 and the six editorial JPGs have NOT been uploaded into this repository; their local paths are not GitHub assets. Main remains unchanged; keep PR in draft.
+
+### Required new keyframe fixes
+KF01: faithful initial image; CGI scissor doors transition from open to fully closed without any geometry changes.
+KF02: lock latch and closed-door seam shown in close-up; no floating lamps or new body-panel details.
+KF03: road-driving vehicle must match original black turbine wheels, roof and rear fin.
+KF04: four wheel jets explicitly visible; nearest two may be foreground but far pair must be spatially accounted for.
+KF05: lift the original vehicle without transforming into a different white sports car. No rear light-bar redesign.
+KF06: repeat original wing, roof and wheels even at flying rear 3/4 angle; retain original dark desert sky color and terrain, avoid excessive Milky Way embellishments.
+Acceptance gate: six visual keyframes approved against original; per-shot video renders reviewed; final 15s H.264 + AAC metadata and human check pass before merge.
