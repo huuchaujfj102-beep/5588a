@@ -1,0 +1,53 @@
+name: Free video adapters validation
+on:
+  push:
+    paths:
+      - 'integrations/**'
+      - 'tests/test_video_adapters.py'
+      - '.github/workflows/free-video-adapters.yml'
+  pull_request:
+    paths:
+      - 'integrations/**'
+      - 'tests/test_video_adapters.py'
+      - '.github/workflows/free-video-adapters.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-adapters:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Offline adapter safety tests
+        run: python -m unittest discover -s tests -p test_video_adapters.py -v
+      - name: Validate manifest
+        run: python integrations/video_adapters.py manifest
+  kinocut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Install pinned Kinocut (core only)
+        run: python -m pip install 'kinocut==1.16.4'
+      - name: Kinocut doctor
+        run: python integrations/video_adapters.py kinocut-doctor
+      - name: Verify exact video codec and duration
+        run: |
+          mkdir -p out
+          ffmpeg -hide_banner -loglevel error -f lavfi -i color=c=black:s=1080x1920:r=30:d=15 -frames:v 450 -c:v libx264 -pix_fmt yuv420p -movflags +faststart -y out/kinocut-smoke.mp4
+          ffprobe -v error -show_entries stream=codec_name,width,height,nb_frames -show_entries format=duration -of json out/kinocut-smoke.mp4 > out/kinocut-metadata.json
+          python -c "import json; d=json.load(open('out/kinocut-metadata.json')); v=d['streams'][0]; assert v['codec_name']=='h264' and v['width']==1080 and v['height']==1920 and int(v['nb_frames'])==450 and 14.9 <= float(d['format']['duration']) <= 15.1"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: offline-15s-smoke
+          path: out/
+          retention-days: 3
