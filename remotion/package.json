@@ -1,0 +1,22 @@
+{
+  "name": "film-audit-remotion",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "compositions": "remotion compositions src/index.ts",
+    "render": "remotion render src/index.ts AuditDemo out/audit-demo.mp4 --codec h264 --log error",
+    "render:ci": "remotion render src/index.ts AuditDemo out/audit-demo.mp4 --codec h264 --log error --concurrency 1"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.539",
+    "remotion": "4.0.539",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.3",
+    "@types/react": "~18.3.12",
+    "@types/react-dom": "~18.3.1"
+  }
+}
