@@ -53,7 +53,7 @@ Acceptance gate: six visual keyframes approved against original; per-shot video 
 
 
 ## V4 8-frame precision refinements — 2026-10-30
-**User-approved physics correction:** KF05 and KF06 are vertical lift, with four distinct downward wheel-hub jets. **KF07 and KF08 switch to forward flight**, so all downward wheel exhausts MUST turn OFF and **exactly two jets mounted symmetrically at the left and right sides of the original RED REAR LIGHT/wing assembly point rearward**, producing forward thrust. No forward-pointing jet streams, no downward jets at speed. Keep vehicle identity identical from frame to frame.
+**User-approved physics correction:** KF05 and KF06 are vertical lift, with four distinct downward wheel-hub jets. **KF07 and KF08 switch to forward flight**, so four downward wheel exhausts MUST remain on at reduced intensity and **exactly two jets mounted symmetrically at the left and right sides of the original RED REAR LIGHT/wing assembly point rearward**, producing forward thrust. No forward-pointing jet streams, four wheel down-jets remain weak while forward-flight tail jets dominate. Keep vehicle identity identical from frame to frame.
 
 Style lock for all 8: original angular wedge-shaped white concept car, two black scissor doors, giant angular black turbine-spoke wheels, split protruding red aerodynamic rear structure, starry desert canyon at night, cinematic realistic photography, no typographic overlay. No smooth conventional sport coupe substitution.
 
@@ -65,7 +65,10 @@ Style lock for all 8: original angular wedge-shaped white concept car, two black
 | KF04 | Four normal rotating wheels, acceleration, dust, no jets yet | bd17bcb6-525a-4e7f-a0d8-f43a7d4c1560 |
 | KF05 | Wheel assemblies unfold, downward vertical lift plumes | 6ef6521b-0082-498d-b803-7bf0016310d6 |
 | KF06 | Vehicle ascends using four downward wheel lift plumes | a4985d89-f9b8-47f1-8f01-bc4ca321d24a |
-| KF07 | Forward flight above canyon; ONLY two rear-side horizontal thrust jets | 4b1ede2a-5ed6-400a-9c38-23f22fde61f7 |
-| KF08 | Tiny car recedes toward distant sky; ONLY two symmetrical tail-side jets trailing backward | b43c8517-a4f1-454c-bd44-4806ddff9e31 |
+| KF07 | Forward flight above canyon; two dominant rear-side horizontal thrust jets plus four weak wheel lift jets | 4b1ede2a-5ed6-400a-9c38-23f22fde61f7 |
+| KF08 | Tiny car recedes toward distant sky; two dominant symmetrical tail-side jets trailing backward plus four weak downward wheel jets | b43c8517-a4f1-454c-bd44-4806ddff9e31 |
 
 Status: all eight reference-image editing jobs **submitted**. Task submission != image success or QA approval. Do not merge branch or claim final video/render until images have been reviewed individually and 15s timeline rendered/tested.
+
+## Controlling propulsion rules
+See **[propulsion-rules-v5.md](propulsion-rules-v5.md)**. V5 explicitly supersedes earlier KF07/KF08 text which said to turn off wheel down-jets; weak four-wheel lift continues in forward flight, and side-wheel asymmetry controls turns.
