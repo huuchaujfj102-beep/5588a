@@ -50,3 +50,22 @@ KF04: four wheel jets explicitly visible; nearest two may be foreground but far 
 KF05: lift the original vehicle without transforming into a different white sports car. No rear light-bar redesign.
 KF06: repeat original wing, roof and wheels even at flying rear 3/4 angle; retain original dark desert sky color and terrain, avoid excessive Milky Way embellishments.
 Acceptance gate: six visual keyframes approved against original; per-shot video renders reviewed; final 15s H.264 + AAC metadata and human check pass before merge.
+
+
+## V4 8-frame precision refinements — 2026-10-30
+**User-approved physics correction:** KF05 and KF06 are vertical lift, with four distinct downward wheel-hub jets. **KF07 and KF08 switch to forward flight**, so all downward wheel exhausts MUST turn OFF and **exactly two jets mounted symmetrically at the left and right sides of the original RED REAR LIGHT/wing assembly point rearward**, producing forward thrust. No forward-pointing jet streams, no downward jets at speed. Keep vehicle identity identical from frame to frame.
+
+Style lock for all 8: original angular wedge-shaped white concept car, two black scissor doors, giant angular black turbine-spoke wheels, split protruding red aerodynamic rear structure, starry desert canyon at night, cinematic realistic photography, no typographic overlay. No smooth conventional sport coupe substitution.
+
+| Frame | V4 strict action | Runway reference-edit task |
+| --- | --- | --- |
+| KF01 | Original body, only scissor-door closing transition | 28ebb4c2-2b8b-4e8a-8a92-0a29e66e3e81 |
+| KF02 | Doors fully closed, flush lock seam, tiny attached blue lock light | efa270fc-df8c-44d0-b8c0-1395cd166704 |
+| KF03 | Macro original red angular rear lighting (no generic light bar) | 961d1cb6-8070-40d9-8b1c-4c199291a50b |
+| KF04 | Four normal rotating wheels, acceleration, dust, no jets yet | bd17bcb6-525a-4e7f-a0d8-f43a7d4c1560 |
+| KF05 | Wheel assemblies unfold, downward vertical lift plumes | 6ef6521b-0082-498d-b803-7bf0016310d6 |
+| KF06 | Vehicle ascends using four downward wheel lift plumes | a4985d89-f9b8-47f1-8f01-bc4ca321d24a |
+| KF07 | Forward flight above canyon; ONLY two rear-side horizontal thrust jets | 4b1ede2a-5ed6-400a-9c38-23f22fde61f7 |
+| KF08 | Tiny car recedes toward distant sky; ONLY two symmetrical tail-side jets trailing backward | b43c8517-a4f1-454c-bd44-4806ddff9e31 |
+
+Status: all eight reference-image editing jobs **submitted**. Task submission != image success or QA approval. Do not merge branch or claim final video/render until images have been reviewed individually and 15s timeline rendered/tested.
