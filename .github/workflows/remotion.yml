@@ -1,0 +1,49 @@
+name: Remotion render smoke test
+on:
+  push:
+    paths:
+      - 'remotion/**'
+      - '.github/workflows/remotion.yml'
+  pull_request:
+    paths:
+      - 'remotion/**'
+      - '.github/workflows/remotion.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: remotion
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Discover compositions
+        run: npm run compositions
+      - name: Render smoke test
+        run: npm run render:ci
+      - name: Install FFmpeg tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffprobe -version
+      - name: Probe output
+        run: |
+          ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate -show_entries format=duration -of json out/audit-demo.mp4 > out/metadata.json
+          python3 -c "import json; d=json.load(open('out/metadata.json')); v=d['streams'][0]; assert v['width']==1080 and v['height']==1920 and v['codec_name']=='h264' and v['r_frame_rate']=='30/1'; assert 14.9 <= float(d['format']['duration']) <= 15.1"
+      - name: Upload video and metadata
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: remotion-smoke-video
+          path: |
+            remotion/out/audit-demo.mp4
+            remotion/out/metadata.json
+          retention-days: 3
