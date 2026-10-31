@@ -1,0 +1,38 @@
+name: OneFlow real FFmpeg integration smoke (synthetic TEST footage)
+on:
+  push:
+    paths:
+      - 'tests/test_oneflow_ffmpeg_integration.py'
+      - 'oneflow/core.py'
+      - '.github/workflows/oneflow-ffmpeg-smoke.yml'
+  pull_request:
+    paths:
+      - 'tests/test_oneflow_ffmpeg_integration.py'
+      - 'oneflow/core.py'
+      - '.github/workflows/oneflow-ffmpeg-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  synth-media-join-and-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU-only FFmpeg and FFprobe
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          command -v ffmpeg
+          command -v ffprobe
+      - name: Test real container-based synthetic media stitching
+        run: |
+          python -m unittest discover -s tests -p 'test_oneflow_ffmpeg_integration.py' -v
+      - name: Confirm original model-generated video was not created
+        run: |
+          echo "Synthetic color test frames only: not user story footage and not AI video."
