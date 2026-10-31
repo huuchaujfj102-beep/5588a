@@ -28,3 +28,15 @@ push / PR 触发 GitHub Actions 的单元测试与示例审核，审核 JSON 保
 已增加提示词预检、跨镜头文本设定比对、审核报告归纳接口。默认离线预演；仅显式使用 `--glm-live` 时发送文本并计费，须在运行环境配置 `RUNPOD_API_KEY`。模型建议不替代视觉/音频检查或人工签核；现有阻断项不会被撤销。
 
 使用方法、费用估算及验证边界见 [接入说明](docs/glm-runpod.md)。
+
+
+## OneFlow V1 一句话影视流水线（新模块）
+
+新增 `oneflow/`、`docs/oneflow.md` 与 `.github/workflows/oneflow.yml`，目标串联：
+**一句话 → 剧本与分镜 → ComfyUI 图像/视频/音效（需运行中的开源模型及已校验 API 图）→ FFmpeg 合成 → 5588a 技术审核 → 人工终审 → 授权发布接口 → 官方数据回流**。
+
+安全的 GitHub Actions 一句话入口只生成分镜与测试报告，不会消费模型额度。
+真实生成通过自托管 GPU + `python -m oneflow run --live --config ...` 显式执行。
+平台发布必须另外完成对应平台的 OAuth/官方 API 授权，并由人工确认已审成片后操作。现阶段**不宣称**媒体生成和多平台自动发布已经实机打通。
+
+详细步骤：[`docs/oneflow.md`](docs/oneflow.md)。
