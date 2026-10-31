@@ -1,0 +1,45 @@
+{
+  "_notice": "Copy to private-inputs/oneflow-config.json, edit ComfyUI API graph node IDs, configure your own endpoints and model weights. Example is NOT live-ready.",
+  "story": {"kind": "ollama", "url_env": "OLLAMA_URL", "model": "qwen3:8b"},
+  "image": [
+    {
+      "kind": "comfyui",
+      "name": "sdxl-or-flux-image",
+      "url_env": "COMFYUI_URL",
+      "token_env": "COMFYUI_TOKEN",
+      "graph": "private-inputs/workflows/image-api.json",
+      "patches": [{"node": "6", "input": "text", "from": "prompt"}],
+      "timeout": 900
+    }
+  ],
+  "video": [
+    {
+      "kind": "comfyui",
+      "name": "wan22-i2v",
+      "url_env": "COMFYUI_URL",
+      "token_env": "COMFYUI_TOKEN",
+      "graph": "private-inputs/workflows/video-api.json",
+      "patches": [
+        {"node": "6", "input": "text", "from": "prompt"},
+        {"node": "10", "input": "image", "from": "image_upload"},
+        {"node": "12", "input": "length", "from": "seconds"}
+      ],
+      "timeout": 1800
+    }
+  ],
+  "audio": [
+    {
+      "kind": "comfyui",
+      "name": "local-audiogen-sfx",
+      "url_env": "COMFYUI_URL",
+      "token_env": "COMFYUI_TOKEN",
+      "graph": "private-inputs/workflows/audio-api.json",
+      "patches": [{"node": "6", "input": "text", "from": "prompt"}],
+      "timeout": 900
+    }
+  ],
+  "require_audio": true,
+  "max_shots": 12,
+  "fps": 24,
+  "publisher": {"url_env": "PUBLISHER_URL", "token_env": "PUBLISHER_TOKEN"}
+}
