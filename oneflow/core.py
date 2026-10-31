@@ -200,7 +200,8 @@ def normalize(root, shot, fps, width, height, require_audio):
     duration = float(info.get("format", {}).get("duration") or 0)
     if duration < shot["seconds"] - 0.4:
         raise FlowError(shot["id"] + " too short; do not silently freeze or duplicate frames")
-    if require_audio and not shot["audio"]:
+    embedded_audio = bool(primary_media(info, "audio"))
+    if require_audio and not shot["audio"] and not embedded_audio:
         raise FlowError(shot["id"] + " has no sound effects")
     output = root / "media" / (shot["id"] + "-normalized.mp4")
     aspect = f"scale={width}:{height}:force_original_aspect_ratio=decrease,pad={width}:{height}:(ow-iw)/2:(oh-ih)/2,setsar=1,fps={fps},format=yuv420p"
@@ -208,9 +209,13 @@ def normalize(root, shot, fps, width, height, require_audio):
             "-i", str(clip)]
     if shot["audio"]:
         args += ["-i", str(root / shot["audio"])]
+        audio_map = "1:a:0"
+    elif embedded_audio:
+        audio_map = "0:a:0"
     else:
         args += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo"]
-    args += ["-map", "0:v:0", "-map", "1:a:0", "-vf", aspect,
+        audio_map = "1:a:0"
+    args += ["-map", "0:v:0", "-map", audio_map, "-vf", aspect,
              "-af", "aresample=48000,apad",
              "-t", str(shot["seconds"]), "-c:v", "libx264",
              "-preset", "veryfast", "-crf", "19", "-pix_fmt", "yuv420p",
@@ -302,12 +307,20 @@ def produce(job, cfg):
     manifest["status"] = "RENDERING"
     save_json(root / "manifest.json", manifest)
     try:
+        previous = None
         for shot in manifest["shots"]:
             values = {"prompt": shot["visual_prompt"], "negative_prompt":
                       "identity drift, continuity errors, extra characters, physical impossibilities, watermark",
                       "seconds": shot["seconds"],
                       "seed": int(hashlib.sha256((manifest["id"] + shot["id"]).encode()).hexdigest()[:8], 16),
                       "image": None}
+            if cfg.get("frame_bridge", False) and previous:
+                tail = media_dir / (previous["id"] + "-tail.png")
+                if not tail.exists():
+                    command(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+                             "-sseof", "-0.2", "-i", str(root / previous["video"]),
+                             "-frames:v", "1", str(tail)])
+                values["reference_image"] = str(tail)
             if not shot["image"] or not (root / shot["image"]).exists():
                 image_path = generate("image", routed["image"], values,
                                       media_dir / (shot["id"] + "-image"))
@@ -333,6 +346,7 @@ def produce(job, cfg):
                 shot["audio"] = str(sound_path.relative_to(root))
                 shot["state"] = "MEDIA_GENERATED_UNREVIEWED"
                 save_json(root / "manifest.json", manifest)
+            previous = shot
         video = assemble(root, manifest, cfg)
         manifest["render"] = str(video.relative_to(root))
         qc = audit(root, manifest, cfg, video)
