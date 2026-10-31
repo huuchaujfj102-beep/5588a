@@ -18,6 +18,8 @@ from pathlib import Path
 from urllib.parse import urlencode
 
 from .providers import ProviderError, exchange, generate, json_call, ollama_shots, endpoint
+from .router import RoutingError, route, preflight
+from .director import film_prompt, phase_list
 
 
 class FlowError(RuntimeError):
@@ -31,6 +33,9 @@ DEFAULT = {
     "video": [],
     "audio": [],
     "require_audio": True,
+    "audio_mode": "separate",
+    "commercial": True,
+    "frame_bridge": False,
     "max_shots": 12,
     "resolution": [1080, 1920],
     "fps": 24,
@@ -71,26 +76,29 @@ def config(path=None):
 def describe(prompt, seconds, count, cfg):
     story = cfg.get("story", {})
     if story.get("kind") == "ollama":
-        return ollama_shots(story, prompt, seconds, count), "ollama_live"
-    if story.get("kind") != "heuristic":
+        drafts = ollama_shots(story, prompt, seconds, count)
+        planner = "ollama_live"
+    elif story.get("kind") == "heuristic":
+        phases = phase_list(prompt)
+        drafts = [
+            {"prompt": phases[min(len(phases) - 1, i * len(phases) // count)],
+             "sound": "Original location effects for this action; no narration unless explicitly requested."}
+            for i in range(count)
+        ]
+        planner = "heuristic_draft_not_ai_storyboard"
+    else:
         raise FlowError("Unknown story planning provider")
-    parts = [v.strip() for v in re.split(r"[，,。；;！!？?\n]+", prompt) if v.strip()]
-    if not parts:
-        parts = [prompt]
     output = []
-    for i in range(count):
-        scene = parts[min(i, len(parts) - 1)]
+    for i, draft in enumerate(drafts):
+        if not isinstance(draft, dict) or not draft.get("prompt") or not draft.get("sound"):
+            raise FlowError("Storyboard missing visual or audio prompt")
+        previous = drafts[i-1]["prompt"] if i else None
         output.append({
-            "prompt": (prompt + ". Shot " + str(i + 1) + "/" + str(count) +
-                       ". Visual emphasis: " + scene +
-                       ". Keep characters, props, geography, direction of motion, lighting, "
-                       "vehicle engineering and continuity consistent with earlier shots. "
-                       "Film-grade photorealism. No invented characters or unapproved text."),
-            "sound": ("Create original synchronized location sound effects for shot " +
-                      str(i + 1) + ": " + scene +
-                      ". Sound design only unless the brief specifically requests music.")
+            "prompt": film_prompt(prompt, draft["prompt"], previous, i + 1, count),
+            "sound": draft["sound"],
+            "phase": draft["prompt"]
         })
-    return output, "heuristic_draft_not_ai_storyboard"
+    return output, planner
 
 
 def create(prompt, seconds, ratio, platforms, out_root, cfg):
@@ -123,13 +131,15 @@ def create(prompt, seconds, ratio, platforms, out_root, cfg):
             "seconds": durations[i],
             "visual_prompt": item["prompt"],
             "audio_prompt": item["sound"],
+            "narrative_phase": item["phase"],
             "image": None, "video": None, "audio": None,
             "normalized": None, "state": "PLANNED"
         })
     manifest = {
         "schema": "oneflow.v1", "id": ident, "created_at": now(),
         "brief": prompt, "seconds": seconds, "ratio": ratio,
-        "planner": planner, "platforms": sorted(set(platforms)),
+        "planner": planner, "commercial": cfg.get("commercial", True),
+        "platforms": sorted(set(platforms)),
         "status": "PLANNED", "shots": shots, "render": None, "qc": None,
         "approval": None, "publication": {}, "metrics": {},
         "warnings": ["Story draft is not a substitute for visual review.",
@@ -257,7 +267,7 @@ def audit(root, manifest, cfg, media):
     if abs(length - manifest["seconds"]) > 1.0:
         issues.append({"module": "media_spec", "severity": "blocker",
                        "code": "DURATION_MISMATCH", "message": "Final duration differs from brief"})
-    if cfg.get("require_audio", True) and not all(s["audio"] for s in manifest["shots"]):
+    if cfg.get("require_audio", True) and not primary_media(info, "audio"):
         issues.append({"module": "audio", "severity": "blocker",
                        "code": "MISSING_REQUIRED_SOUND", "message": "Audio stage incomplete"})
     qc = {"status": "FAIL" if any(x.get("severity") == "blocker" for x in issues)
@@ -278,8 +288,13 @@ def produce(job, cfg):
         raise FlowError("Approved jobs cannot be modified; create a new version")
     if not cfg.get("image") or not cfg.get("video"):
         raise FlowError("Configure real image and video models before rendering")
-    if cfg.get("require_audio", True) and not cfg.get("audio"):
+    if cfg.get("require_audio", True) and cfg.get("audio_mode", "separate") == "separate" and not cfg.get("audio"):
         raise FlowError("Configured sound generation required; no fake or silent substitution")
+    preflight(cfg)
+    routed = {stage: route(stage, cfg.get(stage, []), commercial=cfg.get("commercial", True))
+              for stage in ("image", "video", "audio")}
+    if bool(manifest.get("commercial", True)) != bool(cfg.get("commercial", True)):
+        raise FlowError("Commercial-use flag changed since project creation")
     if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
         raise FlowError("FFmpeg and FFprobe are required")
     media_dir = root / "media"
@@ -294,21 +309,26 @@ def produce(job, cfg):
                       "seed": int(hashlib.sha256((manifest["id"] + shot["id"]).encode()).hexdigest()[:8], 16),
                       "image": None}
             if not shot["image"] or not (root / shot["image"]).exists():
-                image_path = generate("image", cfg["image"], values,
+                image_path = generate("image", routed["image"], values,
                                       media_dir / (shot["id"] + "-image"))
                 shot["image"] = str(image_path.relative_to(root))
                 shot["state"] = "IMAGE_GENERATED_UNREVIEWED"
                 save_json(root / "manifest.json", manifest)
             values["image"] = str(root / shot["image"])
             if not shot["video"] or not (root / shot["video"]).exists():
-                video_path = generate("video", cfg["video"], values,
+                video_path = generate("video", routed["video"], values,
                                       media_dir / (shot["id"] + "-video"))
                 shot["video"] = str(video_path.relative_to(root))
                 shot["state"] = "VIDEO_GENERATED_UNREVIEWED"
                 save_json(root / "manifest.json", manifest)
-            if cfg.get("audio") and (not shot["audio"] or not (root / shot["audio"]).exists()):
+            if cfg.get("audio_mode", "separate") == "embedded":
+                if not primary_media(probe(root / shot["video"]), "audio"):
+                    raise FlowError("Selected audio-video model did not produce an audio track")
+                shot["state"] = "EMBEDDED_AUDIO_UNREVIEWED"
+                save_json(root / "manifest.json", manifest)
+            if cfg.get("audio_mode", "separate") == "separate" and routed["audio"] and (not shot["audio"] or not (root / shot["audio"]).exists()):
                 sound_values = {**values, "prompt": shot["audio_prompt"]}
-                sound_path = generate("audio", cfg["audio"], sound_values,
+                sound_path = generate("audio", routed["audio"], sound_values,
                                       media_dir / (shot["id"] + "-sound"))
                 shot["audio"] = str(sound_path.relative_to(root))
                 shot["state"] = "MEDIA_GENERATED_UNREVIEWED"
@@ -320,7 +340,7 @@ def produce(job, cfg):
         manifest["status"] = "BLOCKED" if qc["status"] == "FAIL" else "AWAITING_HUMAN_REVIEW"
         save_json(root / "manifest.json", manifest)
         return manifest["status"]
-    except (FlowError, ProviderError, OSError, ValueError) as exc:
+    except (FlowError, ProviderError, RoutingError, OSError, ValueError) as exc:
         manifest["status"] = "FAILED"
         manifest["error"] = str(exc)
         save_json(root / "manifest.json", manifest)
@@ -473,7 +493,7 @@ def main(argv=None):
                               "shots": len(data["shots"]), "published": data["publication"]},
                              ensure_ascii=False))
         return 0
-    except (FlowError, ProviderError, OSError, ValueError) as exc:
+    except (FlowError, ProviderError, RoutingError, OSError, ValueError) as exc:
         print("ONEFLOW ERROR: " + str(exc), file=sys.stderr)
         return 1
 
