@@ -3,12 +3,14 @@ on:
   push:
     paths:
       - 'runpod_wan/**'
-      - 'tests/test_runpod_wan.py'
+      - 'tests/test_runpod*.py'
+      - '.github/workflows/runpod-wan-gpu-render.yml'
       - '.github/workflows/runpod-wan-preflight.yml'
   pull_request:
     paths:
       - 'runpod_wan/**'
-      - 'tests/test_runpod_wan.py'
+      - 'tests/test_runpod*.py'
+      - '.github/workflows/runpod-wan-gpu-render.yml'
       - '.github/workflows/runpod-wan-preflight.yml'
   workflow_dispatch:
 permissions:
@@ -25,7 +27,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Bash bootstrap syntax only
-        run: bash -n runpod_wan/bootstrap.sh
+        run: bash -n runpod_wan/bootstrap.sh runpod_wan/run_sequence.sh
       - name: Python syntax
         run: python -m compileall -q runpod_wan
       - name: Offline test suite (must not create GPU Pods)
