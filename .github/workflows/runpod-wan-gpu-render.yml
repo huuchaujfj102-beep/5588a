@@ -1,0 +1,72 @@
+name: Wan2.2 ONE SENTENCE -> 5s VIDEO (Runpod GPU, approval)
+on:
+  workflow_dispatch:
+    inputs:
+      one_sentence:
+        description: 'One-sentence shot brief; leave empty for Snow White S01 demo'
+        type: string
+        required: false
+        default: ''
+      approve_gpu_billing:
+        description: 'I authorize the paid Runpod GPU computation for one 5-second clip'
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: wan22-one-sentence-runpod-gpu
+  cancel-in-progress: false
+
+jobs:
+  validate-without-gpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Offline tests
+        run: |
+          bash -n runpod_wan/bootstrap.sh runpod_wan/run_sequence.sh
+          python -m unittest discover -s tests -v
+      - name: Check billable-GPU approval in submitted request
+        env:
+          APPROVED: ${{ inputs.approve_gpu_billing }}
+        run: |
+          if [ "$APPROVED" != 'true' ]; then
+            echo "Not authorized: do not schedule a GPU job." >&2
+            exit 1
+          fi
+          echo "Explicit GPU approval submitted. Waiting for Runpod self-hosted runner."
+
+  runpod-real-video:
+    needs: validate-without-gpu
+    # This label must be explicitly installed on a GPU runner in the user's Runpod Pod.
+    # Never use a hosted GitHub CPU runner to pretend GPU video generation succeeded.
+    runs-on: [self-hosted, linux, x64, runpod-wan22]
+    # IMPORTANT: Configure Settings > Environments > runpod-paid-gpu
+    # with required reviewers before use. The environment alone does not add reviewers.
+    environment: runpod-paid-gpu
+    timeout-minutes: 180
+    env:
+      WAN_CONFIRM_GPU_COST: ${{ inputs.approve_gpu_billing }}
+      WAN_ONE_SENTENCE: ${{ inputs.one_sentence }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Bootstrap -> dry-run -> paid 5-second Wan2.2 -> output QC
+        shell: bash
+        run: bash runpod_wan/run_sequence.sh
+      - name: Upload technical QC only; keep MP4 in private Runpod /workspace
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: wan22-5sec-technical-review
+          path: /workspace/oneflow-output/snow-white-S01-${{ github.run_id }}-${{ github.run_attempt }}.audit.json
+          if-no-files-found: error
+          retention-days: 7
