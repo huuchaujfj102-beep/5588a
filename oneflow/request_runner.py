@@ -11,6 +11,7 @@ from pathlib import Path
 
 from .core import create, load_json, save_json, config, FlowError
 from .director import film_prompt
+from .platforms import PROFILES, make_package
 
 ALLOWED = re.compile(r"^[a-zA-Z0-9._-]+\.json$")
 
@@ -44,6 +45,72 @@ def validate(request):
                    ("visual", "motion", "camera", "sound", "narration")):
             raise FlowError("Shot " + str(i + 1) + " missing required director fields")
     return request
+
+
+def srt_timestamp(seconds):
+    if type(seconds) is not int or seconds < 0:
+        raise FlowError("SRT timestamp must be nonnegative integral seconds")
+    hours, rem = divmod(seconds, 3600)
+    minutes, secs = divmod(rem, 60)
+    return f"{hours:02d}:{minutes:02d}:{secs:02d},000"
+
+
+def production_handoff(request, manifest, narration, out):
+    """Generate concrete editorial assets; NEVER imply GPU or audio was rendered."""
+    srt = []
+    shot_cues = []
+    edit_list = []
+    for index, (shot, timeline) in enumerate(zip(request["shots"], narration), 1):
+        start, end = timeline["start_seconds"], timeline["end_seconds"]
+        srt.extend([str(index),
+                    srt_timestamp(start) + " --> " + srt_timestamp(end),
+                    timeline["text"].replace("\\r", " ").replace("\\n", " "), ""])
+        shot_cues.append({
+            "shot_id": timeline["shot"], "start_seconds": start,
+            "end_seconds": end, "duration_seconds": end - start,
+            "narration_script": shot["narration"],
+            "sound_design_prompt": shot["sound"],
+            "narration_audio": None, "sound_effect_audio": None,
+            "status": "AUDIO_NOT_GENERATED"
+        })
+        edit_list.append({
+            "shot_id": timeline["shot"], "start_seconds": start,
+            "end_seconds": end, "duration_seconds": end - start,
+            "source_video": None, "source_audio": None,
+            "status": "AWAITING_RENDERED_MEDIA"
+        })
+    (out / "subtitles.srt").write_text("\\n".join(srt), encoding="utf-8")
+    save_json(out / "audio-cues.json", {
+        "status": "SCRIPT_ONLY_NO_AUDIO", "voice_language": "zh-CN",
+        "soundtrack_license": "NOT_VERIFIED", "shots": shot_cues
+    })
+    save_json(out / "edit-decision-list.json", {
+        "status": "AWAITING_REAL_VIDEO", "fps": 24, "ratio": manifest["ratio"],
+        "duration_seconds": request["seconds"], "shots": edit_list
+    })
+    drafts = {}
+    # Generate offline editor drafts for all supported platforms, but never upload.
+    for platform in PROFILES:
+        editorial_manifest = {**manifest,
+                              "brief": request["title"] + "。 " + request["brief"]}
+        draft = make_package(editorial_manifest, platform)
+        drafts[platform] = {
+            **draft, "status": "DRAFT_NOT_PUBLISHED",
+            "video_file": None, "cover_file": None,
+            "account_oauth_authorized": False,
+            "manual_approval_recorded": False
+        }
+    save_json(out / "release-drafts.json", {
+        "status": "DRAFT_ONLY", "publish_automatically": False,
+        "profiles": drafts, "disclaimer":
+        "These are editorial text drafts; not an actual API upload or verified platform compliance."
+    })
+    return {
+        "subtitles": "subtitles.srt",
+        "audio_cues": "audio-cues.json",
+        "editing_timeline": "edit-decision-list.json",
+        "release_drafts": "release-drafts.json"
+    }
 
 
 def package(request, out_root, cfg=None):
@@ -87,11 +154,13 @@ def package(request, out_root, cfg=None):
                           "end_seconds": timestamp + shot["seconds"],
                           "text": shot["narration"]})
         timestamp += shot["seconds"]
+    manifest["offline_handoff"] = production_handoff(request, manifest, narration, path)
     manifest["title"] = request["title"]
     manifest["character_bible"] = "character-bible.md"
     manifest["original_story_type"] = "Grimm fairy-tale inspired original adaptation"
     manifest["narration_timing"] = "narration.json"
     manifest["warnings"].append("Narration text is not synthesized into an audio file yet.")
+    manifest["warnings"].append("Subtitles, audio-cue timeline and social-release metadata are drafts, not rendered, audited or uploaded assets.")
     manifest["warnings"].append("No image/video/audio model was called at request-package stage.")
     save_json(path / "manifest.json", manifest)
     save_json(path / "narration.json", narration)
