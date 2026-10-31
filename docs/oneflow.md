@@ -119,3 +119,52 @@ python -m oneflow metrics --job ... --config private-inputs/oneflow-config.json
 | E 数据回流 | 官方授权 API 返回实际数据，记录采集时刻并复盘 |
 
 阶段 A 完成后需要在自托管云环境继续配置 B—E。**不得把只有框架或 smoke test 的结果声明为全链路生产就绪。**
+
+
+## V2.0 模型优势融合（按能力编排，不盲目安装全部）
+
+`oneflow/model_catalog.json` 记录上游开源模型的强项、适合生产环节、官方项目、许可政策及局限性。**登记/测试通过不等于本账号已经部署模型权重，也不证明实际视频生成已跑通。** `oneflow/router.py` 在 `--live` 前检查候选模型的 `model_id`、stage、license_checked、图路径和关键节点映射，并按 `priority` 低数值优先、失败才切换下一个；模型或许可不符合要求会阻断，而不是偷偷降级。
+
+| 模型/框架 | 吸收的特点 | 实际使用边界 |
+|---|---|---|
+| Qwen3 + Ollama | JSON 结构化镜头计划；顺序+约束 | Ollama 需要部署，不是 ChatGPT 订阅额度 |
+| Qwen3-VL + Ollama | 视频帧空间分析、文字和结构复核 | 需要另装模型；每镜只抓首尾两张图片，意见仅供人审 |
+| FLUX.2 klein 4B | 快速生图、参考图编辑 | **只把 klein 4B 的 Apache-2.0 许可作为该条路线依据**；不同 FLUX 版本许可不同 |
+| Wan2.2 TI2V-5B | 图文条件的视频与运动表现 | 需相应 API 图、GPU 和模型；不能默认生成原始音效 |
+| LTX-2 | 多关键帧、音视频同步 | 必须确认相应 LTX 社区许可；当 `audio_mode=embedded` 才启用已验证的音频轨处理 |
+| MMAudio | 帧对齐视频音效（有技术参考价值） | **官方公开模型权重 CC-BY-NC 4.0，商业项目禁止默认使用**；代码 MIT 不能替代权重许可 |
+| ComfyUI | API 格式工作流分层执行与导出 | 必须从实际 ComfyUI 导出 API JSON，`patches` 节点/输入必须实测 |
+
+上游来源：
+- https://github.com/QwenLM/Qwen3
+- https://github.com/QwenLM/Qwen3-VL
+- https://github.com/black-forest-labs/flux2
+- https://github.com/Wan-Video/Wan2.2
+- https://github.com/Lightricks/LTX-2
+- https://github.com/hkchengrex/MMAudio
+- https://github.com/Comfy-Org/docs/blob/main/development/api-development/workflow-api-format.mdx
+
+### 新增固定导演规范
+
+`oneflow/director.py` 把每镜提示词编排成 7 部分：原图/资产锁定 → 局部微动 → 环境动态 → 单一慢速运镜 → 光影控制 → 画质 → 负面约束。保留你的原始一句话剧本和上一镜阶段作为硬约束。默认阶段切分只是 **离线草稿**，并不保证复杂逻辑、真实机械结构、运动物理正确；人审仍是发布前必要关卡。
+
+### 连镜（可选）
+
+`frame_bridge=true`：第 N 镜视频最后约 0.2 秒提取一帧，作为下一镜生成图片的可选参考图；必须在 **所有候选生图 ComfyUI graph** 中明确包含来自 `reference_image_upload` 的合法节点映射。适合连贯动作，不适合完全切换时空/反打镜头；默认关闭，由导演分镜确定后再选择。
+
+### 两种声音策略
+
+1. **separate（默认）**：生成原始图生视频，再调用已授权的音效图，最终把单独音效合入 MP4。
+2. **embedded**：仅限确实能产出完整视频音轨的已测试 LTX 等音视频模型；每个候选视频模型必须明确设置 `supports_embedded_audio=true`。FFprobe 实际检查原视频是否带音频流；没有则失败，不以无声音频掩盖缺失。此模式由 `audio_mode=embedded` 激活，独立 `audio` 阶段不调用。
+
+### 可选 Qwen3-VL 画面审核
+
+在 **私有配置** 内启用 `visual_review` 的 Ollama 服务与已核查许可的模型（`license_checked=true`），输出 `qc.json.visual_review`。它只采样每镜首尾两帧、返回 `warning / needs_human_review`，不能自动签核、宣称通过版权审查或判断动态运动全程。若 `required=true`，视觉审核不可用就阻止放行。
+
+### 可审计生产记录
+
+每个 `shots[]` 记录实际选用的 `model_provenance.image/video/audio`，不会简单按配置猜测模型。每镜内容仍按 `shot_id` 缓存，出错可恢复已有文件；核准的最终视频必须通过 SHA-256 锁定。模型修改、返修及发布请建立新的审核版本，不要覆盖已经批准的作品。
+
+### 真实验收优先级
+
+从赛车样片的 **5 秒单镜** 开始，再用 3 镜连续动作检验结构与物理（先升空→后喷尾焰→再关闭轮部喷口），最后完成 35 秒音效+审核+多平台授权。每阶段记载 **是否实测成功、出片时间、GPU 用时、素材问题、账单、失败代码、返修次数**；无测试数据不能宣称某模型一定最优。
