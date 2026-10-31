@@ -1,63 +1,30 @@
-# OneFlow GitHub 一句话自动生图
+# OneFlow GitHub 一句话生图：最小权限授权
 
-## 新增：浏览器一键授权（推荐先试）
+> 安全更新：不再使用 Hugging Face CLI 的 Device Code OAuth 浏览器授权。该模式的授权页可能包括管理所有仓库、Jobs、Webhooks、Billing 等广泛权限，不符合“一句话生图”所需的最小权限原则。用户看到原授权页时，请点击 **Deny**，不要批准宽权限。
 
-Hugging Face 已提供官方 **Device Code OAuth** 授权流程。我们复用其官方 CLI `hf auth login --format agent`。GitHub 工作流会在同一次运行中显示授权链接和一次性验证码，由用户打开 Hugging Face 官方网页确认，完成后使用**仅存在该次临时 GitHub runner** 的 OAuth 访问令牌调用 FLUX.1-schnell 生图。无需向聊天粘贴 API Key、也无需手工创建 `HF_TOKEN`。
+## 只配置一次：细粒度 HF_TOKEN
 
-实际操作（必须拥有 Hugging Face 账户与可用推理额度）：
+1. 打开 [Hugging Face Access Tokens](https://huggingface.co/settings/tokens)，点击 **New token**，类型选择 **Fine-grained**。
+2. 给令牌起个能识别的名字（例如 `oneflow-inference-only`）。仅选择 **Inference / Make calls to Inference Providers** 相关权限；不授予仓库读写/删除、Webhooks、Jobs、Billing 等无关权限。具体界面字段以 Hugging Face 当前显示为准。
+3. 复制令牌，只在 GitHub 官方页面 https://github.com/huuchaujfj102-beep/5588a/settings/secrets/actions → **New repository secret** 粘贴。名称精确填写 `HF_TOKEN`。不要向聊天、截图或 GitHub Issues 粘贴访问令牌。
+4. 在 https://huggingface.co/settings/inference-providers 核查模型访问、推理额度及可能产生的费用。Hugging Face 的额度与 Runpod、ChatGPT 额度独立。
+5. 点击 [GitHub OneFlow 生图工作流](https://github.com/huuchaujfj102-beep/5588a/actions/workflows/oneflow-generate-image.yml) → **Run workflow**。分支选 `main`，`one_sentence` 留空可生成《白雪公主》S01 的王后与魔镜，勾选 `approve_paid_image` 后手动启动一次模型推理。
 
-1. 打开 [GitHub 一句话生图入口](https://github.com/huuchaujfj102-beep/5588a/actions/workflows/oneflow-generate-image.yml)，点击 **Run workflow**。
-2. `authorization_mode` 选择 **browser**（默认）；`one_sentence` 留空即使用《白雪公主》S01；勾选 `approve_paid_image` 允许**一次**可能收费的生图请求。
-3. 点 Run workflow 后打开该次 Run 的 `real-hf-image` → **Browser authorization** 步骤实时日志，点击日志提供的 **huggingface.co 官方验证码页面**，输入显示的一次性验证码并确认权限（验证码通常15分钟内有效）。这属于 Hugging Face 官方授权页面，并非 ChatGPT 内置弹框。
-4. 返回 GitHub 看执行结果；成功时从本次 Run 下方下载 `oneflow-real-FLUX-S01-...` Artifact 中的 `S01.png` 和 `S01.json`。
+## 成功输出与限制
 
-**重要边界：** 这个浏览器授权针对每次 GitHub workflow 的临时执行环境；新的一次运行通常仍需重新批准。我们并没有将可长期使用的用户令牌自动写入 GitHub Secrets，也不会自动为用户创建 Hugging Face 账户或付费。若批准后模型返回权限不足或提供商额度不足，工作流会失败；可使用下方长期 `HF_TOKEN` 方式作为备选，仍需实际验证提供商。OAuth 登录成功**不等于**已经获得某个模型的推理权限，也不等于生成成功。
+- 免费预检 `free-preflight` 检查提示词和程序，不调用付费模型，不会产生图片。
+- `real-hf-image` 只有在用户明确勾选一次图像推理同意，且 GitHub 仓库 Secret `HF_TOKEN` 非空时才调用 Hugging Face Inference Providers 的 FLUX.1 Schnell。此模型是否被该账户可用的云端 Provider 实际支持，需要首次实测。
+- 成功后会生成可解码的 `S01.png`、`S01.json`（含模型、尺寸、SHA-256 和人工审核标识），存到 7 天保留期的 GitHub Actions Artifact，不会发布平台或自动提交到公开仓库。
+- 若凭据未配置、模型权限不足、额度不足或者 Provider 返回错误，工作流应失败而不是产出模拟图片。
+- 图片质量、人物一致性、版权、商用权限与是否适合 Wan2.2 图生视频，必须另行审核。
+- 本仓库为公开仓库：GitHub Actions Artifact 不是私密素材的安全长期存储，勿提交患者、个人敏感信息或未公开参考素材。
+- **关于先前第13–15次运行：** 浏览器登录步骤可能在等待用户确认或过期后失败；那些任务没有完成图片生成。它们不是本流程的授权凭据。
 
-**安全规则：** 授权令牌只在临时执行器的 `HF_HOME` 中使用，清理步骤会删除临时认证文件；不能把令牌写进日志、GitHub 源码或视频发布草稿。GitHub Actions 运行日志中公开显示的是**一次性设备验证码**，请不要转发它或授权陌生的请求。生成图片的 GitHub Artifact 也不适合储存秘密资料。
+## 下一步接 Wan2.2
 
-如果你希望以后 GitHub 点运行后无需重复授权，可以采用下方仅设置一次的 `HF_TOKEN` 私密密钥方案。这个长期密钥必须由用户在 GitHub 官方 Secrets 页面手工保存，无法仅靠当前连接自动获取或代存。
+用户审核通过 S01.png 后，安全地传到自有 Runpod Pod 的 `/workspace/approved/S01.png`，由已实际部署成功的 Wan2.2 TI2V-5B 图生视频生成五秒镜头。GPU 实机出片、配音/音效、12镜合成及发布平台 OAuth 都属于尚待验证的独立步骤。
 
----
-
-
-**状态：GitHub 端的真实模型调用程序、付费授权门禁与 PNG 文件审核已通过离线 CI；没有授权令牌时不会调用 Hugging Face，更不把模拟 PNG 冒充用户作品。**
-
-## 可选：设置一次长期 HF_TOKEN（以后无需每次浏览器授权）
-
-1. 登录 https://huggingface.co/settings/tokens ，创建细粒度 Access Token，授予 Inference Providers 权限。若模型提出条款或访问确认，在官方 Hugging Face 页面完成。
-2. 打开 https://github.com/huuchaujfj102-beep/5588a/settings/secrets/actions ，点击 **New repository secret**。
-3. Name 填 **HF_TOKEN**，Secret 填 Hugging Face 令牌并保存。**不要把令牌发送到聊天、Issues 或公开代码。**
-4. 查看 https://huggingface.co/settings/inference-providers 的可用额度和账单。首次只运行一张图，Hugging Face 可能收取云推理费用，不属于 ChatGPT 或 Runpod 的额度。
-5. 由于 5588a 是公开仓库，不要把病患照片、私密剧本或身份资料作为 Actions 输入；Actions artifact 不等同于私密存储。
-
-## 一句话触发真实生图
-
-打开 https://github.com/huuchaujfj102-beep/5588a/actions/workflows/oneflow-generate-image.yml ，点击 **Run workflow**：
-
-- **one_sentence**：留空则自动生成已入库的《白雪公主》S01 王后与魔镜；也可输入原创一句话。
-- **authorization_mode**：使用长期密钥时选择 `secret`；需要浏览器授权时选择 `browser`（默认）。
-- **approve_paid_image**：勾选授权进行且仅进行**一次** Hugging Face 云端生图调用，否则只做离线测试。
-- 点击 **Run workflow**。第一阶段是无模型调用的预检，第二阶段检测 HF_TOKEN，且在用户勾选授权时才真实调用 FLUX.1 Schnell。
-
-若真实生成成功，在此次 Actions 页面底部 Artifacts 下载 **oneflow-real-FLUX-S01-运行编号**，其中有：
-
-- **S01.png**：经 PIL 验证真实解码的 PNG 文件。
-- **S01.json**：实际像素尺寸、模型名称、生成时刻、seed、文件 SHA-256、待人工审核项目。
-
-若输出 MISSING_HF_TOKEN、额度不足、模型请求失败，工作流应为失败状态；不会生成占位图或伪造 SUCCESS。
-
-## 默认生图策略及边界
-
-采用 Hugging Face Inference Providers 的 FLUX.1 Schnell，模型权重许可证 Apache-2.0，默认请求 768 × 1344 竖屏首帧、seed=128839、一次请求、四步采样。后端提供商可能有服务可用性和参数限制；首次真实调用结果才是最终判断依据。此任务 **没有给 GitHub CPU runner 安装整套 FLUX 权重**，也 **没有消耗 Runpod GPU**。
-
-模型信息：https://huggingface.co/black-forest-labs/FLUX.1-schnell
-
-API 信息：https://huggingface.co/docs/inference-providers/tasks/text-to-image
-
-计费信息：https://huggingface.co/docs/inference-providers/pricing
-
-## 与 Wan2.2 对接的后续
-
-人工审核 S01.png 里的王后、服装、魔镜等是否合格；通过后，把首帧经安全通道传到自己的 Runpod Pod（不要提交私人图片至公开仓库），实际执行 Wan2.2 图生视频。图片生成完成不意味着 I2V、配音、合成、自动返修和平台发布已实机打通。
-
-本阶段只有自动生图与图像有效性检测，版权证明与跨镜人物一致性仍必须人工把关。
+官方参考：
+- https://huggingface.co/docs/hub/security-tokens
+- https://huggingface.co/docs/inference-providers/index
+- https://huggingface.co/docs/inference-providers/pricing

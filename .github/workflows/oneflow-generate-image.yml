@@ -13,20 +13,12 @@ on:
   workflow_dispatch:
     inputs:
       one_sentence:
-        description: 'Optional one-sentence image brief. Leave empty for original Snow White S01.'
+        description: 'Optional image brief. Leave empty for Snow White mirror scene S01.'
         type: string
         required: false
         default: ''
-      authorization_mode:
-        description: 'Browser = confirm on Hugging Face (no GitHub secret); Secret = existing HF_TOKEN'
-        type: choice
-        required: true
-        default: browser
-        options:
-          - browser
-          - secret
       approve_paid_image:
-        description: 'I authorize exactly one hosted image inference (can consume Hugging Face credits)'
+        description: 'I authorize ONE potentially paid image inference with narrow-scoped HF_TOKEN'
         type: boolean
         required: true
         default: false
@@ -47,19 +39,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install image client and image file validators
-        run: python -m pip install 'huggingface_hub>=0.34,<2' 'Pillow>=11,<13'
-      - name: Python tests (mocked provider, no charge)
+      - name: Install model client for local tests
+        run: python -m pip install 'huggingface_hub>=1,<2' 'Pillow>=11,<13'
+      - name: Dry-run image planner tests (no paid calls)
         run: python -m unittest discover -s tests -p 'test_oneflow_image_generation.py' -v
-      - name: Real Snow White S01 keyframe prompt dry-run (no image/no cost)
+      - name: Original Snow White prompt preflight (no model call)
         run: |
           python -m oneflow.image_generation \
             --request-file oneflow/requests/snow-white-seven-dwarfs-60s.json \
             --shot S01 --dry-run
-      - name: Confirm no image was invented
-        run: |
-          test ! -d private-inputs/generated-images
-          echo "Offline tests succeeded. Real model has not been called."
+      - name: Prove no image was fabricated
+        run: test ! -d private-inputs/generated-images
 
   real-hf-image:
     needs: free-preflight
@@ -69,8 +59,6 @@ jobs:
     env:
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
       ONE_SENTENCE: ${{ inputs.one_sentence }}
-      AUTH_MODE: ${{ inputs.authorization_mode }}
-      HF_HOME: /tmp/oneflow-hf-browser-auth-${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -78,41 +66,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install supported image inference adapter and browser-login CLI
-        run: python -m pip install 'huggingface_hub>=1,<2' 'Pillow>=11,<13'
-      - name: Verify authorization choice (do not call any paid model)
+      - name: Require a fine-grained HF_TOKEN before any billable inference
         shell: bash
         run: |
           set -euo pipefail
-          if [ "$AUTH_MODE" = "secret" ]; then
-            if [ -z "$HF_TOKEN" ]; then
-              echo "MISSING_HF_TOKEN: configure GitHub Actions secret HF_TOKEN." >&2
-              exit 2
-            fi
-          elif [ "$AUTH_MODE" != "browser" ]; then
-            echo "Invalid authorization mode" >&2
+          if [ -z "$HF_TOKEN" ]; then
+            echo "MISSING_HF_TOKEN: create a fine-grained token with only 'Make calls to Inference Providers' permission." >&2
+            echo "Save it in GitHub repository Settings > Secrets and variables > Actions as HF_TOKEN." >&2
             exit 2
           fi
-      - name: 'Browser authorization: open the official URL and approve the code'
-        if: inputs.authorization_mode == 'browser'
-        env:
-          HF_TOKEN: ''
+      - name: Install image inference and PNG validator
+        run: python -m pip install 'huggingface_hub>=1,<2' 'Pillow>=11,<13'
+      - name: Invoke FLUX exactly once and verify the real PNG
         shell: bash
         run: |
           set -euo pipefail
-          echo "OPEN THIS STEP'S LIVE LOGS. Visit the official Hugging Face approval URL shown below, confirm its one-time code, and approve inference access."
-          echo "No Hugging Face token needs to be pasted into GitHub or chat."
-          hf auth login --format agent
-          python -c 'from huggingface_hub import get_token; assert get_token(), "Browser authorization did not create an access token"'
-          echo "Browser authorization succeeded; token stored only on this temporary runner."
-
-      - name: Invoke FLUX exactly once and verify a real PNG
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ "$AUTH_MODE" = "browser" ]; then
-            unset HF_TOKEN
-          fi
           if [ -z "$ONE_SENTENCE" ]; then
             python -m oneflow.image_generation \
               --request-file oneflow/requests/snow-white-seven-dwarfs-60s.json \
@@ -126,19 +94,10 @@ jobs:
           fi
           test -s private-inputs/generated-images/S01.png
           test -s private-inputs/generated-images/S01.json
-      - name: Deliver real image and audit metadata (never fake an image)
+      - name: Deliver generated image + review metadata (no automatic publication)
         uses: actions/upload-artifact@v4
         with:
           name: oneflow-real-FLUX-S01-${{ github.run_id }}
           path: private-inputs/generated-images/
           if-no-files-found: error
           retention-days: 7
-      - name: Destroy temporary browser OAuth files on this runner
-        if: always()
-        shell: bash
-        run: |
-          if [ -n "$HF_HOME" ] && [ "$HF_HOME" = "/tmp/oneflow-hf-browser-auth-${{ github.run_id }}" ]; then
-            rm -rf -- "$HF_HOME"
-          fi
-          echo "Temporary Hugging Face browser credentials cleared from ephemeral job workspace."
-

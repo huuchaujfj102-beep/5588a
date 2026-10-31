@@ -44,4 +44,4 @@ push / PR 触发 GitHub Actions 的单元测试与示例审核，审核 JSON 保
 
 ## OneFlow 一句话真实生图（FLUX.1 Schnell）
 
-新增 GitHub Actions 一句话生图入口：通过 Hugging Face Inference Providers 调用实际图像模型。优先选择 `browser`：运行时打开 Hugging Face 官方设备授权网页并确认一次性验证码，即可在当前作业中获得临时推理令牌；也可选择已设置 `HF_TOKEN` 的 `secret` 方式。两者都须勾选一次生图费用确认；缺授权则失败，不生成占位图；离线测试不消耗云端图像额度。详见 [GitHub 生图接入指南](docs/oneflow-github-image.md) 和 [生图 Actions](.github/workflows/oneflow-generate-image.yml)。
+新增 GitHub Actions 一句话生图入口：通过 Hugging Face Inference Providers 调用实际图像模型。为了遵守最小授权原则，不再使用请求广泛权限的 Hugging Face CLI 浏览器 OAuth，改为在 GitHub Repository Secrets 中一次性配置**仅具备 Inference Providers 调用权限**的细粒度 `HF_TOKEN`。每次真实生图仍须勾选一次费用确认；缺令牌则失败，不生成占位图；离线测试不消耗云端图像额度。详见 [GitHub 生图接入指南](docs/oneflow-github-image.md) 和 [生图 Actions](.github/workflows/oneflow-generate-image.yml)。
