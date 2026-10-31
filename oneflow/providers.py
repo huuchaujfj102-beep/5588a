@@ -129,6 +129,8 @@ def comfy_output(cfg, stage, values, dest):
     patched = dict(values)
     if values.get("image"):
         patched["image_upload"] = upload_image(cfg, values["image"])
+    if values.get("reference_image"):
+        patched["reference_image_upload"] = upload_image(cfg, values["reference_image"])
     if not cfg.get("patches"):
         raise ProviderError("Explicit ComfyUI input node mappings required")
     for patch in cfg["patches"]:
@@ -188,7 +190,7 @@ def comfy_output(cfg, stage, values, dest):
     return target
 
 
-def generate(stage, candidates, values, dest):
+def generate(stage, candidates, values, dest, return_used=False):
     if not candidates:
         raise ProviderError("No live " + stage + " provider configured")
     errors = []
@@ -196,7 +198,8 @@ def generate(stage, candidates, values, dest):
         try:
             if candidate.get("kind") != "comfyui":
                 raise ProviderError("Unsupported provider kind")
-            return comfy_output(candidate, stage, values, dest)
+            result = comfy_output(candidate, stage, values, dest)
+            return (result, candidate.get("model_id", "unregistered")) if return_used else result
         except ProviderError as exc:
             errors.append(candidate.get("name", "unnamed") + ": " + str(exc))
     raise ProviderError("All " + stage + " providers failed: " + " | ".join(errors))
