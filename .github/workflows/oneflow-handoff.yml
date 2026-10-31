@@ -1,0 +1,151 @@
+name: OneFlow verified image -> video-prep handoff (NO GPU)
+
+on:
+  push:
+    paths:
+      - 'oneflow/handoff.py'
+      - 'tests/test_oneflow_handoff.py'
+      - '.github/workflows/oneflow-handoff.yml'
+  pull_request:
+    paths:
+      - 'oneflow/handoff.py'
+      - 'tests/test_oneflow_handoff.py'
+      - '.github/workflows/oneflow-handoff.yml'
+  workflow_run:
+    workflows:
+      - 'OneFlow REAL image generation (OVH free / Cloudflare FLUX / fal / HF)'
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'Completed OneFlow image run id; example: 41239793072'
+        required: true
+        type: string
+      seconds:
+        description: 'Shot plan duration (not generated MP4 duration)'
+        required: true
+        type: choice
+        options: ['5', '15', '35', '60']
+        default: '35'
+      one_sentence:
+        description: 'Optional original brief; blank reads the signed image report'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: oneflow-video-prep-${{ github.event.workflow_run.id || inputs.source_run_id || github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  offline-handoff-tests:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PNG validator and FFmpeg
+        run: |
+          python -m pip install 'Pillow>=11,<13'
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+          fi
+      - name: Run actual synthetic-fixture QA tests (no provider model calls)
+        run: python -m unittest discover -s tests -p 'test_oneflow_handoff.py' -v
+
+  deliver-source-image-package:
+    # Safe automatic follow-up only after a successful MANUAL image generation
+    # on main; never reacts to untrusted pull requests or push-only dry runs.
+    # The one-off tagged commit lets us verify the already-successful #44 artifact
+    # without consuming inference credits or creating a second model request.
+    if: >-
+      (github.event_name == 'workflow_run'
+       && github.event.workflow_run.conclusion == 'success'
+       && github.event.workflow_run.event == 'workflow_dispatch'
+       && github.event.workflow_run.head_branch == 'main')
+      || (github.event_name == 'workflow_dispatch')
+      || (github.event_name == 'push'
+          && github.ref == 'refs/heads/main'
+          && contains(github.event.head_commit.message, '[handoff-44]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN_ID: ${{ github.event.workflow_run.id || inputs.source_run_id || '41239793072' }}
+      SOURCE_REPO: ${{ github.repository }}
+      USER_BRIEF: ${{ inputs.one_sentence }}
+      USER_SECONDS: ${{ inputs.seconds || '35' }}
+    steps:
+      - name: Checkout trusted main only
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Image decoder and media tools
+        run: |
+          python -m pip install 'Pillow>=11,<13'
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+          fi
+      - name: Offline safety test
+        run: python -m unittest discover -s tests -p 'test_oneflow_handoff.py' -v
+      - name: Confirm source run and fetch only matching verified image artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_RUN_ID" =~ ^[0-9]{8,16}$ ]] || { echo "Invalid run ID"; exit 2; }
+          gh api "repos/$SOURCE_REPO/actions/runs/$SOURCE_RUN_ID" > source-run.json
+          jq -e --arg repo "$SOURCE_REPO" '
+            .head_repository.full_name == $repo
+            and .head_branch == "main"
+            and .event == "workflow_dispatch"
+            and .conclusion == "success"
+            and (.path | startswith(".github/workflows/oneflow-generate-image.yml"))
+          ' source-run.json >/dev/null || { echo "Untrusted source workflow run"; exit 2; }
+          ARTIFACT_NAME="$(
+            gh api "repos/$SOURCE_REPO/actions/runs/$SOURCE_RUN_ID/artifacts?per_page=100" --jq '.artifacts[].name' |
+            grep -E "^oneflow-(cloudflare-FLUX-free|ovh-FREE)-S01-${SOURCE_RUN_ID}$" |
+            head -n 1
+          )"
+          test -n "$ARTIFACT_NAME" || { echo "No verified source image artifact found"; exit 2; }
+          mkdir -p source-image
+          gh run download "$SOURCE_RUN_ID" --repo "$SOURCE_REPO" --name "$ARTIFACT_NAME" --dir source-image
+          test -s source-image/S01.png
+          test -s source-image/S01.json
+          echo "Verified source artifact fetched. No image inference or GPU usage."
+      - name: Build 35s plan, 9:16 non-crop reference and unmistakable STATIC MP4 preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -n "$USER_BRIEF" ]; then
+            python -m oneflow.handoff --source source-image --out oneflow-handoff \
+              --source-run-id "$SOURCE_RUN_ID" --seconds "$USER_SECONDS" \
+              --brief "$USER_BRIEF" --static-preview
+          else
+            python -m oneflow.handoff --source source-image --out oneflow-handoff \
+              --source-run-id "$SOURCE_RUN_ID" --seconds "$USER_SECONDS" --static-preview
+          fi
+          test -s oneflow-handoff/S01_original.png
+          test -s oneflow-handoff/S01_portrait_letterbox.png
+          test -s oneflow-handoff/STATIC_PREVIEW_NO_AI_MOTION.mp4
+          test -s oneflow-handoff/delivery.json
+          jq -e '.readiness.video_generated == false and .readiness.published == false' oneflow-handoff/delivery.json >/dev/null
+      - name: Upload real-image handoff + NOT-AI-MOTION diagnostic preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: oneflow-video-PREP-NO-GPU-${{ github.run_id }}
+          path: oneflow-handoff/
+          retention-days: 14
+          if-no-files-found: error
