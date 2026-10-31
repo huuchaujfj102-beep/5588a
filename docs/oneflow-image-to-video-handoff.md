@@ -22,7 +22,7 @@
 ## 已实际确认与尚待确认的界限
 
 1. Cloudflare / OVH 真实生图：已确认；Cloudflare #44 真实 PNG 为 1024×1024。
-2. 从 GitHub 生图成品自动获取并校验到交接包：需用真实 #44 运行结果做第一次端到端验收，成功时输出上面文件。
+2. 从 GitHub 生图成品自动获取并校验到交接包：**已用真实 #44 完成第一次端到端验收，成功**：运行 https://github.com/huuchaujfj102-beep/5588a/actions/runs/41240879475 ，Artifact `oneflow-video-PREP-NO-GPU-41240879475`（ID 13056844422，约 2.25 MB），原始图 SHA256 `85b2df4369ae187b3815977e292f7768948cd40a1e356f381a81ff265118b734`，静帧 MP4 已实际生成并通过 FFmpeg/ffprobe 检查，无额外模型推理。
 3. FFmpeg 静帧 MP4：能验证格式处理与来源素材读取，**不能**验证动画、物理运动或音效质量。
 4. Runpod Wan GPU 真实 5 秒 I2V：代码/离线预检已有，仍需要运行的 GPU Pod、24 GB 级别显存、对应模型权重、Github self-hosted runner `runpod-wan22`，以及独立明确收费授权。当前还未验证一条真实 Wan MP4。
 5. 音效：仅 cue sheet 与先前 FFmpeg 混音测试；没有真实 AI/专业录制引擎与喷焰音效。
