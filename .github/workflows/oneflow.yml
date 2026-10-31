@@ -1,0 +1,55 @@
+name: One-sentence film pipeline (safe launch)
+on:
+  push:
+    paths:
+      - 'oneflow/**'
+      - 'tests/test_oneflow*.py'
+      - 'docs/oneflow.md'
+      - '.github/workflows/oneflow.yml'
+  pull_request:
+    paths:
+      - 'oneflow/**'
+      - 'tests/test_oneflow*.py'
+      - 'docs/oneflow.md'
+      - '.github/workflows/oneflow.yml'
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: '一句话描述短片（本云端入口只生成分镜与预检，避免未经授权调用付费模型）'
+        required: true
+        type: string
+      seconds:
+        description: '时长，3-90秒'
+        required: true
+        type: choice
+        options: ['15', '30', '35', '60', '90']
+        default: '35'
+permissions:
+  contents: read
+jobs:
+  plan-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unit tests, no model/API calls
+        run: python -m unittest discover -s tests -v
+      - name: 'One-sentence launch: offline plan stage'
+        env:
+          USER_BRIEF: ${{ github.event.inputs.prompt }}
+          USER_SECONDS: ${{ github.event.inputs.seconds }}
+        run: |
+          if [ -z "$USER_BRIEF" ]; then USER_BRIEF='制作35秒电影级喷气式跑车短片，包含启动、加速、腾空、蓝色尾焰与真实音效'; fi
+          if [ -z "$USER_SECONDS" ]; then USER_SECONDS=35; fi
+          python -m oneflow run --prompt "$USER_BRIEF" --seconds "$USER_SECONDS" --platform youtube --platform douyin --out oneflow-preview
+      - name: Upload structured task and storyboard, never model secrets or media
+        uses: actions/upload-artifact@v4
+        with:
+          name: oneflow-storyboard-plan
+          path: oneflow-preview/
+          retention-days: 7

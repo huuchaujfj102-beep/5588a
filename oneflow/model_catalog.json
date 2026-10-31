@@ -1,0 +1,159 @@
+{
+  "schema": "oneflow-model-catalog.v1",
+  "notice": "These are upstream-reported capabilities and licenses, not locally benchmarked or deployed models. Verify the exact checkpoint license before commercial use. No endpoints/weights are installed by catalog registration.",
+  "models": [
+    {
+      "id": "qwen3-8b",
+      "stages": [
+        "story"
+      ],
+      "upstream": "https://github.com/QwenLM/Qwen3",
+      "license": "Apache-2.0",
+      "license_policy": "permissive",
+      "strengths": [
+        "structured screenplay",
+        "shot sequencing",
+        "film brief constraints"
+      ],
+      "limits": [
+        "text only; cannot certify visuals"
+      ]
+    },
+    {
+      "id": "qwen3-vl",
+      "stages": [
+        "reference_analysis",
+        "visual_review"
+      ],
+      "upstream": "https://github.com/QwenLM/Qwen3-VL",
+      "license": "verify exact checkpoint license",
+      "license_policy": "review",
+      "strengths": [
+        "video temporal understanding",
+        "OCR",
+        "spatial relationships"
+      ],
+      "limits": [
+        "VLM output is advisory; frame sampling and human review required"
+      ]
+    },
+    {
+      "id": "flux2-klein-4b",
+      "stages": [
+        "image"
+      ],
+      "upstream": "https://github.com/black-forest-labs/flux2",
+      "license": "Apache-2.0 (4B only)",
+      "license_policy": "permissive",
+      "strengths": [
+        "fast image generation",
+        "single/multiple references",
+        "image editing"
+      ],
+      "limits": [
+        "9B, dev have different license; do not substitute"
+      ]
+    },
+    {
+      "id": "qwen-image-2.1",
+      "stages": [
+        "image"
+      ],
+      "upstream": "https://github.com/QwenLM/Qwen-Image-2.1",
+      "license": "Qwen Research License (commercial use requires separate rights)",
+      "license_policy": "noncommercial",
+      "strengths": [
+        "up to 10 reference images",
+        "identity-aware selective edits",
+        "native RGBA layers"
+      ],
+      "limits": [
+        "published research license is not a default commercial grant",
+        "model not deployed in this workspace"
+      ]
+    },
+    {
+      "id": "wan2.2-ti2v-5b",
+      "stages": [
+        "video"
+      ],
+      "upstream": "https://github.com/Wan-Video/Wan2.2",
+      "license": "check exact model card",
+      "license_policy": "review",
+      "strengths": [
+        "text/image-conditioned 720p 24fps video",
+        "efficient single-GPU option"
+      ],
+      "limits": [
+        "video does not natively guarantee sound; check duration and VRAM"
+      ]
+    },
+    {
+      "id": "wan2.2-i2v-a14b",
+      "stages": [
+        "video"
+      ],
+      "upstream": "https://github.com/Wan-Video/Wan2.2",
+      "license": "check exact model card",
+      "license_policy": "review",
+      "strengths": [
+        "higher complexity image-to-video",
+        "MoE video diffusion"
+      ],
+      "limits": [
+        "requires substantial GPU memory"
+      ]
+    },
+    {
+      "id": "ltx2",
+      "stages": [
+        "video"
+      ],
+      "upstream": "https://github.com/Lightricks/LTX-2",
+      "license": "LTX-2 Community License; see applicable checkpoint version",
+      "license_policy": "review",
+      "strengths": [
+        "joint synchronized audio/video",
+        "multiple keyframes",
+        "camera and LoRA control"
+      ],
+      "limits": [
+        "separate license conditions; verify checkpoint and output compliance",
+        "quality depends on hardware/pipeline"
+      ]
+    },
+    {
+      "id": "mmaudio",
+      "stages": [
+        "audio"
+      ],
+      "upstream": "https://github.com/hkchengrex/MMAudio",
+      "license": "MIT code; CC-BY-NC 4.0 checkpoint weights",
+      "license_policy": "noncommercial",
+      "strengths": [
+        "video-conditioned synchronized Foley",
+        "video-to-audio"
+      ],
+      "limits": [
+        "published weights cannot be defaulted into commercial pipeline"
+      ]
+    },
+    {
+      "id": "custom-approved",
+      "stages": [
+        "image",
+        "video",
+        "audio"
+      ],
+      "upstream": "custom private model deployment",
+      "license": "user-supplied documented license",
+      "license_policy": "review",
+      "strengths": [
+        "any user-validated ComfyUI API graph"
+      ],
+      "limits": [
+        "requires independent test, source and explicit license attestation"
+      ]
+    }
+  ]
+}
