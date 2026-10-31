@@ -37,7 +37,7 @@ jobs:
           python-version: '3.11'
       - name: Unit tests, no model/API calls
         run: python -m unittest discover -s tests -v
-      - name: One-sentence launch: offline plan stage
+      - name: 'One-sentence launch: offline plan stage'
         env:
           USER_BRIEF: ${{ github.event.inputs.prompt }}
           USER_SECONDS: ${{ github.event.inputs.seconds }}
