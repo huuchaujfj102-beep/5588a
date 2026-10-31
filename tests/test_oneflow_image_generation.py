@@ -74,8 +74,8 @@ class ImageFlowTests(unittest.TestCase):
                 def text_to_image(self, **kwargs):
                     return Image.new("RGB", (768, 1344), (12, 50, 100))
 
-            with patch.dict("os.environ", {"HF_TOKEN": ""}), \\
-                 patch("huggingface_hub.get_token", return_value="oauth-token-from-browser"):
+            with (patch.dict("os.environ", {"HF_TOKEN": ""}),
+                  patch("huggingface_hub.get_token", return_value="oauth-token-from-browser")):
                 report = execute(args, client_cls=FakeHF)
             self.assertEqual(report["status"], "IMAGE_GENERATED_REVIEW_REQUIRED")
             self.assertTrue((Path(tmp) / "output" / "S01.png").exists())
@@ -84,8 +84,8 @@ class ImageFlowTests(unittest.TestCase):
         from unittest.mock import patch
         with tempfile.TemporaryDirectory() as tmp:
             args = makeargs(tmp, approve_one_image=True)
-            with patch.dict("os.environ", {"HF_TOKEN": ""}), \\
-                 patch("huggingface_hub.get_token", return_value=None):
+            with (patch.dict("os.environ", {"HF_TOKEN": ""}),
+                  patch("huggingface_hub.get_token", return_value=None)):
                 with self.assertRaisesRegex(ImageFlowError, "MISSING_HF_AUTH"):
                     execute(args)
 
