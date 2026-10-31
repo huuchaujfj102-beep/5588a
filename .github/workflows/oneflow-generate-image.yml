@@ -70,7 +70,7 @@ jobs:
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
       ONE_SENTENCE: ${{ inputs.one_sentence }}
       AUTH_MODE: ${{ inputs.authorization_mode }}
-      HF_HOME: ${{ runner.temp }}/oneflow-hf-browser-auth
+      HF_HOME: /tmp/oneflow-hf-browser-auth-${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -137,7 +137,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          if [ -n "$HF_HOME" ] && [ "$HF_HOME" = "$RUNNER_TEMP/oneflow-hf-browser-auth" ]; then
+          if [ -n "$HF_HOME" ] && [ "$HF_HOME" = "/tmp/oneflow-hf-browser-auth-${{ github.run_id }}" ]; then
             rm -rf -- "$HF_HOME"
           fi
           echo "Temporary Hugging Face browser credentials cleared from ephemeral job workspace."
