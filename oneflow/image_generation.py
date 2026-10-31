@@ -176,8 +176,10 @@ def execute(args, token=None, client_cls=None):
     secret = token if token is not None else os.environ.get("HF_TOKEN", "")
     if not secret:
         raise ImageFlowError("MISSING_HF_TOKEN: configure GitHub Actions secret HF_TOKEN")
-    root.mkdir(parents=True, exist_ok=True)
     target = root / (args.shot + ".png")
+    if target.exists():
+        raise ImageFlowError("Output already exists; choose an empty task folder to avoid double billing")
+    root.mkdir(parents=True, exist_ok=True)
     report = image_generation(plan, secret, target, client_cls)
     (root / (args.shot + ".json")).write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
