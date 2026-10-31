@@ -1,0 +1,69 @@
+name: OneFlow OVHcloud Free SDXL - 1 image smoke test
+on:
+  push:
+    branches:
+      - feature/oneflow-fal-low-cost
+    paths:
+      - '.github/workflows/oneflow-ovh-free-smoke.yml'
+  workflow_dispatch:
+    inputs:
+      one_sentence:
+        description: 'English one-line image brief. Leave blank for black hypercar sample.'
+        required: false
+        type: string
+        default: ''
+      approve_free_test:
+        description: 'I authorize ONE anonymous generation from the OVHcloud Free SDXL catalog'
+        required: true
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: oneflow-ovh-free-smoke-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  anonymous-free-image:
+    # Only the intentionally tagged bootstrap push runs once. Future runs need
+    # manual explicit approval; normal commits never start inference.
+    if: >-
+      (github.event_name == 'push' && contains(github.event.head_commit.message, '[onefree-test]'))
+      || (github.event_name == 'workflow_dispatch' && inputs.approve_free_test == true)
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      ONE_SENTENCE: ${{ inputs.one_sentence }}
+    steps:
+      - name: Checkout without persisted token
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install only PNG validator and run offline regression tests
+        run: |
+          python -m pip install 'Pillow>=11,<13'
+          python -m unittest discover -s tests -p 'test_oneflow_ovh_free.py' -v
+      - name: One actual anonymous request to OVHcloud Free SDXL
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$ONE_SENTENCE" ]; then
+            ONE_SENTENCE='Original futuristic black carbon-fiber hypercar on a rain-soaked racetrack at night. Realistic chassis-mounted rear propulsion nozzle behind tires, blue flame, low camera angle, professional photorealistic cinema lighting, single car, no logos, no letters.'
+          fi
+          python -m oneflow.ovh_free_image \
+            --brief "$ONE_SENTENCE" --shot S01 \
+            --output private-inputs/generated-images-ovh \
+            --approve-free-test
+          test -s private-inputs/generated-images-ovh/S01.png
+          test -s private-inputs/generated-images-ovh/S01.json
+      - name: Upload verified PNG and provider audit metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: ovh-free-sdxl-S01-${{ github.run_id }}
+          path: private-inputs/generated-images-ovh/
+          if-no-files-found: error
+          retention-days: 7
