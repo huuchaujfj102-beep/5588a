@@ -63,10 +63,12 @@ def infer_once(prompt, account_id, token, *, steps=4, seed=128839, opener=None):
     if not isinstance(seed, int) or not 0 <= seed <= 2147483647:
         raise ImageFlowError("Invalid random seed")
 
-    # No AI Gateway, no paid fallback, no retries. Model API accepts these 3 fields.
+    # Use only the documented prompt/steps request fields for this model.
+    # Seed stays in local shot metadata but is not sent to the provider.
+    # No AI Gateway, retries or paid fallback.
     request = Request(
         f"{ENDPOINT_ROOT}/{account_id}/ai/run/{MODEL}",
-        data=json.dumps({"prompt": prompt, "steps": steps, "seed": seed}, ensure_ascii=False).encode("utf-8"),
+        data=json.dumps({"prompt": prompt, "steps": steps}, ensure_ascii=False).encode("utf-8"),
         method="POST",
         headers={
             "Authorization": "Bearer " + token,
@@ -81,11 +83,28 @@ def infer_once(prompt, account_id, token, *, steps=4, seed=128839, opener=None):
                 raise ImageFlowError("Cloudflare API response is too large")
             return parse_image_response(raw)
     except HTTPError as exc:
+        # Print only sanitized integer Cloudflare error codes, never upstream messages
+        # or request/authorization headers. One failed inference is never retried.
+        safe_codes = []
+        try:
+            error_payload = json.loads(exc.read(4096))
+            if isinstance(error_payload, dict):
+                error_list = error_payload.get("errors", [])
+                if isinstance(error_list, list):
+                    safe_codes = [
+                        str(item["code"]) for item in error_list[:3]
+                        if isinstance(item, dict)
+                        and type(item.get("code")) is int
+                        and 0 <= item["code"] <= 999999
+                    ]
+        except (ValueError, UnicodeDecodeError, OSError):
+            pass
+        code_text = ",".join(safe_codes) if safe_codes else "unavailable"
         if exc.code == 429:
-            raise ImageFlowError("CLOUDFLARE_QUOTA_OR_CAPACITY_429: no retry or upgrade") from None
+            raise ImageFlowError(f"CLOUDFLARE_QUOTA_OR_CAPACITY_429 CF_CODES={code_text}: no retry") from None
         if exc.code in (401, 403):
-            raise ImageFlowError(f"CLOUDFLARE_AUTH_OR_PLAN_HTTP_{exc.code}") from None
-        raise ImageFlowError(f"CLOUDFLARE_HTTP_{exc.code}") from None
+            raise ImageFlowError(f"CLOUDFLARE_AUTH_OR_PLAN_HTTP_{exc.code} CF_CODES={code_text}") from None
+        raise ImageFlowError(f"CLOUDFLARE_HTTP_{exc.code} CF_CODES={code_text}") from None
     except URLError:
         raise ImageFlowError("CLOUDFLARE_NETWORK_ERROR") from None
 
@@ -100,6 +119,8 @@ def execute(args, *, account_id=None, token=None, opener=None):
         "requested_height": None,
         "resolution_note": "Cloudflare model chooses native output dimensions; inspect actual_width/height",
         "steps": args.steps,
+        "seed_transmitted": False,
+        "note": "Cloudflare FLUX.1 Schnell request sends documented prompt/steps only",
         "free_plan_attestation_required": True,
         "api_calls": 0,
     })
