@@ -477,6 +477,38 @@ def metrics(job, cfg):
     return manifest["metrics"]
 
 
+
+def release(job, reviewer, cfg, visual_attested=False, rights_attested=False,
+            consent=False):
+    """Human resumes a one-sentence job: approve, then each authorized platform, then metrics."""
+    if not consent:
+        raise FlowError("Explicit multi-platform release consent required")
+    root = job_root(job)
+    manifest = load_json(root / "manifest.json")
+    if not manifest["platforms"]:
+        raise FlowError("No original target platforms selected")
+    if manifest["status"] == "AWAITING_HUMAN_REVIEW":
+        approve(root, reviewer, visual_attested, rights_attested)
+    else:
+        manifest = load_json(root / "manifest.json")
+        if not manifest.get("approval") or not manifest["approval"].get("reviewer"):
+            raise FlowError("No valid human approval")
+        if manifest["approval"]["reviewer"] != reviewer:
+            raise FlowError("Use the original reviewer or create a new approval version")
+    outcomes = {}
+    for platform in load_json(root / "manifest.json")["platforms"]:
+        try:
+            outcomes[platform] = publish(root, platform, cfg, consent=True)
+        except (FlowError, ProviderError, OSError, ValueError) as exc:
+            outcomes[platform] = {"status": "error", "error": str(exc)}
+    try:
+        measurements = metrics(root, cfg)
+    except (FlowError, ProviderError, OSError, ValueError) as exc:
+        measurements = {"status": "unavailable", "reason": str(exc)}
+    return {"job": str(root), "publication": outcomes,
+            "metrics": measurements, "status": load_json(root / "manifest.json")["status"]}
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description="One sentence -> production -> audit -> human approval -> publish -> metrics")
     sub = p.add_subparsers(dest="action", required=True)
@@ -488,17 +520,19 @@ def main(argv=None):
     start.add_argument("--out", default="private-inputs/oneflow-jobs")
     start.add_argument("--config")
     start.add_argument("--live", action="store_true", help="Explicitly use paid/compute-intensive live model endpoints")
-    for cmd in ("produce", "approve", "publish", "metrics", "status"):
+    for cmd in ("produce", "approve", "publish", "metrics", "status", "release"):
         child = sub.add_parser(cmd)
         child.add_argument("--job", required=True)
-        if cmd in ("produce", "publish", "metrics"):
+        if cmd in ("produce", "publish", "metrics", "release"):
             child.add_argument("--config")
-        if cmd == "approve":
+        if cmd in ("approve", "release"):
             child.add_argument("--reviewer", required=True)
             child.add_argument("--visual-attested", action="store_true")
             child.add_argument("--rights-attested", action="store_true")
         if cmd == "publish":
             child.add_argument("--platform", required=True, choices=PLATFORMS)
+            child.add_argument("--consent", action="store_true")
+        if cmd == "release":
             child.add_argument("--consent", action="store_true")
     args = p.parse_args(argv)
     try:
@@ -519,6 +553,12 @@ def main(argv=None):
                              ensure_ascii=False))
         elif args.action == "metrics":
             print(json.dumps(metrics(args.job, config(args.config)), ensure_ascii=False))
+        elif args.action == "release":
+            result = release(args.job, args.reviewer, config(args.config),
+                             args.visual_attested, args.rights_attested, args.consent)
+            print(json.dumps(result, ensure_ascii=False))
+            if any(v["status"] == "error" for v in result["publication"].values()):
+                return 1
         else:
             root = job_root(args.job)
             data = load_json(root / "manifest.json")
