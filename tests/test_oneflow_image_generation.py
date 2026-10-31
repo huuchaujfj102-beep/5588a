@@ -61,6 +61,34 @@ class ImageFlowTests(unittest.TestCase):
         self.assertNotIn("石砾: ", brief)
         self.assertNotIn("星砂: ", brief)
 
+    def test_browser_oauth_token_is_used_without_hf_token_secret(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            args = makeargs(tmp, approve_one_image=True)
+            from PIL import Image
+
+            class FakeHF:
+                def __init__(self, provider, api_key):
+                    if api_key != "oauth-token-from-browser":
+                        raise AssertionError("Device OAuth token not selected")
+                def text_to_image(self, **kwargs):
+                    return Image.new("RGB", (768, 1344), (12, 50, 100))
+
+            with patch.dict("os.environ", {"HF_TOKEN": ""}), \\
+                 patch("huggingface_hub.get_token", return_value="oauth-token-from-browser"):
+                report = execute(args, client_cls=FakeHF)
+            self.assertEqual(report["status"], "IMAGE_GENERATED_REVIEW_REQUIRED")
+            self.assertTrue((Path(tmp) / "output" / "S01.png").exists())
+
+    def test_browser_oauth_missing_and_no_secret_is_blocked(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            args = makeargs(tmp, approve_one_image=True)
+            with patch.dict("os.environ", {"HF_TOKEN": ""}), \\
+                 patch("huggingface_hub.get_token", return_value=None):
+                with self.assertRaisesRegex(ImageFlowError, "MISSING_HF_AUTH"):
+                    execute(args)
+
     def test_existing_file_fails_before_network(self):
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "output"
