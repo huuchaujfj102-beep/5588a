@@ -93,7 +93,7 @@ jobs:
             echo "Invalid authorization mode" >&2
             exit 2
           fi
-      - name: Browser authorization: open the official URL and approve the code
+      - name: 'Browser authorization: open the official URL and approve the code'
         if: inputs.authorization_mode == 'browser'
         env:
           HF_TOKEN: ''
