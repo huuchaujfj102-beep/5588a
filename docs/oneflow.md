@@ -168,3 +168,21 @@ python -m oneflow metrics --job ... --config private-inputs/oneflow-config.json
 ### 真实验收优先级
 
 从赛车样片的 **5 秒单镜** 开始，再用 3 镜连续动作检验结构与物理（先升空→后喷尾焰→再关闭轮部喷口），最后完成 35 秒音效+审核+多平台授权。每阶段记载 **是否实测成功、出片时间、GPU 用时、素材问题、账单、失败代码、返修次数**；无测试数据不能宣称某模型一定最优。
+
+
+## V2.1 一次审核放行：自动依次发布、尝试读取数据
+
+有真实 GPU 模型和可信平台网关时，一句话 `run --live` 能完成直到 `AWAITING_HUMAN_REVIEW` 的生成、剪辑和技术审核。**不要把审核中作品自动对外发布。** 审看成片并确认素材许可后，使用：
+
+```bash
+python -m oneflow release \
+  --job private-inputs/oneflow-jobs/film-xxxxxxxxxxxx \
+  --reviewer "制片人" \
+  --visual-attested --rights-attested \
+  --config private-inputs/oneflow-config.json \
+  --consent
+```
+
+该命令对选定的每个平台逐项调用 `POST /publish`，记录真实 ID 或发布失败，再通过已授权的 `GET /metrics` 接口抓取有权限获取的数据。任何平台报错只记录该平台失败，不会把排队中说成已上线；命令若有平台失败返回非零码，允许确认状态后按相同 `idempotency_key` 重试，不能盲目重复发文。
+
+`oneflow/platforms.py` 按平台生成 **内部编辑用** 标题和描述长度建议，标记目标画幅，传给发布网关核验与转码。当前**未提供**平台官方 API 客户端、OAuth、自动封面剪裁、上传分块/轮询、正式规格实时校验或质量数据回归训练，因此这些环节必须在独立的受控发布适配器补齐。安全的默认行为是缺授权则阻断，不假装能发布。
