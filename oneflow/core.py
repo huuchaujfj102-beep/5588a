@@ -283,6 +283,21 @@ def audit(root, manifest, cfg, media):
                                "duration_and_audio_presence"],
           "issues": issues, "manual_review_required": MANUAL_GATES,
           "notice": "Technical checks DO NOT verify physical logic, image consistency, actual sound fidelity or licenses."}
+    if cfg.get("visual_review"):
+        from .visual_review import inspect, VisualReviewError
+        try:
+            if not cfg["visual_review"].get("license_checked"):
+                raise VisualReviewError("Exact VLM checkpoint license not approved")
+            qc["visual_review"] = inspect(root, manifest, cfg["visual_review"])
+        except (VisualReviewError, OSError, ValueError) as exc:
+            qc["visual_review"] = {"status": "UNAVAILABLE", "reason": str(exc),
+                                    "manual_review_required": True}
+            if cfg["visual_review"].get("required", False):
+                qc["status"] = "FAIL"
+                qc["issues"].append({"module": "visual_review",
+                                     "severity": "blocker",
+                                     "code": "REQUIRED_VLM_UNAVAILABLE",
+                                     "message": "Required visual review failed"})
     save_json(root / "qc.json", qc)
     return qc
 
