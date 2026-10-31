@@ -3,12 +3,12 @@ on:
   push:
     paths:
       - 'oneflow/**'
-      - 'tests/test_oneflow.py'
+      - 'tests/test_oneflow*.py'
       - '.github/workflows/oneflow.yml'
   pull_request:
     paths:
       - 'oneflow/**'
-      - 'tests/test_oneflow.py'
+      - 'tests/test_oneflow*.py'
       - '.github/workflows/oneflow.yml'
   workflow_dispatch:
     inputs:
