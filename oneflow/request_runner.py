@@ -70,8 +70,7 @@ def package(request, out_root, cfg=None):
         text = film_prompt(request["brief"], camera_details, previous,
                            i + 1, len(request["shots"]))
         # Keep character identity lock in every prompt and avoid style drift.
-        text += "\n
-全片人物和服装唯一设定（不得改变）：\n" + (
+        text += "\n\n全片人物和服装唯一设定（不得改变）：\n" + (
             "; ".join(k + ": " + v for k, v in characters.items()))
         draft["visual_prompt"] = text
         draft["narrative_phase"] = shot["visual"]
