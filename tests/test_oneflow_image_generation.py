@@ -40,7 +40,7 @@ class ImageFlowTests(unittest.TestCase):
 
     def test_missing_secret_fails_not_false_positive(self):
         with tempfile.TemporaryDirectory() as tmp:
-            with self.assertRaisesRegex(ImageFlowError, "MISSING_HF_TOKEN"):
+            with self.assertRaisesRegex(ImageFlowError, "MISSING_HF_AUTH"):
                 execute(makeargs(tmp, approve_one_image=True), token="")
             self.assertFalse((Path(tmp) / "output").exists())
 
@@ -60,6 +60,38 @@ class ImageFlowTests(unittest.TestCase):
         self.assertIn("7. NEGATIVE:", brief)
         self.assertNotIn("石砾: ", brief)
         self.assertNotIn("星砂: ", brief)
+
+    @unittest.skipUnless(importlib.util.find_spec("PIL") and importlib.util.find_spec("huggingface_hub"),
+                         "Pillow and huggingface_hub required for OAuth provider unit test")
+    def test_browser_oauth_token_is_used_without_hf_token_secret(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            args = makeargs(tmp, approve_one_image=True)
+            from PIL import Image
+
+            class FakeHF:
+                def __init__(self, provider, api_key):
+                    if api_key != "oauth-token-from-browser":
+                        raise AssertionError("Device OAuth token not selected")
+                def text_to_image(self, **kwargs):
+                    return Image.new("RGB", (768, 1344), (12, 50, 100))
+
+            with (patch.dict("os.environ", {"HF_TOKEN": ""}),
+                  patch("huggingface_hub.get_token", return_value="oauth-token-from-browser")):
+                report = execute(args, client_cls=FakeHF)
+            self.assertEqual(report["status"], "IMAGE_GENERATED_REVIEW_REQUIRED")
+            self.assertTrue((Path(tmp) / "output" / "S01.png").exists())
+
+    @unittest.skipUnless(importlib.util.find_spec("huggingface_hub"),
+                         "huggingface_hub required for OAuth provider unit test")
+    def test_browser_oauth_missing_and_no_secret_is_blocked(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            args = makeargs(tmp, approve_one_image=True)
+            with (patch.dict("os.environ", {"HF_TOKEN": ""}),
+                  patch("huggingface_hub.get_token", return_value=None)):
+                with self.assertRaisesRegex(ImageFlowError, "MISSING_HF_AUTH"):
+                    execute(args)
 
     def test_existing_file_fails_before_network(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -174,8 +174,18 @@ def execute(args, token=None, client_cls=None):
         raise ImageFlowError("Billable inference must be explicitly authorized (--approve-one-image)")
     # Only create output directory after credentials/preflight checks.
     secret = token if token is not None else os.environ.get("HF_TOKEN", "")
+    # Hugging Face's official browser/device OAuth stores a short-lived token
+    # in HF_HOME on this ephemeral Actions runner (not in GitHub Secrets).
+    if not secret and token is None:
+        try:
+            from huggingface_hub import get_token
+            secret = get_token() or ""
+        except (ImportError, OSError):
+            secret = ""
     if not secret:
-        raise ImageFlowError("MISSING_HF_TOKEN: configure GitHub Actions secret HF_TOKEN")
+        raise ImageFlowError(
+            "MISSING_HF_AUTH: configure HF_TOKEN or approve GitHub's browser/device OAuth flow"
+        )
     target = root / (args.shot + ".png")
     if target.exists():
         raise ImageFlowError("Output already exists; choose an empty task folder to avoid double billing")
