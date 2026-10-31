@@ -20,6 +20,7 @@ from urllib.parse import urlencode
 from .providers import ProviderError, exchange, generate, json_call, ollama_shots, endpoint
 from .router import RoutingError, route, preflight
 from .director import film_prompt, phase_list
+from .platforms import make_package
 
 
 class FlowError(RuntimeError):
@@ -429,9 +430,8 @@ def publish(job, platform, cfg, consent=False):
     if len(video) > 500_000_000:
         raise FlowError("Video too large for basic publisher bridge; use chunked uploader")
     boundary = "oneflow" + uuid.uuid4().hex
-    meta = {"job_id": manifest["id"], "platform": platform,
-            "title": manifest["brief"][:100],
-            "description": manifest["brief"][:2000],
+    meta = {**make_package(manifest, platform),
+            "job_id": manifest["id"],
             "sha256": manifest["approval"]["video_sha256"],
             "idempotency_key": manifest["id"] + "-" + platform}
     prefix = ('--' + boundary + '\r\nContent-Disposition: form-data; name="metadata"\r\n' +
