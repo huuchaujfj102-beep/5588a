@@ -1,11 +1,12 @@
 """Offline tests for fal.ai adapter: no real provider or billing calls."""
 import argparse
+import importlib.util
 from io import BytesIO
 from pathlib import Path
 import tempfile
 import unittest
 
-from PIL import Image
+PIL_INSTALLED = importlib.util.find_spec('PIL') is not None
 from oneflow.fal_image import (
     FAL_MODEL, download_fal_image, estimate_usd, execute,
 )
@@ -25,6 +26,7 @@ def makeargs(tmp, **kw):
 
 
 def sample_png():
+    from PIL import Image
     out = BytesIO()
     Image.new("RGB", (768, 1344), (12, 43, 88)).save(out, "PNG")
     return out.getvalue()
@@ -54,6 +56,7 @@ class FalImageTests(unittest.TestCase):
             with self.assertRaisesRegex(ImageFlowError, "MISSING_FAL_KEY"):
                 execute(makeargs(tmp, approve_one_image=True), token="")
 
+    @unittest.skipUnless(PIL_INSTALLED, 'Pillow not installed in audit CI')
     def test_mock_image_creates_real_png_and_report(self):
         calls = []
         def fake_submit(model, arguments):
@@ -70,6 +73,7 @@ class FalImageTests(unittest.TestCase):
             self.assertEqual(result["actual_width"], 768)
             self.assertEqual(len(result["sha256"]), 64)
             self.assertTrue(Path(tmp, "generated-images", "S01.json").exists())
+            from PIL import Image
             with Image.open(Path(tmp, "generated-images", "S01.png")) as img:
                 self.assertEqual(img.size, (768, 1344))
                 self.assertEqual(img.format, "PNG")
@@ -101,6 +105,7 @@ class FalImageTests(unittest.TestCase):
         with self.assertRaisesRegex(ImageFlowError, "Unexpected image output host"):
             download_fal_image("https://evil.example/secret")
 
+    @unittest.skipUnless(PIL_INSTALLED, 'Pillow not installed in audit CI')
     def test_image_bytes_must_decode(self):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaisesRegex(ImageFlowError, "cannot be decoded"):
