@@ -30,14 +30,15 @@ def build_command(wan_root, model_dir, image, prompt, output, seconds, seed):
         raise SmokeError("Need a nonempty prompt up to 6000 characters")
     if not isinstance(seed, int) or seed < 0:
         raise SmokeError("Seed must be a nonnegative integer")
-    image = Path(image).expanduser().resolve()
+    image = Path(image).expanduser().resolve() if image else None
     output = Path(output).expanduser().resolve()
     wan_root = Path(wan_root).expanduser().resolve()
     model_dir = Path(model_dir).expanduser().resolve()
-    if image.suffix.lower() not in (".jpg", ".jpeg", ".png") or not image.is_file():
-        raise SmokeError("Provide an existing approved PNG/JPEG reference frame")
-    if image.stat().st_size > 40_000_000:
-        raise SmokeError("Reference image exceeds 40MB")
+    if image is not None:
+        if image.suffix.lower() not in (".jpg", ".jpeg", ".png") or not image.is_file():
+            raise SmokeError("Provide an existing approved PNG/JPEG reference frame")
+        if image.stat().st_size > 40_000_000:
+            raise SmokeError("Reference image exceeds 40MB")
     if output.suffix.lower() != ".mp4":
         raise SmokeError("Output must be MP4")
     if not (wan_root / "generate.py").is_file():
@@ -47,13 +48,16 @@ def build_command(wan_root, model_dir, image, prompt, output, seconds, seed):
     if output.exists():
         raise SmokeError("Output already exists; do not silently overwrite an earlier result")
     frame_num = seconds * FPS + 1  # 4n+1
-    return [
+    command = [
       sys.executable, str(wan_root / "generate.py"),
       "--task", "ti2v-5B", "--size", SIZE, "--frame_num", str(frame_num),
       "--ckpt_dir", str(model_dir), "--offload_model", "True",
-      "--convert_model_dtype", "--t5_cpu", "--image", str(image),
+      "--convert_model_dtype", "--t5_cpu",
       "--prompt", prompt, "--base_seed", str(seed), "--save_file", str(output)
     ]
+    if image is not None:
+        command += ["--image", str(image)]
+    return command
 
 
 def inspect(path, seconds):
@@ -87,11 +91,14 @@ def run(args):
                             output, args.seconds, args.seed)
     manifest = {"status": "DRY_RUN", "wan_task": "ti2v-5B",
                 "model": "Wan-AI/Wan2.2-TI2V-5B", "seconds": args.seconds,
-                "seed": args.seed, "input_sha256": sha256(args.image),
+                "seed": args.seed,
+                "input_sha256": sha256(args.image) if args.image else None,
                 "command": command[:]}
     if args.dry_run:
         return manifest
-    if not args.approved_image:
+    if not args.confirm_gpu_spend:
+        raise SmokeError("GPU computation must be explicitly confirmed (--confirm-gpu-spend)")
+    if args.image and not args.approved_image:
         raise SmokeError("Human approval of the input image required (--approved-image)")
     gpu = subprocess.run(["nvidia-smi", "--query-gpu=memory.total",
                           "--format=csv,noheader,nounits"], check=True,
@@ -119,12 +126,14 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--wan-root", default="/workspace/Wan2.2")
     parser.add_argument("--model-dir", default="/workspace/models/Wan2.2-TI2V-5B")
-    parser.add_argument("--image", required=True)
+    parser.add_argument("--image", help="Optional first-frame PNG/JPEG for I2V; omit for T2V")
     parser.add_argument("--prompt-file", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--seconds", type=int, default=5, choices=[3, 4, 5])
     parser.add_argument("--seed", type=int, default=12345)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--confirm-gpu-spend", action="store_true",
+                        help="Explicitly enable billable GPU inference")
     parser.add_argument("--approved-image", action="store_true",
                         help="Confirm real human preapproval of the reference frame")
     args = parser.parse_args(argv)
