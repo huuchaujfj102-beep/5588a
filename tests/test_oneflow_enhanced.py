@@ -7,7 +7,8 @@ from unittest.mock import patch
 from oneflow.router import RoutingError, catalog, route, preflight
 from oneflow.director import film_prompt
 from oneflow.visual_review import validate_review, VisualReviewError
-from oneflow.core import describe, normalize
+from oneflow.core import describe, normalize, create, FlowError, release
+from oneflow.platforms import make_package
 
 
 class EnhancedFlowTests(unittest.TestCase):
@@ -90,6 +91,24 @@ class EnhancedFlowTests(unittest.TestCase):
         with self.assertRaises(VisualReviewError):
             validate_review({"findings": [{"severity": "PASS", "description": "all good"}],
                              "uncertainties": []})
+
+    def test_platform_metadata_profiles_are_distinct(self):
+        manifest = {"brief": "超跑启动、加速、喷气，3D写实电影短片", "ratio": "9:16"}
+        xhs = make_package(manifest, "xiaohongshu")
+        youtube = make_package(manifest, "youtube")
+        self.assertEqual(xhs["suggested_target_ratio"], "9:16")
+        self.assertTrue(xhs["editorial_profile_only"])
+        self.assertEqual(youtube["platform"], "youtube")
+        self.assertIn("Official API", youtube["required_review"][0])
+
+    def test_multi_platform_release_requires_new_explicit_consent(self):
+        with tempfile.TemporaryDirectory() as folder:
+            job = create("赛道超跑启动、加速、腾空、蓝色尾焰", 10, "9:16",
+                         ["youtube", "douyin"], folder, {"story": {"kind": "heuristic"}, "max_shots": 12, "commercial": True})
+            with self.assertRaisesRegex(FlowError, "consent"):
+                release(job, "reviewer", {}, True, True, False)
+            with self.assertRaisesRegex(FlowError, "No valid human approval"):
+                release(job, "reviewer", {}, True, True, True)
 
     def test_normalizer_prefers_real_embedded_av_over_silent_track(self):
         with tempfile.TemporaryDirectory() as folder:
