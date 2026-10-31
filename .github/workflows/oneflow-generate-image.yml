@@ -1,0 +1,102 @@
+name: OneFlow REAL image generation (FLUX.1 via Hugging Face)
+on:
+  push:
+    paths:
+      - 'oneflow/image_generation.py'
+      - 'tests/test_oneflow_image_generation.py'
+      - '.github/workflows/oneflow-generate-image.yml'
+  pull_request:
+    paths:
+      - 'oneflow/image_generation.py'
+      - 'tests/test_oneflow_image_generation.py'
+      - '.github/workflows/oneflow-generate-image.yml'
+  workflow_dispatch:
+    inputs:
+      one_sentence:
+        description: 'Optional one-sentence image brief. Leave empty for original Snow White S01.'
+        type: string
+        required: false
+        default: ''
+      approve_paid_image:
+        description: 'I authorize exactly one hosted image inference (can consume Hugging Face credits)'
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: oneflow-real-image-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: false
+
+jobs:
+  free-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install image client and image file validators
+        run: python -m pip install 'huggingface_hub>=0.34,<2' 'Pillow>=11,<13'
+      - name: Python tests (mocked provider, no charge)
+        run: python -m unittest discover -s tests -p 'test_oneflow_image_generation.py' -v
+      - name: Real Snow White S01 keyframe prompt dry-run (no image/no cost)
+        run: |
+          python -m oneflow.image_generation \
+            --request-file oneflow/requests/snow-white-seven-dwarfs-60s.json \
+            --shot S01 --dry-run
+      - name: Confirm no image was invented
+        run: |
+          test ! -d private-inputs/generated-images
+          echo "Offline tests succeeded. Real model has not been called."
+
+  real-hf-image:
+    needs: free-preflight
+    if: github.event_name == 'workflow_dispatch' && inputs.approve_paid_image == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      ONE_SENTENCE: ${{ inputs.one_sentence }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify connection before any billable model call
+        run: |
+          if [ -z "$HF_TOKEN" ]; then
+            echo "MISSING_HF_TOKEN: Set Settings > Secrets and variables > Actions > HF_TOKEN." >&2
+            exit 2
+          fi
+      - name: Install supported image inference adapter
+        run: python -m pip install 'huggingface_hub>=0.34,<2' 'Pillow>=11,<13'
+      - name: Invoke FLUX exactly once and verify a real PNG
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$ONE_SENTENCE" ]; then
+            python -m oneflow.image_generation \
+              --request-file oneflow/requests/snow-white-seven-dwarfs-60s.json \
+              --shot S01 --output private-inputs/generated-images \
+              --approve-one-image
+          else
+            python -m oneflow.image_generation \
+              --brief "$ONE_SENTENCE" \
+              --shot S01 --output private-inputs/generated-images \
+              --approve-one-image
+          fi
+          test -s private-inputs/generated-images/S01.png
+          test -s private-inputs/generated-images/S01.json
+      - name: Deliver real image and audit metadata (never fake an image)
+        uses: actions/upload-artifact@v4
+        with:
+          name: oneflow-real-FLUX-S01-${{ github.run_id }}
+          path: private-inputs/generated-images/
+          if-no-files-found: error
+          retention-days: 7
