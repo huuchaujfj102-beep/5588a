@@ -97,7 +97,7 @@ class CloudflareFreeImageTests(unittest.TestCase):
         self.assertEqual(request.get_method(), "POST")
         self.assertEqual(request.get_header("Authorization"), "Bearer secret_test_token")
         body = json.loads(request.data)
-        self.assertEqual(set(body), {"prompt", "steps", "seed"})
+        self.assertEqual(set(body), {"prompt", "steps"})
         self.assertEqual(body["steps"], 4)
 
     def test_only_four_steps_no_auto_retry_for_quota_error(self):
@@ -112,6 +112,32 @@ class CloudflareFreeImageTests(unittest.TestCase):
         with self.assertRaisesRegex(ImageFlowError, "requires 1-4"):
             infer_once("Photorealistic racing car in cinematic light",
                        self.account, "secret", steps=8, opener=blocked)
+        self.assertEqual(len(calls), 1)
+
+    def test_http_400_reports_sanitized_cloudflare_codes_without_retry(self):
+        calls = []
+        def invalid_request(req, timeout):
+            calls.append(1)
+            body = json.dumps({
+                "success": False,
+                "errors": [{"code": 5007, "message": "sensitive provider message"}]
+            }).encode()
+            raise HTTPError(req.full_url, 400, "Bad Request", {}, BytesIO(body))
+        with self.assertRaisesRegex(ImageFlowError, "CLOUDFLARE_HTTP_400 CF_CODES=5007") as ctx:
+            infer_once("Photorealistic black supercar on wet track",
+                       self.account, "test_token", opener=invalid_request)
+        self.assertNotIn("sensitive provider message", str(ctx.exception))
+        self.assertNotIn("test_token", str(ctx.exception))
+        self.assertEqual(len(calls), 1)
+
+    def test_unparseable_http_400_body_does_not_leak_or_retry(self):
+        calls = []
+        def invalid_request(req, timeout):
+            calls.append(1)
+            raise HTTPError(req.full_url, 400, "Bad Request", {}, BytesIO(b"private payload"))
+        with self.assertRaisesRegex(ImageFlowError, "CLOUDFLARE_HTTP_400 CF_CODES=unavailable"):
+            infer_once("Photorealistic black supercar on wet track",
+                       self.account, "test_token", opener=invalid_request)
         self.assertEqual(len(calls), 1)
 
     @unittest.skipUnless(HAS_PIL, "Pillow needed for image fixtures")
