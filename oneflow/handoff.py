@@ -13,8 +13,6 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
-from PIL import Image, ImageOps, UnidentifiedImageError
-
 from .director import film_prompt
 from .platforms import PROFILES, make_package
 
@@ -23,7 +21,6 @@ class HandoffError(ValueError):
     pass
 
 
-Image.MAX_IMAGE_PIXELS = 30_000_000
 MAX_BYTES = 16 * 1024 * 1024
 STATUS = "ASSETS_READY_VIDEO_NOT_GENERATED_REVIEW_REQUIRED"
 SAFE_SHOT = re.compile(r"S(?:0[1-9]|1[0-2])\Z")
@@ -67,6 +64,8 @@ def verify_source(folder):
         raise HandoffError("Source SHA256 metadata is missing")
     if digest(image_path) != checksum:
         raise HandoffError("Source PNG SHA256 does not match provider report")
+    from PIL import Image, UnidentifiedImageError
+    Image.MAX_IMAGE_PIXELS = 30_000_000
     try:
         with Image.open(image_path) as image:
             image.verify()
@@ -171,6 +170,7 @@ def assemble_package(source, out, run_id, seconds, *, brief=None, preview=False)
     target.mkdir(parents=True, exist_ok=True)
     original = target / "S01_original.png"
     shutil.copyfile(source_png, original)
+    from PIL import Image, ImageOps
     with Image.open(source_png) as im:
         fitted = ImageOps.contain(im.convert("RGB"), (1080, 1920), Image.Resampling.LANCZOS)
     canvas = Image.new("RGB", (1080, 1920), (8, 10, 13))
