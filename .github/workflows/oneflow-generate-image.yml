@@ -1,24 +1,36 @@
-name: OneFlow REAL image generation (FLUX.1 via Hugging Face)
+name: OneFlow REAL image generation (FLUX.1 via fal.ai or HF)
 on:
   push:
     paths:
       - 'oneflow/image_generation.py'
+      - 'oneflow/fal_image.py'
       - 'tests/test_oneflow_image_generation.py'
+      - 'tests/test_oneflow_fal_image.py'
       - '.github/workflows/oneflow-generate-image.yml'
   pull_request:
     paths:
       - 'oneflow/image_generation.py'
+      - 'oneflow/fal_image.py'
       - 'tests/test_oneflow_image_generation.py'
+      - 'tests/test_oneflow_fal_image.py'
       - '.github/workflows/oneflow-generate-image.yml'
   workflow_dispatch:
     inputs:
+      image_provider:
+        description: 'Image provider: fal is lower-cost; HF remains available'
+        type: choice
+        required: true
+        default: fal
+        options:
+          - fal
+          - huggingface
       one_sentence:
         description: 'Optional image brief. Leave empty for Snow White mirror scene S01.'
         type: string
         required: false
         default: ''
       approve_paid_image:
-        description: 'I authorize ONE potentially paid image inference with narrow-scoped HF_TOKEN'
+        description: 'I authorize ONE potentially paid image inference with the selected provider key'
         type: boolean
         required: true
         default: false
@@ -42,7 +54,9 @@ jobs:
       - name: Install model client for local tests
         run: python -m pip install 'huggingface_hub>=1,<2' 'Pillow>=11,<13'
       - name: Dry-run image planner tests (no paid calls)
-        run: python -m unittest discover -s tests -p 'test_oneflow_image_generation.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_oneflow_image_generation.py' -v
+          python -m unittest discover -s tests -p 'test_oneflow_fal_image.py' -v
       - name: Original Snow White prompt preflight (no model call)
         run: |
           python -m oneflow.image_generation \
@@ -58,6 +72,8 @@ jobs:
     timeout-minutes: 20
     env:
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      FAL_KEY: ${{ secrets.FAL_KEY }}
+      IMAGE_PROVIDER: ${{ inputs.image_provider }}
       ONE_SENTENCE: ${{ inputs.one_sentence }}
     steps:
       - uses: actions/checkout@v4
@@ -66,28 +82,43 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Require a fine-grained HF_TOKEN before any billable inference
+      - name: Check only the explicitly selected provider credential
         shell: bash
         run: |
           set -euo pipefail
-          if [ -z "$HF_TOKEN" ]; then
-            echo "MISSING_HF_TOKEN: create a fine-grained token with only 'Make calls to Inference Providers' permission." >&2
-            echo "Save it in GitHub repository Settings > Secrets and variables > Actions as HF_TOKEN." >&2
-            exit 2
-          fi
+          case "$IMAGE_PROVIDER" in
+            fal)
+              if [ -z "$FAL_KEY" ]; then
+                echo "MISSING_FAL_KEY: save fal.ai API key in GitHub Actions secrets as FAL_KEY." >&2
+                exit 2
+              fi
+              ;;
+            huggingface)
+              if [ -z "$HF_TOKEN" ]; then
+                echo "MISSING_HF_TOKEN: supply inference-only GitHub Actions secret HF_TOKEN." >&2
+                exit 2
+              fi
+              ;;
+            *) echo "Unsupported provider" >&2; exit 2 ;;
+          esac
       - name: Install image inference and PNG validator
-        run: python -m pip install 'huggingface_hub>=1,<2' 'Pillow>=11,<13'
+        run: python -m pip install 'huggingface_hub>=1,<2' 'fal-client>=0.13,<1' 'Pillow>=11,<13'
       - name: Invoke FLUX exactly once and verify the real PNG
         shell: bash
         run: |
           set -euo pipefail
+          case "$IMAGE_PROVIDER" in
+            fal) MODULE="oneflow.fal_image" ;;
+            huggingface) MODULE="oneflow.image_generation" ;;
+            *) echo "Unsupported provider"; exit 2 ;;
+          esac
           if [ -z "$ONE_SENTENCE" ]; then
-            python -m oneflow.image_generation \
+            python -m "$MODULE" \
               --request-file oneflow/requests/snow-white-seven-dwarfs-60s.json \
               --shot S01 --output private-inputs/generated-images \
               --approve-one-image
           else
-            python -m oneflow.image_generation \
+            python -m "$MODULE" \
               --brief "$ONE_SENTENCE" \
               --shot S01 --output private-inputs/generated-images \
               --approve-one-image
@@ -97,7 +128,7 @@ jobs:
       - name: Deliver generated image + review metadata (no automatic publication)
         uses: actions/upload-artifact@v4
         with:
-          name: oneflow-real-FLUX-S01-${{ github.run_id }}
+          name: oneflow-real-FLUX-${{ inputs.image_provider }}-S01-${{ github.run_id }}
           path: private-inputs/generated-images/
           if-no-files-found: error
           retention-days: 7
