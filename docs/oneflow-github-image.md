@@ -1,8 +1,28 @@
 # OneFlow GitHub 一句话自动生图
 
+## 新增：浏览器一键授权（推荐先试）
+
+Hugging Face 已提供官方 **Device Code OAuth** 授权流程。我们复用其官方 CLI `hf auth login --format agent`。GitHub 工作流会在同一次运行中显示授权链接和一次性验证码，由用户打开 Hugging Face 官方网页确认，完成后使用**仅存在该次临时 GitHub runner** 的 OAuth 访问令牌调用 FLUX.1-schnell 生图。无需向聊天粘贴 API Key、也无需手工创建 `HF_TOKEN`。
+
+实际操作（必须拥有 Hugging Face 账户与可用推理额度）：
+
+1. 打开 [GitHub 一句话生图入口](https://github.com/huuchaujfj102-beep/5588a/actions/workflows/oneflow-generate-image.yml)，点击 **Run workflow**。
+2. `authorization_mode` 选择 **browser**（默认）；`one_sentence` 留空即使用《白雪公主》S01；勾选 `approve_paid_image` 允许**一次**可能收费的生图请求。
+3. 点 Run workflow 后打开该次 Run 的 `real-hf-image` → **Browser authorization** 步骤实时日志，点击日志提供的 **huggingface.co 官方验证码页面**，输入显示的一次性验证码并确认权限（验证码通常15分钟内有效）。这属于 Hugging Face 官方授权页面，并非 ChatGPT 内置弹框。
+4. 返回 GitHub 看执行结果；成功时从本次 Run 下方下载 `oneflow-real-FLUX-S01-...` Artifact 中的 `S01.png` 和 `S01.json`。
+
+**重要边界：** 这个浏览器授权针对每次 GitHub workflow 的临时执行环境；新的一次运行通常仍需重新批准。我们并没有将可长期使用的用户令牌自动写入 GitHub Secrets，也不会自动为用户创建 Hugging Face 账户或付费。若批准后模型返回权限不足或提供商额度不足，工作流会失败；可使用下方长期 `HF_TOKEN` 方式作为备选，仍需实际验证提供商。OAuth 登录成功**不等于**已经获得某个模型的推理权限，也不等于生成成功。
+
+**安全规则：** 授权令牌只在临时执行器的 `HF_HOME` 中使用，清理步骤会删除临时认证文件；不能把令牌写进日志、GitHub 源码或视频发布草稿。GitHub Actions 运行日志中公开显示的是**一次性设备验证码**，请不要转发它或授权陌生的请求。生成图片的 GitHub Artifact 也不适合储存秘密资料。
+
+如果你希望以后 GitHub 点运行后无需重复授权，可以采用下方仅设置一次的 `HF_TOKEN` 私密密钥方案。这个长期密钥必须由用户在 GitHub 官方 Secrets 页面手工保存，无法仅靠当前连接自动获取或代存。
+
+---
+
+
 **状态：GitHub 端的真实模型调用程序、付费授权门禁与 PNG 文件审核已通过离线 CI；没有授权令牌时不会调用 Hugging Face，更不把模拟 PNG 冒充用户作品。**
 
-## 一次性连接：HF_TOKEN
+## 可选：设置一次长期 HF_TOKEN（以后无需每次浏览器授权）
 
 1. 登录 https://huggingface.co/settings/tokens ，创建细粒度 Access Token，授予 Inference Providers 权限。若模型提出条款或访问确认，在官方 Hugging Face 页面完成。
 2. 打开 https://github.com/huuchaujfj102-beep/5588a/settings/secrets/actions ，点击 **New repository secret**。
@@ -15,6 +35,7 @@
 打开 https://github.com/huuchaujfj102-beep/5588a/actions/workflows/oneflow-generate-image.yml ，点击 **Run workflow**：
 
 - **one_sentence**：留空则自动生成已入库的《白雪公主》S01 王后与魔镜；也可输入原创一句话。
+- **authorization_mode**：使用长期密钥时选择 `secret`；需要浏览器授权时选择 `browser`（默认）。
 - **approve_paid_image**：勾选授权进行且仅进行**一次** Hugging Face 云端生图调用，否则只做离线测试。
 - 点击 **Run workflow**。第一阶段是无模型调用的预检，第二阶段检测 HF_TOKEN，且在用户勾选授权时才真实调用 FLUX.1 Schnell。
 
