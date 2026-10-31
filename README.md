@@ -40,3 +40,8 @@ push / PR 触发 GitHub Actions 的单元测试与示例审核，审核 JSON 保
 平台发布必须另外完成对应平台的 OAuth/官方 API 授权，并由人工确认已审成片后操作。现阶段**不宣称**媒体生成和多平台自动发布已经实机打通。
 
 详细步骤：[`docs/oneflow.md`](docs/oneflow.md)。
+
+
+## OneFlow 一句话真实生图（FLUX.1 Schnell）
+
+新增 GitHub Actions 一句话生图入口：通过 Hugging Face Inference Providers 调用实际图像模型，仅在配置私密 `HF_TOKEN`、用户明确勾选一次云端生图授权后生成 PNG。无令牌则失败，不生成占位图；离线测试不消耗云端图像额度。详见 [GitHub 生图接入指南](docs/oneflow-github-image.md) 和 [生图 Actions](.github/workflows/oneflow-generate-image.yml)。
