@@ -64,7 +64,7 @@ def production_handoff(request, manifest, narration, out):
         start, end = timeline["start_seconds"], timeline["end_seconds"]
         srt.extend([str(index),
                     srt_timestamp(start) + " --> " + srt_timestamp(end),
-                    timeline["text"].replace("\\r", " ").replace("\\n", " "), ""])
+                    timeline["text"].replace("\r", " ").replace("\n", " "), ""])
         shot_cues.append({
             "shot_id": timeline["shot"], "start_seconds": start,
             "end_seconds": end, "duration_seconds": end - start,
@@ -79,7 +79,7 @@ def production_handoff(request, manifest, narration, out):
             "source_video": None, "source_audio": None,
             "status": "AWAITING_RENDERED_MEDIA"
         })
-    (out / "subtitles.srt").write_text("\\n".join(srt), encoding="utf-8")
+    (out / "subtitles.srt").write_text("\n".join(srt), encoding="utf-8")
     save_json(out / "audio-cues.json", {
         "status": "SCRIPT_ONLY_NO_AUDIO", "voice_language": "zh-CN",
         "soundtrack_license": "NOT_VERIFIED", "shots": shot_cues
