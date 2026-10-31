@@ -48,7 +48,7 @@ jobs:
         run: |
           test "$(git -C .local/openmontage rev-parse HEAD)" = "195eab24478dc9363326aec437aefc3701635ddf"
           test -x .local/openmontage/.venv/bin/python
-          .local/openmontage/.venv/bin/python -c "import yaml, pydantic, requests; from tools.tool_registry import registry; print('OpenMontage core Python imports OK')"
+          (cd .local/openmontage && .venv/bin/python -c "import yaml, pydantic, requests; from tools.tool_registry import registry; print('OpenMontage core Python imports OK')")
       - name: List built-in demonstration compositions
         run: |
           cd .local/openmontage
