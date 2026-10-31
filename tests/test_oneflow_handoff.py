@@ -93,7 +93,7 @@ class HandoffTests(unittest.TestCase):
             self.assertEqual(doc["shots"][0]["status"], "KEYFRAME_EXISTS_REVIEW_REQUIRED")
             self.assertEqual(doc["shots"][1]["status"], "SHOT_PLANNED_NO_IMAGE")
             self.assertEqual(len(json.loads((out / "publication_drafts.json").read_text())["profiles"]), 6)
-            self.assertIn("STILL", (out / "README.txt").read_text())
+            self.assertIn("STATIC_PREVIEW_NO_AI_MOTION", (out / "README.txt").read_text())
             self.assertTrue((out / "wan_s01_prompt.txt").is_file())
 
     def test_output_rejects_duplicate_without_overwriting(self):
