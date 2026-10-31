@@ -48,7 +48,7 @@ class WanSmokeTests(unittest.TestCase):
         args = argparse.Namespace(
           wan_root=str(self.wan), model_dir=str(self.model), image=str(self.image),
           prompt_file=str(self.prompt_file), output=str(self.output),
-          seconds=5, seed=456, dry_run=True, approved_image=False)
+          seconds=5, seed=456, dry_run=True, approved_image=False, confirm_gpu_spend=False)
         with patch("runpod_wan.smoke.subprocess.run",
                    side_effect=AssertionError("dry run must not execute")):
             report = run(args)
@@ -59,8 +59,22 @@ class WanSmokeTests(unittest.TestCase):
         args = argparse.Namespace(
           wan_root=str(self.wan), model_dir=str(self.model), image=str(self.image),
           prompt_file=str(self.prompt_file), output=str(self.output),
-          seconds=5, seed=456, dry_run=False, approved_image=False)
+          seconds=5, seed=456, dry_run=False, approved_image=False, confirm_gpu_spend=True)
         with self.assertRaisesRegex(SmokeError, "Human approval"):
+            run(args)
+
+    def test_text_only_mode_is_supported_without_image(self):
+        cmd = build_command(self.wan, self.model, None, "Forest at dawn",
+                            self.output, 5, 123)
+        self.assertNotIn("--image", cmd)
+        self.assertEqual(cmd[cmd.index("--task") + 1], "ti2v-5B")
+
+    def test_explicit_gpu_spend_confirmation_is_required(self):
+        args = argparse.Namespace(
+          wan_root=str(self.wan), model_dir=str(self.model), image=None,
+          prompt_file=str(self.prompt_file), output=str(self.output),
+          seconds=5, seed=456, dry_run=False, approved_image=False, confirm_gpu_spend=False)
+        with self.assertRaisesRegex(SmokeError, "confirmed"):
             run(args)
 
     def test_fail_missing_weights(self):
