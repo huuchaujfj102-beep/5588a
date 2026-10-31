@@ -50,7 +50,6 @@ def download_fal_image(url):
 
 def generate_one(plan, token, target, submit=None, download=None):
     """Provider call and verified local image; dependency injection is for offline tests."""
-    from PIL import Image, UnidentifiedImageError
     if not token or not token.strip():
         raise ImageFlowError("MISSING_FAL_KEY: add a fal.ai API key as repository secret FAL_KEY")
     target = Path(target)
@@ -85,6 +84,7 @@ def generate_one(plan, token, target, submit=None, download=None):
     raw = (download or download_fal_image)(url)
     if not isinstance(raw, bytes) or len(raw) < 200 or len(raw) > MAX_IMAGE_BYTES:
         raise ImageFlowError("Missing, oversized or invalid provider image bytes")
+    from PIL import Image, UnidentifiedImageError
     try:
         with Image.open(BytesIO(raw)) as img:
             img.load()
