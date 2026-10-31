@@ -1,28 +1,82 @@
 {
-  "_notice": "Copy to private-inputs/oneflow-config.json, edit ComfyUI API graph node IDs, configure your own endpoints and model weights. Example is NOT live-ready.",
-  "story": {"kind": "ollama", "url_env": "OLLAMA_URL", "model": "qwen3:8b"},
+  "_notice": "Illustrative only. Export tested ComfyUI API-format graphs, adjust node IDs, model weights, licenses, and endpoints before --live. No model weights or credentials installed by this file.",
+  "commercial": true,
+  "story": {
+    "kind": "ollama",
+    "url_env": "OLLAMA_URL",
+    "model": "qwen3:8b"
+  },
+  "audio_mode": "separate",
+  "frame_bridge": false,
   "image": [
     {
       "kind": "comfyui",
-      "name": "sdxl-or-flux-image",
+      "model_id": "flux2-klein-4b",
+      "name": "fast-keyframes",
+      "priority": 10,
+      "license_checked": true,
       "url_env": "COMFYUI_URL",
       "token_env": "COMFYUI_TOKEN",
-      "graph": "private-inputs/workflows/image-api.json",
-      "patches": [{"node": "6", "input": "text", "from": "prompt"}],
+      "graph": "private-inputs/workflows/flux2-image-api.json",
+      "patches": [
+        {
+          "node": "6",
+          "input": "text",
+          "from": "prompt"
+        }
+      ],
       "timeout": 900
     }
   ],
   "video": [
     {
       "kind": "comfyui",
-      "name": "wan22-i2v",
+      "model_id": "wan2.2-ti2v-5b",
+      "name": "wan-video",
+      "priority": 10,
+      "license_checked": false,
       "url_env": "COMFYUI_URL",
       "token_env": "COMFYUI_TOKEN",
-      "graph": "private-inputs/workflows/video-api.json",
+      "graph": "private-inputs/workflows/wan-i2v-api.json",
       "patches": [
-        {"node": "6", "input": "text", "from": "prompt"},
-        {"node": "10", "input": "image", "from": "image_upload"},
-        {"node": "12", "input": "length", "from": "seconds"}
+        {
+          "node": "6",
+          "input": "text",
+          "from": "prompt"
+        },
+        {
+          "node": "10",
+          "input": "image",
+          "from": "image_upload"
+        },
+        {
+          "node": "12",
+          "input": "length",
+          "from": "seconds"
+        }
+      ],
+      "timeout": 1800
+    },
+    {
+      "kind": "comfyui",
+      "model_id": "ltx2",
+      "name": "ltx2-video-alternative",
+      "priority": 20,
+      "license_checked": false,
+      "url_env": "COMFYUI_URL",
+      "token_env": "COMFYUI_TOKEN",
+      "graph": "private-inputs/workflows/ltx2-api.json",
+      "patches": [
+        {
+          "node": "6",
+          "input": "text",
+          "from": "prompt"
+        },
+        {
+          "node": "10",
+          "input": "image",
+          "from": "image_upload"
+        }
       ],
       "timeout": 1800
     }
@@ -30,16 +84,35 @@
   "audio": [
     {
       "kind": "comfyui",
-      "name": "local-audiogen-sfx",
+      "model_id": "custom-approved",
+      "name": "self-hosted-original-sfx",
+      "priority": 10,
+      "license_checked": false,
       "url_env": "COMFYUI_URL",
       "token_env": "COMFYUI_TOKEN",
-      "graph": "private-inputs/workflows/audio-api.json",
-      "patches": [{"node": "6", "input": "text", "from": "prompt"}],
+      "graph": "private-inputs/workflows/licensed-audio-api.json",
+      "patches": [
+        {
+          "node": "6",
+          "input": "text",
+          "from": "prompt"
+        }
+      ],
       "timeout": 900
     }
   ],
+  "visual_review": {
+    "kind": "ollama",
+    "url_env": "OLLAMA_URL",
+    "model": "qwen3-vl:8b",
+    "license_checked": false,
+    "required": false
+  },
   "require_audio": true,
   "max_shots": 12,
   "fps": 24,
-  "publisher": {"url_env": "PUBLISHER_URL", "token_env": "PUBLISHER_TOKEN"}
+  "publisher": {
+    "url_env": "PUBLISHER_URL",
+    "token_env": "PUBLISHER_TOKEN"
+  }
 }
