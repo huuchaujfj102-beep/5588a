@@ -4,11 +4,13 @@ on:
     paths:
       - 'oneflow/**'
       - 'tests/test_oneflow*.py'
+      - 'docs/oneflow.md'
       - '.github/workflows/oneflow.yml'
   pull_request:
     paths:
       - 'oneflow/**'
       - 'tests/test_oneflow*.py'
+      - 'docs/oneflow.md'
       - '.github/workflows/oneflow.yml'
   workflow_dispatch:
     inputs:
