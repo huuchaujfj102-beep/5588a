@@ -1,0 +1,58 @@
+name: OneFlow story request (GitHub trigger)
+on:
+  push:
+    paths:
+      - 'oneflow/requests/*.json'
+  workflow_dispatch:
+    inputs:
+      request_file:
+        description: 'A checked-in oneflow/requests/*.json file'
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  storyboard-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate workflow and director modules
+        run: python -m unittest discover -s tests -v
+      - name: Build exactly requested story packages
+        shell: bash
+        env:
+          SELECTED_REQUEST: ${{ inputs.request_file }}
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            export REQUEST_FILES="$SELECTED_REQUEST"
+          else
+            export REQUEST_FILES="$(git diff-tree --no-commit-id --name-only -r HEAD | grep -E '^oneflow/requests/[a-zA-Z0-9._-]+\.json$' || true)"
+          fi
+          if [ -z "$REQUEST_FILES" ]; then
+            echo "No matching submitted request file" >&2
+            exit 1
+          fi
+          while IFS= read -r request_file; do
+            case "$request_file" in
+              oneflow/requests/*.json) ;;
+              *) echo "Invalid request path" >&2; exit 1 ;;
+            esac
+            python -m oneflow.request_runner "$request_file" --out oneflow-preview
+          done <<< "$REQUEST_FILES"
+      - name: Upload storyboard + identity bible (no generated video)
+        uses: actions/upload-artifact@v4
+        with:
+          name: oneflow-story-request-plan
+          path: oneflow-preview/
+          if-no-files-found: error
+          retention-days: 14
