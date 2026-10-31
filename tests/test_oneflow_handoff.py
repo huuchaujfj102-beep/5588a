@@ -50,7 +50,8 @@ class HandoffTests(unittest.TestCase):
     def test_integrity_check_stops_tampered_bytes(self):
         with tempfile.TemporaryDirectory() as tmp:
             source, record = self.create_source(tmp)
-            (source / "S01.png").write_bytes(b"tampered")
+            from PIL import Image
+            Image.new("RGB", (1024, 1024), (255, 32, 32)).save(source / "S01.png", "PNG")
             with self.assertRaisesRegex(HandoffError, "SHA256"):
                 verify_source(source)
 
