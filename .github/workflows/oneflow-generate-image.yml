@@ -1,36 +1,46 @@
-name: OneFlow REAL image generation (free OVH / fal.ai / HF)
+name: OneFlow REAL image generation (OVH free / Cloudflare FLUX / fal / HF)
 on:
   push:
     paths:
       - 'oneflow/image_generation.py'
       - 'oneflow/fal_image.py'
       - 'oneflow/ovh_free_image.py'
+      - 'oneflow/cloudflare_free_image.py'
       - 'tests/test_oneflow_image_generation.py'
       - 'tests/test_oneflow_fal_image.py'
       - 'tests/test_oneflow_ovh_free.py'
+      - 'tests/test_oneflow_cloudflare_free_image.py'
       - '.github/workflows/oneflow-generate-image.yml'
   pull_request:
     paths:
       - 'oneflow/image_generation.py'
       - 'oneflow/fal_image.py'
       - 'oneflow/ovh_free_image.py'
+      - 'oneflow/cloudflare_free_image.py'
       - 'tests/test_oneflow_image_generation.py'
       - 'tests/test_oneflow_fal_image.py'
       - 'tests/test_oneflow_ovh_free.py'
+      - 'tests/test_oneflow_cloudflare_free_image.py'
       - '.github/workflows/oneflow-generate-image.yml'
   workflow_dispatch:
     inputs:
       image_provider:
-        description: 'Image provider: OVH SDXL free; fal and HF need credits'
+        description: 'Image provider: OVH free or Cloudflare free FLUX; fal/HF need credits'
         type: choice
         required: true
         default: ovh_free
         options:
           - ovh_free
+          - cloudflare_free
           - fal
           - huggingface
       approve_free_image:
-        description: 'I authorize ONE anonymous generation using free OVHcloud SDXL'
+        description: 'I approve ONE free test (OVH/Cloudflare); paid providers need separate approval'
+        type: boolean
+        required: true
+        default: false
+      confirm_cloudflare_workers_free:
+        description: 'For Cloudflare only: I confirmed the account uses Workers Free (not Paid)'
         type: boolean
         required: true
         default: false
@@ -68,6 +78,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_oneflow_image_generation.py' -v
           python -m unittest discover -s tests -p 'test_oneflow_fal_image.py' -v
           python -m unittest discover -s tests -p 'test_oneflow_ovh_free.py' -v
+          python -m unittest discover -s tests -p 'test_oneflow_cloudflare_free_image.py' -v
       - name: Original Snow White prompt preflight (no model call)
         run: |
           python -m oneflow.image_generation \
@@ -177,5 +188,54 @@ jobs:
         with:
           name: oneflow-ovh-FREE-S01-${{ github.run_id }}
           path: private-inputs/generated-images-ovh/
+          if-no-files-found: error
+          retention-days: 7
+
+  real-free-cloudflare-image:
+    needs: free-preflight
+    if: github.event_name == 'workflow_dispatch' && inputs.image_provider == 'cloudflare_free' && inputs.approve_free_image == true && inputs.confirm_cloudflare_workers_free == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      ONE_SENTENCE: ${{ inputs.one_sentence }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate Cloudflare-specific secrets before inference
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "Missing CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_API_TOKEN repository secret. No model call made." >&2
+            exit 2
+          fi
+      - name: Install image decoding and verify offline tests
+        run: |
+          python -m pip install 'Pillow>=11,<13'
+          python -m unittest discover -s tests -p 'test_oneflow_cloudflare_free_image.py' -v
+      - name: One opt-in FLUX.1 Schnell request, never paid fallback or retry
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$ONE_SENTENCE" ]; then
+            ONE_SENTENCE='Original futuristic black carbon-fiber hypercar on a wet racetrack at night, cinematic low angle, realistic rear propulsion system behind the wheels, dramatic photography, single car, no words or watermark.'
+          fi
+          python -m oneflow.cloudflare_free_image \
+            --brief "$ONE_SENTENCE" --shot S01 --steps 4 \
+            --output private-inputs/generated-images-cloudflare \
+            --approve-free-test --confirm-workers-free
+          test -s private-inputs/generated-images-cloudflare/S01.png
+          test -s private-inputs/generated-images-cloudflare/S01.json
+      - name: Deliver verified PNG and audit metadata for human review
+        uses: actions/upload-artifact@v4
+        with:
+          name: oneflow-cloudflare-FLUX-free-S01-${{ github.run_id }}
+          path: private-inputs/generated-images-cloudflare/
           if-no-files-found: error
           retention-days: 7
