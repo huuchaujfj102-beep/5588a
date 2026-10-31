@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from oneflow.core import FlowError, load_json
-from oneflow.request_runner import package, validate
+from oneflow.request_runner import package, validate, srt_timestamp
 
 
 def sample():
@@ -39,9 +39,40 @@ class StoryRequestTests(unittest.TestCase):
             self.assertTrue((folder / "character-bible.md").exists())
             self.assertTrue((folder / "narration.json").exists())
             self.assertTrue((folder / "rendering-checklist.md").exists())
+            self.assertTrue((folder / "subtitles.srt").exists())
+            self.assertTrue((folder / "audio-cues.json").exists())
+            self.assertTrue((folder / "edit-decision-list.json").exists())
+            self.assertTrue((folder / "release-drafts.json").exists())
+            self.assertEqual(manifest["offline_handoff"]["subtitles"], "subtitles.srt")
+            subtitles = (folder / "subtitles.srt").read_text(encoding="utf8")
+            self.assertIn("00:00:00,000 --> 00:00:05,000", subtitles)
+            self.assertIn("00:00:10,000 --> 00:00:15,000", subtitles)
+            self.assertIn("她找到了朋友。", subtitles)
+            from film_audit.audit import check_srt
+            self.assertEqual(check_srt(folder / "subtitles.srt"), [])
+            narration = load_json(folder / "audio-cues.json")
+            self.assertEqual(narration["status"], "SCRIPT_ONLY_NO_AUDIO")
+            self.assertEqual(len(narration["shots"]), 3)
+            self.assertIsNone(narration["shots"][0]["narration_audio"])
+            edit = load_json(folder / "edit-decision-list.json")
+            self.assertIsNone(edit["shots"][0]["source_video"])
+            self.assertEqual(edit["duration_seconds"], 15)
+            drafts = load_json(folder / "release-drafts.json")
+            self.assertFalse(drafts["publish_automatically"])
+            self.assertIn("douyin", drafts["profiles"])
+            self.assertIn("youtube", drafts["profiles"])
+            self.assertTrue(all(x["status"] == "DRAFT_NOT_PUBLISHED"
+                                for x in drafts["profiles"].values()))
             self.assertIn("七位不同服装", manifest["shots"][1]["visual_prompt"])
             self.assertEqual(manifest["shots"][2]["narration"], "她找到了朋友。")
             self.assertFalse((folder / "final-draft.mp4").exists())
+
+    def test_srt_timestamp_is_exact(self):
+        self.assertEqual(srt_timestamp(0), "00:00:00,000")
+        self.assertEqual(srt_timestamp(60), "00:01:00,000")
+        self.assertEqual(srt_timestamp(3605), "01:00:05,000")
+        with self.assertRaises(FlowError):
+            srt_timestamp(-1)
 
     def test_empty_bible_rejected(self):
         doc = sample()

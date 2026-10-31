@@ -3,6 +3,10 @@ on:
   push:
     paths:
       - 'oneflow/requests/*.json'
+      - 'oneflow/request_runner.py'
+      - 'oneflow/platforms.py'
+      - 'tests/test_oneflow_requests.py'
+      - '.github/workflows/oneflow-story-request.yml'
   workflow_dispatch:
     inputs:
       request_file:
@@ -39,8 +43,13 @@ jobs:
             export REQUEST_FILES="$(git diff-tree --no-commit-id --name-only -r HEAD | grep -E '^oneflow/requests/[a-zA-Z0-9._-]+\.json$' || true)"
           fi
           if [ -z "$REQUEST_FILES" ]; then
-            echo "No matching submitted request file" >&2
-            exit 1
+            if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+              REQUEST_FILES="oneflow/requests/snow-white-seven-dwarfs-60s.json"
+              echo "No new request changed; regenerate the existing Snow White 60s package."
+            else
+              echo "No matching submitted request file" >&2
+              exit 1
+            fi
           fi
           while IFS= read -r request_file; do
             case "$request_file" in
