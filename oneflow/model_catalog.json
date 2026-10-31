@@ -55,6 +55,24 @@
       ]
     },
     {
+      "id": "qwen-image-2.1",
+      "stages": [
+        "image"
+      ],
+      "upstream": "https://github.com/QwenLM/Qwen-Image-2.1",
+      "license": "Qwen Research License (commercial use requires separate rights)",
+      "license_policy": "noncommercial",
+      "strengths": [
+        "up to 10 reference images",
+        "identity-aware selective edits",
+        "native RGBA layers"
+      ],
+      "limits": [
+        "published research license is not a default commercial grant",
+        "model not deployed in this workspace"
+      ]
+    },
+    {
       "id": "wan2.2-ti2v-5b",
       "stages": [
         "video"
