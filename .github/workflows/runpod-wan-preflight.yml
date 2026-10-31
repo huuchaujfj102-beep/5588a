@@ -1,0 +1,38 @@
+name: Wan2.2 Runpod deployment preflight (NO GPU / NO CHARGE)
+on:
+  push:
+    paths:
+      - 'runpod_wan/**'
+      - 'tests/test_runpod_wan.py'
+      - '.github/workflows/runpod-wan-preflight.yml'
+  pull_request:
+    paths:
+      - 'runpod_wan/**'
+      - 'tests/test_runpod_wan.py'
+      - '.github/workflows/runpod-wan-preflight.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Bash bootstrap syntax only
+        run: bash -n runpod_wan/bootstrap.sh
+      - name: Python syntax
+        run: python -m compileall -q runpod_wan
+      - name: Offline test suite (must not create GPU Pods)
+        run: python -m unittest discover -s tests -v
+      - name: Explicit proof no video was rendered
+        run: |
+          if find . -name '*.mp4' -print -quit | grep -q .; then
+            echo "Unexpected MP4 generated in no-GPU CI" >&2
+            exit 1
+          fi
