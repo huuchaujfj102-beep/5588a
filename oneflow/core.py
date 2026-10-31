@@ -133,6 +133,7 @@ def create(prompt, seconds, ratio, platforms, out_root, cfg):
             "audio_prompt": item["sound"],
             "narrative_phase": item["phase"],
             "image": None, "video": None, "audio": None,
+            "model_provenance": {},
             "normalized": None, "state": "PLANNED"
         })
     manifest = {
@@ -322,16 +323,18 @@ def produce(job, cfg):
                              "-frames:v", "1", str(tail)])
                 values["reference_image"] = str(tail)
             if not shot["image"] or not (root / shot["image"]).exists():
-                image_path = generate("image", routed["image"], values,
-                                      media_dir / (shot["id"] + "-image"))
+                image_path, model_id = generate("image", routed["image"], values,
+                                      media_dir / (shot["id"] + "-image"), return_used=True)
                 shot["image"] = str(image_path.relative_to(root))
+                shot.setdefault("model_provenance", {})["image"] = model_id
                 shot["state"] = "IMAGE_GENERATED_UNREVIEWED"
                 save_json(root / "manifest.json", manifest)
             values["image"] = str(root / shot["image"])
             if not shot["video"] or not (root / shot["video"]).exists():
-                video_path = generate("video", routed["video"], values,
-                                      media_dir / (shot["id"] + "-video"))
+                video_path, model_id = generate("video", routed["video"], values,
+                                      media_dir / (shot["id"] + "-video"), return_used=True)
                 shot["video"] = str(video_path.relative_to(root))
+                shot.setdefault("model_provenance", {})["video"] = model_id
                 shot["state"] = "VIDEO_GENERATED_UNREVIEWED"
                 save_json(root / "manifest.json", manifest)
             if cfg.get("audio_mode", "separate") == "embedded":
@@ -341,9 +344,10 @@ def produce(job, cfg):
                 save_json(root / "manifest.json", manifest)
             if cfg.get("audio_mode", "separate") == "separate" and routed["audio"] and (not shot["audio"] or not (root / shot["audio"]).exists()):
                 sound_values = {**values, "prompt": shot["audio_prompt"]}
-                sound_path = generate("audio", routed["audio"], sound_values,
-                                      media_dir / (shot["id"] + "-sound"))
+                sound_path, model_id = generate("audio", routed["audio"], sound_values,
+                                      media_dir / (shot["id"] + "-sound"), return_used=True)
                 shot["audio"] = str(sound_path.relative_to(root))
+                shot.setdefault("model_provenance", {})["audio"] = model_id
                 shot["state"] = "MEDIA_GENERATED_UNREVIEWED"
                 save_json(root / "manifest.json", manifest)
             previous = shot
