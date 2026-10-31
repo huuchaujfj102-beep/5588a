@@ -8,3 +8,5 @@ audit-report.json
 audit-report*.json
 glm-input.json
 private-inputs/
+# Upstream source, generated video assets, and local secrets
+.local/

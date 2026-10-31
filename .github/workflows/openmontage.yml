@@ -1,0 +1,68 @@
+name: OpenMontage cloud install and verify
+on:
+  push:
+    paths:
+      - '.github/workflows/openmontage.yml'
+      - 'scripts/setup_openmontage.sh'
+      - '.devcontainer/devcontainer.json'
+  workflow_dispatch:
+    inputs:
+      render_demo:
+        description: 'Also attempt the zero-key Remotion demo render (extra runner time)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: openmontage-install-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  install-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout only this repository (without persistent Git credentials)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffprobe -version | head -n 1
+      - name: Install pinned upstream OpenMontage and inspect provider registry
+        run: bash scripts/setup_openmontage.sh
+      - name: Verify exact source and Python environment
+        run: |
+          test "$(git -C .local/openmontage rev-parse HEAD)" = "195eab24478dc9363326aec437aefc3701635ddf"
+          test -x .local/openmontage/.venv/bin/python
+          .local/openmontage/.venv/bin/python -c "import yaml, pydantic, requests; from tools.tool_registry import registry; print('OpenMontage core Python imports OK')"
+      - name: List built-in demonstration compositions
+        run: |
+          cd .local/openmontage
+          make demo-list | tee ../../openmontage-demo-list.txt
+      - name: Optional zero-key composition smoke render
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.render_demo }}
+        run: |
+          cd .local/openmontage
+          make demo
+      - name: Upload diagnostic summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: openmontage-install-diagnostics
+          path: openmontage-demo-list.txt
+          if-no-files-found: ignore
+          retention-days: 5
