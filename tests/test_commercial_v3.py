@@ -28,7 +28,7 @@ class CommercialV3Tests(unittest.TestCase):
 
     def test_expansion_has_later_channels(self):
         x=make_queue("制作AI工业未来视觉系列和品牌营销短片计划",START,stage="expand")
-        self.assertEqual(x["account_count"],14)
+        self.assertEqual(x["account_count"],16)
         self.assertIn("facebook",set(p["platform"] for p in x["per_account"]))
         self.assertIn("toutiao",set(p["platform"] for p in x["per_account"]))
 
