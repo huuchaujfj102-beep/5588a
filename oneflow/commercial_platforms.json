@@ -478,6 +478,143 @@
         300
       ],
       "trial_30d_target": "第2个月再测, 不预期初期广告分成"
+    },
+    {
+      "id": "pinterest",
+      "label": "Pinterest",
+      "market": "Global",
+      "p0_accounts": 0,
+      "p1_accounts": 1,
+      "brands": [
+        "APEX MOTION巅速造境"
+      ],
+      "formats": [
+        "2:3静态未来建筑和工业设计灵感",
+        "9:16概念超跑/空间设计Video Pins"
+      ],
+      "anchor": "搜索友好的设计主题+可收藏的完整图像/短视频",
+      "launch": "第61天建立1个设计灵感品牌账户, 先4个Board分主题, 每周3-4个高质量Pin, 导向合法作品展示/企业咨询站",
+      "benchmark": [
+        "工业设计概念板",
+        "汽车品牌未来概念视觉Board"
+      ],
+      "week_posts_per_account": 3,
+      "trial_local_times": [
+        "09:00",
+        "17:30"
+      ],
+      "monetization": [
+        "设计服务客户",
+        "品牌展示与授权素材",
+        "自有数字产品"
+      ],
+      "api_status": "pinterest_v5_oauth_app_review",
+      "posting_mode": "approved_api_after_consent",
+      "api_scope": [
+        "pins:write"
+      ],
+      "publish_docs": "https://developer.pinterest.com/docs/work-with-organic-content-and-users/create-boards-and-pins/",
+      "constraints": [
+        "视频Pin需要先注册媒体上传、确认成功后创建Pin",
+        "新应用Trial权限创建的Pin可能仅创作者可见",
+        "真实设计的版权、广告标识"
+      ],
+      "trial_month_spend_cny": [
+        100,
+        350
+      ],
+      "trial_30d_target": "第3个月测试12个Pin的保存、链接点击和有效咨询"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "market": "Global",
+      "p0_accounts": 0,
+      "p1_accounts": 1,
+      "brands": [
+        "AI商业大片实验室"
+      ],
+      "formats": [
+        "16:9 30-60秒B2B产品广告案例",
+        "16:9 60-120秒生产工艺视觉和ROI拆解",
+        "图片+真实制作成本表"
+      ],
+      "anchor": "一个具体企业痛点+作品前后对比+制作指标",
+      "launch": "第31-60天以真实公司主体建企业主页, 初期每周2条英文专业案例并主动开展合规商务沟通, 无机器群发",
+      "benchmark": [
+        "B2B品牌创意制作工作室",
+        "科技企业品牌营销内容"
+      ],
+      "week_posts_per_account": 2,
+      "trial_local_times": [
+        "08:30",
+        "17:30"
+      ],
+      "monetization": [
+        "跨境B2B视频制作",
+        "品牌素材合作",
+        "长期企业创意服务"
+      ],
+      "api_status": "linkedin_versioned_posts_api_and_video_api",
+      "posting_mode": "approved_api_after_consent",
+      "api_scope": [
+        "w_organization_social"
+      ],
+      "publish_docs": "https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/posts-api?view=li-lms-2026-06",
+      "constraints": [
+        "需公司主页管理权限及指定OAuth scopes",
+        "视频注册上传并在Posts API中引用素材URN",
+        "不得机器批量加好友或消息骚扰"
+      ],
+      "trial_month_spend_cny": [
+        100,
+        400
+      ],
+      "trial_30d_target": "第2个月开始建立10-20个有效商务沟通机会（非成交预测）"
+    },
+    {
+      "id": "weibo",
+      "label": "微博",
+      "market": "CN",
+      "p0_accounts": 0,
+      "p1_accounts": 0,
+      "brands": [
+        "APEX MOTION巅速造境"
+      ],
+      "formats": [
+        "15-30秒超跑科幻短片加制作背景",
+        "汽车/科技趋势原创海报与分析"
+      ],
+      "anchor": "热点事件必须经过事实核查; AI概念内容明确虚构",
+      "launch": "暂不新开; 第2阶段观察公开热榜/试用官方weibo-cli, 有真实搜索及商务线索再申请",
+      "benchmark": [
+        "汽车资讯与设计KOL"
+      ],
+      "week_posts_per_account": 2,
+      "trial_local_times": [
+        "12:20",
+        "20:30"
+      ],
+      "monetization": [
+        "品牌合作",
+        "商业制作线索"
+      ],
+      "api_status": "official_weibo_cli_auth_and_credit_required",
+      "posting_mode": "official_cli_after_app_approval_and_consent",
+      "api_scope": [
+        "weibo_cli_authorized_writes"
+      ],
+      "publish_docs": "https://open.weibo.com/cli/quickstart",
+      "constraints": [
+        "微博CLI需要开发者实名认证、OAuth及对应接口额度",
+        "体验版写接口有限次且不必然覆盖视频",
+        "目前仅列入观察不计入开设账户数"
+      ],
+      "trial_month_spend_cny": [
+        0,
+        150
+      ],
+      "trial_30d_target": "仅调研不投产"
     }
   ]
 }
