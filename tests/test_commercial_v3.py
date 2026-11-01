@@ -20,7 +20,7 @@ class CommercialV3Tests(unittest.TestCase):
             self.assertIsNone(item["published_id"])
             self.assertIsNone(item["actual_metrics"])
             self.assertEqual(item["state"],"NEEDS_ASSET_AND_HUMAN_REVIEW")
-            self.assertTrue(all("+" in t for t in item["planned_local_times"]))
+            self.assertTrue(all(datetime.fromisoformat(t).tzinfo is not None for t in item["planned_local_times"]))
         routes={p["platform"]:p["publisher_route"] for p in x["per_account"]}
         self.assertEqual(routes["wechat_channels"],"OFFICIAL_MANUAL_SCHEDULER")
         self.assertEqual(routes["xiaohongshu"],"OFFICIAL_MANUAL_SCHEDULER")
