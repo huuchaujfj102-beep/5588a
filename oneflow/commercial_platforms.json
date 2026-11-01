@@ -1,0 +1,483 @@
+{
+  "schema": "oneflow-commercial-v3.platforms.v1",
+  "snapshot_date": "2026-11-01",
+  "notes": [
+    "运营频率/账号数/成本/时间均为小团队测试假设而非官方数据",
+    "仅申请官方API授权、用户明确同意后才可发布",
+    "AI/虚构/营销内容应按国家法规和平台规则正确标记",
+    "平台内私信、转化、播放和收益必须记录真实回执; 不调用非公开接口或模拟登录绕过审核"
+  ],
+  "master_content_lines": [
+    "future_auto",
+    "commercial_product_video",
+    "ai_filmmaking",
+    "future_architecture",
+    "original_culture"
+  ],
+  "platform_profiles": [
+    {
+      "id": "douyin",
+      "label": "抖音",
+      "market": "CN",
+      "p0_accounts": 2,
+      "p1_accounts": 3,
+      "brands": [
+        "APEX MOTION巅速造境",
+        "AI商业大片实验室"
+      ],
+      "formats": [
+        "9:16 15-35秒超跑/工业设计剧情式奇观",
+        "9:16 20-45秒真产品商业概念广告/前后对比",
+        "9:16 30-60秒AI制片幕后"
+      ],
+      "anchor": "前三秒高反差视觉或明确的产品问题; 每条视频只讲一个结果",
+      "launch": "注册2个不同定位的真实账号; 头像简介/关键词统一; 前7天发布4-6条原创样片完成冷启动观察, 不刷粉不机械养号; 第8-30天每号每周3-4条, 每周复盘完播/询盘",
+      "benchmark": [
+        "影视飓风",
+        "老师好我叫何同学",
+        "汽车视觉设计类创作者（需样本复核）"
+      ],
+      "week_posts_per_account": 3,
+      "trial_local_times": [
+        "12:20",
+        "19:30",
+        "21:10"
+      ],
+      "monetization": [
+        "企业广告定制",
+        "平台合规商单",
+        "产品服务线索"
+      ],
+      "api_status": "apply_oauth_and_scope",
+      "posting_mode": "approved_api_after_per_post_user_awareness",
+      "api_scope": [
+        "video.create.bind"
+      ],
+      "publish_docs": "https://developer.open-douyin.com/docs/resource/zh-CN/dop/develop/openapi/video-management/douyin/create-video/video-create",
+      "constraints": [
+        "第三方代用户投稿需权限、授权及每次操作用户感知",
+        "不默认携带品牌水印/导流",
+        "AI/营销/虚构标识"
+      ],
+      "trial_month_spend_cny": [
+        900,
+        1800
+      ],
+      "trial_30d_target": "每号12条原创, 获取合计3-10条有效商机线索为测试目标; 并非预测"
+    },
+    {
+      "id": "wechat_channels",
+      "label": "微信视频号",
+      "market": "CN",
+      "p0_accounts": 1,
+      "p1_accounts": 1,
+      "brands": [
+        "AI商业大片实验室"
+      ],
+      "formats": [
+        "9:16 30-60秒前后对比客户案例",
+        "16:9 60-120秒制作过程/企业品牌背书"
+      ],
+      "anchor": "把复杂商业问题讲得值得转发给同事/熟人",
+      "launch": "1个实名品牌号, 视频+公众号/企微合法承接; 每周3条专业案例、1次问答内容, 前14天重点测试自然转发率",
+      "benchmark": [
+        "企业品牌服务类创作者",
+        "家居/设计行业官方视频号案例"
+      ],
+      "week_posts_per_account": 3,
+      "trial_local_times": [
+        "12:30",
+        "20:00"
+      ],
+      "monetization": [
+        "企业微信合规接待的商业线索",
+        "月度企业视频服务"
+      ],
+      "api_status": "no_verified_public_normal_video_publish_api",
+      "posting_mode": "manual_official_assistant_schedule",
+      "api_scope": [],
+      "publish_docs": "https://channels.weixin.qq.com/",
+      "constraints": [
+        "普通视频上传-定时-状态公共API未核实",
+        "只能生成发布包并由人工在官方助手排期",
+        "不可通过cookie抓取/非官方接口模拟发布"
+      ],
+      "trial_month_spend_cny": [
+        200,
+        500
+      ],
+      "trial_30d_target": "12条专业案例, 2-5条意向对话作为验证目标"
+    },
+    {
+      "id": "xiaohongshu",
+      "label": "小红书",
+      "market": "CN",
+      "p0_accounts": 1,
+      "p1_accounts": 2,
+      "brands": [
+        "AI商业大片实验室",
+        "AI影视工作流研究所"
+      ],
+      "formats": [
+        "9:16 15-45秒AI广告前后对比",
+        "4:5图文分镜/成本拆解",
+        "60-150秒真实工具流程演示"
+      ],
+      "anchor": "关键词能搜到、封面说清问题、内容给出具体前后结果",
+      "launch": "首月1个企业案例号, 每周3篇作品笔记+2篇可收藏流程图, 在同一行业标签中持续迭代; 30天后才判断是否增开教程号",
+      "benchmark": [
+        "AI创意设计与剪辑教程作者",
+        "2026 LINK商业创作者榜单"
+      ],
+      "week_posts_per_account": 4,
+      "trial_local_times": [
+        "12:00",
+        "19:50"
+      ],
+      "monetization": [
+        "企业服务询盘",
+        "商单/符合条件的蒲公英合作",
+        "授权数字模板"
+      ],
+      "api_status": "write_notes_planned_not_general_open",
+      "posting_mode": "manual_official_creator_backend",
+      "api_scope": [],
+      "publish_docs": "https://openaccount.xiaohongshu.com/docs/scope",
+      "constraints": [
+        "write_notes 官方文档2026-03-29仍标为规划中",
+        "不得用模拟器、cookie、违规私信群发方式绕过",
+        "保留AI/广告标识; 正规商用授权"
+      ],
+      "trial_month_spend_cny": [
+        350,
+        900
+      ],
+      "trial_30d_target": "12-18篇笔记; 收藏、搜索曝光和2-5条有效咨询作为测试假设"
+    },
+    {
+      "id": "kuaishou",
+      "label": "快手",
+      "market": "CN",
+      "p0_accounts": 1,
+      "p1_accounts": 1,
+      "brands": [
+        "AI商业大片实验室"
+      ],
+      "formats": [
+        "9:16 20-50秒中国制造产品改造故事",
+        "工厂工艺流程或户外设备功能展示, 必须真实准确",
+        "9:16 高密度AI视频制作幕后"
+      ],
+      "anchor": "从真实痛点/真实工艺切入, 避免只展示空洞科幻特效",
+      "launch": "首月1个账号, 选择智能制造/汽配细分方向, 每周3条, 评论中真实互动而非模板群发",
+      "benchmark": [
+        "新农人/工厂实拍创作者",
+        "制造业产品展示号"
+      ],
+      "week_posts_per_account": 3,
+      "trial_local_times": [
+        "12:10",
+        "19:40"
+      ],
+      "monetization": [
+        "产业客户线索",
+        "品牌合作",
+        "合规电商展示"
+      ],
+      "api_status": "approved_user_video_publish_oauth",
+      "posting_mode": "approved_api_after_consent",
+      "api_scope": [
+        "user_video_publish"
+      ],
+      "publish_docs": "https://open.kuaishou.com/platformDocs/openAbility/contentManagement/createAVideo",
+      "constraints": [
+        "API需要开始上传→上传文件→发布",
+        "发布接口异步, 必须状态核验才标成功",
+        "真实工厂素材授权"
+      ],
+      "trial_month_spend_cny": [
+        250,
+        650
+      ],
+      "trial_30d_target": "12条行业内容, 测试真实生产商询价/商务询盘"
+    },
+    {
+      "id": "bilibili",
+      "label": "哔哩哔哩",
+      "market": "CN",
+      "p0_accounts": 1,
+      "p1_accounts": 1,
+      "brands": [
+        "AI影视工作流研究所"
+      ],
+      "formats": [
+        "16:9 4-10分钟技术拆解/失败复盘",
+        "9:16 30-90秒前后对比视频"
+      ],
+      "anchor": "问题—方案—演示—成本—结论, 不能仅拼短视频",
+      "launch": "首月1账号每周1条深度+2条短视频, 累积四期有可复现实验的系列",
+      "benchmark": [
+        "影视飓风",
+        "老师好我叫何同学",
+        "技术工具测评作者"
+      ],
+      "week_posts_per_account": 3,
+      "trial_local_times": [
+        "17:50",
+        "20:20"
+      ],
+      "monetization": [
+        "专业企业合作",
+        "课程/工具包",
+        "充电和符合条件的创作激励"
+      ],
+      "api_status": "open_platform_submission_after_developer_approval",
+      "posting_mode": "approved_api_after_consent",
+      "api_scope": [
+        "submit_video_subject_to_app_review"
+      ],
+      "publish_docs": "https://open.bilibili.com/doc",
+      "constraints": [
+        "开放平台需开发者认证/审核",
+        "第三方投稿需明确用户授权",
+        "部分数据API取决于申请权限"
+      ],
+      "trial_month_spend_cny": [
+        500,
+        1200
+      ],
+      "trial_30d_target": "4条深度+8条剪辑短片, 观察搜索和技术咨询"
+    },
+    {
+      "id": "toutiao",
+      "label": "今日头条",
+      "market": "CN",
+      "p0_accounts": 0,
+      "p1_accounts": 1,
+      "brands": [
+        "AI影视工作流研究所"
+      ],
+      "formats": [
+        "16:9 60-180秒AI工具测试/科技故事",
+        "图文深度拆解与原创案例"
+      ],
+      "anchor": "信息密度与可搜索价值优先",
+      "launch": "第61天以后复用B站深度内容改编, 不新增独立视频流水线",
+      "benchmark": [
+        "科技科普与数码分析作者"
+      ],
+      "week_posts_per_account": 2,
+      "trial_local_times": [
+        "12:00",
+        "20:10"
+      ],
+      "monetization": [
+        "品牌内容",
+        "专业产品/资料销售",
+        "符合资格的创作者收入"
+      ],
+      "api_status": "scope_application_and_user_oauth",
+      "posting_mode": "approved_api_after_consent",
+      "api_scope": [
+        "toutiao.video.create"
+      ],
+      "publish_docs": "https://open.douyin.com/platform/resource/docs/openapi/video-management/toutiao/create-video/upload-video",
+      "constraints": [
+        "权限申请和用户授权",
+        "不得擅自转载"
+      ],
+      "trial_month_spend_cny": [
+        80,
+        250
+      ],
+      "trial_30d_target": "第3个月才开, 检验搜索与深度内容延续效果"
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube",
+      "market": "Global",
+      "p0_accounts": 1,
+      "p1_accounts": 2,
+      "brands": [
+        "APEX MOTION巅速造境",
+        "AI影视工作流研究所"
+      ],
+      "formats": [
+        "9:16 20-45秒Shorts视觉奇观",
+        "16:9 5-12分钟AI汽车设计/制作幕后英文长视频"
+      ],
+      "anchor": "Shorts呈现视觉结果, 长视频展示完整过程与原创分析",
+      "launch": "首月1个国际英文频道, 每周3条Shorts+每2周1条长视频, 不把Shorts广告作为初期主要收入",
+      "benchmark": [
+        "Supercar Blondie",
+        "The B1M",
+        "AI design breakdown creators"
+      ],
+      "week_posts_per_account": 4,
+      "trial_local_times": [
+        "11:00",
+        "18:00"
+      ],
+      "monetization": [
+        "全球设计/视频制作订单",
+        "赞助",
+        "符合YPP条件的广告分成",
+        "原创数字产品"
+      ],
+      "api_status": "youtube_data_api_oauth",
+      "posting_mode": "official_api_schedule_after_approval",
+      "api_scope": [
+        "https://www.googleapis.com/auth/youtube.upload"
+      ],
+      "publish_docs": "https://developers.google.com/youtube/data/reference/rest/v3/videos/insert",
+      "constraints": [
+        "OAuth和API项目审批",
+        "scheduled publishAt仅private且未公开作品",
+        "必要时标记containsSyntheticMedia",
+        "原创重复模板化内容不保证YPP"
+      ],
+      "trial_month_spend_cny": [
+        450,
+        1250
+      ],
+      "trial_30d_target": "12条Shorts+2条英文深度, 寻找潜在国际买家意向"
+    },
+    {
+      "id": "tiktok",
+      "label": "TikTok",
+      "market": "Global",
+      "p0_accounts": 1,
+      "p1_accounts": 1,
+      "brands": [
+        "APEX MOTION巅速造境"
+      ],
+      "formats": [
+        "9:16 15-40秒超跑震撼影像+真实幕后反差",
+        "9:16 60秒以上原创故事/教程(如申请奖励, 必须符合资格)"
+      ],
+      "anchor": "先表现超常视觉, 再补真实制作幕后或悬念揭秘",
+      "launch": "首月1个合规地区身份的正式账号, 每周4条, 避免误导性AI与模板复制",
+      "benchmark": [
+        "Supercar Blondie",
+        "official TikTok Next 2026 brand cases"
+      ],
+      "week_posts_per_account": 4,
+      "trial_local_times": [
+        "12:30",
+        "19:30"
+      ],
+      "monetization": [
+        "全球品牌合作",
+        "商业制作询盘",
+        "符合当地资格的创作者项目"
+      ],
+      "api_status": "direct_post_requires_app_scope_oauth_audit",
+      "posting_mode": "official_api_after_app_audit_and_consent",
+      "api_scope": [
+        "video.publish"
+      ],
+      "publish_docs": "https://developers.tiktok.com/docs/en/content-posting-api-get-started",
+      "constraints": [
+        "未经审核客户端只能private",
+        "每次发布要向用户展示选项并获得明确同意",
+        "Creator Rewards奖励不适用于所有短视频/地区",
+        "AI内容标记"
+      ],
+      "trial_month_spend_cny": [
+        400,
+        950
+      ],
+      "trial_30d_target": "16条原创, 测试不同英文开头与受众兴趣"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "market": "Global",
+      "p0_accounts": 1,
+      "p1_accounts": 1,
+      "brands": [
+        "APEX MOTION巅速造境"
+      ],
+      "formats": [
+        "9:16 10-30秒Reels超跑质感片",
+        "4:5 6-10页分镜轮播/幕后图文"
+      ],
+      "anchor": "Reels拉新, 轮播建立收藏和询盘",
+      "launch": "1个专业账户, 前30天每周3条Reels+1组轮播, 核查链接、简介和商务联络方式",
+      "benchmark": [
+        "Supercar Blondie",
+        "汽车设计公司官方Instagram"
+      ],
+      "week_posts_per_account": 4,
+      "trial_local_times": [
+        "11:30",
+        "18:40"
+      ],
+      "monetization": [
+        "品牌合作",
+        "视觉定制海外订单",
+        "数字产品"
+      ],
+      "api_status": "professional_account_meta_graph_oauth",
+      "posting_mode": "approved_meta_api_after_consent",
+      "api_scope": [
+        "instagram_content_publish"
+      ],
+      "publish_docs": "https://www.postman.com/meta/instagram/documentation/6yqw8pt/instagram-api",
+      "constraints": [
+        "需要Instagram专业账户及Meta授权",
+        "公共可访问的托管视频URL",
+        "创建container并发布核验",
+        "轮播和Reels分开打包"
+      ],
+      "trial_month_spend_cny": [
+        250,
+        650
+      ],
+      "trial_30d_target": "12条Reels+4篇轮播, 留意主页访问和商务询盘"
+    },
+    {
+      "id": "facebook",
+      "label": "Facebook Reels",
+      "market": "Global",
+      "p0_accounts": 0,
+      "p1_accounts": 1,
+      "brands": [
+        "APEX MOTION巅速造境"
+      ],
+      "formats": [
+        "9:16 15-40秒原生Reels",
+        "16:9幕后短纪录"
+      ],
+      "anchor": "用高视觉质感吸引汽车社群与品牌主页",
+      "launch": "第2个月才创建品牌Page; 以同一母片改编, 不额外新拍",
+      "benchmark": [
+        "汽车媒体品牌Facebook Reels"
+      ],
+      "week_posts_per_account": 3,
+      "trial_local_times": [
+        "13:00",
+        "19:00"
+      ],
+      "monetization": [
+        "海外品牌合作",
+        "企业制作线索"
+      ],
+      "api_status": "meta_pages_reels_permissions_required",
+      "posting_mode": "pending_official_review_and_consent",
+      "api_scope": [
+        "pages_manage_posts"
+      ],
+      "publish_docs": "https://developers.facebook.com/docs/video-api/guides/reels-publishing/",
+      "constraints": [
+        "需品牌Page, Meta App权限与账户授权",
+        "独立输出且核实原创性"
+      ],
+      "trial_month_spend_cny": [
+        100,
+        300
+      ],
+      "trial_30d_target": "第2个月再测, 不预期初期广告分成"
+    }
+  ]
+}
