@@ -69,3 +69,30 @@ If a quote is missing, a model requires longer than 4 seconds, credits are insuf
 - **HeyGen:** uploaded continuity frame accepted, but generating 14 seconds returned HTTP 402 free videos exhausted.
 
 No model is marked *connected* merely because it is listed. Production will require: approved source, authorized API token, verified quota, safe retry policy, media continuity tests, rights review, optional human approval, and explicit release authorization.
+
+
+## Magic Hour: candidate for one whole 14-second clip (not connected)
+
+Official price/account references:
+- https://magichour.ai/pricing — signup grant 400 credits; eligible free accounts may claim 100 daily credits up to seven times.
+- https://magichour.ai/api/image-to-video — official Python `magic_hour` image-to-video SDK.
+- https://magichour.ai/products/image-to-video — free generations are personal, non-commercial only.
+
+A basic estimate of 24 credits/sec would imply ~336 credits for a 14s trial. This is **not a confirmed account/model quote**: length and model restrictions apply. The live adapter therefore requires an explicit account quote and never assumes the 400 credits exist for this user.
+
+The optional SDK adapter is `oneflow/magic_hour_trial.py`. Offline:
+```bash
+python -m oneflow.magic_hour_trial > magic-hour-14s-plan.json
+```
+After account-specific authentication/price check, and **only with user approval**:
+```bash
+pip install magic_hour
+# Set MAGIC_HOUR_API_KEY in a protected environment, NOT repository code.
+python -m oneflow.magic_hour_trial --live \
+  --source-frame /private/media/last_frame.jpg \
+  --output /private/output/magic-hour-trial \
+  --quoted-credits YOUR_CONFIRMED_CREDITS \
+  --credit-cap YOUR_MAX_ALLOWED_CREDITS \
+  --confirm-trial-credits
+```
+Optional `--model` must be an exact image-to-video model ID verified in the signed-in account. The provider response and clip are **not** declared visually or commercially approved. API integration has not been live-tested and should not be merged until a real small test confirms the endpoint, SDK and cost policy. Magic Hour's public MCP endpoint is `https://mcp.magichour.ai/`; it is not connected in this conversation.
