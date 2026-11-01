@@ -5,6 +5,8 @@ on:
     paths:
       - "oneflow/nodaro_trial.py"
       - "tests/test_nodaro_trial.py"
+      - "oneflow/magic_hour_trial.py"
+      - "tests/test_magic_hour_trial.py"
       - ".github/workflows/oneflow-free-trial-video.yml"
       - "docs/oneflow-free-trial-video.md"
 
@@ -18,7 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify adapter contract
-        run: python -m unittest discover -s tests -p test_nodaro_trial.py -v
+        run: |
+          python -m unittest discover -s tests -p test_nodaro_trial.py -v
+          python -m unittest discover -s tests -p test_magic_hour_trial.py -v
       - name: Produce 14-second 4+4+4+2 shot plan (no remote call)
         run: |
           python -m oneflow.nodaro_trial > nodaro-14s-plan.json
@@ -31,8 +35,20 @@ jobs:
           assert not p["publish_approved"]
           print("PASS: offline storyboard only; credits spent = 0")
           PY
+      - name: Verify alternative Magic Hour candidate without API calls
+        run: |
+          python -m oneflow.magic_hour_trial > magic-hour-14s-plan.json
+          python - <<'PY'
+          import json
+          p=json.load(open('magic-hour-14s-plan.json'))
+          assert p['duration_seconds'] == 14
+          assert 'NONCOMMERCIAL' in p['license_gate']
+          assert p['status'] == 'PREPARED_NOT_AUTHORIZED_NOT_RENDERED'
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: oneflow-free-trial-video-PLAN-NOT-RENDERED
-          path: nodaro-14s-plan.json
+          path: |
+            nodaro-14s-plan.json
+            magic-hour-14s-plan.json
           retention-days: 7
