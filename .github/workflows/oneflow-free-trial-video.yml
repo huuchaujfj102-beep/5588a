@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify adapter contract
-        run: python -m unittest tests.test_nodaro_trial -v
+        run: python -m unittest discover -s tests -p test_nodaro_trial.py -v
       - name: Produce 14-second 4+4+4+2 shot plan (no remote call)
         run: |
           python -m oneflow.nodaro_trial > nodaro-14s-plan.json
