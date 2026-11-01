@@ -81,17 +81,16 @@ def live(args):
     outdir.mkdir(parents=True, exist_ok=True)
     brief = plan()
     # Exactly one generation; on unknown timeouts, check existing project before retrying.
-    response = Client(token=key).v1.image_to_video.generate(
+    settings = dict(
         name="APEX MOTION Emerald 14s trial continuation",
         assets={"image_file_path": str(pathlib.Path(args.source_frame).resolve())},
-        end_seconds=14.0,
-        resolution="480p",
-        model="ltx-2.5",
+        end_seconds=14.0, resolution="480p",
         style={"prompt": brief["prompt"]},
-        wait_for_completion=True,
-        download_outputs=True,
-        download_directory=str(outdir)
-    )
+        wait_for_completion=True, download_outputs=True, download_directory=str(outdir))
+    # Never invent a model ID. Optional model is from the account's verified catalog.
+    if args.model:
+        settings["model"] = args.model
+    response = Client(token=key).v1.image_to_video.generate(**settings)
     print(json.dumps({"status": "RENDER_RETURNED_NOT_LICENSED_OR_VISUALLY_APPROVED",
                       "provider_result": str(response)[:1500],
                       "output_dir": str(outdir), "publish_approved": False}))
@@ -104,6 +103,7 @@ def main():
     parser.add_argument("--output", default="output/magic_hour_trial")
     parser.add_argument("--quoted-credits", type=float)
     parser.add_argument("--credit-cap", type=float)
+    parser.add_argument("--model", help="ID verified in this account's image-to-video catalog")
     parser.add_argument("--confirm-trial-credits", action="store_true")
     args = parser.parse_args()
     if not args.live:
