@@ -96,3 +96,31 @@ python -m oneflow.magic_hour_trial --live \
   --confirm-trial-credits
 ```
 Optional `--model` must be an exact image-to-video model ID verified in the signed-in account. The provider response and clip are **not** declared visually or commercially approved. API integration has not been live-tested and should not be merged until a real small test confirms the endpoint, SDK and cost policy. Magic Hour's public MCP endpoint is `https://mcp.magichour.ai/`; it is not connected in this conversation.
+
+## Update: user-provided Magic Hour SDK snippet validated and integrated (2026-11-01)
+
+Confirmed against the official current Python SDK and API:
+- `Client(token=os.getenv("MAGIC_HOUR_API_KEY"))` and `client.v1.image_to_video.generate(...)` are valid.
+- `model="ltx-2.5"` supports **14 seconds** by API model schema (integer 1–60), and `resolution="480p"` is supported. Whether a **free** account can run a 14s job depends on its actual account privileges; web free previews may be shorter.
+- `assets.image_file_path` MUST point to the **genuine final frame** of `1000023067.mp4` for this assignment, not the public sunset example image.
+- Audio is requested with `audio=True`, supported for LTX-2.5 with no extra audio credit multiplier in the published API schema; output audio quality still needs review.
+- The source video is 4:3; the LTX-2.5 model advertises native 16:9, 9:16 and 1:1. Avoid claiming seamless 4:3 until aspect ratio, motion and crop continuity have been reviewed and conformed in post.
+- `GET https://api.magichour.ai/v1/account` is read-only and returns an available `credits` field; check this before generation.
+- Never rerun a generation after a timeout until the original project status is checked; account credits may have already been deducted.
+
+The adapter now provides `--source-video` to extract a true last decoded frame using FFmpeg, or `--source-frame` for an already extracted frame. It calls the official SDK with the exact model, 14s length, 480p, `audio=True`, `wait_for_completion=True` and `download_outputs=True`. It writes a local run manifest with the provider project ID, charged credits and returned local paths and keeps **publication blocked**.
+
+```bash
+pip install magic_hour
+# Configure MAGIC_HOUR_API_KEY in a secure local environment (never paste in chat).
+python -m oneflow.magic_hour_trial --live \
+  --source-video /private/media/1000023067.mp4 \
+  --output /private/output/apex_motion_14s \
+  --quoted-credits YOUR_ACCOUNT_MODEL_QUOTE \
+  --credit-cap YOUR_APPROVED_LIMIT \
+  --confirm-trial-credits
+```
+
+**Status:** The connected ChatGPT execution runtime does not have `MAGIC_HOUR_API_KEY`; the SDK is not preinstalled; therefore only the offline plan and mocked API contract can be tested here. No 14s video was generated or downloaded. Do not merge PR to main until actual authenticated low-risk test succeeds.
+
+References: https://magichour.ai/api/ltx-2-5 | https://github.com/magichourhq/magic-hour-python | https://help.magichour.ai/en/articles/8350794-api-pricing-calculator-and-usage-based-billing
