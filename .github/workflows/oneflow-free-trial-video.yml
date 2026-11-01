@@ -1,0 +1,38 @@
+name: OneFlow Free Trial I2V (safe plan, no paid model calls)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "oneflow/nodaro_trial.py"
+      - "tests/test_nodaro_trial.py"
+      - ".github/workflows/oneflow-free-trial-video.yml"
+      - "docs/oneflow-free-trial-video.md"
+
+permissions:
+  contents: read
+
+jobs:
+  safe-offline-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify adapter contract
+        run: python -m unittest tests.test_nodaro_trial -v
+      - name: Produce 14-second 4+4+4+2 shot plan (no remote call)
+        run: |
+          python -m oneflow.nodaro_trial > nodaro-14s-plan.json
+          python - <<'PY'
+          import json
+          p=json.load(open("nodaro-14s-plan.json"))
+          assert p["status"] == "PLAN_NOT_RENDERED"
+          assert sum(shot["seconds"] for shot in p["shots"]) == 14
+          assert all(shot["resolution"] == "480p" for shot in p["shots"])
+          assert not p["publish_approved"]
+          print("PASS: offline storyboard only; credits spent = 0")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oneflow-free-trial-video-PLAN-NOT-RENDERED
+          path: nodaro-14s-plan.json
+          retention-days: 7
