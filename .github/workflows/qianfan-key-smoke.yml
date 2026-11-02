@@ -1,11 +1,6 @@
 name: Qianfan API key read-only smoke test
 
 on:
-  push:
-    branches:
-      - feature/qianfan-key-smoke-20261102
-    paths:
-      - .github/workflows/qianfan-key-smoke.yml
   pull_request:
     branches:
       - main
