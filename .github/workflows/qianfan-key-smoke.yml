@@ -1,0 +1,77 @@
+name: Qianfan API key read-only smoke test
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/qianfan-key-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-qianfan-key:
+    name: Verify API Key with GET /v2/models (no inference)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate key presence and model-list authentication
+        shell: bash
+        env:
+          QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+          import urllib.error
+          import urllib.request
+
+          key = os.environ.get("QIANFAN_API_KEY", "")
+          if not key.strip():
+              print("FAIL: QIANFAN_API_KEY is absent/empty in this workflow's repository Secrets.")
+              sys.exit(2)
+
+          print("Secret provided by GitHub Actions: yes (value intentionally hidden).")
+          print("Validation: GET https://qianfan.baidubce.com/v2/models")
+          print("No chat, image, video, or other inference requests will be made.")
+          request = urllib.request.Request(
+              "https://qianfan.baidubce.com/v2/models",
+              headers={"Authorization": "Bearer " + key, "Accept": "application/json"},
+              method="GET",
+          )
+          try:
+              with urllib.request.urlopen(request, timeout=20) as response:
+                  code = response.status
+                  raw = response.read(1024 * 1024)
+          except urllib.error.HTTPError as e:
+              # Do not print provider response bodies, request headers or credentials.
+              print(f"FAIL: API returned HTTP {e.code}. Check ModelBuilder permission, V2 key type and app scope.")
+              sys.exit(1)
+          except urllib.error.URLError:
+              print("FAIL: DNS/TLS/network error while contacting official Qianfan endpoint.")
+              sys.exit(1)
+          except TimeoutError:
+              print("FAIL: Qianfan request timed out.")
+              sys.exit(1)
+
+          if code != 200:
+              print(f"FAIL: Unexpected HTTP status {code}.")
+              sys.exit(1)
+          try:
+              data = json.loads(raw)
+          except (ValueError, UnicodeDecodeError):
+              print("FAIL: Got HTTP 200 but response was not valid JSON.")
+              sys.exit(1)
+          if not isinstance(data, dict):
+              print("FAIL: Unexpected JSON response shape.")
+              sys.exit(1)
+          items = data.get("data")
+          if not isinstance(items, list):
+              print("PASS: HTTP 200 and JSON received. Unexpected model list format; verify API docs before enabling generation.")
+          else:
+              print(f"PASS: authenticated model list accessible, {len(items)} entries returned.")
+          print("Secret value never printed. No inference request or media generation was performed.")
+          PY
