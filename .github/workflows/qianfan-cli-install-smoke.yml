@@ -57,9 +57,11 @@ jobs:
         run: |
           qianfan +connect --dry-run
           Write-Output "Skill preview exit code: $LASTEXITCODE"
-          qianfan +connect
-          Write-Output "Skill install exit code: $LASTEXITCODE"
+          qianfan +connect --yes
+          if ($LASTEXITCODE -ne 0) { throw "qianfan +connect --yes failed" }
           qianfan +connect list
-          Write-Output "Skill listing exit code: $LASTEXITCODE"
+          if ($LASTEXITCODE -ne 0) { throw "qianfan +connect list failed" }
+          $skillFiles = @(Get-ChildItem -Path (Join-Path $env:USERPROFILE ".qianfan\skills") -Filter "SKILL.md" -File -Recurse -ErrorAction SilentlyContinue)
+          Write-Output ("Qianfan installed SKILL.md count: " + $skillFiles.Count)
+          if ($skillFiles.Count -lt 1) { throw "Qianfan CLI reported no installed Skill documents" }
           Write-Output "Note: Runner files are temporary and will not install Skills on the phone or a persistent server."
-          exit 0
