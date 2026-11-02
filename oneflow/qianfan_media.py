@@ -1,62 +1,185 @@
-"""Baidu Qianfan image/video async task submitters. No calls without opt-in."""
+"""Baidu Qianfan async image and image-to-video adapters.
+
+Both paid submissions require an explicit allow_paid=True. Reading an existing
+task's status does not create another generation task. No media is written to
+public GitHub Actions artifacts by this module.
+
+Official API references (2026-10-22 video docs):
+https://cloud.baidu.com/doc/qianfan-multimodal/s/8mmt3c9jr
+https://cloud.baidu.com/doc/qianfan-multimodal/s/gmmt3c9im
+https://cloud.baidu.com/doc/qianfan-multimodal/s/fmn5nsoey
+https://cloud.baidu.com/doc/qianfan-multimodal/s/1mn5nsohk
+"""
+import json
 import os
 import re
-import json
+import time
+import urllib.parse
 import urllib.request
+
 
 IMAGE_ENDPOINT = "https://qianfan.baidubce.com/beta/image/qianfan-image-v1"
 VIDEO_ENDPOINT = "https://qianfan.baidubce.com/beta/video/generations/qianfan-video"
+IMAGE_MODELS = ("o1-base", "v3o")
+VIDEO_MODELS = ("VQ2-Turbo", "VQ2-Pro", "VQ3-Turbo", "VQ3-Pro", "VQ4")
+DONE = ("succeed", "success")
+FAILED = ("failed",)
+RUNNING = ("submitted", "processing", "created", "queueing")
+
 
 class MediaTaskError(Exception):
-    pass
+    """Do not propagate raw provider responses or HTTP request headers."""
+
+
+def _key():
+    key = os.environ.get("QIANFAN_API_KEY", "")
+    if not key.strip():
+        raise MediaTaskError("Missing QIANFAN_API_KEY; no request sent")
+    return key
+
+
+def _request(url, key, payload=None, transport=None):
+    body = (json.dumps(payload, ensure_ascii=False).encode("utf-8")
+            if payload is not None else None)
+    headers = {"Authorization": "Bearer " + key, "Accept": "application/json"}
+    if body is not None:
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(url, headers=headers, data=body,
+                                 method="POST" if body is not None else "GET")
+    try:
+        opener = transport or urllib.request.urlopen
+        with opener(req, timeout=45) as response:
+            data = json.load(response)
+    except Exception:
+        # Provider response/HTTP exception may include sensitive URLs.
+        raise MediaTaskError("Qianfan API transport failed; inspect private provider console") from None
+    if not isinstance(data, dict):
+        raise MediaTaskError("Qianfan response was not an object")
+    return data
+
+
+def _task_id(value):
+    if (not isinstance(value, str)
+            or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}", value)):
+        raise MediaTaskError("Invalid Qianfan task ID")
+    return value
+
 
 def submit(kind, *, prompt, model, image_url=None, ratio="9:16",
            duration=5, resolution="1k", allow_paid=False, transport=None):
-    """Submit exactly one potentially billable task; never infer completion."""
+    """Submit ONE potentially billable task. Does not imply generation success."""
     if not allow_paid:
         raise MediaTaskError("Explicit allow_paid=True required; no request sent")
     if kind not in ("image", "video"):
         raise MediaTaskError("kind must be image or video")
-    if not isinstance(prompt, str) or not prompt.strip() or len(prompt)>2500:
-        raise MediaTaskError("Invalid prompt")
+    if not isinstance(prompt, str) or not prompt.strip():
+        raise MediaTaskError("Prompt is required")
     if ratio not in ("9:16", "16:9", "1:1"):
-        raise MediaTaskError("Unsupported aspect ratio")
-    if kind=="image":
-        if model not in ("o1-base", "v3o") or resolution not in ("1k", "2k"):
+        raise MediaTaskError("Unsupported image aspect ratio")
+    if kind == "image":
+        if model not in IMAGE_MODELS or resolution not in ("1k", "2k"):
             raise MediaTaskError("Unsupported image model or resolution")
-        endpoint=IMAGE_ENDPOINT
-        payload={"model":model,"type":"omni","model_parameters":{
-            "prompt":prompt,"resolution":resolution,"aspect_ratio":ratio,
-            "result_type":"single","n":1}}
+        if len(prompt) > 2500:
+            raise MediaTaskError("Image prompt exceeds 2500 characters")
+        endpoint = IMAGE_ENDPOINT
+        payload = {"model": model, "type": "omni", "model_parameters": {
+            "prompt": prompt, "resolution": resolution,
+            "aspect_ratio": ratio, "result_type": "single", "n": 1}}
     else:
-        if model != "qianfan-video-latest":
-            raise MediaTaskError("Unsupported video model")
-        if not isinstance(image_url,str) or not image_url.startswith("https://"):
-            raise MediaTaskError("Image-to-video requires HTTPS image URL")
-        if not isinstance(duration,int) or not 3<=duration<=15:
-            raise MediaTaskError("Duration outside safe 3-15 second test range")
-        raise MediaTaskError("Video payload schema awaiting verification; no paid request sent")
-        endpoint=VIDEO_ENDPOINT
-        payload={"model":model,"type":"img2video","model_parameters":{
-            "prompt":prompt,"images":[image_url],
-            "settings":{"duration":duration,"aspect_ratio":ratio}}}
-    key=os.environ.get("QIANFAN_API_KEY","")
-    if not key.strip():
-        raise MediaTaskError("Missing QIANFAN_API_KEY")
-    req=urllib.request.Request(endpoint,
-        data=json.dumps(payload,ensure_ascii=False).encode("utf-8"),
-        headers={"Authorization":"Bearer "+key,"Content-Type":"application/json"},
-        method="POST")
-    try:
-        opener=transport or urllib.request.urlopen
-        with opener(req,timeout=45) as response:
-            result=json.load(response)
-        if result.get("code")!=0 or not result.get("data",{}).get("task_id"):
-            raise MediaTaskError("Provider did not accept task")
-        return {"task_id":result["data"]["task_id"],
-                "status":result["data"].get("task_status","submitted"),
-                "kind":kind,"model":model}
-    except MediaTaskError:
-        raise
-    except Exception:
-        raise MediaTaskError("Qianfan task submission failed; inspect provider console") from None
+        if model not in VIDEO_MODELS:
+            raise MediaTaskError("Unsupported Qianfan image-to-video model")
+        if len(prompt) > 2000:
+            raise MediaTaskError("Video prompt exceeds 2000 characters")
+        parsed = urllib.parse.urlparse(image_url) if isinstance(image_url, str) else None
+        if (parsed is None or parsed.scheme != "https" or not parsed.hostname
+                or parsed.username or parsed.password):
+            raise MediaTaskError("Image-to-video requires a public HTTPS image URL")
+        max_duration = 16 if model in ("VQ4", "VQ3-Pro", "VQ3-Turbo") else 10
+        if type(duration) is not int or not 1 <= duration <= max_duration:
+            raise MediaTaskError("Invalid duration for selected video model")
+        if resolution not in ("720p", "1080p"):
+            raise MediaTaskError("Choose 720p or 1080p for video")
+        endpoint = VIDEO_ENDPOINT
+        # For video, the first-frame image determines ratio. Do not invent
+        # unsupported video aspect_ratio or settings object.
+        payload = {"model": model, "type": "img2video", "model_parameters": {
+            "images": [image_url], "prompt": prompt, "duration": duration,
+            "resolution": resolution, "audio": False, "bgm": False,
+            "is_rec": False, "watermark": False}}
+    data = _request(endpoint, _key(), payload, transport=transport)
+    if kind == "image":
+        if data.get("code") != 0 or not isinstance(data.get("data"), dict):
+            raise MediaTaskError("Qianfan image generation task not accepted")
+        item = data["data"]
+        task_id = _task_id(item.get("task_id"))
+        status = item.get("task_status", "submitted")
+    else:
+        # Newer VQ API uses top-level task_id/status, unlike image API.
+        task_id = _task_id(data.get("task_id"))
+        status = data.get("status", "created")
+    if status not in DONE + FAILED + RUNNING:
+        raise MediaTaskError("Unrecognized Qianfan task status")
+    return {"kind": kind, "model": model, "task_id": task_id,
+            "status": status}
+
+
+def task_status(kind, task_id, *, model=None, transport=None):
+    """Read status of an ALREADY SUBMITTED task without creating new charges."""
+    task_id = _task_id(task_id)
+    if kind == "image":
+        endpoint = IMAGE_ENDPOINT
+    elif kind == "video":
+        endpoint = VIDEO_ENDPOINT
+        if model is not None and model not in VIDEO_MODELS:
+            raise MediaTaskError("Invalid video model")
+    else:
+        raise MediaTaskError("kind must be image or video")
+    params = {"task_id": task_id}
+    if kind == "video" and model:
+        params["model"] = model
+    data = _request(endpoint + "?" + urllib.parse.urlencode(params), _key(),
+                    transport=transport)
+    if kind == "image":
+        if data.get("code") != 0 or not isinstance(data.get("data"), dict):
+            raise MediaTaskError("Qianfan image status response was not successful")
+        item = data["data"]
+        status = item.get("task_status")
+        result = item.get("task_result") or {}
+        entries = result.get("images") or []
+    else:
+        item = data
+        status = item.get("status")
+        entries = item.get("creations") or []
+    if status not in DONE + FAILED + RUNNING:
+        raise MediaTaskError("Unrecognized Qianfan task status")
+    if not isinstance(entries, list):
+        raise MediaTaskError("Media result is not a list")
+    urls = []
+    if status in DONE:
+        for entry in entries:
+            if isinstance(entry, dict) and isinstance(entry.get("url"), str):
+                url = entry["url"]
+                parsed = urllib.parse.urlparse(url)
+                if parsed.scheme == "https" and parsed.hostname:
+                    urls.append(url)
+        if not urls:
+            raise MediaTaskError("Task marked successful but no HTTPS media result found")
+    return {"kind": kind, "task_id": task_id,
+            "status": status, "result_urls": urls}
+
+
+def wait_for_task(kind, task_id, *, model=None, attempts=12, delay=10,
+                  transport=None, sleep_fn=time.sleep):
+    """Bounded polling. No re-submission. Returns pending state at timeout."""
+    if type(attempts) is not int or not 1 <= attempts <= 60:
+        raise MediaTaskError("Invalid maximum poll attempts")
+    if not isinstance(delay, (int, float)) or not 0 <= delay <= 60:
+        raise MediaTaskError("Invalid poll delay")
+    last = None
+    for number in range(attempts):
+        last = task_status(kind, task_id, model=model, transport=transport)
+        if last["status"] in DONE + FAILED:
+            return last
+        if number < attempts - 1:
+            sleep_fn(delay)
+    return last
