@@ -9,6 +9,8 @@ on:
       - oneflow/qianfan_i2v.py
       - oneflow/qianfan_media.py
       - tests/test_qianfan_i2v.py
+      - tests/test_qianfan_media.py
+      - tests/test_musesteamer_air.py
       - tests/test_douyin_publisher.py
       - oneflow/douyin_publisher.py
   pull_request:
@@ -19,6 +21,8 @@ on:
       - oneflow/qianfan_i2v.py
       - oneflow/qianfan_media.py
       - tests/test_qianfan_i2v.py
+      - tests/test_qianfan_media.py
+      - tests/test_musesteamer_air.py
   workflow_dispatch:
     inputs:
       brief:
@@ -32,14 +36,15 @@ on:
         required: false
         default: ''
       model:
-        description: 'Video model; VQ2-Turbo uses original synthesized SFX, VQ3-Turbo includes model audio'
+        description: 'MuseSteamer-Air-I2V: 5s low-cost video, synthetic SFX. VQ3-Turbo has embedded audio.'
         type: choice
         options:
+          - musesteamer-air-i2v
           - VQ2-Turbo
           - VQ3-Turbo
-        default: VQ2-Turbo
+        default: musesteamer-air-i2v
       confirm_paid:
-        description: 'I checked Baidu account entitlement and price; I authorize ONE paid 5s generation'
+        description: 'I authorize ONE billable 5-second generation; this action will NOT publish to Douyin'
         type: boolean
         required: true
         default: false
@@ -72,6 +77,8 @@ jobs:
         run: |
           set -e
           python -m compileall -q oneflow
+          python -m unittest discover -s tests -p 'test_qianfan_media.py' -v
+          python -m unittest discover -s tests -p 'test_musesteamer_air.py' -v
           python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
           python -m unittest discover -s tests -p 'test_douyin_publisher.py' -v
       - name: Create a one-sentence public draft (no paid requests)
@@ -82,7 +89,7 @@ jobs:
           set -euo pipefail
           python -m oneflow.qianfan_i2v run --brief "$BRIEF" \
             --first-frame-url "https://example.com/synthetic-reference-only.jpg" \
-            --seconds 5 --ratio 16:9 --model VQ2-Turbo \
+            --seconds 5 --ratio 16:9 --model musesteamer-air-i2v \
             --out "$RUNNER_TEMP/i2v-offline" --platform douyin
           echo "Offline plan created; no Qianfan API request was sent."
 
@@ -110,7 +117,7 @@ jobs:
           echo "Reference URL provided; only an explicit, approved PUBLIC image is supported in public Actions."
       - name: Install CJK watermark font
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
-      - name: Submit ONE VQ model task and await video, audit, watermark
+      - name: Submit ONE explicitly approved model task and audit video with watermark
         env:
           QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
           BRIEF: ${{ inputs.brief }}
