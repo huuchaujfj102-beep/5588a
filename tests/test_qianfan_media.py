@@ -31,17 +31,14 @@ class MediaTests(unittest.TestCase):
         self.assertEqual(payload["type"],"omni")
         self.assertEqual(payload["model_parameters"]["n"],1)
 
-    def test_video_submission_mock(self):
-        urls=[]
-        def fake(req,timeout):
-            urls.append(req.full_url)
-            return Response(json.dumps({"code":0,"data":{"task_id":"video-123"}}).encode())
+    def test_video_is_safely_blocked_until_schema_confirmed(self):
         with patch.dict(os.environ,{"QIANFAN_API_KEY":"fake-test-only"}):
-            result=submit("video",prompt="slow cinematic movement",
-                model="qianfan-video-latest",image_url="https://example.com/car.png",
-                allow_paid=True,transport=fake)
-        self.assertEqual(result["task_id"],"video-123")
-        self.assertEqual(urls,[VIDEO_ENDPOINT])
+            with patch("urllib.request.urlopen") as call:
+                with self.assertRaisesRegex(MediaTaskError,"awaiting verification"):
+                    submit("video",prompt="slow cinematic movement",
+                        model="qianfan-video-latest",
+                        image_url="https://example.com/car.png",allow_paid=True)
+                call.assert_not_called()
 
     def test_bad_inputs_never_send(self):
         with patch("urllib.request.urlopen") as call,patch.dict(os.environ,{"QIANFAN_API_KEY":"fake"}):
