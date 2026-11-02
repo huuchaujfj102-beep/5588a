@@ -1,0 +1,13 @@
+{
+  "_notice": "EXAMPLE ONLY. Replace model with an enabled Qianfan text model ID. --live-plan explicitly invokes a possibly billed text-generation API. Never put credentials in config.",
+  "commercial": true,
+  "story": {
+    "kind": "qianfan",
+    "model": "REPLACE_WITH_ENABLED_MODEL_ID",
+    "max_tokens": 3072,
+    "timeout": 120
+  },
+  "image": [],
+  "video": [],
+  "audio": []
+}

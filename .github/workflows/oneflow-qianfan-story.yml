@@ -1,0 +1,85 @@
+name: Qianfan ERNIE storyboard manual test (opt-in billing)
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_id:
+        description: 'Enabled Qianfan chat model ID (example: ernie-5.1)'
+        type: string
+        required: true
+        default: 'ernie-5.1'
+      confirm_paid_request:
+        description: 'I explicitly authorize ONE potentially billed ERNIE chat request using a PUBLIC TEST PROMPT'
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qianfan-storyboard-manual
+  cancel-in-progress: false
+
+jobs:
+  text-only-storyboard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Prevent accidental charges
+        if: ${{ !inputs.confirm_paid_request }}
+        run: echo "Cost opt-in not provided. No model inference request will run."
+
+      - name: Checkout vetted code
+        if: ${{ inputs.confirm_paid_request }}
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        if: ${{ inputs.confirm_paid_request }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate fictional sample storyboard (one request; may incur charges)
+        if: ${{ inputs.confirm_paid_request }}
+        env:
+          MODEL_ID: ${{ inputs.model_id }}
+          QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$QIANFAN_API_KEY" ]]; then
+            echo "QIANFAN_API_KEY missing; no request sent"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          dest = Path(os.environ["RUNNER_TEMP"]) / "oneflow-qianfan-config.json"
+          dest.write_text(json.dumps({
+            "story": {
+              "kind": "qianfan",
+              "model": os.environ["MODEL_ID"],
+              "max_tokens": 2048,
+              "timeout": 120
+            }
+          }), encoding="utf-8")
+          PY
+          python -m oneflow run \
+            --prompt "原创15秒概念超跑短片：夕阳下启动、疾驰、尾灯两侧喷射蓝焰，只有原创引擎和气流音效，不要旁白。仅用于公开测试。" \
+            --seconds 15 --ratio 9:16 \
+            --config "$RUNNER_TEMP/oneflow-qianfan-config.json" \
+            --out "$RUNNER_TEMP/qianfan-public-test" \
+            --live-plan
+
+      - name: Upload public-safe storyboard preview
+        if: ${{ success() && inputs.confirm_paid_request }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: qianfan-public-test-storyboard
+          path: ${{ runner.temp }}/qianfan-public-test/
+          retention-days: 1
+          if-no-files-found: error
