@@ -1,0 +1,125 @@
+name: Qianfan One-Sentence I2V -> MP4 -> Audit (opt-in)
+
+on:
+  push:
+    branches:
+      - feature/qianfan-i2v-oneflow-v1-20261102
+    paths:
+      - .github/workflows/qianfan-i2v-oneflow.yml
+      - oneflow/qianfan_i2v.py
+      - oneflow/qianfan_media.py
+      - tests/test_qianfan_i2v.py
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/qianfan-i2v-oneflow.yml
+      - oneflow/qianfan_i2v.py
+      - oneflow/qianfan_media.py
+      - tests/test_qianfan_i2v.py
+  workflow_dispatch:
+    inputs:
+      brief:
+        description: 'PUBLIC, fictional video brief; visible in GitHub Actions logs'
+        type: string
+        required: true
+        default: 'Same dark silver concept supercar launches and speeds forward on the sunset road. Actual moving wheels, unmistakable acceleration, no dialogue.'
+      public_first_frame_url:
+        description: 'PUBLIC direct HTTPS JPG/PNG/WebP reference image URL, accessible to Baidu; never enter private content'
+        type: string
+        required: false
+        default: ''
+      model:
+        description: 'Video model; VQ2-Turbo uses original synthesized SFX, VQ3-Turbo includes model audio'
+        type: choice
+        options:
+          - VQ2-Turbo
+          - VQ3-Turbo
+        default: VQ2-Turbo
+      confirm_paid:
+        description: 'I checked Baidu account entitlement and price; I authorize ONE paid 5s generation'
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qianfan-one-sentence-i2v-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  offline-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check Python code without provider/network
+        run: python -m compileall -q oneflow && python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
+      - name: Create a one-sentence public draft (no paid requests)
+        env:
+          BRIEF: ${{ inputs.brief || 'Original single supercar accelerates forward through sunset, no morphing.' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m oneflow.qianfan_i2v run --brief "$BRIEF" \
+            --first-frame-url "https://example.com/synthetic-reference-only.jpg" \
+            --seconds 5 --ratio 16:9 --model VQ2-Turbo \
+            --out "$RUNNER_TEMP/i2v-offline" --platform douyin
+          echo "Offline plan created; no Qianfan API request was sent."
+
+  live-video:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_paid }}
+    needs: offline-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check that live first-frame URL is present (before model submission)
+        env:
+          FRAME: ${{ inputs.public_first_frame_url }}
+        shell: bash
+        run: |
+          if [[ -z "$FRAME" ]]; then
+            echo "Public first frame required for live run. No model request sent."
+            exit 1
+          fi
+          echo "Reference URL provided; only an explicit, approved PUBLIC image is supported in public Actions."
+      - name: Install CJK watermark font
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - name: Submit ONE VQ model task and await video, audit, watermark
+        env:
+          QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+          BRIEF: ${{ inputs.brief }}
+          FRAME: ${{ inputs.public_first_frame_url }}
+          MODEL: ${{ inputs.model }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$QIANFAN_API_KEY" ]]; then echo "QIANFAN_API_KEY absent"; exit 1; fi
+          SOUND="synthetic"
+          if [[ "$MODEL" == "VQ3-Turbo" ]]; then SOUND="embedded"; fi
+          python -m oneflow.qianfan_i2v run \
+            --brief "$BRIEF" --first-frame-url "$FRAME" \
+            --seconds 5 --ratio 16:9 --resolution 720p \
+            --model "$MODEL" --sound "$SOUND" \
+            --platform douyin --out "$RUNNER_TEMP/i2v-public-test" --confirm-paid
+      - name: Export publicly safe result for human review
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: qianfan-i2v-public-test-output
+          path: ${{ runner.temp }}/i2v-public-test/
+          retention-days: 1
+          if-no-files-found: ignore
