@@ -62,8 +62,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Check Python code without provider/network
-        run: python -m compileall -q oneflow && python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v && python -m unittest discover -s tests -p 'test_douyin_publisher.py' -v
+      - name: Install real FFmpeg and CJK font for CPU media QC
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Check Python code and FULL CPU video synthesis/test without model requests
+        run: |
+          set -e
+          python -m compileall -q oneflow
+          python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
+          python -m unittest discover -s tests -p 'test_douyin_publisher.py' -v
       - name: Create a one-sentence public draft (no paid requests)
         env:
           BRIEF: ${{ inputs.brief || 'Original single supercar accelerates forward through sunset, no morphing.' }}
