@@ -9,6 +9,8 @@ on:
       - oneflow/qianfan_i2v.py
       - oneflow/qianfan_media.py
       - tests/test_qianfan_i2v.py
+      - tests/test_qianfan_media.py
+      - tests/test_musesteamer_air.py
       - tests/test_douyin_publisher.py
       - oneflow/douyin_publisher.py
   pull_request:
@@ -19,6 +21,8 @@ on:
       - oneflow/qianfan_i2v.py
       - oneflow/qianfan_media.py
       - tests/test_qianfan_i2v.py
+      - tests/test_qianfan_media.py
+      - tests/test_musesteamer_air.py
   workflow_dispatch:
     inputs:
       brief:
@@ -31,21 +35,38 @@ on:
         type: string
         required: false
         default: ''
+      source_image_run_id:
+        description: 'Optional: successful MANUAL OneFlow image generation run ID on main. No public image URL required.'
+        type: string
+        required: false
+        default: ''
+      generate_cloudflare_first_frame:
+        description: 'One-sentence mode: generate exactly ONE Cloudflare FLUX first frame inside this job'
+        type: boolean
+        required: true
+        default: false
+      confirm_cloudflare_workers_free:
+        description: 'Cloudflare mode only: confirm Workers Free tier and available free daily quota'
+        type: boolean
+        required: true
+        default: false
       model:
-        description: 'Video model; VQ2-Turbo uses original synthesized SFX, VQ3-Turbo includes model audio'
+        description: 'MuseSteamer-Air-I2V: 5s low-cost video, synthetic SFX. VQ3-Turbo has embedded audio.'
         type: choice
         options:
+          - musesteamer-air-i2v
           - VQ2-Turbo
           - VQ3-Turbo
-        default: VQ2-Turbo
+        default: musesteamer-air-i2v
       confirm_paid:
-        description: 'I checked Baidu account entitlement and price; I authorize ONE paid 5s generation'
+        description: 'I authorize ONE billable 5-second generation; this action will NOT publish to Douyin'
         type: boolean
         required: true
         default: false
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: qianfan-one-sentence-i2v-${{ github.ref }}
@@ -72,6 +93,8 @@ jobs:
         run: |
           set -e
           python -m compileall -q oneflow
+          python -m unittest discover -s tests -p 'test_qianfan_media.py' -v
+          python -m unittest discover -s tests -p 'test_musesteamer_air.py' -v
           python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
           python -m unittest discover -s tests -p 'test_douyin_publisher.py' -v
       - name: Create a one-sentence public draft (no paid requests)
@@ -82,7 +105,7 @@ jobs:
           set -euo pipefail
           python -m oneflow.qianfan_i2v run --brief "$BRIEF" \
             --first-frame-url "https://example.com/synthetic-reference-only.jpg" \
-            --seconds 5 --ratio 16:9 --model VQ2-Turbo \
+            --seconds 5 --ratio 16:9 --model musesteamer-air-i2v \
             --out "$RUNNER_TEMP/i2v-offline" --platform douyin
           echo "Offline plan created; no Qianfan API request was sent."
 
@@ -98,23 +121,124 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Check that live first-frame URL is present (before model submission)
+      - name: Verify exactly one approved frame source before any paid request
         env:
           FRAME: ${{ inputs.public_first_frame_url }}
+          SOURCE_RUN_ID: ${{ inputs.source_image_run_id }}
+          GENERATE_CF: ${{ inputs.generate_cloudflare_first_frame }}
+          CONFIRM_CF_FREE: ${{ inputs.confirm_cloudflare_workers_free }}
         shell: bash
         run: |
-          if [[ -z "$FRAME" ]]; then
-            echo "Public first frame required for live run. No model request sent."
-            exit 1
+          set -euo pipefail
+          SOURCE_COUNT=0
+          [[ -n "$FRAME" ]] && SOURCE_COUNT=$((SOURCE_COUNT+1))
+          [[ -n "$SOURCE_RUN_ID" ]] && SOURCE_COUNT=$((SOURCE_COUNT+1))
+          [[ "$GENERATE_CF" == "true" ]] && SOURCE_COUNT=$((SOURCE_COUNT+1))
+          if [[ "$SOURCE_COUNT" -ne 1 ]]; then
+            echo "Choose EXACTLY one: public image URL, previous image run ID, OR generate Cloudflare first frame." >&2
+            exit 2
           fi
-          echo "Reference URL provided; only an explicit, approved PUBLIC image is supported in public Actions."
+          if [[ "$GENERATE_CF" == "true" && "$CONFIRM_CF_FREE" != "true" ]]; then
+            echo "Cloudflare Workers Free confirmation required; no paid video request made." >&2
+            exit 2
+          fi
+          if [[ -n "$FRAME" && ! "$FRAME" =~ ^https:// ]]; then
+            echo "First frame must be public HTTPS. No billable request made." >&2; exit 2
+          fi
+          if [[ -n "$SOURCE_RUN_ID" && ! "$SOURCE_RUN_ID" =~ ^[0-9]{8,16}$ ]]; then
+            echo "Invalid source image run ID. No billable request made." >&2; exit 2
+          fi
+      - name: Check image run provenance and a single image artifact
+        if: ${{ inputs.source_image_run_id != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN_ID: ${{ inputs.source_image_run_id }}
+          SOURCE_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$SOURCE_REPO/actions/runs/$SOURCE_RUN_ID" > "$RUNNER_TEMP/source-run.json"
+          jq -e --arg repo "$SOURCE_REPO" '
+            .head_repository.full_name == $repo
+            and .head_branch == "main"
+            and .event == "workflow_dispatch"
+            and .conclusion == "success"
+            and (.path | startswith(".github/workflows/oneflow-generate-image.yml"))' "$RUNNER_TEMP/source-run.json" >/dev/null
+          gh api "repos/$SOURCE_REPO/actions/runs/$SOURCE_RUN_ID/artifacts" > "$RUNNER_TEMP/artifacts.json"
+          jq -e '[.artifacts[] | select(.expired == false) | select(.name | test("^oneflow-(real-FLUX|ovh-FREE|cloudflare-FLUX-free)-.*S01-"))] | length == 1' "$RUNNER_TEMP/artifacts.json" >/dev/null
+      - name: Download approved generated image (never published to image host)
+        if: ${{ inputs.source_image_run_id != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_image_run_id }}
+          github-token: ${{ github.token }}
+          pattern: oneflow-*
+          merge-multiple: true
+          path: ${{ runner.temp }}/reference
+      - name: Validate artifact source image locally before any paid model call
+        if: ${{ inputs.source_image_run_id != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'Pillow>=11,<13'
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from PIL import Image
+          root = Path(os.environ["RUNNER_TEMP"]) / "reference"
+          images = list(root.rglob("S01.png"))
+          if len(images) != 1:
+              raise SystemExit("Expected exactly one S01.png; no billable request.")
+          image = images[0]
+          if not 64 <= image.stat().st_size <= 9_000_000:
+              raise SystemExit("Image size outside 64B..9MB; no billable request.")
+          with Image.open(image) as im:
+              im.verify()
+          with Image.open(image) as im:
+              if min(im.size) < 300 or im.format != "PNG":
+                  raise SystemExit("First frame is invalid/small; no billable request.")
+          print("Verified first frame with PNG dimensions >=300px.")
+          PY
+      - name: Generate one original Cloudflare FLUX first frame (only after explicit Free confirmation)
+        if: ${{ inputs.generate_cloudflare_first_frame }}
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BRIEF: ${{ inputs.brief }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ -n "$CLOUDFLARE_ACCOUNT_ID" && -n "$CLOUDFLARE_API_TOKEN" ]] || {
+            echo "Cloudflare credentials absent; paid video request will not start." >&2
+            exit 2
+          }
+          python -m pip install 'Pillow>=11,<13'
+          python -m oneflow.cloudflare_free_image --brief "$BRIEF" --shot S01 --steps 4 \
+            --output "$RUNNER_TEMP/reference" --approve-free-test --confirm-workers-free
+          test -s "$RUNNER_TEMP/reference/S01.png"
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from PIL import Image
+          path = Path(os.environ["RUNNER_TEMP"]) / "reference" / "S01.png"
+          if not 64 <= path.stat().st_size <= 9_000_000:
+              raise SystemExit("Cloudflare image outside 64B..9MB; video not billed")
+          with Image.open(path) as image:
+              image.verify()
+          with Image.open(path) as image:
+              if min(image.size) < 300 or image.format != "PNG":
+                  raise SystemExit("Cloudflare image dimension/format invalid; video not billed")
+          print("Verified original Cloudflare first frame, ready for MuseSteamer.")
+          PY
       - name: Install CJK watermark font
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
-      - name: Submit ONE VQ model task and await video, audit, watermark
+      - name: Submit ONE explicitly approved model task and audit video with watermark
         env:
           QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
           BRIEF: ${{ inputs.brief }}
           FRAME: ${{ inputs.public_first_frame_url }}
+          SOURCE_RUN_ID: ${{ inputs.source_image_run_id }}
+          GENERATE_CF: ${{ inputs.generate_cloudflare_first_frame }}
           MODEL: ${{ inputs.model }}
         shell: bash
         run: |
@@ -122,8 +246,13 @@ jobs:
           if [[ -z "$QIANFAN_API_KEY" ]]; then echo "QIANFAN_API_KEY absent"; exit 1; fi
           SOUND="synthetic"
           if [[ "$MODEL" == "VQ3-Turbo" ]]; then SOUND="embedded"; fi
+          if [[ -n "$SOURCE_RUN_ID" || "$GENERATE_CF" == "true" ]]; then
+            FRAME_ARG=(--first-frame-file "$RUNNER_TEMP/reference/S01.png")
+          else
+            FRAME_ARG=(--first-frame-url "$FRAME")
+          fi
           python -m oneflow.qianfan_i2v run \
-            --brief "$BRIEF" --first-frame-url "$FRAME" \
+            --brief "$BRIEF" "${FRAME_ARG[@]}" \
             --seconds 5 --ratio 16:9 --resolution 720p \
             --model "$MODEL" --sound "$SOUND" \
             --platform douyin --out "$RUNNER_TEMP/i2v-public-test" --confirm-paid

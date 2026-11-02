@@ -1,0 +1,170 @@
+name: OneFlow reviewed I2V -> Douyin (opt-in OAuth, human approval)
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_video_run_id:
+        description: 'Successful MANUAL Qianfan OneFlow video run ID on main'
+        type: string
+        required: true
+      reviewer:
+        description: 'Real human reviewer name/handle (shown in public workflow metadata)'
+        type: string
+        required: true
+      visual_attested:
+        description: 'I personally watched the MP4 and verified identity, motion, watermarks and safety'
+        type: boolean
+        required: true
+        default: false
+      rights_attested:
+        description: 'I personally checked copyright, music, image rights and commercial use'
+        type: boolean
+        required: true
+        default: false
+      visibility:
+        description: 'Default upload is private (self-visible); public is a separately confirmed action'
+        type: choice
+        options: [private, public]
+        required: true
+        default: private
+      consent_upload:
+        description: 'I consent to ONE Douyin upload/create API transaction with my authorized account'
+        type: boolean
+        required: true
+        default: false
+      confirm_public:
+        description: 'Required ONLY for public visibility: I authorize a public Douyin submission'
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+
+concurrency:
+  group: oneflow-douyin-source-${{ inputs.source_video_run_id }}
+  cancel-in-progress: false
+
+jobs:
+  approved-douyin-post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    # Optional: configure required reviewers for this environment in Settings.
+    environment: douyin-reviewed-post
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN_ID: ${{ inputs.source_video_run_id }}
+      SOURCE_REPO: ${{ github.repository }}
+      REVIEWER: ${{ inputs.reviewer }}
+      VISIBILITY: ${{ inputs.visibility }}
+      DOUYIN_ACCESS_TOKEN: ${{ secrets.DOUYIN_ACCESS_TOKEN }}
+      DOUYIN_OPEN_ID: ${{ secrets.DOUYIN_OPEN_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Confirm independent visual/rights consent and provider OAuth
+        env:
+          VISUAL: ${{ inputs.visual_attested }}
+          RIGHTS: ${{ inputs.rights_attested }}
+          CONSENT: ${{ inputs.consent_upload }}
+          PUBLIC_CONFIRM: ${{ inputs.confirm_public }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$VISUAL" == "true" && "$RIGHTS" == "true" && "$CONSENT" == "true" ]] || {
+            echo "Human review and explicit posting consent are required. No API call made." >&2
+            exit 2
+          }
+          [[ -n "$REVIEWER" && -n "$DOUYIN_ACCESS_TOKEN" && -n "$DOUYIN_OPEN_ID" ]] || {
+            echo "Reviewer and Douyin OAuth secrets are required. No API call made." >&2
+            exit 2
+          }
+          [[ "$SOURCE_RUN_ID" =~ ^[0-9]{8,16}$ ]] || {
+            echo "Invalid source run ID. No API call made." >&2; exit 2
+          }
+          if [[ "$VISIBILITY" == "public" && "$PUBLIC_CONFIRM" != "true" ]]; then
+            echo "Public posting requires separate public approval. No API call made." >&2; exit 2
+          fi
+      - name: Check provenance of reviewed video and original generation run
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$SOURCE_REPO/actions/runs/$SOURCE_RUN_ID" > "$RUNNER_TEMP/source-run.json"
+          jq -e --arg repo "$SOURCE_REPO" '
+            .head_repository.full_name == $repo
+            and .head_branch == "main"
+            and .event == "workflow_dispatch"
+            and .conclusion == "success"
+            and (.path | startswith(".github/workflows/qianfan-i2v-oneflow.yml"))' "$RUNNER_TEMP/source-run.json" >/dev/null
+          gh api "repos/$SOURCE_REPO/actions/runs/$SOURCE_RUN_ID/artifacts" > "$RUNNER_TEMP/artifacts.json"
+          jq -e '[.artifacts[] | select(.expired == false and .name == "qianfan-i2v-public-test-output")] | length == 1' "$RUNNER_TEMP/artifacts.json" >/dev/null
+      - name: Download exact previously audited media artifact
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_video_run_id }}
+          github-token: ${{ github.token }}
+          name: qianfan-i2v-public-test-output
+          path: ${{ runner.temp }}/source-i2v
+      - name: Check SHA, existing QC and one immutable job before publish
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from oneflow.core import digest
+          root = Path(os.environ["RUNNER_TEMP"]) / "source-i2v"
+          files = list(root.rglob("manifest.json"))
+          if len(files) != 1:
+              raise SystemExit("Expected exactly one previously created OneFlow manifest")
+          job = files[0].parent
+          manifest = json.loads(files[0].read_text())
+          qc = json.loads((job / "qc.json").read_text())
+          if manifest.get("status") != "AWAITING_HUMAN_REVIEW":
+              raise SystemExit("Source is not a completed, human-reviewable render")
+          if "douyin" not in manifest.get("platforms", []):
+              raise SystemExit("Original generation job did not authorize Douyin target")
+          if qc.get("status") != "REVIEW_REQUIRED" or digest(job / manifest["render"]) != qc.get("video_sha256"):
+              raise SystemExit("The MP4 and audited hash do not match")
+          with open(os.environ["GITHUB_ENV"], "a") as f:
+              f.write("ONEFLOW_JOB_DIR=" + str(job) + "\n")
+          print("One audited MP4 and checksum verified. Human attestation required.")
+          PY
+      - name: Create durable no-retry marker before contacting Douyin
+        shell: bash
+        run: |
+          set -euo pipefail
+          MARKER="oneflow-douyin-source-$SOURCE_RUN_ID"
+          # Fail closed if this source has EVER been submitted; prevent duplicate
+          # account posts even if a GitHub Actions run is restarted.
+          gh api -X GET search/issues -f q="repo:$SOURCE_REPO in:title $MARKER" > "$RUNNER_TEMP/source-marker-search.json"
+          jq -e --arg marker "$MARKER" '[.items[] | select(.title == $marker)] | length == 0' "$RUNNER_TEMP/source-marker-search.json" >/dev/null || {
+            echo "Existing publish attempt marker; reconcile with Douyin before another submission." >&2
+            exit 2
+          }
+          gh api "repos/$SOURCE_REPO/issues" -f title="$MARKER" -f body="Private/public Douyin posting attempt reserved for source Actions run $SOURCE_RUN_ID. This marker is CREATED BEFORE the external API request to block accidental duplicates. On failure reconcile manually. No secrets or media content." >/dev/null
+      - name: Attest reviewed MP4 and submit one official Douyin video
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m oneflow approve --job "$ONEFLOW_JOB_DIR" --reviewer "$REVIEWER" --visual-attested --rights-attested
+          if [[ "$VISIBILITY" == "public" ]]; then
+            python -m oneflow.douyin_publisher --job "$ONEFLOW_JOB_DIR" --consent-public-post --confirm-public
+          else
+            python -m oneflow.douyin_publisher --job "$ONEFLOW_JOB_DIR" --consent-private-upload
+          fi
+      - name: Preserve private posting attempt state for reconciliation
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: douyin-publish-state-${{ inputs.source_video_run_id }}-${{ github.run_id }}
+          path: ${{ env.ONEFLOW_JOB_DIR }}/manifest.json
+          retention-days: 7
+          if-no-files-found: ignore

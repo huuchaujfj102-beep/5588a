@@ -32,6 +32,7 @@ PRICES_RMB_FIVE_SECONDS = {
     "VQ2-Turbo": {"720p": 1.25},
     "VQ2-Pro": {"720p": 1.71875},
     "VQ3-Turbo": {"720p": 1.875},  # 0.375 yuan/second; estimate
+    "musesteamer-air-i2v": {"720p": 1.0},  # fixed 5s job; output pixels determined by model
 }
 MAX_MEDIA_BYTES = 150_000_000
 
@@ -197,17 +198,19 @@ def _watermark_mp4(path, font_path=None):
 def plan(brief, first_frame, *, seconds=5, ratio="9:16", model="VQ2-Turbo",
          resolution="720p", sound="synthetic", platforms=(), out_root="private-inputs/oneflow-jobs",
          enable_watermark=True):
-    """Zero-cost job plan. 3-5 seconds currently supported as one shot."""
+    """Zero-cost job plan. MuseSteamer is fixed at 5s; VQ pilot accepts 3-5s."""
     if type(seconds) is not int or not 3 <= seconds <= 5:
         raise FlowError("Current verified Qianfan OneFlow pilot supports a single 3-5 second shot")
-    if model not in ("VQ2-Turbo", "VQ2-Pro", "VQ3-Turbo"):
-        raise FlowError("Pilot accepts VQ2-Turbo, VQ2-Pro or VQ3-Turbo")
+    if model not in ("VQ2-Turbo", "VQ2-Pro", "VQ3-Turbo", "musesteamer-air-i2v"):
+        raise FlowError("Pilot accepts VQ2/VQ3 or musesteamer-air-i2v")
+    if model == "musesteamer-air-i2v" and seconds != 5:
+        raise FlowError("MuseSteamer Air I2V currently supports exactly 5 seconds")
     if resolution != "720p":
         raise FlowError("Pilot resolution is 720p; output may be upscaled by FFmpeg")
     if sound not in ("synthetic", "embedded"):
         raise FlowError("Choose synthetic or embedded audio")
     if sound == "embedded" and model not in ("VQ3-Turbo",):
-        raise FlowError("Pilot embedded audio requires VQ3-Turbo")
+        raise FlowError("Pilot embedded audio requires VQ3-Turbo; MuseSteamer uses synthetic SFX")
     if not first_frame or not isinstance(first_frame, str):
         raise FlowError("A first-frame image URL or local image file is required")
     file = Path(first_frame)
@@ -308,7 +311,7 @@ def resume(job, *, attempts=30, delay=10, fetcher=None, watermark=None):
         manifest["status"] = "FAILED"
         save_json(root / "manifest.json", manifest)
         raise FlowError("Qianfan video task failed; do not retry payment automatically")
-    if latest["status"] not in ("success", "succeed"):
+    if latest["status"] not in ("success", "succeed", "succeeded"):
         manifest["status"] = "VIDEO_PENDING"
         save_json(root / "manifest.json", manifest)
         return "VIDEO_PENDING"
@@ -359,7 +362,7 @@ def main(argv=None):
     src.add_argument("--first-frame-file")
     start.add_argument("--seconds", type=int, default=5)
     start.add_argument("--ratio", default="9:16")
-    start.add_argument("--model", default="VQ2-Turbo")
+    start.add_argument("--model", default="musesteamer-air-i2v")
     start.add_argument("--resolution", default="720p")
     start.add_argument("--sound", choices=("synthetic", "embedded"), default="synthetic")
     start.add_argument("--platform", action="append", default=[])
