@@ -16,6 +16,7 @@ import re
 import time
 import urllib.parse
 import urllib.request
+import urllib.error
 
 
 IMAGE_ENDPOINT = "https://qianfan.baidubce.com/beta/image/qianfan-image-v1"
@@ -50,12 +51,51 @@ def _request(url, key, payload=None, transport=None):
         opener = transport or urllib.request.urlopen
         with opener(req, timeout=45) as response:
             data = json.load(response)
+    except urllib.error.HTTPError as exc:
+        # Record status only. Never emit provider response body, URLs, headers,
+        # secrets or user-submitted prompt text into public Actions logs.
+        raise MediaTaskError(
+            "Qianfan API HTTP " + str(exc.code) +
+            "; no task ID was confirmed. Check billing, entitlement and error code privately"
+        ) from None
+    except urllib.error.URLError:
+        raise MediaTaskError("Qianfan API network/DNS/TLS failure; no task ID confirmed") from None
+    except TimeoutError:
+        raise MediaTaskError("Qianfan API request timeout; task acceptance unknown") from None
     except Exception:
-        # Provider response/HTTP exception may include sensitive URLs.
-        raise MediaTaskError("Qianfan API transport failed; inspect private provider console") from None
+        # Generic transport failure can otherwise hide accidental secret material.
+        raise MediaTaskError("Qianfan API transport failure; task acceptance unknown") from None
     if not isinstance(data, dict):
         raise MediaTaskError("Qianfan response was not an object")
     return data
+
+
+
+def probe_image_endpoint(*, transport=None):
+    """Read-only GET of a clearly invalid task. Never submits media generation.
+
+    HTTP 400/404 can indicate endpoint reachability, not model permission.
+    API authentication and billing remain separate; no task ID is created.
+    """
+    url = IMAGE_ENDPOINT + "?task_id=qianfan-readonly-diagnostic-invalid-id"
+    key = _key()
+    req = urllib.request.Request(
+        url, headers={"Authorization": "Bearer " + key,
+                      "Accept": "application/json"}, method="GET")
+    try:
+        opener = transport or urllib.request.urlopen
+        with opener(req, timeout=20) as response:
+            code = response.status
+            # No response body is read or displayed.
+        return {"http_status": int(code), "method": "GET",
+                "created_task": False}
+    except urllib.error.HTTPError as exc:
+        return {"http_status": int(exc.code), "method": "GET",
+                "created_task": False}
+    except urllib.error.URLError:
+        raise MediaTaskError("Read-only Qianfan endpoint probe failed: network/DNS/TLS") from None
+    except TimeoutError:
+        raise MediaTaskError("Read-only Qianfan endpoint probe timed out") from None
 
 
 def _task_id(value):
