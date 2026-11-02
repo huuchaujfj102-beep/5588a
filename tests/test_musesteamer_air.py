@@ -6,6 +6,8 @@ Sources: https://cloud.baidu.com/doc/qianfan-api/s/Amg0lgcx4
 import io
 import json
 import os
+import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -146,6 +148,36 @@ class MuseSteamerTests(unittest.TestCase):
             with self.assertRaisesRegex(FlowError, "already attempted"):
                 submit_once(job2, confirm_paid=True)
             self.assertEqual(paid.call_count, 1)
+
+
+    @unittest.skipUnless(shutil.which("ffmpeg") and shutil.which("ffprobe"),
+                         "FFmpeg/FFprobe required for real CPU-only assembly test")
+    def test_muse_succeeded_finalizes_real_local_mp4_and_douyin_package(self):
+        job = self._plan()
+        with patch("oneflow.qianfan_i2v.submit", return_value={
+                "task_id": "muse123", "status": "created"}):
+            submit_once(job, confirm_paid=True)
+
+        def fake_download(url, target):
+            target = Path(target)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            subprocess.run([
+                "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+                "-f", "lavfi", "-i", "color=c=black:s=320x180:r=24:d=5",
+                "-c:v", "libx264", "-pix_fmt", "yuv420p", str(target),
+            ], check=True, capture_output=True, timeout=90)
+            return target
+
+        with patch("oneflow.qianfan_media.wait_for_task", return_value={
+                "task_id": "muse123", "status": "succeeded",
+                "result_urls": ["https://cdn.example.com/muse.mp4"]}):
+            result = resume(job, fetcher=fake_download, watermark=False)
+        self.assertEqual(result, "AWAITING_HUMAN_REVIEW")
+        manifest = load_json(job / "manifest.json")
+        self.assertEqual(manifest["qianfan_i2v"]["status"], "FINALIZED")
+        self.assertTrue((job / manifest["render"]).exists())
+        self.assertTrue((job / "release-package" / "douyin.json").exists())
+        self.assertEqual(load_json(job / "qc.json")["status"], "REVIEW_REQUIRED")
 
 
 if __name__ == "__main__":
