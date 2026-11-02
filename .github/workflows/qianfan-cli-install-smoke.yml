@@ -1,0 +1,65 @@
+name: Install and verify Qianfan CLI (Windows, no billing)
+
+on:
+  push:
+    branches:
+      - feature/qianfan-cli-guide-install-20261102
+    paths:
+      - .github/workflows/qianfan-cli-install-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install-qianfan-cli:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install official Qianfan CLI
+        run: |
+          node --version
+          npm --version
+          npm config set registry https://registry.npmjs.org/
+          npm i @baiducloud/qianfan-cli@latest -g --no-audit --no-fund
+          if ($LASTEXITCODE -ne 0) { throw "npm install failed" }
+
+      - name: Validate Qianfan CLI entrypoints
+        run: |
+          qianfan --version
+          if ($LASTEXITCODE -ne 0) { throw "qianfan --version failed" }
+          qianfan --help
+          if ($LASTEXITCODE -ne 0) { throw "qianfan --help failed" }
+          qianfan auth --help
+          if ($LASTEXITCODE -ne 0) { throw "qianfan auth --help failed" }
+
+      - name: Check fresh runner is unauthenticated (no browser login)
+        run: |
+          qianfan auth status
+          Write-Output "The ephemeral GitHub runner is intentionally not logged in. No account tokens were uploaded."
+          exit 0
+
+      - name: Preview and install Qianfan Agent Skills on runner only
+        run: |
+          qianfan +connect --dry-run
+          Write-Output "Skill preview exit code: $LASTEXITCODE"
+          qianfan +connect
+          Write-Output "Skill install exit code: $LASTEXITCODE"
+          qianfan +connect list
+          Write-Output "Skill listing exit code: $LASTEXITCODE"
+          Write-Output "Note: Runner files are temporary and will not install Skills on the phone or a persistent server."
+          exit 0
