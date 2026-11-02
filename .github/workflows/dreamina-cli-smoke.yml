@@ -1,0 +1,59 @@
+name: Dreamina CLI and Skill smoke test (no authentication)
+
+on:
+  push:
+    branches:
+      - feature/dreamina-cli-smoke-20261102
+    paths:
+      - .github/workflows/dreamina-cli-smoke.yml
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/dreamina-cli-smoke.yml
+
+permissions:
+  contents: read
+
+jobs:
+  install-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Download official installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 2 --connect-timeout 15 --max-time 120 https://jimeng.jianying.com/cli -o /tmp/dreamina-install.sh
+          echo "Installer SHA256:"
+          sha256sum /tmp/dreamina-install.sh
+
+      - name: Run official installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash /tmp/dreamina-install.sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Verify CLI and read installed Skill
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.local/bin:$PATH"
+          command -v dreamina
+          dreamina --help
+          dreamina login --help
+          test -s "$HOME/.dreamina_cli/dreamina/SKILL.md"
+          echo "Installed Skill path: $HOME/.dreamina_cli/dreamina/SKILL.md"
+          echo "Skill excerpt:"
+          sed -n '1,220p' "$HOME/.dreamina_cli/dreamina/SKILL.md"
+
+      - name: Save Skill documentation for review
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dreamina-skill-documentation
+          path: ~/.dreamina_cli/dreamina/SKILL.md
+          retention-days: 7
+          if-no-files-found: error
