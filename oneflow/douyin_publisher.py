@@ -63,13 +63,18 @@ def _accepted(response):
         data.get("error_code", 0) == 0 and extra.get("error_code", 0) == 0)
 
 
-def publish_approved_douyin(job, *, consent=False, text=None, transport=None):
+def publish_approved_douyin(job, *, consent=False, text=None, visibility="private",
+                             confirm_public=False, transport=None):
     """Only official submission. Returns 'pending' until real public URL verified."""
     root = Path(job).resolve()
     manifest = load_json(root / "manifest.json")
     authorize_publish(root, manifest, "douyin")
     if not consent:
         raise FlowError("Explicit per-platform consent required for Douyin posting")
+    if visibility not in ("private", "public"):
+        raise FlowError("Invalid Douyin post visibility")
+    if visibility == "public" and not confirm_public:
+        raise FlowError("Public posting requires separate --confirm-public permission")
     token, open_id = _oauth()
     current = manifest.setdefault("douyin_direct", {})
     if current.get("status") == "CREATE_ACCEPTED":
@@ -117,11 +122,13 @@ def publish_approved_douyin(job, *, consent=False, text=None, transport=None):
         save_json(root / "manifest.json", manifest)
 
     current["status"] = "CREATE_ATTEMPTED"
+    current["requested_visibility"] = visibility
     save_json(root / "manifest.json", manifest)
     try:
         reply = _send(CREATE_URL + suffix, token,
                       payload={"video_id": current["video_id"], "text": text,
-                               "private_status": 1}, transport=transport)
+                               "private_status": 0 if visibility == "public" else 1},
+                      transport=transport)
         data = reply.get("data") or {}
         if not _accepted(reply) or not isinstance(data.get("item_id"), str):
             raise FlowError("Douyin create was not accepted; check platform before retry")
@@ -137,7 +144,7 @@ def publish_approved_douyin(job, *, consent=False, text=None, transport=None):
     manifest["publication"]["douyin"] = {
         "status": "pending", "external_id": data["item_id"],
         "url": None, "updated_at": now(),
-        "review_note": "Accepted by API as account-private, not publicly published"}
+        "review_note": "Submission accepted, moderation/visibility not independently verified"}
     save_json(root / "manifest.json", manifest)
     return {"status": "pending", "item_id": data["item_id"],
             "notice": "Created an account-private video; publication not verified"}
@@ -147,11 +154,19 @@ def main(argv=None):
     p = argparse.ArgumentParser(description="Official Douyin private upload after human OneFlow approval")
     p.add_argument("--job", required=True)
     p.add_argument("--consent-private-upload", action="store_true")
+    p.add_argument("--consent-public-post", action="store_true")
+    p.add_argument("--confirm-public", action="store_true")
     p.add_argument("--text")
     args = p.parse_args(argv)
     try:
-        result = publish_approved_douyin(args.job,
-                 consent=args.consent_private_upload, text=args.text)
+        if args.consent_public_post and args.consent_private_upload:
+            raise FlowError("Choose exactly one Douyin visibility/consent mode")
+        result = publish_approved_douyin(
+            args.job,
+            consent=args.consent_private_upload or args.consent_public_post,
+            text=args.text,
+            visibility="public" if args.consent_public_post else "private",
+            confirm_public=args.confirm_public)
         print(json.dumps(result, ensure_ascii=False))
         return 0
     except (FlowError, OSError, ValueError) as e:
