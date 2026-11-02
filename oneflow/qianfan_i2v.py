@@ -311,7 +311,7 @@ def resume(job, *, attempts=30, delay=10, fetcher=None, watermark=None):
         manifest["status"] = "FAILED"
         save_json(root / "manifest.json", manifest)
         raise FlowError("Qianfan video task failed; do not retry payment automatically")
-    if latest["status"] not in ("success", "succeed"):
+    if latest["status"] not in ("success", "succeed", "succeeded"):
         manifest["status"] = "VIDEO_PENDING"
         save_json(root / "manifest.json", manifest)
         return "VIDEO_PENDING"
