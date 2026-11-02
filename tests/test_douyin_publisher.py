@@ -108,5 +108,38 @@ class DouyinPublisherTests(unittest.TestCase):
         self.assertEqual(len(calls), 1)
 
 
+    def test_public_post_requires_separate_explicit_confirmation(self):
+        with patch.dict(os.environ, {"DOUYIN_ACCESS_TOKEN": "fake",
+                                     "DOUYIN_OPEN_ID": "fake"}):
+            with patch("urllib.request.urlopen") as call:
+                with self.assertRaisesRegex(FlowError, "confirm-public"):
+                    publish_approved_douyin(self.job, consent=True,
+                                            visibility="public", confirm_public=False)
+                call.assert_not_called()
+
+    def test_public_post_uses_explicit_visibility_zero_but_still_pending(self):
+        uploaded = []
+        def mock(req, timeout):
+            uploaded.append(req)
+            if req.full_url.startswith(UPLOAD_URL):
+                return result({"data": {"video": {"video_id": "enc-vid"},
+                                        "error_code": 0},
+                               "extra": {"error_code": 0}})
+            payload = json.loads(req.data)
+            self.assertEqual(payload["private_status"], 0)
+            return result({"data": {"item_id": "pending-review", "error_code": 0},
+                           "extra": {"error_code": 0}})
+        with patch.dict(os.environ, {"DOUYIN_ACCESS_TOKEN": "fake",
+                                     "DOUYIN_OPEN_ID": "fake"}):
+            out = publish_approved_douyin(self.job, consent=True,
+                   visibility="public", confirm_public=True, transport=mock)
+        self.assertEqual(out["status"], "pending")
+        self.assertEqual(len(uploaded), 2)
+        data = load_json(self.job / "manifest.json")
+        self.assertEqual(data["douyin_direct"]["requested_visibility"], "public")
+        self.assertIsNone(data["publication"]["douyin"]["url"])
+
+
+
 if __name__ == "__main__":
     unittest.main()
