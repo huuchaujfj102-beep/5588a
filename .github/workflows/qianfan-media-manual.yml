@@ -1,0 +1,119 @@
+name: Qianfan image and video manual test (explicit billing opt-in)
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 'dry-run makes no paid request; the other choices create ONE task'
+        type: choice
+        options:
+          - dry-run
+          - image-1k
+          - video-5s
+        required: true
+        default: dry-run
+      confirm_paid:
+        description: 'I explicitly approve ONE potentially billed Qianfan media generation task'
+        required: true
+        type: boolean
+        default: false
+      public_first_frame_url:
+        description: 'For video only: PUBLIC HTTPS URL to an approved nonprivate first frame'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qianfan-media-manual
+  cancel-in-progress: false
+
+jobs:
+  single-media-task:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout code without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run offline Qianfan media tests (zero cost)
+        run: python -m unittest tests.test_qianfan_media -v
+
+      - name: Stop safely unless paid task explicitly selected and approved
+        if: ${{ inputs.operation == 'dry-run' || !inputs.confirm_paid }}
+        run: |
+          echo "No provider generation was requested."
+          echo "To opt in, select image-1k or video-5s AND check confirm_paid."
+
+      - name: Submit at most one Qianfan generation and check status
+        if: ${{ inputs.operation != 'dry-run' && inputs.confirm_paid }}
+        env:
+          OPERATION: ${{ inputs.operation }}
+          PUBLIC_FIRST_FRAME_URL: ${{ inputs.public_first_frame_url }}
+          QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/qianfan-public-test"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          from oneflow.qianfan_media import submit, wait_for_task
+          operation = os.environ["OPERATION"]
+          public_prompt = (
+              "Original science-fiction supercar concept, midnight graphite body, "
+              "slim continuous LED headlights, rear blue jet exhaust, sunset desert "
+              "highway, cinematic realistic photography, no logos or text, "
+              "single vehicle, identical geometry across shots."
+          )
+          if operation == "image-1k":
+              kind, model = "image", "o1-base"
+              task = submit(kind, prompt=public_prompt, model=model,
+                            ratio="16:9", resolution="1k", allow_paid=True)
+          elif operation == "video-5s":
+              kind, model = "video", "VQ2-Turbo"
+              url = os.environ.get("PUBLIC_FIRST_FRAME_URL", "").strip()
+              if not url:
+                  raise RuntimeError("video-5s requires a PUBLIC HTTPS first-frame URL")
+              task = submit(kind, prompt=(
+                  "The exact same supercar in the reference frame starts its "
+                  "engine and accelerates forward at high speed; tires rotate "
+                  "on pavement, reflections sweep along identical body panels, "
+                  "no morphing, no vehicle redesign, no narration."
+              ), model=model, image_url=url, duration=5,
+                 resolution="720p", allow_paid=True)
+          else:
+              raise RuntimeError("Unknown operation")
+          print("Task accepted by Qianfan; no model credentials are shown.")
+          print("Task kind:", kind)
+          print("Task ID:", task["task_id"])
+          final = wait_for_task(kind, task["task_id"], model=model if kind == "video" else None,
+                                attempts=30, delay=10)
+          print("Last observed status:", final["status"])
+          # This file can be viewed by anyone with access to this PUBLIC repo;
+          # never run it with private or confidential imagery.
+          out = Path(os.environ["RUNNER_TEMP"]) / "qianfan-public-test" / "result.json"
+          out.write_text(json.dumps({"task": task, "last_status": final},
+                                    ensure_ascii=False, indent=2), encoding="utf-8")
+          if final["status"] == "failed":
+              raise RuntimeError("Qianfan media generation task failed")
+          PY
+
+      - name: Upload PUBLIC synthetic test metadata (no original asset or API key)
+        if: ${{ success() && inputs.operation != 'dry-run' && inputs.confirm_paid }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: qianfan-public-test-result
+          path: ${{ runner.temp }}/qianfan-public-test/result.json
+          retention-days: 1
+          if-no-files-found: error
