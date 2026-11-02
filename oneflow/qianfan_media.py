@@ -10,6 +10,8 @@ https://cloud.baidu.com/doc/qianfan-multimodal/s/gmmt3c9im
 https://cloud.baidu.com/doc/qianfan-multimodal/s/fmn5nsoey
 https://cloud.baidu.com/doc/qianfan-multimodal/s/1mn5nsohk
 """
+import base64
+import binascii
 import json
 import os
 import re
@@ -106,7 +108,8 @@ def _task_id(value):
 
 
 def submit(kind, *, prompt, model, image_url=None, ratio="9:16",
-           duration=5, resolution="1k", allow_paid=False, transport=None):
+           duration=5, resolution="1k", allow_paid=False, transport=None,
+           audio=False):
     """Submit ONE potentially billable task. Does not imply generation success."""
     if not allow_paid:
         raise MediaTaskError("Explicit allow_paid=True required; no request sent")
@@ -130,21 +133,38 @@ def submit(kind, *, prompt, model, image_url=None, ratio="9:16",
             raise MediaTaskError("Unsupported Qianfan image-to-video model")
         if len(prompt) > 2000:
             raise MediaTaskError("Video prompt exceeds 2000 characters")
-        parsed = urllib.parse.urlparse(image_url) if isinstance(image_url, str) else None
-        if (parsed is None or parsed.scheme != "https" or not parsed.hostname
-                or parsed.username or parsed.password):
-            raise MediaTaskError("Image-to-video requires a public HTTPS image URL")
+        if not isinstance(image_url, str) or not image_url:
+            raise MediaTaskError("Image-to-video requires a first-frame image")
+        if image_url.startswith("data:image/"):
+            if len(image_url) > 14_000_000:
+                raise MediaTaskError("Image data URI exceeds allowed size")
+            match = re.fullmatch(r"data:image/(?:png|jpeg|webp);base64,([A-Za-z0-9+/=]+)", image_url)
+            if not match:
+                raise MediaTaskError("Invalid supported base64 image format")
+            try:
+                raw = base64.b64decode(match.group(1), validate=True)
+            except (binascii.Error, ValueError):
+                raise MediaTaskError("Invalid image base64 encoding") from None
+            if len(raw) > 10_000_000 or len(raw) < 64:
+                raise MediaTaskError("Base64 frame must be 64 bytes to 10 MB")
+        else:
+            parsed = urllib.parse.urlparse(image_url)
+            if (parsed.scheme != "https" or not parsed.hostname
+                    or parsed.username or parsed.password):
+                raise MediaTaskError("Image-to-video requires a public HTTPS image URL")
         max_duration = 16 if model in ("VQ4", "VQ3-Pro", "VQ3-Turbo") else 10
         if type(duration) is not int or not 1 <= duration <= max_duration:
             raise MediaTaskError("Invalid duration for selected video model")
-        if resolution not in ("720p", "1080p"):
-            raise MediaTaskError("Choose 720p or 1080p for video")
+        if resolution not in ("540p", "720p", "1080p"):
+            raise MediaTaskError("Choose 540p, 720p or 1080p for video")
+        if type(audio) is not bool:
+            raise MediaTaskError("audio must be boolean")
         endpoint = VIDEO_ENDPOINT
         # For video, the first-frame image determines ratio. Do not invent
         # unsupported video aspect_ratio or settings object.
         payload = {"model": model, "type": "img2video", "model_parameters": {
             "images": [image_url], "prompt": prompt, "duration": duration,
-            "resolution": resolution, "audio": False, "bgm": False,
+            "resolution": resolution, "audio": audio, "bgm": False,
             "is_rec": False, "watermark": False}}
     data = _request(endpoint, _key(), payload, transport=transport)
     if kind == "image":
