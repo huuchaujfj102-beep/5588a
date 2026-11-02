@@ -1,0 +1,33 @@
+name: Inspect official Qianfan CLI guide (read-only)
+
+on:
+  push:
+    branches:
+      - feature/qianfan-cli-guide-install-20261102
+    paths:
+      - .github/workflows/qianfan-cli-guide-inspect.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-guide:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Fetch guide only; never execute downloaded content
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --max-time 35 \
+            --proto '=https' --tlsv1.2 \
+            'https://aipe-dragonboat.cdn.bcebos.com/qianfan-cli/docs/guide.md' \
+            --output /tmp/qianfan-cli-guide.md
+          test "$(wc -c < /tmp/qianfan-cli-guide.md)" -gt 100
+          test "$(wc -c < /tmp/qianfan-cli-guide.md)" -lt 200000
+          echo '=== GUIDE SHA256 ==='
+          sha256sum /tmp/qianfan-cli-guide.md
+          echo '=== GUIDE CONTENT ==='
+          cat /tmp/qianfan-cli-guide.md
+          echo '=== END GUIDE ==='
