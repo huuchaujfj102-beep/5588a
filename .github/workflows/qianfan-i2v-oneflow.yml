@@ -40,6 +40,16 @@ on:
         type: string
         required: false
         default: ''
+      generate_cloudflare_first_frame:
+        description: 'One-sentence mode: generate exactly ONE Cloudflare FLUX first frame inside this job'
+        type: boolean
+        required: true
+        default: false
+      confirm_cloudflare_workers_free:
+        description: 'Cloudflare mode only: confirm Workers Free tier and available free daily quota'
+        type: boolean
+        required: true
+        default: false
       model:
         description: 'MuseSteamer-Air-I2V: 5s low-cost video, synthetic SFX. VQ3-Turbo has embedded audio.'
         type: choice
@@ -115,11 +125,21 @@ jobs:
         env:
           FRAME: ${{ inputs.public_first_frame_url }}
           SOURCE_RUN_ID: ${{ inputs.source_image_run_id }}
+          GENERATE_CF: ${{ inputs.generate_cloudflare_first_frame }}
+          CONFIRM_CF_FREE: ${{ inputs.confirm_cloudflare_workers_free }}
         shell: bash
         run: |
           set -euo pipefail
-          if [[ -n "$FRAME" && -n "$SOURCE_RUN_ID" ]] || [[ -z "$FRAME" && -z "$SOURCE_RUN_ID" ]]; then
-            echo "Provide exactly one: public_first_frame_url OR source_image_run_id. No billable request made." >&2
+          SOURCE_COUNT=0
+          [[ -n "$FRAME" ]] && SOURCE_COUNT=$((SOURCE_COUNT+1))
+          [[ -n "$SOURCE_RUN_ID" ]] && SOURCE_COUNT=$((SOURCE_COUNT+1))
+          [[ "$GENERATE_CF" == "true" ]] && SOURCE_COUNT=$((SOURCE_COUNT+1))
+          if [[ "$SOURCE_COUNT" -ne 1 ]]; then
+            echo "Choose EXACTLY one: public image URL, previous image run ID, OR generate Cloudflare first frame." >&2
+            exit 2
+          fi
+          if [[ "$GENERATE_CF" == "true" && "$CONFIRM_CF_FREE" != "true" ]]; then
+            echo "Cloudflare Workers Free confirmation required; no paid video request made." >&2
             exit 2
           fi
           if [[ -n "$FRAME" && ! "$FRAME" =~ ^https:// ]]; then
@@ -179,6 +199,37 @@ jobs:
                   raise SystemExit("First frame is invalid/small; no billable request.")
           print("Verified first frame with PNG dimensions >=300px.")
           PY
+      - name: Generate one original Cloudflare FLUX first frame (only after explicit Free confirmation)
+        if: ${{ inputs.generate_cloudflare_first_frame }}
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BRIEF: ${{ inputs.brief }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ -n "$CLOUDFLARE_ACCOUNT_ID" && -n "$CLOUDFLARE_API_TOKEN" ]] || {
+            echo "Cloudflare credentials absent; paid video request will not start." >&2
+            exit 2
+          }
+          python -m pip install 'Pillow>=11,<13'
+          python -m oneflow.cloudflare_free_image --brief "$BRIEF" --shot S01 --steps 4 \
+            --output "$RUNNER_TEMP/reference" --approve-free-test --confirm-workers-free
+          test -s "$RUNNER_TEMP/reference/S01.png"
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from PIL import Image
+          path = Path(os.environ["RUNNER_TEMP"]) / "reference" / "S01.png"
+          if not 64 <= path.stat().st_size <= 9_000_000:
+              raise SystemExit("Cloudflare image outside 64B..9MB; video not billed")
+          with Image.open(path) as image:
+              image.verify()
+          with Image.open(path) as image:
+              if min(image.size) < 300 or image.format != "PNG":
+                  raise SystemExit("Cloudflare image dimension/format invalid; video not billed")
+          print("Verified original Cloudflare first frame, ready for MuseSteamer.")
+          PY
       - name: Install CJK watermark font
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
       - name: Submit ONE explicitly approved model task and audit video with watermark
@@ -187,6 +238,7 @@ jobs:
           BRIEF: ${{ inputs.brief }}
           FRAME: ${{ inputs.public_first_frame_url }}
           SOURCE_RUN_ID: ${{ inputs.source_image_run_id }}
+          GENERATE_CF: ${{ inputs.generate_cloudflare_first_frame }}
           MODEL: ${{ inputs.model }}
         shell: bash
         run: |
@@ -194,7 +246,7 @@ jobs:
           if [[ -z "$QIANFAN_API_KEY" ]]; then echo "QIANFAN_API_KEY absent"; exit 1; fi
           SOUND="synthetic"
           if [[ "$MODEL" == "VQ3-Turbo" ]]; then SOUND="embedded"; fi
-          if [[ -n "$SOURCE_RUN_ID" ]]; then
+          if [[ -n "$SOURCE_RUN_ID" || "$GENERATE_CF" == "true" ]]; then
             FRAME_ARG=(--first-frame-file "$RUNNER_TEMP/reference/S01.png")
           else
             FRAME_ARG=(--first-frame-url "$FRAME")
