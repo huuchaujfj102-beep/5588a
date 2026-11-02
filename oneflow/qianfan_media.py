@@ -9,6 +9,8 @@ https://cloud.baidu.com/doc/qianfan-multimodal/s/8mmt3c9jr
 https://cloud.baidu.com/doc/qianfan-multimodal/s/gmmt3c9im
 https://cloud.baidu.com/doc/qianfan-multimodal/s/fmn5nsoey
 https://cloud.baidu.com/doc/qianfan-multimodal/s/1mn5nsohk
+https://cloud.baidu.com/doc/qianfan-api/s/Amg0lgcx4
+https://cloud.baidu.com/doc/qianfan-api/s/Bmg0ma4hf
 """
 import base64
 import binascii
@@ -23,11 +25,13 @@ import urllib.error
 
 IMAGE_ENDPOINT = "https://qianfan.baidubce.com/beta/image/qianfan-image-v1"
 VIDEO_ENDPOINT = "https://qianfan.baidubce.com/beta/video/generations/qianfan-video"
+MUSE_ENDPOINT = "https://qianfan.baidubce.com/video/generations"
+MUSE_MODEL = "musesteamer-air-i2v"
 IMAGE_MODELS = ("o1-base", "v3o")
 VIDEO_MODELS = ("VQ2-Turbo", "VQ2-Pro", "VQ3-Turbo", "VQ3-Pro", "VQ4")
-DONE = ("succeed", "success")
+DONE = ("succeed", "success", "succeeded")
 FAILED = ("failed",)
-RUNNING = ("submitted", "processing", "created", "queueing")
+RUNNING = ("submitted", "processing", "created", "queueing", "pending", "queued", "running")
 
 
 class MediaTaskError(Exception):
@@ -138,7 +142,7 @@ def submit(kind, *, prompt, model, image_url=None, ratio="9:16",
             "prompt": prompt, "resolution": resolution,
             "aspect_ratio": ratio, "result_type": "single", "n": 1}}
     else:
-        if model not in VIDEO_MODELS:
+        if model not in VIDEO_MODELS + (MUSE_MODEL,):
             raise MediaTaskError("Unsupported Qianfan image-to-video model")
         if len(prompt) > 2000:
             raise MediaTaskError("Video prompt exceeds 2000 characters")
@@ -161,20 +165,30 @@ def submit(kind, *, prompt, model, image_url=None, ratio="9:16",
             if (parsed.scheme != "https" or not parsed.hostname
                     or parsed.username or parsed.password):
                 raise MediaTaskError("Image-to-video requires a public HTTPS image URL")
-        max_duration = 16 if model in ("VQ4", "VQ3-Pro", "VQ3-Turbo") else 10
-        if type(duration) is not int or not 1 <= duration <= max_duration:
+        max_duration = 5 if model == MUSE_MODEL else (16 if model in ("VQ4", "VQ3-Pro", "VQ3-Turbo") else 10)
+        if type(duration) is not int or not 1 <= duration <= max_duration or (model == MUSE_MODEL and duration != 5):
             raise MediaTaskError("Invalid duration for selected video model")
         if resolution not in ("540p", "720p", "1080p"):
             raise MediaTaskError("Choose 540p, 720p or 1080p for video")
         if type(audio) is not bool:
             raise MediaTaskError("audio must be boolean")
-        endpoint = VIDEO_ENDPOINT
-        # For video, the first-frame image determines ratio. Do not invent
-        # unsupported video aspect_ratio or settings object.
-        payload = {"model": model, "type": "img2video", "model_parameters": {
-            "images": [image_url], "prompt": prompt, "duration": duration,
-            "resolution": resolution, "audio": audio, "bgm": False,
-            "is_rec": False, "watermark": False}}
+        if model == MUSE_MODEL:
+            if audio:
+                raise MediaTaskError("MuseSteamer Air I2V has no documented embedded audio")
+            # Air uses /video/generations with content[]; never send VQ schema.
+            # The input frame establishes video ratio; Air does not document resolution.
+            endpoint = MUSE_ENDPOINT
+            payload = {"model": MUSE_MODEL, "content": [
+                {"type": "text", "text": prompt},
+                {"type": "image_url", "image_url": {"url": image_url}}
+            ], "duration": 5, "watermark": False, "prompt_extend": False}
+        else:
+            endpoint = VIDEO_ENDPOINT
+            # VQ's first-frame image determines ratio, not an aspect_ratio field.
+            payload = {"model": model, "type": "img2video", "model_parameters": {
+                "images": [image_url], "prompt": prompt, "duration": duration,
+                "resolution": resolution, "audio": audio, "bgm": False,
+                "is_rec": False, "watermark": False}}
     data = _request(endpoint, _key(), payload, transport=transport)
     if kind == "image":
         if data.get("code") != 0 or not isinstance(data.get("data"), dict):
@@ -198,13 +212,13 @@ def task_status(kind, task_id, *, model=None, transport=None):
     if kind == "image":
         endpoint = IMAGE_ENDPOINT
     elif kind == "video":
-        endpoint = VIDEO_ENDPOINT
-        if model is not None and model not in VIDEO_MODELS:
+        endpoint = MUSE_ENDPOINT if model == MUSE_MODEL else VIDEO_ENDPOINT
+        if model is not None and model not in VIDEO_MODELS + (MUSE_MODEL,):
             raise MediaTaskError("Invalid video model")
     else:
         raise MediaTaskError("kind must be image or video")
     params = {"task_id": task_id}
-    if kind == "video" and model:
+    if kind == "video" and model and model != MUSE_MODEL:
         params["model"] = model
     data = _request(endpoint + "?" + urllib.parse.urlencode(params), _key(),
                     transport=transport)
@@ -218,7 +232,14 @@ def task_status(kind, task_id, *, model=None, transport=None):
     else:
         item = data
         status = item.get("status")
-        entries = item.get("creations") or []
+        if model == MUSE_MODEL:
+            content = item.get("content") or {}
+            if not isinstance(content, dict):
+                raise MediaTaskError("MuseSteamer content must be an object")
+            video_url = content.get("video_url")
+            entries = [{"url": video_url}] if isinstance(video_url, str) else []
+        else:
+            entries = item.get("creations") or []
     if status not in DONE + FAILED + RUNNING:
         raise MediaTaskError("Unrecognized Qianfan task status")
     if not isinstance(entries, list):
