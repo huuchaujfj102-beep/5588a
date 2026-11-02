@@ -35,6 +35,7 @@ def submit(kind, *, prompt, model, image_url=None, ratio="9:16",
             raise MediaTaskError("Image-to-video requires HTTPS image URL")
         if not isinstance(duration,int) or not 3<=duration<=15:
             raise MediaTaskError("Duration outside safe 3-15 second test range")
+        raise MediaTaskError("Video payload schema awaiting verification; no paid request sent")
         endpoint=VIDEO_ENDPOINT
         payload={"model":model,"type":"img2video","model_parameters":{
             "prompt":prompt,"images":[image_url],
