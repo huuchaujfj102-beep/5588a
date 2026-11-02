@@ -13,7 +13,7 @@ from pathlib import Path
 
 from .commercial_v3 import make_queue, write_queue, requested_channels
 from .commercial_research import write_outputs, build_handoff, analyze, EvidenceError
-from .core import create, FlowError, PLATFORMS
+from .core import create, config, FlowError, PLATFORMS
 
 
 class CampaignError(ValueError):
@@ -48,7 +48,7 @@ def build_campaign(brief, target_platforms, start, out,
             # production-only storyboard and later distinct packaging.
             media_channels=[platform] if platform in PLATFORMS else []
             job=create(handoff["oneflow_prompt"],seconds,ratio,
-                       media_channels,root/"production-plans")
+                       media_channels,root/"production-plans",config())
             packages.append({
                 "platform":platform,"job_dir":str(job),
                 "output_status":"STORYBOARD_PLANNED_NO_VIDEO_RENDERED",
