@@ -8,6 +8,7 @@ on:
         type: choice
         options:
           - dry-run
+          - probe-image-api
           - image-1k
           - video-5s
         required: true
@@ -54,8 +55,24 @@ jobs:
           echo "No provider generation was requested."
           echo "To opt in, select image-1k or video-5s AND check confirm_paid."
 
+      - name: Check image endpoint with GET only (no generation)
+        if: ${{ inputs.operation == 'probe-image-api' }}
+        env:
+          QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from oneflow.qianfan_media import probe_image_endpoint
+          outcome = probe_image_endpoint()
+          print("Read-only diagnostic request:", outcome["method"])
+          print("Image API HTTP status:", outcome["http_status"])
+          print("Created paid task:", outcome["created_task"])
+          print("401/403 suggests an access or account issue; 400/404 generally indicates the route responded to an invalid task identifier; 429 indicates rate limiting. This GET cannot prove paid image model entitlement.")
+          PY
+
       - name: Submit at most one Qianfan generation and check status
-        if: ${{ inputs.operation != 'dry-run' && inputs.confirm_paid }}
+        if: ${{ (inputs.operation == 'image-1k' || inputs.operation == 'video-5s') && inputs.confirm_paid }}
         env:
           OPERATION: ${{ inputs.operation }}
           PUBLIC_FIRST_FRAME_URL: ${{ inputs.public_first_frame_url }}

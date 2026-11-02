@@ -69,3 +69,29 @@ credits and public-test content are understood and approved.
 
 No video generation should run automatically after an image job because this
 would create an accidental second charge.
+
+
+## Troubleshooting the first real image test
+
+Observed real Actions run #41466759663 (2026-11-02): offline tests passed,
+but POST image submission failed before a task ID was returned. Original
+code hid the actual HTTP error, so the failure cannot be reliably assigned
+to permission, quota, provider validation, or network connectivity.
+
+The manual workflow now offers **probe-image-api** with
+`confirm_paid=false`. It issues exactly one **GET** to the official image
+task status endpoint using a deliberately invalid task ID, with no POST.
+Only the HTTP status code is logged. It never displays the API key, provider
+response body or request headers; it does not generate an image. Interpretation:
+
+- HTTP 401/403: authentication, permission, billing/entitlement or policy
+  issue possible; check Baidu Qianfan console privately.
+- HTTP 429: throttling/concurrency/rate limit; do not immediately retry.
+- HTTP 400/404: an invalid task ID was rejected as expected; this checks
+  endpoint reachability but **does not prove image generation entitlement**.
+- HTTP 5xx: provider/server problem; check provider status.
+- GET success or model-list success still does not prove POST authorization.
+
+Future **paid** POSTs will report only the HTTP status code on rejection,
+avoiding diagnostic blindness while protecting private response content.
+Do **not** rerun image-1k or video-5s simply to obtain an error code.
