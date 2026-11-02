@@ -134,7 +134,7 @@ jobs:
           if qc.get("status") != "REVIEW_REQUIRED" or digest(job / manifest["render"]) != qc.get("video_sha256"):
               raise SystemExit("The MP4 and audited hash do not match")
           with open(os.environ["GITHUB_ENV"], "a") as f:
-              f.write("ONEFLOW_JOB_DIR=" + str(job) + "\\n")
+              f.write("ONEFLOW_JOB_DIR=" + str(job) + "\n")
           print("One audited MP4 and checksum verified. Human attestation required.")
           PY
       - name: Create durable no-retry marker before contacting Douyin
