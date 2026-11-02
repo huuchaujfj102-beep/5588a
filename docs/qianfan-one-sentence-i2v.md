@@ -137,3 +137,30 @@ MP4 -> Audit (opt-in)".
    integrate approval release, publishing and metrics.
 4. Extend to 13s / multiple shots, each with reused approved reference and
    visual identity/physics audit. Require separate user spending limits.
+
+
+## Optional Douyin direct account-private upload (not public posting)
+
+The module oneflow/douyin_publisher.py now implements a guarded two-step
+upload based on Douyin developer APIs: first upload_video, then create_video.
+Both requests need an approved developer application's video.create.bind
+permission, user OAuth access token and open_id, and OneFlow-approved MP4.
+
+Set DOUYIN_ACCESS_TOKEN and DOUYIN_OPEN_ID privately, not in GitHub logs.
+After human approval, explicitly request a PRIVATE, account-only upload:
+
+    python -m oneflow.douyin_publisher --job /private/oneflow-jobs/film-xxxx --consent-private-upload
+
+The first live trial forces private_status=1 (author-only), and returns
+status=pending. It must NEVER be called a public release, even when API
+returns an item_id, because the platform may be reviewing the submission.
+The adapter records upload/create attempts before network requests, does not
+automatically retry uncertain calls, and does not expose OAuth credentials.
+
+Actual public posting needs separately approved user-facing publication
+consent and official publishing/OAuth capability. Merely logging into a
+Douyin mobile app does not grant a developer application this scope.
+
+References:
+https://developer.open-douyin.com/docs/resource/zh-CN/dop/develop/openapi/video-management/douyin/create-video/upload-video
+https://developer.open-douyin.com/docs/resource/zh-CN/dop/develop/openapi/video-management/douyin/create-video/video-create
