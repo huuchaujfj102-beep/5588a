@@ -46,7 +46,7 @@ jobs:
           python-version: '3.11'
 
       - name: Run offline Qianfan media tests (zero cost)
-        run: python -m unittest tests.test_qianfan_media -v
+        run: python -m unittest discover -s tests -p 'test_qianfan_media.py' -v
 
       - name: Stop safely unless paid task explicitly selected and approved
         if: ${{ inputs.operation == 'dry-run' || !inputs.confirm_paid }}
