@@ -20,6 +20,7 @@ from urllib.parse import urlencode
 from .providers import ProviderError, exchange, generate, json_call, ollama_shots, endpoint
 from .router import RoutingError, route, preflight
 from .director import film_prompt, phase_list
+from .qianfan import storyboard as qianfan_shots
 from .platforms import make_package
 
 
@@ -74,11 +75,16 @@ def config(path=None):
     return {**DEFAULT, **src}
 
 
-def describe(prompt, seconds, count, cfg):
+def describe(prompt, seconds, count, cfg, live_story=False):
     story = cfg.get("story", {})
     if story.get("kind") == "ollama":
         drafts = ollama_shots(story, prompt, seconds, count)
         planner = "ollama_live"
+    elif story.get("kind") == "qianfan":
+        if not live_story:
+            raise FlowError("Qianfan storyboard can incur fees: use --live-plan or --live to opt in")
+        drafts = qianfan_shots(story, prompt, seconds, count)
+        planner = "qianfan_live:" + story["model"]
     elif story.get("kind") == "heuristic":
         phases = phase_list(prompt)
         drafts = [
@@ -102,7 +108,7 @@ def describe(prompt, seconds, count, cfg):
     return output, planner
 
 
-def create(prompt, seconds, ratio, platforms, out_root, cfg):
+def create(prompt, seconds, ratio, platforms, out_root, cfg, live_story=False):
     if not isinstance(prompt, str) or len(prompt.strip()) < 4 or len(prompt) > 6000:
         raise FlowError("Prompt needs 4-6000 characters")
     seconds = int(seconds)
@@ -116,7 +122,7 @@ def create(prompt, seconds, ratio, platforms, out_root, cfg):
     shots_count = max(1, (seconds + 4) // 5)
     if shots_count > int(cfg["max_shots"]):
         raise FlowError("Shot count exceeds configured cost cap")
-    storyboard, planner = describe(prompt, seconds, shots_count, cfg)
+    storyboard, planner = describe(prompt, seconds, shots_count, cfg, live_story=live_story)
     if len(storyboard) != shots_count:
         raise FlowError("Story planner did not return the required shot count")
     durations = [seconds // shots_count] * shots_count
@@ -519,7 +525,9 @@ def main(argv=None):
     start.add_argument("--platform", action="append", default=[])
     start.add_argument("--out", default="private-inputs/oneflow-jobs")
     start.add_argument("--config")
-    start.add_argument("--live", action="store_true", help="Explicitly use paid/compute-intensive live model endpoints")
+    live_group = start.add_mutually_exclusive_group()
+    live_group.add_argument("--live", action="store_true", help="Opt in to live story generation and full media rendering")
+    live_group.add_argument("--live-plan", action="store_true", help="Opt in to Qianfan live story only; no image, video or audio generation")
     for cmd in ("produce", "approve", "publish", "metrics", "status", "release"):
         child = sub.add_parser(cmd)
         child.add_argument("--job", required=True)
@@ -538,7 +546,8 @@ def main(argv=None):
     try:
         if args.action == "run":
             cfg = config(args.config)
-            job = create(args.prompt, args.seconds, args.ratio, args.platform, args.out, cfg)
+            job = create(args.prompt, args.seconds, args.ratio, args.platform, args.out, cfg,
+                         live_story=(args.live or args.live_plan))
             if args.live:
                 produce(job, cfg)
             print(json.dumps({"job": str(job), "status": load_json(job / "manifest.json")["status"]},
