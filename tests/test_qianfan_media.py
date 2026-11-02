@@ -175,5 +175,32 @@ class MediaTests(unittest.TestCase):
 
 
 
+    def test_private_image_base64_and_audio_flag(self):
+        calls = []
+        def fake(req, timeout):
+            calls.append(req)
+            return json_response({"task_id": "video-base64", "status": "created"})
+        data_uri = "data:image/png;base64," + __import__("base64").b64encode(
+            bytes.fromhex("89504e470d0a1a0a") + b"z" * 100).decode("ascii")
+        with patch.dict(os.environ, {"QIANFAN_API_KEY": "fake-test-only"}):
+            result = submit("video", prompt="car moves forward", model="VQ3-Turbo",
+                            image_url=data_uri, duration=5, resolution="720p",
+                            audio=True, allow_paid=True, transport=fake)
+        self.assertEqual(result["task_id"], "video-base64")
+        p = json.loads(calls[0].data)["model_parameters"]
+        self.assertTrue(p["audio"])
+        self.assertEqual(p["images"][0], data_uri)
+
+    def test_private_image_invalid_base64_fails_before_network(self):
+        with patch.dict(os.environ, {"QIANFAN_API_KEY": "fake"}):
+            with patch("urllib.request.urlopen") as call:
+                with self.assertRaises(MediaTaskError):
+                    submit("video", prompt="car moves", model="VQ2-Turbo",
+                           image_url="data:image/png;base64,N0T VALID###",
+                           resolution="720p", duration=5, allow_paid=True)
+                call.assert_not_called()
+
+
+
 if __name__ == "__main__":
     unittest.main()
