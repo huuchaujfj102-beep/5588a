@@ -41,6 +41,15 @@ def _key():
     return key
 
 
+
+def _safe_open(req, timeout):
+    """Do not forward Bearer credentials across HTTP redirects."""
+    class NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, hdrs, newurl):
+            return None
+    return urllib.request.build_opener(NoRedirect()).open(req, timeout=timeout)
+
+
 def _request(url, key, payload=None, transport=None):
     body = (json.dumps(payload, ensure_ascii=False).encode("utf-8")
             if payload is not None else None)
@@ -50,7 +59,7 @@ def _request(url, key, payload=None, transport=None):
     req = urllib.request.Request(url, headers=headers, data=body,
                                  method="POST" if body is not None else "GET")
     try:
-        opener = transport or urllib.request.urlopen
+        opener = transport or _safe_open
         with opener(req, timeout=45) as response:
             data = json.load(response)
     except urllib.error.HTTPError as exc:
@@ -85,7 +94,7 @@ def probe_image_endpoint(*, transport=None):
         url, headers={"Authorization": "Bearer " + key,
                       "Accept": "application/json"}, method="GET")
     try:
-        opener = transport or urllib.request.urlopen
+        opener = transport or _safe_open
         with opener(req, timeout=20) as response:
             code = response.status
             # No response body is read or displayed.
