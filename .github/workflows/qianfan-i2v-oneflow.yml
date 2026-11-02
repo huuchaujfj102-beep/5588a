@@ -9,6 +9,8 @@ on:
       - oneflow/qianfan_i2v.py
       - oneflow/qianfan_media.py
       - tests/test_qianfan_i2v.py
+      - tests/test_douyin_publisher.py
+      - oneflow/douyin_publisher.py
   pull_request:
     branches:
       - main
@@ -61,7 +63,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Check Python code without provider/network
-        run: python -m compileall -q oneflow && python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
+        run: python -m compileall -q oneflow && python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v && python -m unittest discover -s tests -p 'test_douyin_publisher.py' -v
       - name: Create a one-sentence public draft (no paid requests)
         env:
           BRIEF: ${{ inputs.brief || 'Original single supercar accelerates forward through sunset, no morphing.' }}
