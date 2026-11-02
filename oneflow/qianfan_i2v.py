@@ -387,6 +387,11 @@ def main(argv=None):
             print(json.dumps({"job": str(root), "status": m["status"],
                               "task_id": m.get("qianfan_i2v", {}).get("task_id")},
                              ensure_ascii=False))
+            if args.confirm_paid and not args.skip_poll and m["status"] != "AWAITING_HUMAN_REVIEW":
+                # Avoid a green CI status when provider task is still pending or
+                # technical QC has blocked the result. The task ID is saved
+                # for a read-only resume, never an automatic second POST.
+                return 2
         else:
             state = resume(args.job, attempts=args.attempts, delay=args.delay)
             print(json.dumps({"job": str(Path(args.job).resolve()), "status": state},
