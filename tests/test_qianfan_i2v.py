@@ -130,7 +130,8 @@ class QianfanI2VTests(unittest.TestCase):
     @unittest.skipUnless(shutil.which("ffmpeg") and shutil.which("ffprobe"),
                          "FFmpeg and FFprobe required for actual CPU-only media test")
     def test_real_synthetic_clip_audit_and_release_package(self):
-        job = self._plan(platforms=("douyin",))
+        # Run the actual "造镜者" drifting watermark filter, too.
+        job = self._plan(platforms=("douyin",), enable_watermark=True)
         with patch("oneflow.qianfan_i2v.submit", return_value={
                 "task_id": "vid125", "status": "created"}):
             submit_once(job, confirm_paid=True)
