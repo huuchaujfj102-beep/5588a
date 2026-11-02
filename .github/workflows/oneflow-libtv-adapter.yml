@@ -1,0 +1,51 @@
+name: OneFlow LibTV Adapter (offline contract test, NO INFERENCE)
+on:
+  push:
+    paths:
+      - 'oneflow/libtv_adapter.py'
+      - 'tests/test_libtv_adapter.py'
+      - 'docs/oneflow-libtv.md'
+      - '.github/workflows/oneflow-libtv-adapter.yml'
+  pull_request:
+    paths:
+      - 'oneflow/libtv_adapter.py'
+      - 'tests/test_libtv_adapter.py'
+      - 'docs/oneflow-libtv.md'
+      - '.github/workflows/oneflow-libtv-adapter.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify LibTV adapter without any API credentials or paid model calls
+        run: |
+          python -m unittest discover -s tests -p test_libtv_adapter.py -v
+      - name: Create one-sentence preview (not a video)
+        run: |
+          python -m oneflow.libtv_adapter \
+            --brief '原创银白翡翠未来超跑，保持原车一致，湖畔日落，14秒电影级真实运动' \
+            --out libtv-offline-plan
+          python - <<'PY'
+          import json
+          p = json.load(open('libtv-offline-plan/libtv-job.json'))
+          assert p['status'] == 'OFFLINE_PLAN_NOT_GENERATED'
+          assert p['video_generated'] is False
+          assert p['credits_verified'] is False
+          print('OFFLINE PASS: no account authorization, no media upload, no video generation')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oneflow-libtv-OFFLINE-NO-VIDEO-${{ github.run_id }}
+          path: libtv-offline-plan/libtv-job.json
+          retention-days: 7
