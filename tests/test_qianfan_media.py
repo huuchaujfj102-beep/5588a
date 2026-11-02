@@ -2,11 +2,12 @@
 import io
 import json
 import os
+import urllib.error
 import unittest
 from unittest.mock import patch
 from oneflow.qianfan_media import (
     IMAGE_ENDPOINT, VIDEO_ENDPOINT, MediaTaskError,
-    submit, task_status, wait_for_task,
+    submit, task_status, wait_for_task, probe_image_endpoint,
 )
 
 
@@ -144,6 +145,34 @@ class MediaTests(unittest.TestCase):
             with self.assertRaises(MediaTaskError) as caught:
                 task_status("image", "img123", transport=fake)
         self.assertNotIn("fake-super-secret", str(caught.exception))
+
+
+    def test_transport_http_code_only_never_leaks_provider_body(self):
+        def fail(req, timeout):
+            raise urllib.error.HTTPError(req.full_url, 403, "secret123",
+                                         {}, io.BytesIO(b'{"message":"secret123"}'))
+        with patch.dict(os.environ, {"QIANFAN_API_KEY": "secret123"}):
+            with self.assertRaises(MediaTaskError) as err:
+                submit("image", prompt="public car", model="o1-base",
+                       allow_paid=True, transport=fail)
+        self.assertIn("HTTP 403", str(err.exception))
+        self.assertNotIn("secret123", str(err.exception))
+        self.assertNotIn("message", str(err.exception))
+
+    def test_probe_never_submits_paid_post(self):
+        calls = []
+        def fake(req, timeout):
+            calls.append((req.get_method(), req.full_url, req.data))
+            raise urllib.error.HTTPError(req.full_url, 404, "not found", {}, None)
+        with patch.dict(os.environ, {"QIANFAN_API_KEY": "fake-test-only"}):
+            result = probe_image_endpoint(transport=fake)
+        self.assertEqual(result["http_status"], 404)
+        self.assertFalse(result["created_task"])
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(calls[0][0], "GET")
+        self.assertIsNone(calls[0][2])
+        self.assertIn("task_id=qianfan-readonly-diagnostic-invalid-id", calls[0][1])
+
 
 
 if __name__ == "__main__":
