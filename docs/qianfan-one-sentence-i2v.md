@@ -164,3 +164,19 @@ Douyin mobile app does not grant a developer application this scope.
 References:
 https://developer.open-douyin.com/docs/resource/zh-CN/dop/develop/openapi/video-management/douyin/create-video/upload-video
 https://developer.open-douyin.com/docs/resource/zh-CN/dop/develop/openapi/video-management/douyin/create-video/video-create
+
+## Explicit public Douyin posting (only after account and app OAuth)
+
+If the editor *separately* approves making an already reviewed video public,
+run ONLY from an authorized private runtime:
+
+    python -m oneflow.douyin_publisher --job /private/oneflow-jobs/film-xxxx --consent-public-post --confirm-public
+
+This sends private_status=0 ONLY with both public-consent switches. The
+code still returns status=pending after official API acceptance, because
+account moderation and actual public visibility have not yet been verified.
+An unauthenticated or unapproved account cannot use this command.
+
+Do not repeatedly run publication after an uncertain POST; resolve actual
+platform status or duplicate upload risk first. In the absence of authorized
+Douyin developer app + OAuth, the program does not even send upload requests.
