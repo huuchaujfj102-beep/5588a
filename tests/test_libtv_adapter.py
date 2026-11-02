@@ -62,7 +62,7 @@ class LibTVAdapterTests(unittest.TestCase):
         self.assertEqual(r["last_seq"],5)
         self.assertEqual(len(r["video_asset_urls"]),1)
         self.assertEqual(m.call_count,1)
-        self.assertEqual(m.call_args.args[0].method,"GET")
+        self.assertEqual(m.call_args.args[0].get_method(),"GET")
 
     def test_upload_rejects_unknown_and_large_media_before_transfer(self):
         with tempfile.TemporaryDirectory() as d:
