@@ -102,6 +102,7 @@ jobs:
           set -e
           python -m compileall -q oneflow
           python -m unittest discover -s tests -p 'test_qianfan_media.py' -v
+          python -m unittest discover -s tests -p 'test_first_frame_preflight.py' -v
           python -m unittest discover -s tests -p 'test_qianfan_auth_probe.py' -v
           python -m unittest discover -s tests -p 'test_musesteamer_air.py' -v
           python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
@@ -209,6 +210,14 @@ jobs:
                   raise SystemExit("First frame is invalid/small; no billable request.")
           print("Verified first frame with PNG dimensions >=300px.")
           PY
+      - name: Validate PUBLIC reference image real bytes before any paid request
+        if: ${{ inputs.public_first_frame_url != '' }}
+        shell: bash
+        env:
+          PUBLIC_IMAGE_URL: ${{ inputs.public_first_frame_url }}
+        run: |
+          set -euo pipefail
+          python -m oneflow.first_frame_preflight --url "$PUBLIC_IMAGE_URL"
       - name: Read-only Qianfan VQ API authentication preflight BEFORE Cloudflare / paid POST
         if: ${{ inputs.model != 'musesteamer-air-i2v' }}
         env:
