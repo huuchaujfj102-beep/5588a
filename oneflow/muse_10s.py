@@ -87,6 +87,10 @@ def make_10s(brief, first_frame, out_root, *, confirm_two_paid=False):
             progress["status"] = "PART_PENDING_OR_BLOCKED"
             save_json(status, progress)
             raise FlowError("Part not finalized. Do NOT repeat model POST; reconcile task_id")
+        refreshed_manifest = load_json(part / "manifest.json")
+        progress["parts"][-1]["task_id"] = refreshed_manifest["qianfan_i2v"].get("task_id")
+        if not progress["parts"][-1]["task_id"]:
+            raise FlowError("Confirmed part task ID missing after completion")
         progress["parts"][-1]["state"] = "VIDEO_COMPLETED_UNREVIEWED"
         save_json(status, progress)
         raw = part / "media" / "S01-qianfan-raw.mp4"
