@@ -167,7 +167,7 @@ jobs:
           fi
           python -m oneflow.vidu_q3 "${args[@]}"
           test -s "$RUNNER_TEMP/vidu-payload-test/vidu-status.json"
-          echo "Verified $SECONDS-second $MODE payload, no paid video task submitted."
+          echo "Verified $SECONDS-second $EFFECTIVE_MODE payload, no paid video task submitted."
       - name: Prepare FFmpeg media tools before any model request
         if: ${{ inputs.operation != 'preflight' }}
         run: |
