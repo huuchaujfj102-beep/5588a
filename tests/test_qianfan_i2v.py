@@ -42,6 +42,38 @@ class QianfanI2VTests(unittest.TestCase):
             self.assertEqual(data["platforms"], ["douyin", "youtube"])
             paid.assert_not_called()
 
+    def test_native_10_and_15_second_single_shot_plans(self):
+        for seconds, model in ((10, "VQ2-Turbo"), (10, "VQ3-Turbo"),
+                               (15, "VQ3-Turbo"), (15, "VQ3-Pro"), (15, "VQ4")):
+            with self.subTest(seconds=seconds, model=model):
+                job = self._plan(seconds=seconds, model=model)
+                m = load_json(job / "manifest.json")
+                self.assertEqual(len(m["shots"]), 1)
+                self.assertEqual(m["shots"][0]["seconds"], seconds)
+                self.assertTrue(m["native_single_clip"])
+                self.assertEqual(m["qianfan_i2v"]["status"], "PLANNED")
+                self.assertIsNone(m["qianfan_i2v"]["task_id"])
+
+    def test_invalid_long_model_fails_before_paid_submit(self):
+        for seconds, model in ((15, "VQ2-Turbo"), (15, "musesteamer-air-i2v"),
+                               (10, "musesteamer-air-i2v")):
+            with self.subTest(seconds=seconds, model=model):
+                with patch("oneflow.qianfan_i2v.submit") as paid:
+                    with self.assertRaises(FlowError):
+                        self._plan(seconds=seconds, model=model)
+                    paid.assert_not_called()
+
+    def test_one_15s_task_only_no_stitched_paid_requests(self):
+        job = self._plan(seconds=15, model="VQ3-Turbo", sound="embedded")
+        response = {"task_id": "native15abc", "status": "created"}
+        with patch("oneflow.qianfan_i2v.submit", return_value=response) as paid:
+            submit_once(job, confirm_paid=True)
+            paid.assert_called_once()
+            self.assertEqual(paid.call_args.kwargs["duration"], 15)
+            self.assertTrue(paid.call_args.kwargs["audio"])
+            with self.assertRaises(FlowError):
+                submit_once(job, confirm_paid=True)
+
     def test_explicit_paid_is_required(self):
         job = self._plan()
         with patch("oneflow.qianfan_i2v.submit") as paid:
