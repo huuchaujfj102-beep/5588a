@@ -97,6 +97,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_musesteamer_air.py' -v
           python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
           python -m unittest discover -s tests -p 'test_douyin_publisher.py' -v
+          python -m unittest discover -s tests -p 'test_oneflow_distribution.py' -v
       - name: Create a one-sentence public draft (no paid requests)
         env:
           BRIEF: ${{ inputs.brief || 'Original single supercar accelerates forward through sunset, no morphing.' }}
