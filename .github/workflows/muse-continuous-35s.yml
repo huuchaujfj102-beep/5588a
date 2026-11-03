@@ -1,0 +1,108 @@
+name: MuseSteamer 35s continuous supercar (7 x 5s, paid opt-in)
+on:
+  workflow_dispatch:
+    inputs:
+      brief:
+        type: string
+        required: true
+        description: 'PUBLIC original fictional car concept only; no private inputs in this public repo'
+        default: 'One dark graphite silver futuristic supercar starts hard, then continually accelerates on the same golden sunset mountain road. Wheels rotate, body remains identical, road parallax, cinematic low-angle tracking, engine roar, no dialogue, never resets.'
+      confirm_cloudflare_workers_free:
+        type: boolean
+        required: true
+        default: false
+        description: 'I confirm Cloudflare Workers Free quota for ONE original first-frame generation'
+      confirm_seven_paid_muse_tasks:
+        type: boolean
+        required: true
+        default: false
+        description: 'I authorize up to SEVEN billable 5s MuseSteamer Air tasks (35s total), each billed separately; NO retries, NO publishing'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/muse-continuous-35s.yml'
+      - 'oneflow/muse_35s.py'
+      - 'tests/test_muse_35s.py'
+permissions:
+  contents: read
+concurrency:
+  group: muse-continuous-35s-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  offline-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: No-network tests, no account or paid media requests
+        run: |
+          set -euo pipefail
+          python -m compileall -q oneflow
+          python -m unittest discover -s tests -p 'test_muse_35s.py' -v
+          python -m unittest discover -s tests -p 'test_muse_10s.py' -v
+  live-seven-part:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_seven_paid_muse_tasks && inputs.confirm_cloudflare_workers_free }}
+    needs: offline-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+      BRIEF: ${{ inputs.brief }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fail closed on absent credentials, media tools or fonts before any model call
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ -n "$CLOUDFLARE_ACCOUNT_ID" && -n "$CLOUDFLARE_API_TOKEN" && -n "$QIANFAN_API_KEY" ]] || {
+            echo "Provider secrets missing; model tasks NOT attempted" >&2
+            exit 2
+          }
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
+          python -m pip install 'Pillow>=11,<13'
+          command -v ffmpeg && command -v ffprobe
+          python - <<'PY'
+          from pathlib import Path
+          choices = (
+              "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+              "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"
+          )
+          if not any(Path(x).is_file() for x in choices):
+              raise SystemExit("CJK font missing; NO paid request")
+          PY
+      - name: Generate one Cloudflare free first frame for all seven continuation clips
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m oneflow.cloudflare_free_image --brief "$BRIEF" \
+            --shot S01 --steps 4 --output "$RUNNER_TEMP/reference" \
+            --approve-free-test --confirm-workers-free
+          test -s "$RUNNER_TEMP/reference/S01.png"
+      - name: Seven paid Muse 5s clips, six exact last-frame transitions, 35s portrait MP4 and QC
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m oneflow.muse_35s --brief "$BRIEF" \
+            --first-frame-file "$RUNNER_TEMP/reference/S01.png" \
+            --out "$RUNNER_TEMP/muse-continuous-35s" --confirm-seven-paid
+      - name: Export ALL clip ledgers, provider task IDs, partial clips and final QC on failure/success
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: muse-35s-seven-shots-and-task-ledger
+          path: ${{ runner.temp }}/muse-continuous-35s/
+          retention-days: 1
+          if-no-files-found: warn
