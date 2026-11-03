@@ -17,6 +17,17 @@ class Muse35sTests(unittest.TestCase):
         self.frame.write_bytes(bytes.fromhex("89504e470d0a1a0a") + b"x" * 120)
         self.idea = "One graphite silver supercar races down a sunset mountain road"
 
+    def test_public_https_first_frame_reaches_first_plan_without_cloudflare(self):
+        public = "https://cdn.example.com/public-racer.png"
+        with patch("oneflow.muse_35s._checked_public_url", return_value=public) as checked, \
+             patch("oneflow.muse_35s.i2v.plan", side_effect=FlowError("stop before paid POST")) as planned, \
+             patch("oneflow.muse_35s.i2v.submit_once") as paid:
+            with self.assertRaisesRegex(FlowError, "stop before paid"):
+                make_35s(self.idea, public, self.base / "out", confirm_seven_paid=True)
+        checked.assert_called_once_with(public)
+        self.assertEqual(planned.call_args.args[1], public)
+        paid.assert_not_called()
+
     def test_no_consent_means_zero_submissions(self):
         with patch("oneflow.muse_35s.i2v.submit_once") as submit:
             with self.assertRaisesRegex(FlowError, "confirm-seven-paid"):

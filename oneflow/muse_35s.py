@@ -17,6 +17,7 @@ from . import qianfan_i2v as i2v
 from .core import FlowError, assemble, audit, config, create, load_json, now, save_json
 from .platforms import make_package
 from .muse_10s import last_frame
+from .qianfan_i2v import _checked_public_url
 
 MODEL = "musesteamer-air-i2v"
 SEGMENT_SECONDS = 5
@@ -88,9 +89,16 @@ def make_35s(brief, first_frame, out_root, *, confirm_seven_paid=False):
         raise FlowError("Provide a public, 4-500-character fictional racing brief")
     # Validate all seven prompts before the first request, not after spending.
     prompts = [_bridge_prompt(i, brief.strip()) for i in range(1, SEGMENTS + 1)]
-    source = Path(first_frame).resolve()
-    if not source.is_file() or source.suffix.lower() not in (".png", ".jpg", ".jpeg", ".webp"):
-        raise FlowError("Approved local first-frame image missing")
+    # A previously approved, PUBLIC HTTPS image is a safe alternative when
+    # Cloudflare FLUX is unavailable. No need to generate another paid/free frame.
+    if isinstance(first_frame, str) and first_frame.startswith("https://"):
+        source = _checked_public_url(first_frame)
+        if "?" in source or "#" in source:
+            raise FlowError("Public first-frame URL must be stable, without signed query or fragment")
+    else:
+        source = Path(first_frame).resolve()
+        if not source.is_file() or source.suffix.lower() not in (".png", ".jpg", ".jpeg", ".webp"):
+            raise FlowError("Approved local first-frame image missing")
     root = Path(out_root).resolve()
     if root.exists() and any(root.iterdir()):
         raise FlowError("Existing 35s job: do NOT restart. Reconcile task IDs offline.")
@@ -110,7 +118,7 @@ def make_35s(brief, first_frame, out_root, *, confirm_seven_paid=False):
 
     for index, prompt in enumerate(prompts, start=1):
         frame = source if index == 1 else root / f"S{index:02d}-start-from-prior-tail.png"
-        if not frame.is_file():
+        if index > 1 and not frame.is_file():
             raise FlowError(f"Missing verified transition frame before clip {index}; no paid request")
         job = i2v.plan(prompt, str(frame), seconds=5, ratio="1:1",
                        model=MODEL, resolution="720p", sound="synthetic",
@@ -204,12 +212,14 @@ def make_35s(brief, first_frame, out_root, *, confirm_seven_paid=False):
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--brief", required=True)
-    parser.add_argument("--first-frame-file", required=True)
+    frames = parser.add_mutually_exclusive_group(required=True)
+    frames.add_argument("--first-frame-file")
+    frames.add_argument("--first-frame-url")
     parser.add_argument("--out", required=True)
     parser.add_argument("--confirm-seven-paid", action="store_true")
     args = parser.parse_args(argv)
     try:
-        film = make_35s(args.brief, args.first_frame_file, args.out,
+        film = make_35s(args.brief, args.first_frame_file or args.first_frame_url, args.out,
                         confirm_seven_paid=args.confirm_seven_paid)
         print(json.dumps({"job": str(film),
                           "status": load_json(film / "manifest.json")["status"]},
