@@ -289,30 +289,78 @@ def fetch_task(task_id, key):
     return api_request("GET", "/ent/v2/tasks/" + task_id + "/creations", key=key)
 
 
-def available_credits(key):
-    """Read-only balance query. Return numeric credits only on a trustworthy shape."""
+def _safe_credit_number(value):
+    """Accept official integer response and numeric-string variants, never floats/booleans."""
+    if type(value) is int and 0 <= value < 1_000_000_000_000:
+        return value
+    if isinstance(value, str) and re.fullmatch(r"[0-9]{1,12}", value):
+        number = int(value)
+        return number if number < 1_000_000_000_000 else None
+    return None
+
+
+def parse_credit_snapshot(data):
+    """Distinguish real zero/insufficient credits from an unrecognized response.
+
+    Official Vidu docs list remaining_credits and remains; some account versions
+    also return active packages. Never add multiple aggregate views together.
+    Only aggregate per-type or per-package balances with an unambiguous number.
+    """
+    if not isinstance(data, dict):
+        return None, "invalid_response"
+    for source in ("remaining_credits", "remains", "packages"):
+        entries = data.get(source)
+        if not isinstance(entries, list):
+            continue
+        if not entries:
+            # Empty primary views can legitimately accompany nonempty fallback
+            # views. Keep scanning, but record that zero is confirmed if ALL
+            # published views are empty.
+            continue
+        values = []
+        for entry in entries:
+            if not isinstance(entry, dict):
+                return None, "invalid_" + source
+            value = _safe_credit_number(entry.get("credit_remain"))
+            if value is None:
+                # A concurrency-only item without a credit counter cannot be
+                # treated as spendable credit; do not guess its numeric amount.
+                if entry.get("type") == "concurrent" and "credit_remain" not in entry:
+                    continue
+                return None, "unrecognized_" + source
+            values.append(value)
+        if values:
+            return sum(values), source
+    any_list = any(isinstance(data.get(n), list)
+                   for n in ("remaining_credits", "remains", "packages"))
+    all_lists_empty = any_list and all(
+        not data[n] for n in ("remaining_credits", "remains", "packages")
+        if isinstance(data.get(n), list))
+    if all_lists_empty:
+        return 0, "empty_resources"
+    return None, "unrecognized_schema"
+
+
+def credit_snapshot(key):
+    """Single authenticated read-only Vidu request, never a video POST."""
     data = api_request("GET", "/ent/v2/credits", key=key)
-    # Vidu documentation lists remaining_credits; older examples use remains.
-    items = data.get("remaining_credits")
-    if not isinstance(items, list):
-        items = data.get("remains")
-    if not isinstance(items, list) or not items:
-        return None
-    numbers = [item.get("credit_remain") for item in items if isinstance(item, dict)]
-    if len(numbers) != len(items) or not all(
-            isinstance(n, (int, float)) and not isinstance(n, bool)
-            and 0 <= n < 1e12 for n in numbers):
-        return None
-    return sum(numbers)
+    return parse_credit_snapshot(data)
+
+
+def available_credits(key):
+    """Compatibility helper for code that needs only the numeric amount."""
+    amount, _ = credit_snapshot(key)
+    return amount
 
 
 def credits_preflight():
-    """No video submission. Reports status and whether standard 15s 720p fits."""
-    remain = available_credits(key_from_env())
+    """Read-only account check, no model generation, no exact balance exposure."""
+    remain, source = credit_snapshot(key_from_env())
     balance = "unknown" if remain is None else ("nonzero" if remain > 0 else "zero")
     enough = "UNKNOWN" if remain is None else ("YES" if remain >= 300 else "NO")
     print("VIDU_READONLY_PREFLIGHT_OK: authenticated=YES, credit_status=" + balance +
           ", credits_sufficient_for_15s_720p=" + enough +
+          ", response_schema=" + source +
           ", model_entitlement=UNVERIFIED; zero paid tasks")
     return balance
 
@@ -335,21 +383,26 @@ def run(args):
             return
         key = key_from_env()
         required_credits = CREDITS_PER_SECOND[args.resolution] * args.seconds
-        remain = available_credits(key)
+        remain, source = credit_snapshot(key)
         manifest["estimated_credits"] = required_credits
+        manifest["credit_response_schema"] = source
         manifest["credits_preflight"] = (
-            "unknown" if remain is None
-            else "sufficient" if remain >= required_credits else "insufficient"
+            "unknown" if remain is None else
+            "sufficient" if remain >= required_credits else
+            "zero" if remain == 0 else "insufficient"
         )
         if remain is None or remain < required_credits:
-            manifest.update(state="BLOCKED_BEFORE_POST", billable_post_count=0,
-                            note="Credit check unknown/insufficient: no paid request submitted.")
+            manifest.update(
+                state="BLOCKED_BEFORE_POST", billable_post_count=0,
+                note="No paid Vidu task submitted; check credit_status and response_schema."
+            )
             save(manifest_path, manifest)
             raise ViduError(
                 "Vidu credit preflight blocked paid generation: requires " +
                 str(required_credits) + " credits for " + str(args.seconds) +
                 "s " + args.resolution +
-                "; available balance is unknown or insufficient. No paid POST sent."
+                "; credit_status=" + manifest["credits_preflight"] +
+                " response_schema=" + source + "; No paid POST sent."
             )
         save(manifest_path, manifest)
         manifest.update(state="POST_ACCEPTANCE_UNKNOWN", billable_post_count=1,
