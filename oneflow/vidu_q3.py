@@ -25,6 +25,8 @@ MODEL = "viduq3-pro"
 MAX_JSON = 1_048_576
 MAX_IMAGE = 9_000_000
 MAX_VIDEO = 250_000_000
+# Official Q3 Pro standard-rate credits per second, subject to upstream changes.
+CREDITS_PER_SECOND = {"540p": 9, "720p": 20, "1080p": 24}
 STATES_PENDING = {"created", "queueing", "processing"}
 TASK_RE = re.compile(r"^[A-Za-z0-9_-]{3,128}$")
 
@@ -287,17 +289,31 @@ def fetch_task(task_id, key):
     return api_request("GET", "/ent/v2/tasks/" + task_id + "/creations", key=key)
 
 
+def available_credits(key):
+    """Read-only balance query. Return numeric credits only on a trustworthy shape."""
+    data = api_request("GET", "/ent/v2/credits", key=key)
+    # Vidu documentation lists remaining_credits; older examples use remains.
+    items = data.get("remaining_credits")
+    if not isinstance(items, list):
+        items = data.get("remains")
+    if not isinstance(items, list) or not items:
+        return None
+    numbers = [item.get("credit_remain") for item in items if isinstance(item, dict)]
+    if len(numbers) != len(items) or not all(
+            isinstance(n, (int, float)) and not isinstance(n, bool)
+            and 0 <= n < 1e12 for n in numbers):
+        return None
+    return sum(numbers)
+
+
 def credits_preflight():
-    """One read-only GET: validates key and reports coarse account credit availability."""
-    data = api_request("GET", "/ent/v2/credits", key=key_from_env())
-    packages = data.get("remaining_credits", data.get("remains", []))
-    balance = "unknown"
-    if isinstance(packages, list):
-        remaining = [p.get("credit_remain") for p in packages if isinstance(p, dict)]
-        if remaining and all(isinstance(n, (int, float)) and not isinstance(n, bool) for n in remaining):
-            balance = "nonzero" if any(n > 0 for n in remaining) else "zero"
+    """No video submission. Reports status and whether standard 15s 720p fits."""
+    remain = available_credits(key_from_env())
+    balance = "unknown" if remain is None else ("nonzero" if remain > 0 else "zero")
+    enough = "UNKNOWN" if remain is None else ("YES" if remain >= 300 else "NO")
     print("VIDU_READONLY_PREFLIGHT_OK: authenticated=YES, credit_status=" + balance +
-          ", model_entitlement=UNVERIFIED, credits_sufficient_for_job=UNVERIFIED; zero paid tasks")
+          ", credits_sufficient_for_15s_720p=" + enough +
+          ", model_entitlement=UNVERIFIED; zero paid tasks")
     return balance
 
 
@@ -318,6 +334,24 @@ def run(args):
             print("VIDU_DRY_RUN_OK: no provider call or charge")
             return
         key = key_from_env()
+        required_credits = CREDITS_PER_SECOND[args.resolution] * args.seconds
+        remain = available_credits(key)
+        manifest["estimated_credits"] = required_credits
+        manifest["credits_preflight"] = (
+            "unknown" if remain is None
+            else "sufficient" if remain >= required_credits else "insufficient"
+        )
+        if remain is None or remain < required_credits:
+            manifest.update(state="BLOCKED_BEFORE_POST", billable_post_count=0,
+                            note="Credit check unknown/insufficient: no paid request submitted.")
+            save(manifest_path, manifest)
+            raise ViduError(
+                "Vidu credit preflight blocked paid generation: requires " +
+                str(required_credits) + " credits for " + str(args.seconds) +
+                "s " + args.resolution +
+                "; available balance is unknown or insufficient. No paid POST sent."
+            )
+        save(manifest_path, manifest)
         manifest.update(state="POST_ACCEPTANCE_UNKNOWN", billable_post_count=1,
                         note="One authorized billable POST; never automatically retry.")
         save(manifest_path, manifest)
@@ -365,7 +399,7 @@ def run(args):
             raw = root / "source.mp4"
             download_video(url, raw)
             raw_info = probe_mp4(raw)
-            if not 0 < raw_info["duration"] and abs(raw_info["duration"] - args.seconds) <= 1.5:
+            if raw_info["duration"] <= 0 or abs(raw_info["duration"] - args.seconds) > 1.5:
                 raise ViduError("Provider output duration unexpected")
             final = root / "final-draft.mp4"
             info = render_portrait(raw, final, args.seconds)

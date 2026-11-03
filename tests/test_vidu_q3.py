@@ -59,6 +59,8 @@ class ViduQ3Tests(unittest.TestCase):
             requests = []
             def fake_api(method, path, **kwargs):
                 requests.append((method, path))
+                if path == "/ent/v2/credits":
+                    return {"remains": [{"type": "metered", "credit_remain": 1000}]}
                 return {"task_id": "test-task-123", "state": "created"} if method == "POST" else {
                     "id": "test-task-123", "state": "success",
                     "creations": [{"url": "https://example.org/film.mp4"}]}
@@ -68,7 +70,8 @@ class ViduQ3Tests(unittest.TestCase):
                  patch.object(v, "probe_mp4", return_value={"duration": 10.0}), \
                  patch.object(v, "render_portrait", return_value={"duration": 10.0, "width": 1080, "height": 1920, "has_audio": True}):
                 v.run(args)
-            self.assertEqual(requests, [("POST", "/ent/v2/text2video"),
+            self.assertEqual(requests, [("GET", "/ent/v2/credits"),
+                                        ("POST", "/ent/v2/text2video"),
                                         ("GET", "/ent/v2/tasks/test-task-123/creations")])
             manifest = json.loads((Path(tmp) / "vidu-status.json").read_text())
             self.assertEqual(manifest["state"], "DELIVERED")
@@ -85,12 +88,14 @@ class ViduQ3Tests(unittest.TestCase):
             calls = []
             def fail(method, path, **kwargs):
                 calls.append(method)
+                if path == "/ent/v2/credits":
+                    return {"remains": [{"credit_remain": 1000}]}
                 raise v.ViduError("Vidu transport/timeout; POST acceptance UNKNOWN")
             with patch.dict("os.environ", {"VIDU_API_KEY": "safe-demo-key"}, clear=True), \
                  patch.object(v, "api_request", side_effect=fail):
                 with self.assertRaises(v.ViduError):
                     v.run(args)
-            self.assertEqual(calls, ["POST"])
+            self.assertEqual(calls, ["GET", "POST"])
             manifest = json.loads((Path(tmp) / "vidu-status.json").read_text())
             self.assertEqual(manifest["state"], "POST_ACCEPTANCE_UNKNOWN")
             self.assertEqual(manifest["billable_post_count"], 1)
@@ -158,6 +163,60 @@ class ViduQ3Tests(unittest.TestCase):
         self.assertEqual(observed, [("GET", "/ent/v2/credits")])
         self.assertIn("credit_status=zero", captured.getvalue())
         self.assertNotIn("test-only", captured.getvalue())
+
+    def test_15s_credit_budget_is_300_at_720p(self):
+        self.assertEqual(v.CREDITS_PER_SECOND["720p"] * 15, 300)
+
+    def test_insufficient_credits_cannot_submit_billable_task(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            args = argparse.Namespace(action="generate", mode="text2video",
+                                      prompt="Dark silver hypercar racing on sunset road",
+                                      seconds=15, resolution="720p", first_frame=None,
+                                      confirm_paid=True, out=tmp, poll_attempts=1,
+                                      poll_seconds=0, task_id=None)
+            calls = []
+            def credits_only(method, path, **kw):
+                calls.append((method, path))
+                if method != "GET":
+                    raise AssertionError("Unexpected POST")
+                return {"remains": [{"credit_remain": 299}]}
+            with patch.dict("os.environ", {"VIDU_API_KEY": "test-key"}, clear=True), \
+                 patch.object(v, "api_request", side_effect=credits_only):
+                with self.assertRaisesRegex(v.ViduError, "No paid POST sent"):
+                    v.run(args)
+            self.assertEqual(calls, [("GET", "/ent/v2/credits")])
+            manifest = json.loads((Path(tmp) / "vidu-status.json").read_text())
+            self.assertEqual(manifest["billable_post_count"], 0)
+            self.assertEqual(manifest["state"], "BLOCKED_BEFORE_POST")
+            self.assertEqual(manifest["estimated_credits"], 300)
+
+    def test_credit_balance_unknown_is_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            args = argparse.Namespace(action="generate", mode="text2video",
+                                      prompt="Dark silver hypercar racing on sunset road",
+                                      seconds=15, resolution="720p", first_frame=None,
+                                      confirm_paid=True, out=tmp, poll_attempts=1,
+                                      poll_seconds=0, task_id=None)
+            with patch.dict("os.environ", {"VIDU_API_KEY":"test-key"}, clear=True), \
+                 patch.object(v, "api_request", return_value={"remains": []}) as caller:
+                with self.assertRaises(v.ViduError):
+                    v.run(args)
+            self.assertEqual(caller.call_count, 1)
+            self.assertEqual(json.loads((Path(tmp) / "vidu-status.json").read_text())["billable_post_count"], 0)
+
+    def test_wrong_provider_duration_is_rejected_even_with_real_task(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            args = argparse.Namespace(action="resume", mode="text2video",
+                                      prompt="not used", seconds=15, resolution="720p",
+                                      first_frame=None, confirm_paid=False, out=tmp,
+                                      poll_attempts=1, poll_seconds=0, task_id="existing-123")
+            with patch.dict("os.environ", {"VIDU_API_KEY":"test-key"}, clear=True), \
+                 patch.object(v, "api_request", return_value={
+                     "state": "success", "creations": [{"url":"https://example.org/video.mp4"}]}), \
+                 patch.object(v, "download_video", side_effect=lambda url,p: Path(p).write_bytes(b"MP4")), \
+                 patch.object(v, "probe_mp4", return_value={"duration": 7.0}):
+                with self.assertRaisesRegex(v.ViduError, "duration unexpected"):
+                    v.run(args)
 
     def test_api_uses_token_header_and_correct_url(self):
         seen = []

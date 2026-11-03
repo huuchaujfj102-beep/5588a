@@ -36,14 +36,15 @@ For a text-only pilot:
 
 To reuse the same approved supercar image:
 - `mode=img2video`
-- `source_image_run_id=41660915365` only while its OVH artifact still exists
+- `source_image_run_id=41660915365` only while its OVH artifact still exists (currently expires 2026-11-10 15:10 UTC)
 - This checks the source run belongs to this repo, was a successful manual run
   on main, and has one original non-expired OVH image artifact. No public image
   link is needed.
+- If you accidentally leave the mode on `text2video` with a valid image run ID, the workflow now **automatically selects** `img2video` rather than failing. With no image ID it remains text-to-video. The effective mode is logged before any charge.
 - Preserve the car description in the motion prompt. Results still require
   human review for consistency.
 
-For 15s change `seconds=15` and authorize separately. Do not launch
+For 15s change `seconds=15` and authorize separately. Standard Q3-Pro 720p is 20 credits/second; 15s costs about **300 credits (~US$1.50)** at official published rates. The workflow first checks Vidu's read-only credits endpoint and blocks the billable POST if the reported balance is insufficient or cannot be established. Do not launch
 10s and 15s blindly in parallel. Each is independently billable.
 
 ## Recovery and safety
