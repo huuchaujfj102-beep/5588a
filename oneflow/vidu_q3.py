@@ -162,7 +162,9 @@ def download_video(url, target):
                 if total > MAX_VIDEO:
                     raise ViduError("Video exceeds 250MB cap")
                 fh.write(chunk)
-        if total < 128 or b"ftyp" not in part.read_bytes()[:64]:
+        with part.open("rb") as video_check:
+            mp4_header = video_check.read(64)
+        if total < 128 or b"ftyp" not in mp4_header:
             raise ViduError("Downloaded file is not an MP4")
         part.replace(target)
     except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError):
@@ -213,7 +215,7 @@ def render_portrait(raw, target, seconds):
     if result.returncode or not target.is_file():
         raise ViduError("FFmpeg export failed; raw clip is preserved")
     info = probe_mp4(target)
-    if not 0.1 < abs(info["duration"] - seconds) + 0.1 < 1.5:
+    if abs(info["duration"] - seconds) > 1.5:
         raise ViduError("Rendered duration does not match requested length")
     if (info["width"], info["height"]) != (1080, 1920):
         raise ViduError("Rendered aspect ratio is not 1080x1920")
