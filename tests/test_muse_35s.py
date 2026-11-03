@@ -121,7 +121,8 @@ class Muse35sTests(unittest.TestCase):
         self.assertEqual(len(calls), 3)
         ledger = load_json(root / "progress.json")
         self.assertEqual(len(ledger["parts"]), 3)
-        self.assertEqual(ledger["parts"][2]["state"], "PLANNED")
+        self.assertEqual(ledger["parts"][2]["state"], "SUBMISSION_UNCERTAIN")
+        self.assertEqual(ledger["status"], "STOPPED_RECONCILE_BILLING")
         with patch("oneflow.muse_35s.i2v.submit_once") as submit:
             with self.assertRaisesRegex(FlowError, "do NOT restart"):
                 make_35s(self.idea, self.frame, root, confirm_seven_paid=True)
