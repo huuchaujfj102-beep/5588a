@@ -1,0 +1,40 @@
+name: OneFlow platform-native content research and five separate scripts (no paid call)
+on:
+  workflow_dispatch:
+    inputs:
+      idea:
+        description: 'PUBLIC idea only. Creates 5 different editorial video plans, never video or posts.'
+        required: true
+        type: string
+        default: '同一辆深银色未来超跑在落日山道点火、疾驰、最后远去。保持车身一致，原创音效，不要旁白。'
+  pull_request:
+    paths:
+      - 'oneflow/channel_strategy.py'
+      - 'tests/test_oneflow_channel_strategy.py'
+      - '.github/workflows/oneflow-channel-strategy.yml'
+permissions:
+  contents: read
+jobs:
+  native-five-channel-plans:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test five distinct native strategies offline
+        run: python -m unittest discover -s tests -p test_oneflow_channel_strategy.py -v
+      - name: Produce five different video creative briefs, not a reused video
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          PUBLIC_IDEA: ${{ inputs.idea }}
+        run: python -m oneflow.channel_strategy --idea "$PUBLIC_IDEA" --out "$RUNNER_TEMP/platform-native"
+      - uses: actions/upload-artifact@v4
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          name: oneflow-five-platform-original-creative-briefs
+          path: ${{ runner.temp }}/platform-native/
+          retention-days: 3
