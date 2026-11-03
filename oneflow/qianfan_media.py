@@ -27,6 +27,11 @@ IMAGE_ENDPOINT = "https://qianfan.baidubce.com/beta/image/qianfan-image-v1"
 VIDEO_ENDPOINT = "https://qianfan.baidubce.com/beta/video/generations/qianfan-video"
 MUSE_ENDPOINT = "https://qianfan.baidubce.com/video/generations"
 MUSE_MODEL = "musesteamer-air-i2v"
+# Async video creation may take longer to ACK than a regular status GET.
+# Never retry a timed-out POST without provider-side reconciliation.
+PAID_SUBMIT_TIMEOUT_SECONDS = 180
+READ_ONLY_STATUS_TIMEOUT_SECONDS = 30
+MAX_PROVIDER_JSON_BYTES = 1024 * 1024
 IMAGE_MODELS = ("o1-base", "v3o")
 VIDEO_MODELS = ("VQ2-Turbo", "VQ2-Pro", "VQ3-Turbo", "VQ3-Pro", "VQ4")
 DONE = ("succeed", "success", "succeeded")
@@ -42,6 +47,8 @@ def _key():
     key = os.environ.get("QIANFAN_API_KEY", "")
     if not key.strip():
         raise MediaTaskError("Missing QIANFAN_API_KEY; no request sent")
+    if key != key.strip() or key.lower().startswith("bearer ") or any(c.isspace() for c in key):
+        raise MediaTaskError("Malformed QIANFAN_API_KEY: store bare key only, no whitespace or Bearer prefix")
     return key
 
 
@@ -64,8 +71,12 @@ def _request(url, key, payload=None, transport=None):
                                  method="POST" if body is not None else "GET")
     try:
         opener = transport or _safe_open
-        with opener(req, timeout=45) as response:
-            data = json.load(response)
+        with opener(req, timeout=(PAID_SUBMIT_TIMEOUT_SECONDS if body is not None
+                                  else READ_ONLY_STATUS_TIMEOUT_SECONDS)) as response:
+            raw = response.read(MAX_PROVIDER_JSON_BYTES + 1)
+            if len(raw) > MAX_PROVIDER_JSON_BYTES:
+                raise MediaTaskError("Provider JSON response exceeds 1 MiB safe limit")
+            data = json.loads(raw)
     except urllib.error.HTTPError as exc:
         # Only extract allowlisted non-sensitive diagnostic identifiers. Never
         # emit provider prose, raw JSON, URLs, headers, tokens, or prompt text.
@@ -99,9 +110,14 @@ def _request(url, key, payload=None, transport=None):
             "; no task ID confirmed. " + note
         ) from None
     except urllib.error.URLError:
-        raise MediaTaskError("Qianfan API network/DNS/TLS failure; no task ID confirmed") from None
+        raise MediaTaskError(
+            "Qianfan API connectivity/timeout failure; task acceptance unknown after POST"
+            if body is not None else "Qianfan read-only status query failed"
+        ) from None
     except TimeoutError:
-        raise MediaTaskError("Qianfan API request timeout; task acceptance unknown") from None
+        raise MediaTaskError("Qianfan request timed out; task acceptance unknown after POST" if body is not None else "Qianfan read-only query timeout") from None
+    except MediaTaskError:
+        raise
     except Exception:
         # Generic transport failure can otherwise hide accidental secret material.
         raise MediaTaskError("Qianfan API transport failure; task acceptance unknown") from None
