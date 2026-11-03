@@ -7,11 +7,16 @@ on:
         required: true
         description: 'PUBLIC original fictional car concept only; no private inputs in this public repo'
         default: 'One dark graphite silver futuristic supercar starts hard, then continually accelerates on the same golden sunset mountain road. Wheels rotate, body remains identical, road parallax, cinematic low-angle tracking, engine roar, no dialogue, never resets.'
+      public_first_frame_url:
+        type: string
+        required: false
+        default: ''
+        description: 'Optional PUBLIC direct HTTPS first-frame JPG/PNG/WebP URL. Use to SKIP Cloudflare entirely; no private or signed URLs.'
       confirm_cloudflare_workers_free:
         type: boolean
         required: true
         default: false
-        description: 'I confirm Cloudflare Workers Free quota for ONE original first-frame generation'
+        description: 'For Cloudflare mode only: confirm available Workers Free quota'
       confirm_seven_paid_muse_tasks:
         type: boolean
         required: true
@@ -52,7 +57,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_muse_10s.py' -v
           python -m unittest discover -s tests -p 'test_muse_35s_real_media.py' -v
   live-seven-part:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_seven_paid_muse_tasks && inputs.confirm_cloudflare_workers_free }}
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_seven_paid_muse_tasks && (inputs.confirm_cloudflare_workers_free || inputs.public_first_frame_url != '') }}
     needs: offline-validation
     runs-on: ubuntu-latest
     timeout-minutes: 120
@@ -61,6 +66,7 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
       BRIEF: ${{ inputs.brief }}
+      PUBLIC_FIRST_FRAME_URL: ${{ inputs.public_first_frame_url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -73,10 +79,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          [[ -n "$CLOUDFLARE_ACCOUNT_ID" && -n "$CLOUDFLARE_API_TOKEN" && -n "$QIANFAN_API_KEY" ]] || {
-            echo "Provider secrets missing; model tasks NOT attempted" >&2
+          [[ -n "$QIANFAN_API_KEY" ]] || {
+            echo "Qianfan API credential missing; no video jobs attempted" >&2
             exit 2
           }
+          if [[ -z "$PUBLIC_FIRST_FRAME_URL" ]]; then
+            [[ -n "$CLOUDFLARE_ACCOUNT_ID" && -n "$CLOUDFLARE_API_TOKEN" ]] || {
+              echo "Cloudflare secrets missing for first-frame creation; no paid video" >&2
+              exit 2
+            }
+          else
+            [[ "$PUBLIC_FIRST_FRAME_URL" =~ ^https:// ]] || {
+              echo "Only PUBLIC HTTPS image URLs are allowed; no paid video attempted" >&2
+              exit 2
+            }
+          fi
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
           python -m pip install 'Pillow>=11,<13'
@@ -91,6 +108,7 @@ jobs:
               raise SystemExit("CJK font missing; NO paid request")
           PY
       - name: Generate one Cloudflare free first frame for all seven continuation clips
+        if: ${{ inputs.public_first_frame_url == '' }}
         id: firstframe
         shell: bash
         run: |
@@ -104,9 +122,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m oneflow.muse_35s --brief "$BRIEF" \
-            --first-frame-file "$RUNNER_TEMP/reference/S01.png" \
-            --out "$RUNNER_TEMP/muse-continuous-35s" --confirm-seven-paid
+          if [[ -n "$PUBLIC_FIRST_FRAME_URL" ]]; then
+            echo "Using user-approved PUBLIC first-frame URL; skipping Cloudflare FLUX entirely."
+            python -m oneflow.muse_35s --brief "$BRIEF" \
+              --first-frame-url "$PUBLIC_FIRST_FRAME_URL" \
+              --out "$RUNNER_TEMP/muse-continuous-35s" --confirm-seven-paid
+          else
+            python -m oneflow.muse_35s --brief "$BRIEF" \
+              --first-frame-file "$RUNNER_TEMP/reference/S01.png" \
+              --out "$RUNNER_TEMP/muse-continuous-35s" --confirm-seven-paid
+          fi
       - name: Save failure-phase report (no secrets or raw provider errors)
         if: ${{ always() }}
         shell: bash
@@ -122,6 +147,7 @@ jobs:
               "format": "oneflow-35s-phase-report-v1",
               "preflight": os.getenv("PREFLIGHT_RESULT", "unknown"),
               "cloudflare_frame": os.getenv("FIRST_FRAME_RESULT", "unknown"),
+              "cloudflare_was_skipped": bool(os.getenv("PUBLIC_FIRST_FRAME_URL")),
               "seven_segment_workflow": os.getenv("PAID_VIDEO_RESULT", "unknown"),
               "provider_task_submission": "inspect progress.json if present; UNKNOWN otherwise",
               "new_run_advice": "Do not rerun if any paid task was attempted; reconcile tasks and billing."
