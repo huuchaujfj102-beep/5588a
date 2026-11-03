@@ -24,6 +24,43 @@ def json_response(value):
 
 
 class MediaTests(unittest.TestCase):
+    def test_paid_post_has_longer_ack_timeout_than_read_only_get(self):
+        observed = []
+        def fake(req, timeout):
+            observed.append((req.get_method(), timeout))
+            if req.get_method() == "POST":
+                return json_response({"task_id": "a123", "status": "created"})
+            return json_response({"status": "processing", "content": {}})
+        with patch.dict(os.environ, {"QIANFAN_API_KEY": "test-key"}):
+            submit("video", prompt="supercar moves", model="musesteamer-air-i2v",
+                   image_url="https://example.com/car.png", resolution="720p",
+                   duration=5, allow_paid=True, transport=fake)
+            task_status("video", "a123", model="musesteamer-air-i2v", transport=fake)
+        self.assertEqual(observed, [("POST", 180), ("GET", 30)])
+
+    def test_bearer_prefix_or_whitespace_fails_before_paid_transport(self):
+        for invalid in ("Bearer bce-v3/example", " bce-v3/example", "bce-v3/example\\n"):
+            with self.subTest(value=invalid), patch.dict(os.environ, {"QIANFAN_API_KEY": invalid}):
+                with patch("oneflow.qianfan_media._safe_open") as network:
+                    with self.assertRaisesRegex(MediaTaskError, "Malformed"):
+                        submit("video", prompt="car speeds", model="musesteamer-air-i2v",
+                               image_url="https://example.com/approved.png", duration=5,
+                               resolution="720p", allow_paid=True)
+                    network.assert_not_called()
+
+    def test_oversized_json_fails_closed_without_provider_retries(self):
+        call_count = 0
+        def fake(req, timeout):
+            nonlocal call_count
+            call_count += 1
+            return FakeResponse(b"{" + b"z" * (1024 * 1024 + 1) + b"}")
+        with patch.dict(os.environ, {"QIANFAN_API_KEY": "test-key"}):
+            with self.assertRaisesRegex(MediaTaskError, "exceeds"):
+                submit("video", prompt="car moves", model="musesteamer-air-i2v",
+                       image_url="https://example.com/car.png", duration=5,
+                       resolution="720p", allow_paid=True, transport=fake)
+        self.assertEqual(call_count, 1)
+
     def test_no_paid_opt_in_no_network(self):
         with patch("urllib.request.urlopen") as call:
             for kind, model in (("image", "o1-base"), ("video", "VQ2-Turbo")):
