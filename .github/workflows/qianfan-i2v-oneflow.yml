@@ -102,6 +102,7 @@ jobs:
           set -e
           python -m compileall -q oneflow
           python -m unittest discover -s tests -p 'test_qianfan_media.py' -v
+          python -m unittest discover -s tests -p 'test_qianfan_auth_probe.py' -v
           python -m unittest discover -s tests -p 'test_musesteamer_air.py' -v
           python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
           python -m unittest discover -s tests -p 'test_douyin_publisher.py' -v
@@ -208,6 +209,16 @@ jobs:
                   raise SystemExit("First frame is invalid/small; no billable request.")
           print("Verified first frame with PNG dimensions >=300px.")
           PY
+      - name: Read-only Qianfan VQ API authentication preflight BEFORE Cloudflare / paid POST
+        if: ${{ inputs.model != 'musesteamer-air-i2v' }}
+        env:
+          QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+          VIDEO_MODEL: ${{ inputs.model }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m oneflow.qianfan_auth_probe --model "$VIDEO_MODEL"
+          echo "VQ endpoint diagnostic passed. Actual model entitlement/balance not verified by read-only GET."
       - name: Generate one original Cloudflare FLUX first frame (only after explicit Free confirmation)
         if: ${{ inputs.generate_cloudflare_first_frame }}
         env:
