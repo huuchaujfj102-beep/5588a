@@ -67,11 +67,36 @@ def _request(url, key, payload=None, transport=None):
         with opener(req, timeout=45) as response:
             data = json.load(response)
     except urllib.error.HTTPError as exc:
-        # Record status only. Never emit provider response body, URLs, headers,
-        # secrets or user-submitted prompt text into public Actions logs.
+        # Only extract allowlisted non-sensitive diagnostic identifiers. Never
+        # emit provider prose, raw JSON, URLs, headers, tokens, or prompt text.
+        # This enables a precise provider support ticket without leaking keys.
+        fields = {}
+        try:
+            error_body = exc.read(4096)
+            parsed = json.loads(error_body)
+            if isinstance(parsed, dict):
+                for key_name in ("code", "err_code", "error_code", "log_id",
+                                 "request_id"):
+                    value = parsed.get(key_name)
+                    if type(value) is int and 0 <= value <= 999999999:
+                        fields[key_name] = str(value)
+                    elif isinstance(value, str) and re.fullmatch(
+                            r"[A-Za-z0-9_-]{1,80}", value):
+                        fields[key_name] = value
+        except (ValueError, TypeError, OSError, UnicodeDecodeError):
+            pass
+        diagnostic = " ".join(k + "=" + v for k, v in fields.items())
+        note = (
+            "Authentication/key scope: check API Key Add Permissions > "
+            "AI Open Capabilities for Qianfan-Video; "
+            "HTTP 401 is not fixed by retrying the same POST."
+            if exc.code in (401, 403)
+            else "Check provider entitlement, validation and billing privately."
+        )
         raise MediaTaskError(
             "Qianfan API HTTP " + str(exc.code) +
-            "; no task ID was confirmed. Check billing, entitlement and error code privately"
+            (" diagnostic " + diagnostic if diagnostic else "") +
+            "; no task ID confirmed. " + note
         ) from None
     except urllib.error.URLError:
         raise MediaTaskError("Qianfan API network/DNS/TLS failure; no task ID confirmed") from None
