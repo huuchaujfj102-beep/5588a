@@ -39,7 +39,7 @@ class MediaTests(unittest.TestCase):
         self.assertEqual(observed, [("POST", 180), ("GET", 30)])
 
     def test_bearer_prefix_or_whitespace_fails_before_paid_transport(self):
-        for invalid in ("Bearer bce-v3/example", " bce-v3/example", "bce-v3/example\\n"):
+        for invalid in ("Bearer bce-v3/example", " bce-v3/example", "bce-v3/example" + chr(10)):
             with self.subTest(value=invalid), patch.dict(os.environ, {"QIANFAN_API_KEY": invalid}):
                 with patch("oneflow.qianfan_media._safe_open") as network:
                     with self.assertRaisesRegex(MediaTaskError, "Malformed"):
