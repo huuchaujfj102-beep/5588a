@@ -23,6 +23,7 @@ on:
       - '.github/workflows/muse-continuous-35s.yml'
       - 'oneflow/muse_35s.py'
       - 'tests/test_muse_35s.py'
+      - 'tests/test_muse_35s_real_media.py'
 permissions:
   contents: read
 concurrency:
@@ -39,12 +40,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install FFmpeg for REAL CPU video processing smoke (no provider calls)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: No-network tests, no account or paid media requests
         run: |
           set -euo pipefail
           python -m compileall -q oneflow
           python -m unittest discover -s tests -p 'test_muse_35s.py' -v
           python -m unittest discover -s tests -p 'test_muse_10s.py' -v
+          python -m unittest discover -s tests -p 'test_muse_35s_real_media.py' -v
   live-seven-part:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_seven_paid_muse_tasks && inputs.confirm_cloudflare_workers_free }}
     needs: offline-validation
@@ -63,6 +69,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Fail closed on absent credentials, media tools or fonts before any model call
+        id: preflight
         shell: bash
         run: |
           set -euo pipefail
@@ -84,6 +91,7 @@ jobs:
               raise SystemExit("CJK font missing; NO paid request")
           PY
       - name: Generate one Cloudflare free first frame for all seven continuation clips
+        id: firstframe
         shell: bash
         run: |
           set -euo pipefail
@@ -92,17 +100,43 @@ jobs:
             --approve-free-test --confirm-workers-free
           test -s "$RUNNER_TEMP/reference/S01.png"
       - name: Seven paid Muse 5s clips, six exact last-frame transitions, 35s portrait MP4 and QC
+        id: paidvideo
         shell: bash
         run: |
           set -euo pipefail
           python -m oneflow.muse_35s --brief "$BRIEF" \
             --first-frame-file "$RUNNER_TEMP/reference/S01.png" \
             --out "$RUNNER_TEMP/muse-continuous-35s" --confirm-seven-paid
+      - name: Save failure-phase report (no secrets or raw provider errors)
+        if: ${{ always() }}
+        shell: bash
+        env:
+          PREFLIGHT_RESULT: ${{ steps.preflight.outcome }}
+          FIRST_FRAME_RESULT: ${{ steps.firstframe.outcome }}
+          PAID_VIDEO_RESULT: ${{ steps.paidvideo.outcome }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          result = {
+              "format": "oneflow-35s-phase-report-v1",
+              "preflight": os.getenv("PREFLIGHT_RESULT", "unknown"),
+              "cloudflare_frame": os.getenv("FIRST_FRAME_RESULT", "unknown"),
+              "seven_segment_workflow": os.getenv("PAID_VIDEO_RESULT", "unknown"),
+              "provider_task_submission": "inspect progress.json if present; UNKNOWN otherwise",
+              "new_run_advice": "Do not rerun if any paid task was attempted; reconcile tasks and billing."
+          }
+          dest = Path(os.environ["RUNNER_TEMP"]) / "muse35-phase-report.json"
+          dest.write_text(json.dumps(result, indent=2), encoding="utf-8")
+          print(json.dumps(result))
+          PY
       - name: Export ALL clip ledgers, provider task IDs, partial clips and final QC on failure/success
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: muse-35s-seven-shots-and-task-ledger
-          path: ${{ runner.temp }}/muse-continuous-35s/
+          path: |
+            ${{ runner.temp }}/muse35-phase-report.json
+            ${{ runner.temp }}/muse-continuous-35s/
           retention-days: 1
           if-no-files-found: warn
