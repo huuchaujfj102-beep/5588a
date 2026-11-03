@@ -38,6 +38,27 @@ concurrency:
   group: muse-continuous-35s-${{ github.ref }}
   cancel-in-progress: false
 jobs:
+  dispatch-gate:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explicit authorization and exactly one source is REQUIRED
+        env:
+          PAID_OK: ${{ inputs.confirm_seven_paid_muse_tasks }}
+          PUBLIC_URL: ${{ inputs.public_first_frame_url }}
+          CF_OK: ${{ inputs.confirm_cloudflare_workers_free }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$PAID_OK" != "true" ]]; then
+            echo "::error::Seven paid Muse tasks were NOT approved; live job intentionally BLOCKED."
+            exit 2
+          fi
+          if [[ -z "$PUBLIC_URL" && "$CF_OK" != "true" ]]; then
+            echo "::error::No usable first-frame source selected; provide a public image URL or authorize Cloudflare free frame."
+            exit 2
+          fi
+          echo "Dispatch gates met. This does NOT verify provider balance or charged task state."
   offline-validation:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -63,7 +84,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_qianfan_media.py' -v
   live-seven-part:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_seven_paid_muse_tasks && (inputs.confirm_cloudflare_workers_free || inputs.public_first_frame_url != '') }}
-    needs: offline-validation
+    needs: [offline-validation, dispatch-gate]
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
