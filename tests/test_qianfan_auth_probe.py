@@ -56,10 +56,11 @@ class AuthPreflightTests(unittest.TestCase):
         self.assertEqual(seen[0].get_method(), "GET")
         self.assertEqual(seen[0].data, None)
 
-    def test_200_is_inconclusive_not_billable_green(self):
+    def test_200_only_establishes_endpoint_reachability(self):
         with patch.dict(os.environ, {"QIANFAN_API_KEY": "bce-v3/ALTAK-TEST/test"}):
-            with self.assertRaisesRegex(MediaTaskError, "inconclusive"):
-                probe_vq_auth(transport=lambda req, timeout: DummyResponse(b"{}"))
+            out = probe_vq_auth(transport=lambda req, timeout: DummyResponse(b"{}"))
+        self.assertEqual(out["http_status"], 200)
+        self.assertEqual(out["authorization"], "endpoint_reached_not_model_entitlement")
 
 
 if __name__ == "__main__":
