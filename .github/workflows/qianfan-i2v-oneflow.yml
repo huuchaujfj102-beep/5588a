@@ -81,6 +81,37 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  dispatch-gate:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explicit paid consent and exactly one first-frame input required
+        env:
+          PAID_OK: ${{ inputs.confirm_paid }}
+          URL: ${{ inputs.public_first_frame_url }}
+          SOURCE_RUN_ID: ${{ inputs.source_image_run_id }}
+          CF: ${{ inputs.generate_cloudflare_first_frame }}
+          CF_OK: ${{ inputs.confirm_cloudflare_workers_free }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$PAID_OK" != "true" ]]; then
+            echo "::error::One billable video task not authorized, no generation performed."
+            exit 2
+          fi
+          count=0
+          [[ -n "$URL" ]] && count=$((count + 1))
+          [[ -n "$SOURCE_RUN_ID" ]] && count=$((count + 1))
+          [[ "$CF" == "true" ]] && count=$((count + 1))
+          if [[ "$count" -ne 1 ]]; then
+            echo "::error::Exactly ONE first-frame source is required."
+            exit 2
+          fi
+          if [[ "$CF" == "true" && "$CF_OK" != "true" ]]; then
+            echo "::error::Cloudflare Free plan attestation missing."
+            exit 2
+          fi
+          echo "Dispatch gates satisfied; provider availability not yet verified."
   offline-validation:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -122,7 +153,7 @@ jobs:
 
   live-video:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_paid }}
-    needs: offline-validation
+    needs: [offline-validation, dispatch-gate]
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
