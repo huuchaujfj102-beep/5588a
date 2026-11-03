@@ -127,11 +127,19 @@ def make_35s(brief, first_frame, out_root, *, confirm_seven_paid=False):
         # Even if the POST times out, the attempt remains recorded. No rerun.
         try:
             i2v.submit_once(job, confirm_paid=True)
-        finally:
+        except Exception:
+            # A network failure may still mean the provider accepted a billable
+            # request. Never reset this to PLANNED and never auto resubmit.
             task = load_json(job / "manifest.json").get("qianfan_i2v", {})
             entry["task_id"] = task.get("task_id")
-            entry["state"] = task.get("status", "SUBMISSION_UNCERTAIN")
+            entry["state"] = "SUBMISSION_UNCERTAIN"
+            progress["status"] = "STOPPED_RECONCILE_BILLING"
             save_json(report, progress)
+            raise
+        task = load_json(job / "manifest.json").get("qianfan_i2v", {})
+        entry["task_id"] = task.get("task_id")
+        entry["state"] = task.get("status", "SUBMISSION_UNCERTAIN")
+        save_json(report, progress)
         outcome = i2v.resume(job)
         if outcome != "AWAITING_HUMAN_REVIEW":
             progress["status"] = "PAUSED_PENDING_OR_BLOCKED"
