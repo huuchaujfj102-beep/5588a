@@ -4,6 +4,7 @@ from pathlib import Path
 # Conservative editorial defaults; individual platforms change API limits and review rules.
 PROFILES = {
     "douyin": {"title_chars": 55, "description_chars": 500, "target_ratio": "9:16"},
+    "shipinhao": {"title_chars": 55, "description_chars": 500, "target_ratio": "9:16"},
     "kuaishou": {"title_chars": 55, "description_chars": 500, "target_ratio": "9:16"},
     "xiaohongshu": {"title_chars": 20, "description_chars": 800, "target_ratio": "9:16"},
     "bilibili": {"title_chars": 60, "description_chars": 1000, "target_ratio": "16:9"},
@@ -27,6 +28,9 @@ def make_package(manifest, platform):
         "description": original[:profile["description_chars"]],
         "source_ratio": manifest["ratio"], "suggested_target_ratio": profile["target_ratio"],
         "editorial_profile_only": True,
+        "publication_status": "NOT_SUBMITTED",
+        "official_post_id": None,
+        "official_post_url": None,
         "required_review": ["Official API upload limits", "Aspect/codec conversion",
                             "Music and content permissions", "Cover image", "Platform account scopes"],
         "note": "Publisher adapter must verify current API specs and transcode as needed; this is not a compliant upload certification."
