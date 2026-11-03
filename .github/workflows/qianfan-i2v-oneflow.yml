@@ -50,16 +50,24 @@ on:
         type: boolean
         required: true
         default: false
+      seconds:
+        description: 'Native model video duration: Air supports 5s; VQ2 up to 10s; VQ3/VQ4 up to 16s.'
+        type: choice
+        options: ['5', '10', '15']
+        default: '10'
       model:
-        description: 'MuseSteamer-Air-I2V: 5s low-cost video, synthetic SFX. VQ3-Turbo has embedded audio.'
+        description: 'VQ3/VQ4 for native 15s; VQ2 for up to 10s; Air only 5s.'
         type: choice
         options:
           - musesteamer-air-i2v
           - VQ2-Turbo
           - VQ3-Turbo
-        default: musesteamer-air-i2v
+          - VQ3-Pro
+          - VQ4
+          - VQ2-Pro
+        default: VQ3-Turbo
       confirm_paid:
-        description: 'I authorize ONE billable 5-second generation; this action will NOT publish to Douyin'
+        description: 'I authorize ONE billable generation of the selected 5/10/15-second model; no posting'
         type: boolean
         required: true
         default: false
@@ -262,12 +270,15 @@ jobs:
           SOURCE_RUN_ID: ${{ inputs.source_image_run_id }}
           GENERATE_CF: ${{ inputs.generate_cloudflare_first_frame }}
           MODEL: ${{ inputs.model }}
+          VIDEO_SECONDS: ${{ inputs.seconds }}
         shell: bash
         run: |
           set -euo pipefail
           if [[ -z "$QIANFAN_API_KEY" ]]; then echo "QIANFAN_API_KEY absent"; exit 1; fi
           SOUND="synthetic"
-          if [[ "$MODEL" == "VQ3-Turbo" ]]; then SOUND="embedded"; fi
+          if [[ "$MODEL" == "VQ3-Turbo" || "$MODEL" == "VQ3-Pro" || "$MODEL" == "VQ4" ]]; then SOUND="embedded"; fi
+          if [[ "$VIDEO_SECONDS" == "15" && "$MODEL" != "VQ3-Turbo" && "$MODEL" != "VQ3-Pro" && "$MODEL" != "VQ4" ]]; then echo "15 seconds requires VQ3/VQ4; no paid request"; exit 2; fi
+          if [[ "$VIDEO_SECONDS" != "5" && "$MODEL" == "musesteamer-air-i2v" ]]; then echo "MuseSteamer Air supports only 5 seconds"; exit 2; fi
           if [[ -n "$SOURCE_RUN_ID" || "$GENERATE_CF" == "true" ]]; then
             FRAME_ARG=(--first-frame-file "$RUNNER_TEMP/reference/S01.png")
           else
@@ -275,7 +286,7 @@ jobs:
           fi
           python -m oneflow.qianfan_i2v run \
             --brief "$BRIEF" "${FRAME_ARG[@]}" \
-            --seconds 5 --ratio 16:9 --resolution 720p \
+            --seconds "$VIDEO_SECONDS" --ratio 9:16 --resolution 720p \
             --model "$MODEL" --sound "$SOUND" \
             --platform douyin --platform kuaishou --platform xiaohongshu \
             --platform shipinhao --platform youtube \
