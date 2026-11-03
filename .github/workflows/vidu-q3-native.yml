@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Text-to-video or image-to-video using previously generated supercar frame
+        description: Optional mode. A nonempty source-image ID ALWAYS selects image-to-video for car consistency
         type: choice
         options: [text2video, img2video]
         default: text2video
       source_image_run_id:
-        description: Image mode only - main branch original OVH image generation run ID
+        description: Paste previous OVH image run ID (e.g. 41660915365); auto-uses image-to-video
         type: string
         default: ''
       brief:
@@ -91,11 +91,19 @@ jobs:
           set -euo pipefail
           if [[ "$OP" == "generate" ]]; then
             [[ "$PAID" == "true" && -z "$TASK" ]] || { echo "::error::Paid approval required and resume ID must be empty"; exit 2; }
-            if [[ "$MODE" == "img2video" && ! "$SOURCE" =~ ^[0-9]{8,16}$ ]]; then
-              echo "::error::Image mode needs a numeric approved OVH source run ID"; exit 2
-            fi
-            if [[ "$MODE" == "text2video" && -n "$SOURCE" ]]; then
-              echo "::error::Text mode must have no source run ID"; exit 2
+            if [[ -n "$SOURCE" ]]; then
+              [[ "$SOURCE" =~ ^[0-9]{8,16}$ ]] || {
+                echo "::error::Source image run ID must be numeric"; exit 2;
+              }
+              echo "EFFECTIVE_MODE=img2video" >> "$GITHUB_ENV"
+              if [[ "$MODE" == "text2video" ]]; then
+                echo "::notice::A source image was supplied, automatically selecting img2video; no charge yet."
+              fi
+            else
+              [[ "$MODE" != "img2video" ]] || {
+                echo "::error::img2video needs an existing image run ID"; exit 2;
+              }
+              echo "EFFECTIVE_MODE=text2video" >> "$GITHUB_ENV"
             fi
           elif [[ "$OP" == "resume" ]]; then
             [[ "$PAID" != "true" && "$TASK" =~ ^[A-Za-z0-9_-]{3,128}$ && -z "$SOURCE" ]] || { echo "::error::Resume requires task ID, no paid approval or source image"; exit 2; }
@@ -105,7 +113,7 @@ jobs:
             echo "::error::Unsupported operation"; exit 2
           fi
       - name: Verify existing approved OVH first frame provenance
-        if: ${{ inputs.operation == 'generate' && inputs.mode == 'img2video' }}
+        if: ${{ inputs.operation == 'generate' && inputs.source_image_run_id != '' }}
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -126,7 +134,7 @@ jobs:
             [.artifacts[] | select(.expired == false and .name == $name)] | length == 1
           ' "$RUNNER_TEMP/source-artifacts.json" >/dev/null
       - name: Download exact OVH image from GitHub Actions
-        if: ${{ inputs.operation == 'generate' && inputs.mode == 'img2video' }}
+        if: ${{ inputs.operation == 'generate' && inputs.source_image_run_id != '' }}
         uses: actions/download-artifact@v4
         with:
           run-id: ${{ inputs.source_image_run_id }}
@@ -134,7 +142,7 @@ jobs:
           name: oneflow-ovh-FREE-S01-${{ inputs.source_image_run_id }}
           path: ${{ runner.temp }}/reference
       - name: Validate image file before paid model submission
-        if: ${{ inputs.operation == 'generate' && inputs.mode == 'img2video' }}
+        if: ${{ inputs.operation == 'generate' && inputs.source_image_run_id != '' }}
         run: |
           python - <<'PY'
           import os
@@ -144,6 +152,23 @@ jobs:
           assert image_data_uri(path).startswith("data:image/png;base64,")
           print("OVH reference image validated, no paid task yet")
           PY
+      - name: Validate actual 15s request payload offline, before any paid POST
+        if: ${{ inputs.operation == 'generate' }}
+        shell: bash
+        env:
+          MODE: ${{ env.EFFECTIVE_MODE }}
+          BRIEF: ${{ inputs.brief }}
+          SECONDS: ${{ inputs.seconds }}
+          RESOLUTION: ${{ inputs.resolution }}
+        run: |
+          set -euo pipefail
+          args=(--action generate --mode "$MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-payload-test")
+          if [[ "$MODE" == "img2video" ]]; then
+            args+=(--first-frame "$RUNNER_TEMP/reference/S01.png")
+          fi
+          python -m oneflow.vidu_q3 "${args[@]}"
+          test -s "$RUNNER_TEMP/vidu-payload-test/vidu-status.json"
+          echo "Verified $SECONDS-second $MODE payload, no paid video task submitted."
       - name: Prepare FFmpeg media tools before any model request
         if: ${{ inputs.operation != 'preflight' }}
         run: |
@@ -168,8 +193,8 @@ jobs:
           elif [[ "$OP" == "resume" ]]; then
             python -m oneflow.vidu_q3 --action resume --task-id "$TASK" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output"
           else
-            args=(--action generate --mode "$MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output" --confirm-paid)
-            if [[ "$MODE" == "img2video" ]]; then args+=(--first-frame "$RUNNER_TEMP/reference/S01.png"); fi
+            args=(--action generate --mode "$EFFECTIVE_MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output" --confirm-paid)
+            if [[ "$EFFECTIVE_MODE" == "img2video" ]]; then args+=(--first-frame "$RUNNER_TEMP/reference/S01.png"); fi
             python -m oneflow.vidu_q3 "${args[@]}"
           fi
       - name: Deliver MP4 and safe billing audit without publishing
