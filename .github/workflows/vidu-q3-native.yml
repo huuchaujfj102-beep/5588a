@@ -1,0 +1,114 @@
+name: Vidu Q3 Pro 10s 15s opt-in pilot
+
+on:
+  push:
+    branches: [feature/vidu-q3-native-workflow-20261104]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      brief:
+        description: PUBLIC fictional concept only
+        type: string
+        required: true
+        default: Dark silver concept supercar speeds along a sunset road, real rotating wheels, low tracking camera, original engine sound, no dialogue, no morphing.
+      seconds:
+        description: Native video duration
+        type: choice
+        options: ['10', '15']
+        default: '10'
+      resolution:
+        description: Vidu model resolution
+        type: choice
+        options: ['720p', '540p', '1080p']
+        default: '720p'
+      operation:
+        description: generate uses one billable POST; resume uses GET only
+        type: choice
+        options: [generate, resume]
+        default: generate
+      resume_task_id:
+        description: existing task ID for GET-only resume
+        type: string
+        default: ''
+      confirm_paid:
+        description: I authorize ONE paid Vidu Q3 Pro video task
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vidu-q3-pilot
+  cancel-in-progress: false
+
+jobs:
+  offline-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s tests -p test_vidu_q3.py -v
+      - run: python -m oneflow.vidu_q3 --seconds 10 --out "$RUNNER_TEMP/vidu-dry"
+
+  live-video:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: offline-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require explicit billing consent or GET-only resume
+        shell: bash
+        env:
+          OP: ${{ inputs.operation }}
+          PAID: ${{ inputs.confirm_paid }}
+          TASK: ${{ inputs.resume_task_id }}
+        run: |
+          set -euo pipefail
+          if [[ "$OP" == "generate" ]]; then
+            [[ "$PAID" == "true" && -z "$TASK" ]] || { echo "::error::Paid approval required and resume ID must be empty"; exit 2; }
+          else
+            [[ "$PAID" != "true" && "$TASK" =~ ^[A-Za-z0-9_-]{3,128}$ ]] || { echo "::error::Resume needs existing task ID without paid approval"; exit 2; }
+          fi
+      - name: Prepare FFmpeg media tools before any model request
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
+          command -v ffprobe
+      - name: One opt-in Vidu POST or GET-only resume
+        shell: bash
+        env:
+          VIDU_API_KEY: ${{ secrets.VIDU_API_KEY }}
+          OP: ${{ inputs.operation }}
+          BRIEF: ${{ inputs.brief }}
+          SECONDS: ${{ inputs.seconds }}
+          RESOLUTION: ${{ inputs.resolution }}
+          TASK: ${{ inputs.resume_task_id }}
+        run: |
+          set -euo pipefail
+          [[ -n "$VIDU_API_KEY" ]] || { echo "::error::Missing VIDU_API_KEY secret"; exit 2; }
+          if [[ "$OP" == "resume" ]]; then
+            python -m oneflow.vidu_q3 --action resume --task-id "$TASK" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output"
+          else
+            python -m oneflow.vidu_q3 --action generate --mode text2video --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output" --confirm-paid
+          fi
+      - name: Deliver MP4 and safe billing audit without publishing
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: vidu-q3-review-${{ github.run_id }}
+          path: ${{ runner.temp }}/vidu-output/
+          retention-days: 7
+          if-no-files-found: ignore
