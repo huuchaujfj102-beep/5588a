@@ -28,7 +28,7 @@ class FlowError(RuntimeError):
     pass
 
 
-PLATFORMS = ("douyin", "kuaishou", "xiaohongshu", "bilibili", "youtube", "tiktok")
+PLATFORMS = ("douyin", "kuaishou", "xiaohongshu", "shipinhao", "bilibili", "youtube", "tiktok")
 DEFAULT = {
     "story": {"kind": "heuristic"},
     "image": [],
