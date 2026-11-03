@@ -230,8 +230,29 @@ jobs:
                   raise SystemExit("Cloudflare image dimension/format invalid; video not billed")
           print("Verified original Cloudflare first frame, ready for MuseSteamer.")
           PY
-      - name: Install CJK watermark font
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - name: Install and verify FFmpeg, FFprobe and CJK watermark font BEFORE any paid video request
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
+          command -v ffmpeg
+          command -v ffprobe
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          for binary in ("ffmpeg", "ffprobe"):
+              if not shutil.which(binary):
+                  raise SystemExit(f"Missing {binary}; stop BEFORE paid Qianfan submission")
+          if not any(Path(p).is_file() for p in (
+              "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+              "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
+          )):
+              raise SystemExit("Missing CJK watermark font; stop BEFORE paid Qianfan submission")
+          print("Media tools and watermark font preflight passed; paid submission remains explicitly gated.")
+          PY
       - name: Submit ONE explicitly approved model task and audit video with watermark
         env:
           QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
