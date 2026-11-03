@@ -19,8 +19,8 @@ class Muse35sTests(unittest.TestCase):
 
     def test_public_https_first_frame_reaches_first_plan_without_cloudflare(self):
         public = "https://cdn.example.com/public-racer.png"
-        with patch("oneflow.muse_35s._checked_public_url", return_value=public) as checked, \\
-             patch("oneflow.muse_35s.i2v.plan", side_effect=FlowError("stop before paid POST")) as planned, \\
+        with patch("oneflow.muse_35s._checked_public_url", return_value=public) as checked, \
+             patch("oneflow.muse_35s.i2v.plan", side_effect=FlowError("stop before paid POST")) as planned, \
              patch("oneflow.muse_35s.i2v.submit_once") as paid:
             with self.assertRaisesRegex(FlowError, "stop before paid"):
                 make_35s(self.idea, public, self.base / "out", confirm_seven_paid=True)
