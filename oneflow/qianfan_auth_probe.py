@@ -12,11 +12,11 @@ from .qianfan_media import VIDEO_ENDPOINT, MediaTaskError, _key
 def probe_vq_auth(*, transport=None):
     """GET an intentionally nonexistent task, never POST or consume generation quota.
 
-    HTTP 400/404 means the target endpoint responded to the key, but does NOT
+    HTTP 200/400/404 means the target endpoint responded to the key, but does NOT
     establish model entitlement. HTTP 401/403 means fail before generating a frame.
     Other statuses remain inconclusive and are not considered success.
     """
-    key = _key().strip()
+    key = _key()
     if key.lower().startswith("bearer "):
         raise MediaTaskError("QIANFAN_API_KEY contains 'Bearer ' prefix; store key only, without Authorization header")
     if any(c.isspace() for c in key):
@@ -49,7 +49,7 @@ def probe_vq_auth(*, transport=None):
         raise MediaTaskError("VQ API HTTP 401: key invalid/expired/missing scope or account mismatch; STOP, no paid generation")
     if status == 403:
         raise MediaTaskError("VQ API HTTP 403: likely insufficient scope or permission; STOP, no paid generation")
-    if status not in (400, 404):
+    if status not in (200, 400, 404):
         raise MediaTaskError(f"VQ API diagnostic inconclusive HTTP {status}; STOP before billable request")
     return {"http_status": status, "method": "GET", "created_task": False,
             "authorization": "endpoint_reached_not_model_entitlement"}
