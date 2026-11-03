@@ -276,7 +276,15 @@ jobs:
             --brief "$BRIEF" "${FRAME_ARG[@]}" \
             --seconds 5 --ratio 16:9 --resolution 720p \
             --model "$MODEL" --sound "$SOUND" \
-            --platform douyin --out "$RUNNER_TEMP/i2v-public-test" --confirm-paid
+            --platform douyin --platform kuaishou --platform xiaohongshu \
+            --platform shipinhao --platform youtube \
+            --out "$RUNNER_TEMP/i2v-public-test" --confirm-paid
+      - name: Build five-platform audited delivery kit (NEVER publish automatically)
+        if: ${{ success() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m oneflow.distribution --jobs-root "$RUNNER_TEMP/i2v-public-test"
       - name: Export publicly safe result for human review
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
