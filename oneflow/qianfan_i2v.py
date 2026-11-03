@@ -198,19 +198,21 @@ def _watermark_mp4(path, font_path=None):
 def plan(brief, first_frame, *, seconds=5, ratio="9:16", model="VQ2-Turbo",
          resolution="720p", sound="synthetic", platforms=(), out_root="private-inputs/oneflow-jobs",
          enable_watermark=True):
-    """Zero-cost job plan. MuseSteamer is fixed at 5s; VQ pilot accepts 3-5s."""
-    if type(seconds) is not int or not 3 <= seconds <= 5:
-        raise FlowError("Current verified Qianfan OneFlow pilot supports a single 3-5 second shot")
-    if model not in ("VQ2-Turbo", "VQ2-Pro", "VQ3-Turbo", "musesteamer-air-i2v"):
-        raise FlowError("Pilot accepts VQ2/VQ3 or musesteamer-air-i2v")
+    """Zero-cost native single-shot plan; VQ3/VQ4 can accept up to 16s."""
+    if type(seconds) is not int or seconds not in (5, 10, 15):
+        raise FlowError("Current native video workflow accepts 5, 10, or 15 seconds")
+    if model not in ("VQ2-Turbo", "VQ2-Pro", "VQ3-Turbo", "VQ3-Pro", "VQ4", "musesteamer-air-i2v"):
+        raise FlowError("Unsupported VQ or MuseSteamer model")
+    if model.startswith("VQ2") and seconds > 10:
+        raise FlowError("VQ2 duration is capped at 10 seconds; choose VQ3 or VQ4 for 15s")
     if model == "musesteamer-air-i2v" and seconds != 5:
         raise FlowError("MuseSteamer Air I2V currently supports exactly 5 seconds")
     if resolution != "720p":
         raise FlowError("Pilot resolution is 720p; output may be upscaled by FFmpeg")
     if sound not in ("synthetic", "embedded"):
         raise FlowError("Choose synthetic or embedded audio")
-    if sound == "embedded" and model not in ("VQ3-Turbo",):
-        raise FlowError("Pilot embedded audio requires VQ3-Turbo; MuseSteamer uses synthetic SFX")
+    if sound == "embedded" and model not in ("VQ3-Turbo", "VQ3-Pro", "VQ4"):
+        raise FlowError("Embedded audio requires VQ3 or VQ4; MuseSteamer uses synthetic SFX")
     if not first_frame or not isinstance(first_frame, str):
         raise FlowError("A first-frame image URL or local image file is required")
     file = Path(first_frame)
@@ -230,6 +232,11 @@ def plan(brief, first_frame, *, seconds=5, ratio="9:16", model="VQ2-Turbo",
     cfg["require_audio"] = True
     root = create(brief, seconds, ratio, list(platforms), out_root, cfg)
     manifest = load_json(root / "manifest.json")
+    # Core normally divides long movies into 5s shots. Native VQ generation is
+    # ONE model task and ONE clip, not N separate provider submissions.
+    manifest["shots"] = manifest["shots"][:1]
+    manifest["shots"][0]["seconds"] = seconds
+    manifest["native_single_clip"] = True
     manifest["qianfan_i2v"] = {
         "source": source, "model": model, "resolution": resolution,
         "sound": sound, "watermark": bool(enable_watermark),
@@ -355,7 +362,7 @@ def resume(job, *, attempts=30, delay=10, fetcher=None, watermark=None):
 def main(argv=None):
     p = argparse.ArgumentParser(description="Qianfan one-sentence + reference frame -> reviewed OneFlow MP4")
     sub = p.add_subparsers(dest="cmd", required=True)
-    start = sub.add_parser("run", help="Create 5s plan; optional one paid video task")
+    start = sub.add_parser("run", help="Create native 5/10/15s plan; optional one paid video task")
     start.add_argument("--brief", required=True)
     src = start.add_mutually_exclusive_group(required=True)
     src.add_argument("--first-frame-url")
