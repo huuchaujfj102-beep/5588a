@@ -159,6 +159,42 @@ class MediaTests(unittest.TestCase):
         self.assertNotIn("secret123", str(err.exception))
         self.assertNotIn("message", str(err.exception))
 
+    def test_http_401_safe_provider_identifiers_only(self):
+        def fail(req, timeout):
+            body = {
+                "code": "AccessDenied", "err_code": "NO_VIDEO_SCOPE",
+                "request_id": "req-12345",
+                "message": "PRIVATE_DO_NOT_EXPOSE",
+                "url": "https://private.example/?token=SECRET"
+            }
+            raise urllib.error.HTTPError(req.full_url, 401, "SECRET", {},
+                                         io.BytesIO(json.dumps(body).encode()))
+        with patch.dict(os.environ, {"QIANFAN_API_KEY": "bce-v3/FAKESECRET/test"}):
+            with self.assertRaises(MediaTaskError) as error:
+                submit("video", prompt="Car moving", model="VQ3-Turbo",
+                       image_url="https://example.com/car.png", duration=10,
+                       resolution="720p", allow_paid=True, transport=fail)
+        result = str(error.exception)
+        self.assertIn("HTTP 401", result)
+        self.assertIn("err_code=NO_VIDEO_SCOPE", result)
+        self.assertIn("request_id=req-12345", result)
+        self.assertNotIn("PRIVATE_DO_NOT_EXPOSE", result)
+        self.assertNotIn("FAKESECRET", result)
+        self.assertNotIn("SECRET", result)
+
+    def test_http_error_disallows_untrusted_free_text_fields(self):
+        def fail(req, timeout):
+            raise urllib.error.HTTPError(req.full_url, 401, "secret", {},
+                io.BytesIO(json.dumps({"request_id": "bad key has spaces",
+                                       "code": {"message": "secret"}}).encode()))
+        with patch.dict(os.environ, {"QIANFAN_API_KEY": "fake"}):
+            with self.assertRaises(MediaTaskError) as error:
+                submit("video", prompt="Car moving", model="VQ3-Turbo",
+                       image_url="https://example.com/car.png",
+                       allow_paid=True, transport=fail)
+        self.assertNotIn("bad key", str(error.exception))
+        self.assertNotIn("secret", str(error.exception))
+
     def test_probe_never_submits_paid_post(self):
         calls = []
         def fake(req, timeout):
