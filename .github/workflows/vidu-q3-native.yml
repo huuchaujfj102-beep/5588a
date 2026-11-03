@@ -156,14 +156,13 @@ jobs:
         if: ${{ inputs.operation == 'generate' }}
         shell: bash
         env:
-          MODE: ${{ env.EFFECTIVE_MODE }}
           BRIEF: ${{ inputs.brief }}
           SECONDS: ${{ inputs.seconds }}
           RESOLUTION: ${{ inputs.resolution }}
         run: |
           set -euo pipefail
-          args=(--action generate --mode "$MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-payload-test")
-          if [[ "$MODE" == "img2video" ]]; then
+          args=(--action generate --mode "$EFFECTIVE_MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-payload-test")
+          if [[ "$EFFECTIVE_MODE" == "img2video" ]]; then
             args+=(--first-frame "$RUNNER_TEMP/reference/S01.png")
           fi
           python -m oneflow.vidu_q3 "${args[@]}"
