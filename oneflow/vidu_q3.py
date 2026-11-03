@@ -33,6 +33,58 @@ class ViduError(Exception):
     pass
 
 
+# Only display exact known provider error identifiers. Vidu error bodies may
+# contain sensitive prompts or account details; never print them verbatim.
+SAFE_VIDU_ERROR_CODES = frozenset({
+    "BadRequest", "FieldLacking", "FieldUnwanted", "FieldItemCountOutOfRange",
+    "PageSizeOutOfRange", "ImageDownloadFailure", "OperationInProcess",
+    "TaskPromptPolicyViolation", "ImageFormatInvalid", "AuditSubmitIllegal",
+    "CreditInsufficient", "CreationPolicyViolation", "ModelUnavailable",
+    "UserCancelled", "FieldInvalid", "Unauthorized", "Forbidden",
+    "QuotaExceeded", "TooManyRequests", "SystemThrottling", "Unknown",
+})
+SAFE_VIDU_FIELD_NAMES = frozenset({
+    "model", "prompt", "duration", "seed", "aspect_ratio", "resolution",
+    "audio", "off_peak", "callback_url", "images", "is_rec",
+    "style", "movement_amplitude",
+})
+
+
+def safe_http_diagnostic(raw_body):
+    """Return allowlisted provider error code + field, never untrusted prose."""
+    try:
+        parsed = json.loads(raw_body[:4096])
+    except (ValueError, TypeError, UnicodeDecodeError):
+        return "provider_code=not_exposed"
+    if not isinstance(parsed, dict):
+        return "provider_code=not_exposed"
+    candidates = []
+    for key in ("reason", "err_code", "error_code", "code", "error"):
+        value = parsed.get(key)
+        if isinstance(value, str):
+            candidates.append(value)
+        elif isinstance(value, dict):
+            for nested in ("reason", "err_code", "error_code", "code"):
+                if isinstance(value.get(nested), str):
+                    candidates.append(value[nested])
+    if isinstance(parsed.get("message"), str):
+        candidates.append(parsed["message"])
+    selected = next((name for name in SAFE_VIDU_ERROR_CODES
+                     if any(re.search(r"(?<![A-Za-z])" + re.escape(name) +
+                                      r"(?![A-Za-z])", item) for item in candidates)),
+                    "not_exposed")
+    result = "provider_code=" + selected
+    if selected in ("FieldInvalid", "FieldLacking", "FieldUnwanted", "BadRequest"):
+        # Field names are fixed identifiers, not arbitrary upstream messages.
+        text = " ".join(candidates)
+        field = next((f for f in sorted(SAFE_VIDU_FIELD_NAMES)
+                      if re.search(r"(?<![A-Za-z_])" + re.escape(f) +
+                                   r"(?![A-Za-z_])", text)), None)
+        if field:
+            result += " field=" + field
+    return result
+
+
 def save(path, obj):
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -69,9 +121,14 @@ def api_request(method, path, *, key, payload=None, opener=None):
             raise ViduError("Vidu response is not a JSON object")
         return data
     except urllib.error.HTTPError as exc:
-        # Never disclose upstream body, key, headers or private prompt.
-        raise ViduError("Vidu HTTP " + str(exc.code) +
-                        "; no successful response. Do not automatically repeat a billable POST.") from None
+        # Only allowlisted error codes and documented field names are emitted;
+        # no raw upstream response, request, token or prompt enters public logs.
+        try:
+            diagnostic = safe_http_diagnostic(exc.read(4096))
+        except Exception:
+            diagnostic = "provider_code=not_exposed"
+        raise ViduError("Vidu HTTP " + str(exc.code) + " " + diagnostic +
+                        "; no task ID confirmed. Do not repeat billable POST until billing is checked.") from None
     except (urllib.error.URLError, TimeoutError, OSError):
         raise ViduError("Vidu transport/timeout; " +
                         ("POST acceptance UNKNOWN, do not submit again until reconciled"
@@ -230,7 +287,24 @@ def fetch_task(task_id, key):
     return api_request("GET", "/ent/v2/tasks/" + task_id + "/creations", key=key)
 
 
+def credits_preflight():
+    """One read-only GET: validates key and reports coarse account credit availability."""
+    data = api_request("GET", "/ent/v2/credits", key=key_from_env())
+    packages = data.get("remaining_credits", data.get("remains", []))
+    balance = "unknown"
+    if isinstance(packages, list):
+        remaining = [p.get("credit_remain") for p in packages if isinstance(p, dict)]
+        if remaining and all(isinstance(n, (int, float)) and not isinstance(n, bool) for n in remaining):
+            balance = "nonzero" if any(n > 0 for n in remaining) else "zero"
+    print("VIDU_READONLY_PREFLIGHT_OK: authenticated=YES, credit_status=" + balance +
+          ", model_entitlement=UNVERIFIED, credits_sufficient_for_job=UNVERIFIED; zero paid tasks")
+    return balance
+
+
 def run(args):
+    if args.action == "preflight":
+        credits_preflight()
+        return
     root = Path(args.out).resolve()
     manifest_path = root / "vidu-status.json"
     if args.action == "generate":
@@ -310,7 +384,7 @@ def run(args):
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", choices=["generate", "resume"], default="generate")
+    parser.add_argument("--action", choices=["generate", "resume", "preflight"], default="generate")
     parser.add_argument("--mode", choices=["text2video", "img2video"], default="text2video")
     parser.add_argument("--prompt", default="Same dark silver concept supercar accelerates intensely on sunset coastal road; real wheel rotation, realistic high-speed tracking camera, powerful original engine roar, consistent vehicle, no dialogue.")
     parser.add_argument("--seconds", type=int, choices=[10, 15], default=10)
@@ -323,8 +397,8 @@ def main(argv=None):
     parser.add_argument("--out", default="private-inputs/vidu-test")
     args = parser.parse_args(argv)
     try:
-        if args.action == "resume" and args.confirm_paid:
-            raise ViduError("Resume must not include paid generation approval")
+        if args.action != "generate" and args.confirm_paid:
+            raise ViduError("Read-only operations must not include paid generation approval")
         if not 1 <= args.poll_attempts <= 100 or not 0 <= args.poll_seconds <= 120:
             raise ViduError("Invalid polling settings")
         run(args)

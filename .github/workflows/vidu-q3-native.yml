@@ -32,9 +32,9 @@ on:
         options: ['720p', '540p', '1080p']
         default: '720p'
       operation:
-        description: generate uses one billable POST; resume uses GET only
+        description: preflight is free credits GET; generate uses paid POST; resume uses GET
         type: choice
-        options: [generate, resume]
+        options: [preflight, generate, resume]
         default: generate
       resume_task_id:
         description: existing task ID for GET-only resume
@@ -97,8 +97,12 @@ jobs:
             if [[ "$MODE" == "text2video" && -n "$SOURCE" ]]; then
               echo "::error::Text mode must have no source run ID"; exit 2
             fi
-          else
+          elif [[ "$OP" == "resume" ]]; then
             [[ "$PAID" != "true" && "$TASK" =~ ^[A-Za-z0-9_-]{3,128}$ && -z "$SOURCE" ]] || { echo "::error::Resume requires task ID, no paid approval or source image"; exit 2; }
+          elif [[ "$OP" == "preflight" ]]; then
+            [[ "$PAID" != "true" && -z "$TASK" && -z "$SOURCE" ]] || { echo "::error::Read-only preflight must not authorize a paid task or provide IDs"; exit 2; }
+          else
+            echo "::error::Unsupported operation"; exit 2
           fi
       - name: Verify existing approved OVH first frame provenance
         if: ${{ inputs.operation == 'generate' && inputs.mode == 'img2video' }}
@@ -141,6 +145,7 @@ jobs:
           print("OVH reference image validated, no paid task yet")
           PY
       - name: Prepare FFmpeg media tools before any model request
+        if: ${{ inputs.operation != 'preflight' }}
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
@@ -158,7 +163,9 @@ jobs:
         run: |
           set -euo pipefail
           [[ -n "$VIDU_API_KEY" ]] || { echo "::error::Missing VIDU_API_KEY secret"; exit 2; }
-          if [[ "$OP" == "resume" ]]; then
+          if [[ "$OP" == "preflight" ]]; then
+            python -m oneflow.vidu_q3 --action preflight
+          elif [[ "$OP" == "resume" ]]; then
             python -m oneflow.vidu_q3 --action resume --task-id "$TASK" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output"
           else
             args=(--action generate --mode "$MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output" --confirm-paid)

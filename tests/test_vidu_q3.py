@@ -120,6 +120,45 @@ class ViduQ3Tests(unittest.TestCase):
         self.assertIn("401", str(ctx.exception))
         self.assertNotIn("secret-token", str(ctx.exception))
 
+    def test_provider_400_reports_documented_code_not_secret(self):
+        for code in ("CreditInsufficient", "ModelUnavailable", "FieldInvalid", "FieldUnwanted"):
+            response_body = json.dumps({
+                "reason": code,
+                "message": "invalid field: duration; TOKEN_PRIVATE_SHOULD_NOT_LEAK"
+            }).encode()
+            def reject(req, timeout):
+                raise urllib.error.HTTPError(req.full_url, 400, "private", {},
+                                            io.BytesIO(response_body))
+            with self.assertRaises(v.ViduError) as ctx:
+                v.api_request("POST", "/ent/v2/text2video",
+                              key="TOKEN_PRIVATE_SHOULD_NOT_LEAK",
+                              payload={"model": "viduq3-pro"}, opener=reject)
+            self.assertIn("provider_code=" + code, str(ctx.exception))
+            self.assertNotIn("TOKEN_PRIVATE_SHOULD_NOT_LEAK", str(ctx.exception))
+            self.assertNotIn("invalid field", str(ctx.exception))
+
+    def test_malicious_provider_body_must_never_be_logged(self):
+        detail = v.safe_http_diagnostic(json.dumps({
+            "reason": "SHOULD_NOT_BE_PRINTED",
+            "message": "private email and API credentials plus password"
+        }).encode())
+        self.assertEqual(detail, "provider_code=not_exposed")
+
+    def test_credit_preflight_is_get_only_no_paid_post(self):
+        import contextlib
+        captured = io.StringIO()
+        observed = []
+        def safe_api(method, path, **kw):
+            observed.append((method, path))
+            return {"remains": [{"type":"test","credit_remain":0}]}
+        with patch.dict("os.environ", {"VIDU_API_KEY":"test-only"}, clear=True), \
+             patch.object(v, "api_request", side_effect=safe_api), \
+             contextlib.redirect_stdout(captured):
+            v.run(argparse.Namespace(action="preflight"))
+        self.assertEqual(observed, [("GET", "/ent/v2/credits")])
+        self.assertIn("credit_status=zero", captured.getvalue())
+        self.assertNotIn("test-only", captured.getvalue())
+
     def test_api_uses_token_header_and_correct_url(self):
         seen = []
         def fake(req, timeout):
