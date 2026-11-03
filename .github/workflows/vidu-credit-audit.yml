@@ -1,0 +1,45 @@
+name: Vidu read-only credits diagnostic (never generate video)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - oneflow/vidu_q3.py
+      - tests/test_vidu_q3.py
+      - .github/workflows/vidu-credit-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vidu-credits-readonly-audit
+  cancel-in-progress: false
+
+jobs:
+  credits-readonly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run strict offline Vidu credit parsing tests first
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p test_vidu_q3.py -v
+      - name: Query authenticated account credits, GET only, no video submission
+        env:
+          VIDU_API_KEY: ${{ secrets.VIDU_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$VIDU_API_KEY" ]]; then
+            echo "::error::VIDU_API_KEY not configured. No Vidu request made."
+            exit 2
+          fi
+          python -m oneflow.vidu_q3 --action preflight
+          echo "Read-only diagnostic complete. No Vidu video task was submitted."

@@ -218,6 +218,62 @@ class ViduQ3Tests(unittest.TestCase):
                 with self.assertRaisesRegex(v.ViduError, "duration unexpected"):
                     v.run(args)
 
+    def test_parse_official_remains_credits(self):
+        data = {"remains": [
+            {"type":"test", "credit_remain":150},
+            {"type":"metered", "credit_remain":200}
+        ], "packages": [{"credit_remain":350}]}
+        self.assertEqual(v.parse_credit_snapshot(data), (350, "remains"))
+
+    def test_parse_new_remaining_credits_string_values(self):
+        data = {"remaining_credits": [
+            {"type":"test", "credit_remain":"120"},
+            {"type":"metered", "credit_remain":"180"}
+        ]}
+        self.assertEqual(v.parse_credit_snapshot(data), (300, "remaining_credits"))
+
+    def test_empty_remaining_credits_falls_back_to_official_remains(self):
+        data = {"remaining_credits":[],
+                "remains":[{"type":"metered", "credit_remain":400}]}
+        self.assertEqual(v.parse_credit_snapshot(data), (400, "remains"))
+
+    def test_active_packages_fallback_without_double_count(self):
+        data = {"packages":[{"type":"metered", "credit_remain":290},
+                            {"type":"test", "credit_remain":15}]}
+        self.assertEqual(v.parse_credit_snapshot(data), (305, "packages"))
+
+    def test_empty_resource_lists_mean_zero_not_unknown(self):
+        self.assertEqual(v.parse_credit_snapshot({"remains":[], "packages":[]}),
+                         (0, "empty_resources"))
+
+    def test_unknown_and_malformed_values_fail_closed(self):
+        for data in ({}, {"remains":[{"credit_remain":"UNDEFINED"}]},
+                     {"remains":[{"credit_remain":True}]},
+                     {"remains":[{"credit_remain":-1}]},
+                     {"remains":[{"credit_remain":"not a number"}]}):
+            amount, reason = v.parse_credit_snapshot(data)
+            self.assertIsNone(amount)
+            self.assertTrue(reason)
+
+    def test_concurrency_only_without_credit_is_unknown(self):
+        self.assertEqual(v.parse_credit_snapshot({
+            "remains":[{"type":"concurrent","concurrency_limit":1}]
+        }), (None, "unrecognized_schema"))
+
+    def test_readonly_preflight_prints_schema_without_exact_credit_value(self):
+        import contextlib
+        sink = io.StringIO()
+        with patch.dict("os.environ", {"VIDU_API_KEY":"safe-test"}, clear=True), \
+             patch.object(v, "api_request", return_value={
+                 "remaining_credits":[],
+                 "remains":[{"type":"metered","credit_remain":400}]}), \
+             contextlib.redirect_stdout(sink):
+            v.credits_preflight()
+        self.assertIn("credits_sufficient_for_15s_720p=YES", sink.getvalue())
+        self.assertIn("response_schema=remains", sink.getvalue())
+        self.assertNotIn("400", sink.getvalue())
+        self.assertNotIn("safe-test", sink.getvalue())
+
     def test_api_uses_token_header_and_correct_url(self):
         seen = []
         def fake(req, timeout):
