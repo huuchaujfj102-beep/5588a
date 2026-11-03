@@ -5,8 +5,6 @@ HTTP image retrieval is bounded; provider-side image fetch compatibility cannot
 be guaranteed by this external check.
 """
 import argparse
-import ipaddress
-import socket
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -37,8 +35,8 @@ def verify_public_image(url, *, transport=None):
         raise FlowError("PUBLIC_IMAGE_UNREACHABLE: no paid task created") from None
     if len(raw) > MAX_REFERENCE_BYTES or len(raw) < 128:
         raise FlowError("PUBLIC_IMAGE_SIZE_INVALID: no paid task created")
-    kind = ("png" if raw.startswith(b"\\x89PNG\\r\\n\\x1a\\n")
-            else "jpg" if raw.startswith(b"\\xff\\xd8\\xff")
+    kind = ("png" if raw.startswith(b"\x89PNG\r\n\x1a\n")
+            else "jpg" if raw.startswith(b"\xff\xd8\xff")
             else "webp" if raw[:4] == b"RIFF" and raw[8:12] == b"WEBP"
             else None)
     if kind is None or (mime and mime not in ("image/png", "image/jpeg", "image/webp", "application/octet-stream")):
