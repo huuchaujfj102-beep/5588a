@@ -1,0 +1,40 @@
+name: Qianfan VQ Auth Probe (GET only, NO charges)
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: 'Only checks API authentication, not billing or model entitlement'
+        type: choice
+        options: [VQ3-Turbo, VQ3-Pro, VQ4, VQ2-Turbo]
+        default: VQ3-Turbo
+        required: true
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/qianfan-vq-auth-probe.yml'
+      - 'oneflow/qianfan_auth_probe.py'
+      - 'tests/test_qianfan_auth_probe.py'
+permissions:
+  contents: read
+jobs:
+  read-only-auth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Offline tests (no secrets, no web or model requests)
+        run: python -m unittest discover -s tests -p test_qianfan_auth_probe.py -v
+      - name: Probe ONLY on manually dispatched run, never PR
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+          SELECTED_MODEL: ${{ inputs.model }}
+        run: |
+          set -euo pipefail
+          python -m oneflow.qianfan_auth_probe --model "$SELECTED_MODEL"
+          echo "GET-only diagnostic successful; no paid POST and no guarantee of specific model entitlement."
