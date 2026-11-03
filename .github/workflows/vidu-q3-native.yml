@@ -1,0 +1,175 @@
+name: Vidu Q3 Pro 10s 15s opt-in pilot
+
+on:
+  push:
+    branches: [feature/vidu-q3-native-workflow-20261104]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Text-to-video or image-to-video using previously generated supercar frame
+        type: choice
+        options: [text2video, img2video]
+        default: text2video
+      source_image_run_id:
+        description: Image mode only - main branch original OVH image generation run ID
+        type: string
+        default: ''
+      brief:
+        description: PUBLIC fictional concept only
+        type: string
+        required: true
+        default: Dark silver concept supercar speeds along a sunset road, real rotating wheels, low tracking camera, original engine sound, no dialogue, no morphing.
+      seconds:
+        description: Native video duration
+        type: choice
+        options: ['10', '15']
+        default: '10'
+      resolution:
+        description: Vidu model resolution
+        type: choice
+        options: ['720p', '540p', '1080p']
+        default: '720p'
+      operation:
+        description: generate uses one billable POST; resume uses GET only
+        type: choice
+        options: [generate, resume]
+        default: generate
+      resume_task_id:
+        description: existing task ID for GET-only resume
+        type: string
+        default: ''
+      confirm_paid:
+        description: I authorize ONE paid Vidu Q3 Pro video task
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: vidu-q3-pilot
+  cancel-in-progress: false
+
+jobs:
+  offline-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s tests -p test_vidu_q3.py -v
+      - run: python -m oneflow.vidu_q3 --seconds 10 --out "$RUNNER_TEMP/vidu-dry"
+
+  live-video:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: offline-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require explicit billing consent or GET-only resume
+        shell: bash
+        env:
+          OP: ${{ inputs.operation }}
+          MODE: ${{ inputs.mode }}
+          SOURCE: ${{ inputs.source_image_run_id }}
+          PAID: ${{ inputs.confirm_paid }}
+          TASK: ${{ inputs.resume_task_id }}
+        run: |
+          set -euo pipefail
+          if [[ "$OP" == "generate" ]]; then
+            [[ "$PAID" == "true" && -z "$TASK" ]] || { echo "::error::Paid approval required and resume ID must be empty"; exit 2; }
+            if [[ "$MODE" == "img2video" && ! "$SOURCE" =~ ^[0-9]{8,16}$ ]]; then
+              echo "::error::Image mode needs a numeric approved OVH source run ID"; exit 2
+            fi
+            if [[ "$MODE" == "text2video" && -n "$SOURCE" ]]; then
+              echo "::error::Text mode must have no source run ID"; exit 2
+            fi
+          else
+            [[ "$PAID" != "true" && "$TASK" =~ ^[A-Za-z0-9_-]{3,128}$ && -z "$SOURCE" ]] || { echo "::error::Resume requires task ID, no paid approval or source image"; exit 2; }
+          fi
+      - name: Verify existing approved OVH first frame provenance
+        if: ${{ inputs.operation == 'generate' && inputs.mode == 'img2video' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: ${{ inputs.source_image_run_id }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh api "repos/$REPOSITORY/actions/runs/$SOURCE_RUN" > "$RUNNER_TEMP/source-run.json"
+          jq -e --arg repo "$REPOSITORY" '
+            .head_repository.full_name == $repo
+            and .head_branch == "main"
+            and .event == "workflow_dispatch"
+            and .conclusion == "success"
+            and (.path | startswith(".github/workflows/oneflow-generate-image.yml"))
+          ' "$RUNNER_TEMP/source-run.json" >/dev/null
+          gh api "repos/$REPOSITORY/actions/runs/$SOURCE_RUN/artifacts" > "$RUNNER_TEMP/source-artifacts.json"
+          jq -e --arg name "oneflow-ovh-FREE-S01-$SOURCE_RUN" '
+            [.artifacts[] | select(.expired == false and .name == $name)] | length == 1
+          ' "$RUNNER_TEMP/source-artifacts.json" >/dev/null
+      - name: Download exact OVH image from GitHub Actions
+        if: ${{ inputs.operation == 'generate' && inputs.mode == 'img2video' }}
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_image_run_id }}
+          github-token: ${{ github.token }}
+          name: oneflow-ovh-FREE-S01-${{ inputs.source_image_run_id }}
+          path: ${{ runner.temp }}/reference
+      - name: Validate image file before paid model submission
+        if: ${{ inputs.operation == 'generate' && inputs.mode == 'img2video' }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from oneflow.vidu_q3 import image_data_uri
+          path = Path(os.environ["RUNNER_TEMP"]) / "reference" / "S01.png"
+          assert image_data_uri(path).startswith("data:image/png;base64,")
+          print("OVH reference image validated, no paid task yet")
+          PY
+      - name: Prepare FFmpeg media tools before any model request
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
+          command -v ffprobe
+      - name: One opt-in Vidu POST or GET-only resume
+        shell: bash
+        env:
+          VIDU_API_KEY: ${{ secrets.VIDU_API_KEY }}
+          OP: ${{ inputs.operation }}
+          MODE: ${{ inputs.mode }}
+          BRIEF: ${{ inputs.brief }}
+          SECONDS: ${{ inputs.seconds }}
+          RESOLUTION: ${{ inputs.resolution }}
+          TASK: ${{ inputs.resume_task_id }}
+        run: |
+          set -euo pipefail
+          [[ -n "$VIDU_API_KEY" ]] || { echo "::error::Missing VIDU_API_KEY secret"; exit 2; }
+          if [[ "$OP" == "resume" ]]; then
+            python -m oneflow.vidu_q3 --action resume --task-id "$TASK" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output"
+          else
+            args=(--action generate --mode "$MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output" --confirm-paid)
+            if [[ "$MODE" == "img2video" ]]; then args+=(--first-frame "$RUNNER_TEMP/reference/S01.png"); fi
+            python -m oneflow.vidu_q3 "${args[@]}"
+          fi
+      - name: Deliver MP4 and safe billing audit without publishing
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: vidu-q3-review-${{ github.run_id }}
+          path: ${{ runner.temp }}/vidu-output/
+          retention-days: 7
+          if-no-files-found: ignore
