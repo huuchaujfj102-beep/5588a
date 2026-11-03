@@ -29,6 +29,9 @@ on:
       - 'oneflow/muse_35s.py'
       - 'tests/test_muse_35s.py'
       - 'tests/test_muse_35s_real_media.py'
+      - 'tests/test_first_frame_preflight.py'
+      - 'oneflow/first_frame_preflight.py'
+      - 'oneflow/qianfan_media.py'
 permissions:
   contents: read
 concurrency:
@@ -56,6 +59,8 @@ jobs:
           python -m unittest discover -s tests -p 'test_muse_35s.py' -v
           python -m unittest discover -s tests -p 'test_muse_10s.py' -v
           python -m unittest discover -s tests -p 'test_muse_35s_real_media.py' -v
+          python -m unittest discover -s tests -p 'test_first_frame_preflight.py' -v
+          python -m unittest discover -s tests -p 'test_qianfan_media.py' -v
   live-seven-part:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_seven_paid_muse_tasks && (inputs.confirm_cloudflare_workers_free || inputs.public_first_frame_url != '') }}
     needs: offline-validation
@@ -107,6 +112,12 @@ jobs:
           if not any(Path(x).is_file() for x in choices):
               raise SystemExit("CJK font missing; NO paid request")
           PY
+      - name: Verify PUBLIC image responds as a real JPEG/PNG/WebP BEFORE seven paid tasks
+        if: ${{ inputs.public_first_frame_url != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m oneflow.first_frame_preflight --url "$PUBLIC_FIRST_FRAME_URL"
       - name: Generate one Cloudflare free first frame for all seven continuation clips
         if: ${{ inputs.public_first_frame_url == '' }}
         id: firstframe
