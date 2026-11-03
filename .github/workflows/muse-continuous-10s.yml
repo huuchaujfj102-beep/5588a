@@ -1,0 +1,105 @@
+name: MuseSteamer continuous 10s (TWO paid 5s tasks, explicit opt-in)
+on:
+  workflow_dispatch:
+    inputs:
+      brief:
+        description: 'PUBLIC fictional supercar only; metadata visible in public Actions'
+        type: string
+        required: true
+        default: 'One consistent graphite-silver supercar launches immediately, wheels spinning, accelerates violently on a sunset highway, strong tracking camera, real speed sensation, no morphing, no dialogue.'
+      confirm_cloudflare_workers_free:
+        description: 'Confirm Cloudflare Workers Free quota for ONE first frame'
+        type: boolean
+        required: true
+        default: false
+      confirm_two_paid_muse_tasks:
+        description: 'I explicitly authorize up to TWO billable MuseSteamer-Air-I2V 5s tasks; no blind retry or publication'
+        type: boolean
+        required: true
+        default: false
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/muse-continuous-10s.yml'
+      - 'oneflow/muse_10s.py'
+      - 'tests/test_muse_10s.py'
+permissions:
+  contents: read
+concurrency:
+  group: muse-continuous-10s-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  offline-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and run mock-only unit tests (NO paid provider requests)
+        run: |
+          python -m compileall -q oneflow
+          python -m unittest discover -s tests -p 'test_muse_10s.py' -v
+  live-two-part:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_two_paid_muse_tasks && inputs.confirm_cloudflare_workers_free }}
+    needs: offline-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      QIANFAN_API_KEY: ${{ secrets.QIANFAN_API_KEY }}
+      BRIEF: ${{ inputs.brief }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Preflight tools and both cloud credentials BEFORE generation
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ -n "$CLOUDFLARE_ACCOUNT_ID" && -n "$CLOUDFLARE_API_TOKEN" && -n "$QIANFAN_API_KEY" ]] || {
+            echo "Missing provider secret(s); NO paid generation attempted." >&2
+            exit 2
+          }
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
+          python -m pip install 'Pillow>=11,<13'
+          command -v ffmpeg && command -v ffprobe
+          python - <<'PY'
+          from pathlib import Path
+          if not any(Path(p).is_file() for p in (
+            "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+            "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"
+          )):
+              raise SystemExit("Missing 造镜者 watermark font; stop before paid task")
+          print("FFmpeg/FFprobe and CJK font OK")
+          PY
+      - name: Create exactly ONE original first frame from Cloudflare Workers Free
+        run: |
+          set -euo pipefail
+          python -m oneflow.cloudflare_free_image --brief "$BRIEF" --shot S01 --steps 4 \
+            --output "$RUNNER_TEMP/reference" --approve-free-test --confirm-workers-free
+          test -s "$RUNNER_TEMP/reference/S01.png"
+      - name: Generate two real 5s MuseSteamer video clips, join into one reviewed 10s MP4
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m oneflow.muse_10s --brief "$BRIEF" \
+            --first-frame-file "$RUNNER_TEMP/reference/S01.png" \
+            --out "$RUNNER_TEMP/muse-continuous-10s" --confirm-two-paid
+      - name: Export all attempt markers, task ids, clip and QC for review even on failure
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: muse-10s-continuity-and-task-ledger
+          path: |
+            ${{ runner.temp }}/muse-continuous-10s/
+          retention-days: 1
+          if-no-files-found: warn
