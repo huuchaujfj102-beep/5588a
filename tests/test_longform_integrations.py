@@ -10,7 +10,7 @@ from oneflow.longform import (
     LongformError, make_plan, connection, store_plan, attach_asset,
     load_timeline, build_render_payload, public_https
 )
-from oneflow.longform_renderer import submit, prepare_submission
+from oneflow.longform_renderer import submit, prepare_submission, poll_render
 from oneflow.longform_plugins import local_model_command, lip_sync_command, local_execute
 
 
@@ -152,6 +152,22 @@ class LongformTests(unittest.TestCase):
             with self.assertRaisesRegex(LongformError,"Missing SHOTSTACK_API_KEY"):
                 submit(self.db,self.plan["id"],"shotstack",payload,confirm_paid=True,
                        quote_rmb=2,budget_cap_rmb=10)
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM render_jobs").fetchone()[0],0)
+
+
+    def test_read_only_poll_marks_render_as_awaiting_qa_not_published(self):
+        self.bind_all()
+        payload=build_render_payload(load_timeline(self.db,self.plan["id"]),"shotstack")
+        created=submit(self.db,self.plan["id"],"shotstack",payload,confirm_paid=True,
+                       quote_rmb=2,budget_cap_rmb=10,api_key="fake",
+                       opener=lambda req,timeout=30: FakeResponse({
+                           "response":{"id":"safe-render-id-1"}}))
+        polled=poll_render(self.db,created["job_id"],api_key="fake",
+                           opener=lambda req,timeout=30: FakeResponse({
+                               "response":{"status":"done","url":"https://cdn.example.com/video.mp4"}}))
+        self.assertEqual(polled["status"],"RENDERED_AWAITING_QA")
+        self.assertFalse(polled["platform_published"])
+        self.assertFalse(polled["editorial_approval"])
 
     def test_local_plugins_only_plan_commands_by_default(self):
         model_root=self.root / "svi"
