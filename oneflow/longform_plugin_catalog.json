@@ -1,0 +1,93 @@
+{
+  "schema": "spark3.longform.plugins.v0.1",
+  "updated": "2026-11-04",
+  "implementation_pr": 53,
+  "base_branch": "main",
+  "production_enabled": false,
+  "capabilities": {
+    "planner": {
+      "module": "oneflow.longform",
+      "status": "OFFLINE_CI_PASSED",
+      "formats_seconds": [
+        420,
+        1200
+      ],
+      "database": "SQLite",
+      "generator_calls": false
+    },
+    "renderers": [
+      {
+        "id": "shotstack",
+        "module": "oneflow.longform_renderer",
+        "api": "https://api.shotstack.io/edit/stage/render",
+        "credential_env": "SHOTSTACK_API_KEY",
+        "status": "ADAPTER_TESTED_MOCK_NO_REAL_ACCOUNT",
+        "explicit_payment_required": true,
+        "production_enabled": false
+      },
+      {
+        "id": "json2video",
+        "module": "oneflow.longform_renderer",
+        "api": "https://api.json2video.com/v2/movies",
+        "credential_env": "JSON2VIDEO_API_KEY",
+        "status": "ADAPTER_TESTED_MOCK_NO_REAL_ACCOUNT",
+        "explicit_payment_required": true,
+        "production_enabled": false
+      }
+    ],
+    "local_plugins": [
+      {
+        "id": "svi",
+        "upstream": "https://github.com/vita-epfl/Stable-Video-Infinity",
+        "module": "oneflow.longform_plugins",
+        "status": "CLI_PLAN_ONLY_MODEL_NOT_INSTALLED",
+        "requires": [
+          "audited_upstream_repo",
+          "model_weights",
+          "GPU",
+          "rights_clearance",
+          "cost_confirmation"
+        ]
+      },
+      {
+        "id": "longcat",
+        "upstream": "https://github.com/meituan-longcat/LongCat-Video",
+        "module": "oneflow.longform_plugins",
+        "status": "CLI_PLAN_ONLY_MODEL_NOT_INSTALLED",
+        "requires": [
+          "audited_upstream_repo",
+          "model_weights",
+          "GPU",
+          "rights_clearance",
+          "cost_confirmation"
+        ]
+      },
+      {
+        "id": "rhubarb",
+        "upstream": "https://github.com/DanielSWolf/rhubarb-lip-sync",
+        "module": "oneflow.longform_plugins",
+        "status": "CLI_PLAN_ONLY_BINARY_NOT_INSTALLED",
+        "requires": [
+          "trusted_binary",
+          "local_voice_wav",
+          "manual_lipsync_QA"
+        ]
+      }
+    ],
+    "production_database": {
+      "id": "supabase",
+      "status": "CONNECTOR_SUGGESTED_NOT_CONNECTED",
+      "sqlite_fallback": true
+    },
+    "publish": {
+      "status": "BLOCKED_NO_ACCOUNT_OAUTH_OR_HUMAN_APPROVAL"
+    }
+  },
+  "checks": {
+    "last_verified": "2026-11-04",
+    "ci_workflow": ".github/workflows/oneflow-longform-offline.yml",
+    "dedicated_tests": 12,
+    "full_repo_tests": 214,
+    "signed_off_production": false
+  }
+}
