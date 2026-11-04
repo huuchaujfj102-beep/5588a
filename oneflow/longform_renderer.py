@@ -82,6 +82,11 @@ def submit(conn, episode_id, provider, payload, *, confirm_paid=False,
            quote_rmb=None, budget_cap_rmb=None, api_key=None, opener=None):
     if provider not in RENDERERS:
         raise LongformError("Unsupported render provider")
+    if not confirm_paid:
+        raise LongformError("Paid render BLOCKED: --confirm-paid required")
+    if (quote_rmb is None or budget_cap_rmb is None
+            or not 0 <= quote_rmb <= budget_cap_rmb or budget_cap_rmb <= 0):
+        raise LongformError("Paid render BLOCKED: valid quote and budget cap required")
     endpoint, env_key, header = RENDERERS[provider]
     token = api_key or os.environ.get(env_key)
     if not token:
