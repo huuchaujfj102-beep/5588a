@@ -1,0 +1,47 @@
+name: OneFlow longform adapters (offline, no paid calls)
+on:
+  push:
+    paths:
+      - 'oneflow/longform.py'
+      - 'oneflow/longform_renderer.py'
+      - 'oneflow/longform_plugins.py'
+      - 'tests/test_longform_integrations.py'
+      - '.github/workflows/oneflow-longform-offline.yml'
+  pull_request:
+    paths:
+      - 'oneflow/longform.py'
+      - 'oneflow/longform_renderer.py'
+      - 'oneflow/longform_plugins.py'
+      - 'tests/test_longform_integrations.py'
+      - '.github/workflows/oneflow-longform-offline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scene-db-and-render-payloads:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unit tests with synthetic URLs and mocked network
+        run: python -m unittest discover -s tests -p 'test_longform_integrations.py' -v
+      - name: Offline original 7-minute storyline plan (NO provider tasks)
+        run: |
+          python -m oneflow.longform plan \
+            --title '原创雨夜借灯(离线模板测试)' \
+            --brief '原创国风民间悬疑七分钟，人物服装统一，按场分镜，先音频后动画' \
+            --seconds 420 --ratio '16:9' \
+            --db private-inputs/tests-longform.sqlite \
+            --out longform-preview/episode.json
+          python -c "import json; d=json.load(open('longform-preview/episode.json')); assert d['seconds']==420 and len(d['scenes'])==7 and d['gates']['platform_release']=='BLOCKED'"
+      - name: Upload ONLY offline plan JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: longform-offline-plan-420s
+          path: longform-preview/episode.json
+          retention-days: 7
