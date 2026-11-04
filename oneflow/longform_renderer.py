@@ -80,16 +80,16 @@ def prepare_submission(conn, episode_id, provider, payload, *,
 
 def submit(conn, episode_id, provider, payload, *, confirm_paid=False,
            quote_rmb=None, budget_cap_rmb=None, api_key=None, opener=None):
+    if provider not in RENDERERS:
+        raise LongformError("Unsupported render provider")
+    endpoint, env_key, header = RENDERERS[provider]
+    token = api_key or os.environ.get(env_key)
+    if not token:
+        raise LongformError("Missing " + env_key + "; no remote request sent")
     job_id, raw = prepare_submission(
         conn, episode_id, provider, payload, confirm_paid=confirm_paid,
         quote_rmb=quote_rmb, budget_cap_rmb=budget_cap_rmb
     )
-    endpoint, env_key, header = RENDERERS[provider]
-    token = api_key or os.environ.get(env_key)
-    if not token:
-        with conn:
-            conn.execute("UPDATE render_jobs SET status='BLOCKED_NO_KEY' WHERE id=?", (job_id,))
-        raise LongformError("Missing " + env_key + "; no remote request sent")
     request = urllib.request.Request(
         endpoint, data=raw, headers={header: token, "Content-Type": "application/json"},
         method="POST")
@@ -107,6 +107,49 @@ def submit(conn, episode_id, provider, payload, *, confirm_paid=False,
     return {"job_id":job_id,"remote_id":remote_id,"provider":provider,
             "status":"SUBMITTED_NOT_PUBLISHED","actual_cost":"UNKNOWN"}
 
+
+
+def poll_render(conn, job_id, *, api_key=None, opener=None):
+    """Read-only provider poll; never grants editorial approval or publication."""
+    row = conn.execute("SELECT provider,remote_id,status FROM render_jobs WHERE id=?",
+                       (job_id,)).fetchone()
+    if not row or not row[1]:
+        raise LongformError("Only remotely submitted render jobs may be polled")
+    provider, remote_id, old_status = row
+    if old_status not in ("SUBMITTED", "REMOTE_PROCESSING", "RENDERED_AWAITING_QA", "REMOTE_FAILED"):
+        raise LongformError("Unsafe remote render status")
+    if not re.fullmatch(r"[A-Za-z0-9_.-]{4,128}", remote_id):
+        raise LongformError("Unsafe provider task ID")
+    endpoint, env_key, header = RENDERERS[provider]
+    token = api_key or os.environ.get(env_key)
+    if not token:
+        raise LongformError("Missing " + env_key)
+    if provider == "shotstack":
+        url = "https://api.shotstack.io/edit/stage/render/" + remote_id
+    else:
+        url = "https://api.json2video.com/v2/movies?project=" + remote_id
+    request = urllib.request.Request(url, headers={header:token}, method="GET")
+    safe_open = opener or urllib.request.build_opener(NoRedirect()).open
+    result = _read_json(safe_open, request)
+    if provider == "shotstack":
+        details = result.get("response") or {}
+    else:
+        details = result.get("movie") or {}
+    remote_status = details.get("status", "")
+    if not isinstance(remote_status, str):
+        raise LongformError("Malformed remote status")
+    if remote_status == "done":
+        status = "RENDERED_AWAITING_QA"
+    elif remote_status in ("failed", "error", "timeout"):
+        status = "REMOTE_FAILED"
+    else:
+        status = "REMOTE_PROCESSING"
+    with conn:
+        conn.execute("UPDATE render_jobs SET status=?,receipt_json=? WHERE id=?",
+                     (status,json.dumps(result,ensure_ascii=False),job_id))
+    return {"job_id":job_id,"provider":provider,"status":status,
+            "remote_status":remote_status,"editorial_approval":False,
+            "platform_published":False}
 
 def main(argv=None):
     p = argparse.ArgumentParser(description="Explicit paid API render submission")
