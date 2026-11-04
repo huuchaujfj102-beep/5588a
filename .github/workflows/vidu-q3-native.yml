@@ -96,6 +96,9 @@ jobs:
         run: |
           set -euo pipefail
           if [[ "$OP" == "generate" ]]; then
+            [[ "$GITHUB_RUN_ATTEMPT" == "1" ]] || {
+              echo "::error::Paid generation cannot be rerun. Reconcile the original Vidu task and use GET-only resume if a task ID exists."; exit 2;
+            }
             [[ "$PAID" == "true" && -z "$TASK" ]] || { echo "::error::Paid approval required and resume ID must be empty"; exit 2; }
             if [[ -n "$SOURCE" ]]; then
               [[ "$SOURCE" =~ ^[0-9]{8,16}$ ]] || {
@@ -158,22 +161,22 @@ jobs:
           assert image_data_uri(path).startswith("data:image/png;base64,")
           print("OVH reference image validated, no paid task yet")
           PY
-      - name: Validate actual 15s request payload offline, before any paid POST
+      - name: Validate requested video payload offline, before any paid POST
         if: ${{ inputs.operation == 'generate' }}
         shell: bash
         env:
           BRIEF: ${{ inputs.brief }}
-          SECONDS: ${{ inputs.seconds }}
+          VIDEO_DURATION: ${{ inputs.seconds }}
           RESOLUTION: ${{ inputs.resolution }}
         run: |
           set -euo pipefail
-          args=(--action generate --mode "$EFFECTIVE_MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-payload-test")
+          args=(--action generate --mode "$EFFECTIVE_MODE" --prompt "$BRIEF" --seconds "$VIDEO_DURATION" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-payload-test")
           if [[ "$EFFECTIVE_MODE" == "img2video" ]]; then
             args+=(--first-frame "$RUNNER_TEMP/reference/S01.png")
           fi
           python -m oneflow.vidu_q3 "${args[@]}"
           test -s "$RUNNER_TEMP/vidu-payload-test/vidu-status.json"
-          echo "Verified $SECONDS-second $EFFECTIVE_MODE payload, no paid video task submitted."
+          echo "Verified $VIDEO_DURATION-second $EFFECTIVE_MODE payload, no paid video task submitted."
       - name: Prepare FFmpeg media tools before any model request
         if: ${{ inputs.operation != 'preflight' }}
         run: |
@@ -187,7 +190,7 @@ jobs:
           OP: ${{ inputs.operation }}
           MODE: ${{ inputs.mode }}
           BRIEF: ${{ inputs.brief }}
-          SECONDS: ${{ inputs.seconds }}
+          VIDEO_DURATION: ${{ inputs.seconds }}
           RESOLUTION: ${{ inputs.resolution }}
           TASK: ${{ inputs.resume_task_id }}
         run: |
@@ -196,9 +199,9 @@ jobs:
           if [[ "$OP" == "preflight" ]]; then
             python -m oneflow.vidu_q3 --action preflight
           elif [[ "$OP" == "resume" ]]; then
-            python -m oneflow.vidu_q3 --action resume --task-id "$TASK" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output"
+            python -m oneflow.vidu_q3 --action resume --task-id "$TASK" --seconds "$VIDEO_DURATION" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output"
           else
-            args=(--action generate --mode "$EFFECTIVE_MODE" --prompt "$BRIEF" --seconds "$SECONDS" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output" --confirm-paid)
+            args=(--action generate --mode "$EFFECTIVE_MODE" --prompt "$BRIEF" --seconds "$VIDEO_DURATION" --resolution "$RESOLUTION" --out "$RUNNER_TEMP/vidu-output" --confirm-paid)
             if [[ "$EFFECTIVE_MODE" == "img2video" ]]; then args+=(--first-frame "$RUNNER_TEMP/reference/S01.png"); fi
             python -m oneflow.vidu_q3 "${args[@]}"
           fi
