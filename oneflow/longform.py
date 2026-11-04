@@ -185,9 +185,10 @@ def public_https(url):
         raise LongformError("Local/unknown asset host rejected")
     try:
         ipaddress.ip_address(host)
-        raise LongformError("IP literals rejected for external renderer")
     except ValueError:
         pass
+    else:
+        raise LongformError("IP literals rejected for external renderer")
     if v.fragment:
         raise LongformError("Asset URL fragments not allowed")
     return url
