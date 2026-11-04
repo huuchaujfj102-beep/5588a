@@ -63,7 +63,13 @@ Shotstack采用timeline.tracks.clips；JSON2Video采用scenes.elements。合成�
 - Shotstack POST目标固定为 https://api.shotstack.io/edit/stage/render，Stage可能水印或收费，以真实计划为准。
 - JSON2Video POST目标为 https://api.json2video.com/v2/movies，返回project ID；结果状态尚未自动轮询。
 - 本地幂等锁防止重复提交。网络请求出现不确定结果时不得盲目再次POST。
-- 成功只记录SUBMITTED_NOT_PUBLISHED。尚未实现云端成片下载、回调验签及发布，不能说已生成7分钟。
+- 成功先记录SUBMITTED_NOT_PUBLISHED。新增了**只读任务状态查询**，仅在供应商返回done时记录RENDERED_AWAITING_QA，绝不自动标记发布：
+
+    python -m oneflow.longform_status \
+      --db private-inputs/longform.sqlite \
+      --job-id 本地job_id
+
+尚未实现云端成片自动下载、回调验签及发布。即使供应商状态done，也必须取回文件并由5588a人工审查后才可放行。
 
 ## 五、SVI、LongCat、Rhubarb本地插件预检
 下面只建立计划命令，缺少上游源码/权重/程序时明确阻断：
