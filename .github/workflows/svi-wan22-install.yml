@@ -1,0 +1,111 @@
+name: Stable Video Infinity Wan2.2 source install and GPU opt-in
+on:
+  push:
+    paths:
+      - 'runpod_svi/**'
+      - 'tests/test_runpod_svi.py'
+      - '.github/workflows/svi-wan22-install.yml'
+  pull_request:
+    paths:
+      - 'runpod_svi/**'
+      - 'tests/test_runpod_svi.py'
+      - '.github/workflows/svi-wan22-install.yml'
+  workflow_dispatch:
+    inputs:
+      approve_gpu_billing:
+        description: 'I authorize use of an existing billable Runpod GPU Pod for SVI installation'
+        type: boolean
+        required: true
+        default: false
+      install_weights:
+        description: 'Download large SVI plus Wan2.2 A14B weights (extra bandwidth and storage cost)'
+        type: boolean
+        required: true
+        default: false
+      model_licenses_checked:
+        description: 'I reviewed SVI LoRA and Wan2.2 base model usage rights'
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: svi-wan22-install
+  cancel-in-progress: false
+jobs:
+  source-install-cpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Validate safety and shell syntax (no GPU model or paid request)
+        run: |
+          bash -n runpod_svi/install.sh
+          python -m unittest discover -s tests -p 'test_runpod_svi.py' -v
+      - name: Install pinned SVI Wan2.2 source into ephemeral CPU CI environment
+        shell: bash
+        env:
+          SVI_HOME: ${{ runner.temp }}/SVI-svi_wan22
+          SVI_SOURCE_EDITABLE: '1'
+          PYTHON_BIN: python
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade setuptools wheel
+          bash runpod_svi/install.sh source
+          python - <<'PY'
+          from importlib.metadata import version
+          assert version("diffsynth") == "2.0.0"
+          print("SVI_SOURCE_INSTALLED_CPU_NO_WEIGHTS_NO_GPU")
+          PY
+      - name: Verify CPU-only source installation; no paid GPU or output movie
+        run: |
+          echo 'Editable source only. No model weights or video generated.'
+  runpod-gpu-runtime:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.approve_gpu_billing }}
+    needs: source-install-cpu
+    runs-on: [self-hosted, linux, x64, runpod-wan22]
+    environment: runpod-paid-gpu
+    timeout-minutes: 150
+    env:
+      SVI_APPROVE_GPU_BILLING: '1'
+      SVI_APPROVE_DOWNLOAD: ${{ inputs.install_weights && '1' || '0' }}
+      SVI_MODEL_LICENSE_CHECKED: ${{ inputs.model_licenses_checked && '1' || '0' }}
+      SVI_HOME: /workspace/Stable-Video-Infinity-svi_wan22
+      SVI_VENV: /workspace/venvs/svi-wan22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Require explicit GPU approval and license confirmation for weights
+        shell: bash
+        env:
+          GPU_APPROVED: ${{ inputs.approve_gpu_billing }}
+          WANT_WEIGHTS: ${{ inputs.install_weights }}
+          LICENSE_OK: ${{ inputs.model_licenses_checked }}
+        run: |
+          set -euo pipefail
+          [[ "$GPU_APPROVED" == 'true' ]] || exit 2
+          if [[ "$WANT_WEIGHTS" == 'true' ]]; then
+            [[ "$LICENSE_OK" == 'true' ]] || { echo "::error::Weight download blocked without license review"; exit 2; }
+          fi
+          command -v nvidia-smi
+          nvidia-smi -L
+      - name: Install independent pinned SVI GPU runtime on authorized Pod
+        shell: bash
+        run: bash runpod_svi/install.sh runtime
+      - name: Download base model and two SVI LoRA weights only with separate approval
+        if: ${{ inputs.install_weights && inputs.model_licenses_checked }}
+        shell: bash
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: bash runpod_svi/install.sh weights
+      - name: Confirm runtime installation, not video generation
+        shell: bash
+        run: |
+          /workspace/venvs/svi-wan22/bin/python -m pip show diffsynth
+          echo 'SVI_RUNTIME_INSTALL_VERIFIED: real inference NOT tested'
