@@ -1,0 +1,86 @@
+name: OneFlow Commercial V3 (platform operating plan / NO POSTS)
+on:
+  push:
+    paths:
+      - 'oneflow/commercial_v3.py'
+      - 'oneflow/commercial_dispatch.py'
+      - 'oneflow/commercial_platforms.json'
+      - 'oneflow/commercial_research.py'
+      - 'oneflow/commercial_campaign.py'
+      - 'tests/test_commercial_v3.py'
+      - 'tests/test_commercial_research.py'
+      - 'docs/oneflow-commercial-v3.md'
+      - 'docs/oneflow-commercial-v3-browser-research.md'
+      - '.github/workflows/oneflow-commercial-v3.yml'
+  pull_request:
+    paths:
+      - 'oneflow/commercial_v3.py'
+      - 'oneflow/commercial_dispatch.py'
+      - 'oneflow/commercial_platforms.json'
+      - 'oneflow/commercial_research.py'
+      - 'oneflow/commercial_campaign.py'
+      - 'tests/test_commercial_v3.py'
+      - 'tests/test_commercial_research.py'
+      - 'docs/oneflow-commercial-v3.md'
+      - 'docs/oneflow-commercial-v3-browser-research.md'
+      - '.github/workflows/oneflow-commercial-v3.yml'
+  workflow_dispatch:
+    inputs:
+      one_sentence:
+        description: 'Your one-sentence product and market brief (plans ONLY; no media or posts)'
+        required: true
+        type: string
+      stage:
+        description: 'Initial 9 accounts or 14-account second-stage expansion'
+        required: true
+        type: choice
+        default: launch
+        options: ['launch','expand']
+permissions:
+  contents: read
+jobs:
+  offline-tests-and-platform-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate structured channel catalogs and release gates without external services
+        run: |
+          python -m unittest discover -s tests -p test_commercial_v3.py -v
+          python -m unittest discover -s tests -p test_commercial_research.py -v
+      - name: Convert one sentence to multi-channel plan
+        env:
+          ONE_SENTENCE: ${{ inputs.one_sentence }}
+          STAGE: ${{ inputs.stage }}
+        run: |
+          if [ -z "$ONE_SENTENCE" ]; then
+            ONE_SENTENCE='用AI电影化展示原创未来超跑与中国智能硬件的高端商业影像, 制作海外多语种版本'
+          fi
+          if [ -z "$STAGE" ]; then STAGE=launch; fi
+          python -m oneflow.commercial_campaign --brief "$ONE_SENTENCE" --stage "$STAGE" \
+            --start '2026-11-02T09:00:00+08:00' --out commercial-v3-research-campaign
+          python -m oneflow.commercial_v3 --brief "$ONE_SENTENCE" --stage "$STAGE" \
+            --start '2026-11-02T09:00:00+08:00' --out commercial-v3-preview
+          python - <<'PY'
+          import json
+          p=json.load(open('commercial-v3-preview/commercial-v3-queue.json'))
+          assert p['status']=='OFFLINE_PLAN_ONLY_NO_VIDEO_RENDER_NO_UPLOAD'
+          research=json.load(open('commercial-v3-research-campaign/campaign-manifest.json'))
+          assert research['campaign_status']=='BROWSER_RESEARCH_REQUIRED'
+          assert research['real_videos_generated']==0 and research['posted_to_platforms']==0
+          assert p['release_gate'].startswith('BLOCKED_')
+          assert not any(x.get('published_id') for x in p['per_account'])
+          print('SAFE: zero uploads, no platform OAuth, no user accounts logged into')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oneflow-commercial-v3-PLAN-NO-POSTS-${{ github.run_id }}
+          path: |
+            commercial-v3-preview/
+            commercial-v3-research-campaign/
+          retention-days: 14
