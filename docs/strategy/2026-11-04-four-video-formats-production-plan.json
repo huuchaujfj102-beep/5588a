@@ -1,0 +1,164 @@
+{
+  "schema_version": "spark3-content-blueprints-proposal-v1",
+  "status": "proposal_not_runtime_enabled",
+  "updated_at": "2026-11-04",
+  "currency": "CNY",
+  "constraints": {
+    "startup_budget_rmb": 30000,
+    "media_model_budget_90d_rmb": 6000,
+    "max_auto_attempts_per_shot": 2,
+    "platforms_initial_target": 3,
+    "accounts_initial_target": 3,
+    "approved_video_gate": "human_visual_rights_review_and_sha256",
+    "auto_publish_allowed": false,
+    "publish_unblock_requirements": [
+      "official_platform_scope",
+      "account_oauth",
+      "per_post_user_consent",
+      "human_reviewed_media_sha256",
+      "ai_disclosure",
+      "real_publish_receipt"
+    ]
+  },
+  "formats": [
+    {
+      "id": "ancient_comedy",
+      "name": "古装写实微喜剧",
+      "priority": 1,
+      "video_seconds": [
+        8,
+        15
+      ],
+      "main_seconds": 10,
+      "target_count_90d": 45,
+      "planned_avg_direct_cost_rmb": 20,
+      "direct_cost_cap_rmb": 35,
+      "estimated_human_hours_per_video": [
+        1,
+        2
+      ],
+      "pipeline": [
+        "original_script",
+        "character_reference",
+        "i2v_10sec",
+        "voice_effects",
+        "ffmpeg_remotion",
+        "film_audit",
+        "human_gate"
+      ]
+    },
+    {
+      "id": "modern_twist",
+      "name": "现代反转二维动画",
+      "priority": 2,
+      "video_seconds": [
+        45,
+        75
+      ],
+      "main_seconds": 60,
+      "target_count_90d": 22,
+      "planned_avg_direct_cost_rmb": 50,
+      "direct_cost_cap_rmb": 80,
+      "estimated_human_hours_per_video": [
+        3,
+        5
+      ],
+      "pipeline": [
+        "original_script",
+        "2d_character_bible",
+        "layered_2_5d",
+        "selective_i2v",
+        "voice_effects",
+        "film_audit",
+        "human_gate"
+      ]
+    },
+    {
+      "id": "folklore_animation",
+      "name": "国风民间奇谈",
+      "priority": 3,
+      "video_seconds": [
+        60,
+        90
+      ],
+      "main_seconds": 90,
+      "target_count_90d": 9,
+      "planned_avg_direct_cost_rmb": 90,
+      "direct_cost_cap_rmb": 150,
+      "estimated_human_hours_per_video": [
+        5,
+        10
+      ],
+      "pipeline": [
+        "original_script",
+        "historical_fiction_labels",
+        "2d_character_bible",
+        "layered_2_5d",
+        "selective_i2v",
+        "voice_effects",
+        "film_audit",
+        "human_gate"
+      ],
+      "long_form_upgrade_condition": "verified_retention_rewatch_and_rights"
+    },
+    {
+      "id": "historic_action",
+      "name": "历史战争动作大片",
+      "priority": 4,
+      "video_seconds": [
+        30,
+        60
+      ],
+      "main_seconds": 45,
+      "target_count_90d": 5,
+      "planned_avg_direct_cost_rmb": 300,
+      "direct_cost_cap_rmb": 450,
+      "first_demo_direct_spend_cap_rmb": 500,
+      "estimated_human_hours_per_video": [
+        6,
+        12
+      ],
+      "pipeline": [
+        "original_script",
+        "spatial_map",
+        "character_bible",
+        "high_quality_i2v",
+        "layered_sfx",
+        "physics_continuity_audit",
+        "human_gate"
+      ]
+    }
+  ],
+  "periods": [
+    {
+      "days": "1-30",
+      "ancient_comedy": 12,
+      "modern_twist": 6,
+      "folklore_animation": 2,
+      "historic_action": 1
+    },
+    {
+      "days": "31-60",
+      "ancient_comedy": 15,
+      "modern_twist": 8,
+      "folklore_animation": 3,
+      "historic_action": 2
+    },
+    {
+      "days": "61-90",
+      "ancient_comedy": 18,
+      "modern_twist": 8,
+      "folklore_animation": 4,
+      "historic_action": 2
+    }
+  ],
+  "planned_media_spend_rmb": 4310,
+  "rework_buffer_rmb": 1690,
+  "verified_production_status": "NOT_TESTED_FOR_ALL_FOUR",
+  "verified_platform_publication_status": "NOT_VERIFIED",
+  "notes": [
+    "Machine-readable proposal only. No code consumes this config until reviewed, tested and explicitly enabled.",
+    "The user reported 10s test success; do not infer 15s paid test success.",
+    "Cross-platform publish capability must not be claimed until actual account permission and receipt are verified."
+  ]
+}
