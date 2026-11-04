@@ -4,6 +4,7 @@ on:
     paths:
       - 'oneflow/longform.py'
       - 'oneflow/longform_renderer.py'
+      - 'oneflow/longform_status.py'
       - 'oneflow/longform_plugins.py'
       - 'tests/test_longform_integrations.py'
       - '.github/workflows/oneflow-longform-offline.yml'
@@ -11,6 +12,7 @@ on:
     paths:
       - 'oneflow/longform.py'
       - 'oneflow/longform_renderer.py'
+      - 'oneflow/longform_status.py'
       - 'oneflow/longform_plugins.py'
       - 'tests/test_longform_integrations.py'
       - '.github/workflows/oneflow-longform-offline.yml'
