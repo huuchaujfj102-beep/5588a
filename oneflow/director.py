@@ -1,6 +1,8 @@
 """Director prompt contract: seven ordered modules and user-locked asset truth."""
 import re
 
+from .cinematic_i2v_rules import apply_temporal_rules
+
 NEGATIVE = (
     "unapproved new actors or props; changed identities; extra wheels or engines; "
     "backwards action order; inconsistent camera side; deformed anatomy/vehicle; "
@@ -32,4 +34,4 @@ def film_prompt(brief, shot_focus, prior_focus, shot_no, shot_total):
         str(shot_total) + ". Prior narrative phase: " + (prior_focus or "none") + ".",
         "7. Negative constraints: " + NEGATIVE
     ]
-    return "\n".join(parts)
+    return apply_temporal_rules("\n".join(parts))
