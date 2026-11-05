@@ -12,10 +12,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from .cinematic_image_rules import apply_global_rules, NEGATIVE_HINT
+
 MODEL = "black-forest-labs/FLUX.1-schnell"
 SHOT = re.compile(r"S(0[1-9]|1[0-2])\Z")
 MODEL_LICENSE = "Apache-2.0 (FLUX.1-schnell checkpoint; review upstream terms)"
-NEGATIVE = "Disney animated design, cartoon, extra actors, duplicate subjects, changed costume, distorted hands, watermark, caption, text, logo"
+NEGATIVE = "Disney animated design, cartoon, extra actors, duplicate subjects, changed costume, distorted hands, watermark, caption, text, logo; " + NEGATIVE_HINT
 
 
 class ImageFlowError(ValueError):
@@ -66,7 +68,7 @@ def prompt_from_request(path, shot_id):
             ["七位矮人", "七位矿工"] if name.startswith("七位小矮人") else [])):
             visible.append(f"{name}: {spec}")
     locked = "; ".join(visible)
-    return (
+    return apply_global_rules(
         "1. LOCK: original fairytale cinematic keyframe, 9:16; only characters explicitly visible "
         "in this shot. Character design and wardrobe fixed: " + locked + "\n"
         "2. STILL ACTION: decisive moment in shot; " + shot["visual"] +
@@ -85,7 +87,7 @@ def build_prompt(brief=None, request_file=None, shot_id="S01"):
         return prompt_from_request(request_file, shot_id)
     if not brief or not 4 <= len(brief.strip()) <= 4500:
         raise ImageFlowError("One-sentence brief needs 4-4500 characters")
-    return (
+    return apply_global_rules(
         "One single 9:16 photorealistic cinematic still image, intended as an "
         "approved first frame for image-to-video. User brief: " + brief.strip() +
         ". One moment, stable subjects and props, physically plausible composition. "

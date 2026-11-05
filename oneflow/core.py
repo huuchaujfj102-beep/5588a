@@ -20,6 +20,10 @@ from urllib.parse import urlencode
 from .providers import ProviderError, exchange, generate, json_call, ollama_shots, endpoint
 from .router import RoutingError, route, preflight
 from .director import film_prompt, phase_list
+from .cinematic_image_rules import apply_global_rules, build_negative_prompt
+from .cinematic_i2v_rules import build_temporal_negative
+from .cinematic_image_rules import apply_global_rules, build_negative_prompt
+from .cinematic_i2v_rules import build_temporal_negative
 from .qianfan import storyboard as qianfan_shots
 from .platforms import make_package
 
@@ -137,6 +141,14 @@ def create(prompt, seconds, ratio, platforms, out_root, cfg, live_story=False):
             "id": "S" + str(i + 1).zfill(2),
             "seconds": durations[i],
             "visual_prompt": item["prompt"],
+            "image_prompt": apply_global_rules("One cinematic still keyframe for the approved shot; exact subject and world-state: " + item["phase"]),
+            "image_negative_prompt": build_negative_prompt(),
+            "video_negative_prompt": build_temporal_negative(),
+            "source_image_review_status": "REVIEW_REQUIRED",
+            "image_prompt": apply_global_rules("One cinematic still keyframe for the approved shot; exact subject and world-state: " + item["phase"]),
+            "image_negative_prompt": build_negative_prompt(),
+            "video_negative_prompt": build_temporal_negative(),
+            "source_image_review_status": "REVIEW_REQUIRED",
             "audio_prompt": item["sound"],
             "narrative_phase": item["phase"],
             "image": None, "video": None, "audio": None,
@@ -147,6 +159,24 @@ def create(prompt, seconds, ratio, platforms, out_root, cfg, live_story=False):
         "schema": "oneflow.v1", "id": ident, "created_at": now(),
         "brief": prompt, "seconds": seconds, "ratio": ratio,
         "planner": planner, "commercial": cfg.get("commercial", True),
+        "production_policy": {
+            "name": "XINGHUO_3_ONEFLOW_CINEMATIC",
+            "version": "2026-11-05",
+            "image_positive": "docs/cinematic-positive-global-prompt.md",
+            "image_negative": "docs/cinematic-negative-suppression-prompt.md",
+            "i2v_temporal": "docs/cinematic-i2v-temporal-sop.md",
+            "approval_mode": "MANUAL_VISUAL_REVIEW_REQUIRED",
+            "negative_delivery": "PLANNED_ONLY_PROVIDER_SUPPORT_UNVERIFIED"
+        },
+        "production_policy": {
+            "name": "XINGHUO_3_ONEFLOW_CINEMATIC",
+            "version": "2026-11-05",
+            "image_positive": "docs/cinematic-positive-global-prompt.md",
+            "image_negative": "docs/cinematic-negative-suppression-prompt.md",
+            "i2v_temporal": "docs/cinematic-i2v-temporal-sop.md",
+            "approval_mode": "MANUAL_VISUAL_REVIEW_REQUIRED",
+            "negative_delivery": "PLANNED_ONLY_PROVIDER_SUPPORT_UNVERIFIED"
+        },
         "platforms": sorted(set(platforms)),
         "status": "PLANNED", "shots": shots, "render": None, "qc": None,
         "approval": None, "publication": {}, "metrics": {},
