@@ -80,5 +80,34 @@
   "revision": "BX07-HERO-UPDATE-20261106-V2",
   "approval_source_latest": "user explicit instruction: 把这张图放入Bx07做主图",
   "primary_hero_file": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
-  "reference_conflict_policy": "The newest approved primary hero 1000023567.png takes precedence for face, hair and costume. Earlier turnaround images are historical references where they differ and must not be mixed as interchangeable footage. Geometry of lotus platform remains from approved prop structure 1000023547.png."
+  "reference_conflict_policy": "The newest approved primary hero 1000023567.png takes precedence for face, hair and costume. Earlier turnaround images are historical references where they differ and must not be mixed as interchangeable footage. Geometry of lotus platform remains from approved prop structure 1000023547.png.",
+  "repair_qa_2026_11_06": {
+    "origin": "approved primary BX07_MAIN_HERO_USER_APPROVED_20261106.png",
+    "issue": "P0 old front/back and six-view differ substantially in hair and garment from latest hero",
+    "original_turnarounds_preserved": true,
+    "candidates_not_approved": [
+      {
+        "name": "何仙姑仙韻蓮華角色設計稿.png",
+        "sha256": "2b24728c6c0af867dafe50dd8a9882fb08369ba242b700ecf2aee470b6fe9303",
+        "dimensions": [
+          1024,
+          1536
+        ],
+        "status": "CANDIDATE_PENDING_USER"
+      },
+      {
+        "name": "何仙姑莲花仙子六视图服饰设定.png",
+        "sha256": "d3f7d19845ac383606f6320675806c3e35d9ae62da12b0005c5a9c3024ec5409",
+        "dimensions": [
+          1086,
+          1448
+        ],
+        "status": "CANDIDATE_PENDING_USER"
+      }
+    ],
+    "single_right_profile_runway_task": "27aab198-fbaf-4d97-aec3-28f62c705d9c",
+    "independent_profile_result": "PENDING",
+    "report": "docs/reviews/baxian-all-approved-stills-global-qa-2026-11-06.md",
+    "approval_rule": "Do not overwrite existing approved hero, user must approve these supplementary views to become final; motion QA separate."
+  }
 }
