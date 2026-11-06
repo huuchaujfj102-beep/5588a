@@ -147,7 +147,8 @@
         "唯一白仙驴，张果老倒骑，驴的耳朵/长毛/鞍铃统一",
         "禁止小鼓与正骑"
       ],
-      "video_qa_status": "PENDING"
+      "video_qa_status": "PENDING",
+      "group_riding_constraint": "场景内必须后向倒骑白仙驴，身体朝驴尾，四肢、骑坐接触真实；旧横版站在驴旁构图不能直接批准"
     },
     {
       "id": "BX06",
@@ -200,7 +201,13 @@
       "primary_hero_file": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
       "primary_hero_source": "1000023567.png",
       "primary_hero_sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
-      "primary_hero_lock_version": "BX07-HERO-UPDATE-20261106-V2"
+      "primary_hero_lock_version": "BX07-HERO-UPDATE-20261106-V2",
+      "turnaround_consistency_status": "OLD_VIEW_MISMATCH_REQUIRES_NEW_HERO_CONSISTENT_VIEW",
+      "turnaround_candidate_files": [
+        "何仙姑仙韻蓮華角色設計稿.png",
+        "何仙姑莲花仙子六视图服饰设定.png"
+      ],
+      "turnaround_candidate_status": "REPAIR_CANDIDATE_PENDING_TECHNICAL_QA_AND_USER_APPROVAL"
     },
     {
       "id": "BX08",
@@ -220,7 +227,8 @@
         "成熟男性官式发冠，红褐官袍和金纹腰佩固定",
         "一套两片白绿矩形阴阳玉板，非圆盘，数量与纹样不变"
       ],
-      "video_qa_status": "PENDING"
+      "video_qa_status": "PENDING",
+      "group_jade_constraint": "老版群像圆形太极盘错误；必须一对独立白绿矩形阴阳玉板，主图批准形制优先"
     }
   ],
   "hard_fail": [
@@ -233,8 +241,32 @@
     "unexplained_spatial_flip"
   ],
   "visual_validation_required": true,
-  "note": "BX01 user-approved static source only; all other character assets remain unapproved. Actual PNG binary files not in repository.",
-  "registry_notes": "单角色静态用户批准不代表视觉自动检测或动态视频验证完成，未批准角色保持原有审核状态。",
+  "note": "BX01–BX08 all user-designated static identities are approved in conversation; approved originals remain immutable. This JSON is a visual constraint registry, not proof that animation or new compositions passed QA. See docs/reviews/baxian-all-approved-stills-global-qa-2026-11-06.md.",
+  "registry_notes": "8 characters: user-approved static stills; revised BX07 angles and ensemble edits are candidates only. Actual PNG binary files have NOT been uploaded to this GitHub branch; see user-downloaded ZIP. No video's motion validation inferred from stills.",
   "group_stage_reference_manifest": "film_audit/assets/baxian_eight_hero_group_reference_manifest.json",
-  "group_stage_status": "GROUP_CONCEPT_PREVISUALIZATION_NOT_APPROVED"
+  "group_stage_status": "GROUP_REPAIR_IN_PROGRESS_NOT_FINAL",
+  "static_qa_audit": {
+    "date": "2026-11-06",
+    "original_png_reviewed": 28,
+    "report": "docs/reviews/baxian-all-approved-stills-global-qa-2026-11-06.md",
+    "issues_open": [
+      "BX07-old-turnaround-vs-new-hero",
+      "GROUP-jade-panels-vs-round-disk",
+      "GROUP-reverse-riding",
+      "GROUP-BX07-old-costume"
+    ],
+    "edit_tasks": [
+      {
+        "id": "27b6ec0d-d9c8-4be7-a079-70fbd29d7f3e",
+        "purpose": "group-scene-p0-repair",
+        "status": "SUBMITTED_PENDING_RESULT_QA"
+      },
+      {
+        "id": "27aab198-fbaf-4d97-aec3-28f62c705d9c",
+        "purpose": "BX07-independent-right-profile",
+        "status": "SUBMITTED_PENDING_RESULT_QA"
+      }
+    ],
+    "approval_gate": "USER_FINAL_APPROVAL_REQUIRED_BEFORE_REPLACEMENT"
+  }
 }
