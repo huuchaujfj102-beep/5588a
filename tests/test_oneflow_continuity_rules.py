@@ -39,6 +39,14 @@ class ContinuityRulesTests(unittest.TestCase):
         self.assertIn("hair attached at ONE end only", specialist_constraints("手持拂塵"))
         self.assertIn("both rim ends", specialist_constraints("花籃"))
 
+    def test_hem_does_not_hide_duplicate_shoes_in_generation_contract(self):
+        brief = "吕洞宾长袍站立，铁拐李跛足扶拐，保留两人各自腿脚设定"
+        for prompt in (build_prompt(brief), film_prompt(brief, "站立", None, 1, 1)):
+            self.assertIn("each shoe has one upper and one sole", prompt)
+            self.assertIn("preserve intentional limb differences", prompt)
+            self.assertIn(brief, prompt)
+        self.assertIn("duplicated soles", negative_constraints())
+
 
 if __name__ == "__main__":
     unittest.main()
