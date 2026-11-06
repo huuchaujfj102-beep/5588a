@@ -3,7 +3,7 @@
   "character": "吕洞宾",
   "status": "USER_DESIGNATED_LOCKED_STILL",
   "date": "2026-11-06",
-  "archive": "BX03_吕洞宾_定型母图_20261106.zip",
+  "archive": "BX03_吕洞宾_用户批准母图_20261106.zip",
   "files": [
     {
       "file": "1000023560.png",
@@ -33,5 +33,13 @@
     "剑出鞘与入鞘必须连续镜头状态管理"
   ],
   "video_motion_status": "NOT_TESTED",
-  "note": "用户指定定型；原始图像在对话压缩包，GitHub只存校验值与规则，不代表上传PNG。"
+  "note": "用户指定定型；原始图像在对话压缩包，GitHub只存校验值与规则，不代表上传PNG。",
+  "reference_priority": {
+    "identity": "1000023559.png 白底多视角人物",
+    "facial_comparison": "1000023560.png 右侧生成角色身份为准，左侧原参考用于对照",
+    "cinematic": "1000023555.png 电影级风暴海岸及出鞘持剑状态",
+    "prop": "1000023543.png 纯阳剑与剑鞘结构"
+  },
+  "review_caveat": "对照图左侧与右侧面部存在差异，以生成图及五视角中的已批准脸为身份锁；多视角组合图不代表独立五张原生视图。",
+  "binary_images_in_repository": false
 }
