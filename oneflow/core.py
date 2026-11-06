@@ -20,6 +20,7 @@ from urllib.parse import urlencode
 from .providers import ProviderError, exchange, generate, json_call, ollama_shots, endpoint
 from .router import RoutingError, route, preflight
 from .director import film_prompt, phase_list
+from .continuity_rules import negative_constraints, compile_prompt
 from .qianfan import storyboard as qianfan_shots
 from .platforms import make_package
 
@@ -332,8 +333,8 @@ def produce(job, cfg):
     try:
         previous = None
         for shot in manifest["shots"]:
-            values = {"prompt": shot["visual_prompt"], "negative_prompt":
-                      "identity drift, continuity errors, extra characters, physical impossibilities, watermark",
+            values = {"prompt": compile_prompt(shot["visual_prompt"], stage="video")["prompt"], "negative_prompt":
+                      "identity drift, continuity errors, unrequested characters or watermarks, " + negative_constraints(motion=True),
                       "seconds": shot["seconds"],
                       "seed": int(hashlib.sha256((manifest["id"] + shot["id"]).encode()).hexdigest()[:8], 16),
                       "image": None}
@@ -345,7 +346,10 @@ def produce(job, cfg):
                              "-frames:v", "1", str(tail)])
                 values["reference_image"] = str(tail)
             if not shot["image"] or not (root / shot["image"]).exists():
-                image_path, model_id = generate("image", routed["image"], values,
+                image_values = {**values,
+                                "prompt": compile_prompt(values["prompt"], stage="image")["prompt"],
+                                "negative_prompt": negative_constraints()}
+                image_path, model_id = generate("image", routed["image"], image_values,
                                       media_dir / (shot["id"] + "-image"), return_used=True)
                 shot["image"] = str(image_path.relative_to(root))
                 shot.setdefault("model_provenance", {})["image"] = model_id

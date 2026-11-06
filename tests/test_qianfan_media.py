@@ -9,6 +9,7 @@ from oneflow.qianfan_media import (
     IMAGE_ENDPOINT, VIDEO_ENDPOINT, MediaTaskError,
     submit, task_status, wait_for_task, probe_image_endpoint,
 )
+from oneflow.continuity_rules import compile_prompt
 
 
 class FakeResponse(io.BytesIO):
@@ -24,6 +25,31 @@ def json_response(value):
 
 
 class MediaTests(unittest.TestCase):
+    def test_both_native_payloads_include_shared_rules_without_unsupported_fields(self):
+        for kind, model in (("image", "o1-base"), ("video", "VQ2-Turbo")):
+            with self.subTest(kind=kind):
+                calls = []
+                def fake(req, timeout):
+                    calls.append(json.loads(req.data))
+                    return json_response({"code": 0, "data": {
+                        "task_id": "image12", "task_status": "submitted"}} if kind == "image" else
+                        {"task_id": "video12", "status": "created"})
+                brief = "吕洞宾背剑持拂尘，站在山巅"
+                opts = dict(image_url="https://example.com/frame.png", resolution="720p") if kind == "video" else {}
+                with patch.dict(os.environ, {"QIANFAN_API_KEY": "fake-test-only"}):
+                    submit(kind, prompt=brief, model=model, allow_paid=True, transport=fake, **opts)
+                params = calls[0]["model_parameters"]
+                self.assertEqual(params["prompt"], compile_prompt(
+                    brief, stage=kind, max_chars=2500 if kind == "image" else 2000)["prompt"])
+                self.assertNotIn("negative_prompt", params)
+
+    def test_final_compiled_budget_is_checked_before_paid_transport(self):
+        for kind, model, size in (("image", "o1-base", 2500), ("video", "VQ2-Turbo", 2000)):
+            with self.subTest(kind=kind), patch("oneflow.qianfan_media._request") as network:
+                with self.assertRaises(MediaTaskError):
+                    submit(kind, prompt="x" * size, model=model, allow_paid=True)
+                network.assert_not_called()
+
     def test_paid_post_has_longer_ack_timeout_than_read_only_get(self):
         observed = []
         def fake(req, timeout):

@@ -85,9 +85,11 @@ def original_brief(record):
     if not isinstance(prompt, str) or len(prompt) > 10000:
         raise HandoffError("Invalid source prompt")
     prefix = "User brief: "
-    suffix = ". One moment, stable subjects and props"
-    if prefix in prompt and suffix in prompt:
-        return prompt.split(prefix, 1)[1].split(suffix, 1)[0].strip().rstrip(". ")
+    suffixes = (". One moment, stable subjects and props",
+                ". One decisive moment, coherent subjects and props.")
+    for suffix in suffixes:
+        if prefix in prompt and suffix in prompt:
+            return prompt.split(prefix, 1)[1].split(suffix, 1)[0]
     return prompt[:3000].strip()
 
 

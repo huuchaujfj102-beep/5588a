@@ -23,3 +23,8 @@ python -m film_audit.audit --video remotion/out/audit-demo.mp4 --srt examples/sa
 ```
 
 不应将素材本身或凭据提交到仓库。GitHub Actions 的 smoke test 仅对静态测试片运行，不传递任何私有素材。
+
+
+## 素材与时间线穿帮复核
+
+执行 [图生视频V2规则](../docs/image-to-video-rules.md) 的剪辑检查：素材版本、入出点、缩放裁切、镜长、转场重叠、音画同步、文字水印和镜头状态承接。Remotion没有在本项目中新增模型负面提示字段；渲染成功不作为视觉签核。

@@ -13,14 +13,12 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from oneflow.image_generation import ImageFlowError, build_prompt, build_plan, sha256
+from oneflow.continuity_rules import negative_constraints
 
 MODEL = "stabilityai/stable-diffusion-xl-base-1.0"
 ENDPOINT = "https://stable-diffusion-xl.endpoints.kepler.ai.cloud.ovh.net/api/text2image"
 MAX_IMAGE_BYTES = 16 * 1024 * 1024
-DEFAULT_NEGATIVE = (
-    "cartoon, duplicate cars, extra wheels, malformed tires, broken geometry, "
-    "visible text, watermark, distorted bodywork, blurry"
-)
+DEFAULT_NEGATIVE = negative_constraints()
 
 
 def fetch_image_once(prompt, negative_prompt=DEFAULT_NEGATIVE, opener=None):
@@ -60,7 +58,8 @@ def generate_one(plan, output_dir, transport=None):
     if image_path.exists() or report_path.exists():
         raise ImageFlowError("An output already exists; refusing duplicate model inference")
 
-    bytes_in = fetch_image_once(plan["prompt"], opener=transport)
+    bytes_in = fetch_image_once(plan["prompt"], negative_prompt=plan["negative_prompt"],
+                               opener=transport)
     try:
         with Image.open(BytesIO(bytes_in)) as img:
             img.load()
@@ -78,6 +77,7 @@ def generate_one(plan, output_dir, transport=None):
 
     report = {
         **plan,
+        "negative_prompt_field_transmitted": True,
         "provider": "OVHcloud AI Endpoints (anonymous)",
         "model": MODEL,
         "status": "IMAGE_GENERATED_REVIEW_REQUIRED",
@@ -99,7 +99,8 @@ def generate_one(plan, output_dir, transport=None):
 
 
 def execute(args, transport=None):
-    prompt = build_prompt(args.brief, None, args.shot)
+    prompt = build_prompt(args.brief, None, args.shot, max_chars=2048,
+                          separate_negative=True)
     # The SDXL endpoint has a fixed 1024x1024 output as documented.
     plan = build_plan(prompt, args.shot, args.seed, 1024, 1024)
     plan.update({
@@ -109,6 +110,8 @@ def execute(args, transport=None):
         "api_url": ENDPOINT,
         "image_size_note": "SDXL output is fixed at 1024x1024, not native 9:16",
         "requires_api_key": False,
+        "negative_prompt_mode": "separate",
+        "negative_prompt_field_supported": True,
     })
     if args.dry_run:
         return {**plan, "status": "DRY_RUN_NO_IMAGE_GENERATED"}

@@ -14,6 +14,7 @@ from oneflow.qianfan_i2v import (
     _image_data_uri, _fetch_video, build_prompt, plan, resume, submit_once,
 )
 from oneflow.qianfan_media import MediaTaskError
+from oneflow.continuity_rules import compile_prompt
 
 
 class QianfanI2VTests(unittest.TestCase):
@@ -21,6 +22,10 @@ class QianfanI2VTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
+        dns = patch("oneflow.qianfan_i2v.socket.getaddrinfo", return_value=[
+            (2, 1, 6, "", ("8.8.8.8", 443))])
+        dns.start()
+        self.addCleanup(dns.stop)
 
     def _plan(self, **options):
         defaults = dict(brief="超跑从静止立即启动、车轮转动并在夕阳公路上加速疾驰",
@@ -148,7 +153,51 @@ class QianfanI2VTests(unittest.TestCase):
         p = build_prompt("超跑启动、加速、飞驰")
         self.assertIn("ROTATE", p)
         self.assertIn("FORWARD", p)
-        self.assertIn("no morphing", p)
+        self.assertIn("no unrequested morphing", p)
+
+    def test_human_i2v_preserves_actions_without_inventing_a_vehicle(self):
+        brief = "吕洞宾背剑持拂尘，衣摆微动，固定镜头"
+        prompt = build_prompt(brief)
+        self.assertIn(brief, prompt)
+        self.assertNotIn("EXACT SAME single vehicle", prompt)
+        self.assertNotIn("ROTATE", prompt)
+        self.assertEqual(compile_prompt(prompt, stage="video", max_chars=2000)["prompt"], prompt)
+        self.assertLessEqual(len(prompt), 2000)
+
+    def test_private_dns_is_still_rejected_by_production_guard(self):
+        from oneflow.qianfan_i2v import _checked_public_url
+        with patch("oneflow.qianfan_i2v.socket.getaddrinfo", return_value=[
+                (2, 1, 6, "", ("127.0.0.1", 443))]):
+            with self.assertRaisesRegex(FlowError, "non-public"):
+                _checked_public_url("https://example.com/private.png")
+
+    def test_stationary_vehicle_is_not_forced_to_accelerate(self):
+        prompt = build_prompt("超跑保持静止，固定镜头展示车灯")
+        self.assertIn("超跑保持静止", prompt)
+        self.assertNotIn("accelerates fast", prompt)
+        self.assertNotIn("ROTATE", prompt)
+
+    def test_negated_speed_and_english_braking_preserve_requested_action(self):
+        for brief in ("超跑不要加速，保持缓慢行驶",
+                      "The car remains stationary, no acceleration.",
+                      "The car brakes to a stop after accelerating."):
+            with self.subTest(brief=brief):
+                prompt = build_prompt(brief)
+                self.assertIn(brief, prompt)
+                self.assertNotIn("accelerates fast", prompt)
+                self.assertNotIn("ROTATE", prompt)
+
+    def test_prompt_preflight_failure_does_not_record_paid_attempt(self):
+        job = self._plan()
+        from oneflow.core import save_json
+        manifest = load_json(job / "manifest.json")
+        manifest["brief"] = "车" * 951
+        save_json(job / "manifest.json", manifest)
+        with patch("oneflow.qianfan_i2v.submit") as paid:
+            with self.assertRaises(FlowError):
+                submit_once(job, confirm_paid=True)
+            paid.assert_not_called()
+        self.assertEqual(load_json(job / "manifest.json")["qianfan_i2v"]["status"], "PLANNED")
 
     def test_embedded_audio_model_selection(self):
         with self.assertRaisesRegex(FlowError, "requires VQ3"):

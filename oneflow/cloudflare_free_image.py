@@ -110,7 +110,7 @@ def infer_once(prompt, account_id, token, *, steps=4, seed=128839, opener=None):
 
 
 def execute(args, *, account_id=None, token=None, opener=None):
-    prompt = build_prompt(brief=args.brief, shot_id=args.shot)
+    prompt = build_prompt(brief=args.brief, shot_id=args.shot, max_chars=2048)
     plan = build_plan(prompt, args.shot, args.seed, 1024, 1024)
     plan.update({
         "model": MODEL,

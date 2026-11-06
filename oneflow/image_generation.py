@@ -11,11 +11,12 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from .continuity_rules import compile_prompt, negative_constraints, RULE_VERSION
 
 MODEL = "black-forest-labs/FLUX.1-schnell"
 SHOT = re.compile(r"S(0[1-9]|1[0-2])\Z")
 MODEL_LICENSE = "Apache-2.0 (FLUX.1-schnell checkpoint; review upstream terms)"
-NEGATIVE = "Disney animated design, cartoon, extra actors, duplicate subjects, changed costume, distorted hands, watermark, caption, text, logo"
+NEGATIVE = negative_constraints()
 
 
 class ImageFlowError(ValueError):
@@ -42,20 +43,37 @@ def safe_request_path(raw):
     return p
 
 
-def prompt_from_request(path, shot_id):
+def _compile_image(text, *, max_chars=None, separate_negative=False):
+    try:
+        return compile_prompt(text, stage="image", max_chars=max_chars,
+                              separate_negative=separate_negative)["prompt"]
+    except ValueError as exc:
+        raise ImageFlowError(str(exc)) from None
+
+
+def prompt_from_request(path, shot_id, *, max_chars=None, separate_negative=False):
     p = safe_request_path(path)
     if not p:
         raise ImageFlowError("Story request is required")
     document = json.loads(p.read_text(encoding="utf-8"))
+    if not isinstance(document, dict):
+        raise ImageFlowError("Story request must be an object")
     shots = document.get("shots")
-    if not isinstance(shots, list) or not SHOT.fullmatch(shot_id):
+    if (not isinstance(shots, list) or not shots or
+            not isinstance(shot_id, str) or not SHOT.fullmatch(shot_id)):
         raise ImageFlowError("Invalid story shots or shot ID")
     idx = int(shot_id[1:]) - 1
     if idx >= len(shots):
         raise ImageFlowError("Requested shot not in storyboard")
     shot = shots[idx]
+    if (not isinstance(shot, dict) or any(
+            not isinstance(shot.get(field), str) or not shot[field].strip()
+            for field in ("visual", "motion", "camera"))):
+        raise ImageFlowError("Story shot requires nonempty visual, motion and camera text")
     chars = document.get("characters", {})
-    if not isinstance(chars, dict):
+    if (not isinstance(chars, dict) or any(
+            not isinstance(name, str) or not isinstance(spec, str)
+            for name, spec in chars.items())):
         raise ImageFlowError("Invalid character bible")
     # This is one STILL keyframe. Avoid sending the whole 60s story or all actors.
     visible = []
@@ -66,31 +84,32 @@ def prompt_from_request(path, shot_id):
             ["七位矮人", "七位矿工"] if name.startswith("七位小矮人") else [])):
             visible.append(f"{name}: {spec}")
     locked = "; ".join(visible)
-    return (
-        "1. LOCK: original fairytale cinematic keyframe, 9:16; only characters explicitly visible "
+    text = (
+        "1. LOCK: one still keyframe; preserve the requested style and framing; only characters explicitly visible "
         "in this shot. Character design and wardrobe fixed: " + locked + "\n"
         "2. STILL ACTION: decisive moment in shot; " + shot["visual"] +
         ". Motions implied, not multiple poses: " + shot["motion"] + "\n"
         "3. ENVIRONMENT: use only explicitly described scene details.\n"
         "4. CAMERA: a single stable still frame at: " + shot["camera"] + "\n"
         "5. LIGHTING: physically coherent natural/practical film lighting.\n"
-        "6. QUALITY: cinematic live-action fantasy photography, sharp believable details, "
-        "anatomy and props coherent, vertical editorial master for Wan I2V.\n"
-        "7. NEGATIVE: " + NEGATIVE
+        "6. QUALITY: clear details in the requested visual style; coherent anatomy and props.\n"
+        "7. NEGATIVE: apply only relevant structural constraints; preserve requested style, text and symbols."
     )
+    return _compile_image(text, max_chars=max_chars, separate_negative=separate_negative)
 
 
-def build_prompt(brief=None, request_file=None, shot_id="S01"):
+def build_prompt(brief=None, request_file=None, shot_id="S01", *, max_chars=None,
+                 separate_negative=False):
     if request_file:
-        return prompt_from_request(request_file, shot_id)
-    if not brief or not 4 <= len(brief.strip()) <= 4500:
+        return prompt_from_request(request_file, shot_id, max_chars=max_chars,
+                                   separate_negative=separate_negative)
+    if (not isinstance(brief, str) or len(brief.strip()) < 4
+            or len(brief) > 4500):
         raise ImageFlowError("One-sentence brief needs 4-4500 characters")
-    return (
-        "One single 9:16 photorealistic cinematic still image, intended as an "
-        "approved first frame for image-to-video. User brief: " + brief.strip() +
-        ". One moment, stable subjects and props, physically plausible composition. "
-        "No captions, logos, watermarks, anatomical mutations or duplicate characters."
-    )
+    text = ("One single still image for human review before image-to-video. "
+            "Preserve the user's requested style, framing, text and symbols. User brief: "
+            + brief + ". One decisive moment, coherent subjects and props.")
+    return _compile_image(text, max_chars=max_chars, separate_negative=separate_negative)
 
 
 def build_plan(prompt, shot_id, seed, width, height):
@@ -110,7 +129,12 @@ def build_plan(prompt, shot_id, seed, width, height):
         "requested_width": width,
         "requested_height": height,
         "prompt": prompt,
+        "prompt_chars": len(prompt),
         "negative_prompt": NEGATIVE,
+        "negative_prompt_mode": "inline",
+        "negative_prompt_field_supported": False,
+        "negative_prompt_field_transmitted": False,
+        "rule_version": RULE_VERSION,
         "needs_human_reference_approval": True,
         "generated_image": None,
     }
