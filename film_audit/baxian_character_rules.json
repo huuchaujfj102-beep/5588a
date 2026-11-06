@@ -1,0 +1,123 @@
+{
+  "project": "八仙过海·沧海证道",
+  "version": "1.0",
+  "status": "specification_only_not_visual_verified",
+  "characters": [
+    {
+      "id": "BX01",
+      "name": "铁拐李",
+      "required": [
+        "跛足",
+        "铁拐",
+        "紫金葫芦",
+        "破旧麻衣"
+      ],
+      "forbidden": [
+        "健全双腿行走设定"
+      ],
+      "tbd": [
+        "跛足侧别",
+        "铁拐持手",
+        "葫芦佩戴点"
+      ]
+    },
+    {
+      "id": "BX02",
+      "name": "汉钟离",
+      "required": [
+        "袒腹",
+        "宽袍",
+        "芭蕉扇"
+      ],
+      "forbidden": [
+        "双扇"
+      ]
+    },
+    {
+      "id": "BX03",
+      "name": "吕洞宾",
+      "required": [
+        "深蓝纹样衣袍",
+        "纯阳仙剑"
+      ],
+      "forbidden": [
+        "拂尘",
+        "同时出现两把仙剑"
+      ],
+      "states": [
+        "sheathed",
+        "drawing",
+        "drawn",
+        "returning"
+      ]
+    },
+    {
+      "id": "BX04",
+      "name": "蓝采和",
+      "required": [
+        "清朗少年男性",
+        "七宝花篮",
+        "繁花"
+      ],
+      "forbidden": [
+        "未经批准的少女化定型"
+      ]
+    },
+    {
+      "id": "BX05",
+      "name": "张果老",
+      "required": [
+        "白仙驴",
+        "倒骑",
+        "祥云"
+      ],
+      "forbidden": [
+        "小鼓",
+        "手鼓",
+        "正骑"
+      ]
+    },
+    {
+      "id": "BX06",
+      "name": "韩湘子",
+      "required": [
+        "紫玉箫"
+      ],
+      "forbidden": [
+        "多箫"
+      ]
+    },
+    {
+      "id": "BX07",
+      "name": "何仙姑",
+      "required": [
+        "青莲长裙",
+        "莲台"
+      ],
+      "forbidden": [
+        "莲台不承重"
+      ]
+    },
+    {
+      "id": "BX08",
+      "name": "曹国舅",
+      "required": [
+        "红褐官袍",
+        "阴阳玉板"
+      ],
+      "forbidden": [
+        "法宝变剑"
+      ]
+    }
+  ],
+  "hard_fail": [
+    "wrong_character",
+    "wrong_prop_owner",
+    "extra_prop",
+    "missing_signature_feature",
+    "invalid_prop_state",
+    "invalid_action_physics",
+    "unexplained_spatial_flip"
+  ],
+  "visual_validation_required": true
+}
