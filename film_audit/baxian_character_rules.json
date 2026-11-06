@@ -114,7 +114,16 @@
       ],
       "forbidden": [
         "未经批准的少女化定型"
-      ]
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_source": "user supplied and labeled BX04 定型 / 定版",
+      "approval_date": "2026-11-06",
+      "approved_group_reference_file": "1000023554.png",
+      "character_and_prop_locks": [
+        "清朗少年男性，原脸/发带/浅蓝碎花衣袍固定",
+        "唯一七宝藤编花篮，花材和挂件按用户批准原图"
+      ],
+      "video_qa_status": "PENDING"
     },
     {
       "id": "BX05",
@@ -128,7 +137,17 @@
         "小鼓",
         "手鼓",
         "正骑"
-      ]
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_source": "user supplied and labeled BX05 定型 / 定版",
+      "approval_date": "2026-11-06",
+      "approved_group_reference_file": "1000023552.png",
+      "character_and_prop_locks": [
+        "白发老者、褐色旧袍以批准多视角为准",
+        "唯一白仙驴，张果老倒骑，驴的耳朵/长毛/鞍铃统一",
+        "禁止小鼓与正骑"
+      ],
+      "video_qa_status": "PENDING"
     },
     {
       "id": "BX06",
@@ -192,7 +211,16 @@
       ],
       "forbidden": [
         "法宝变剑"
-      ]
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_source": "user supplied and labeled BX08 定型 / 定版",
+      "approval_date": "2026-11-06",
+      "approved_group_reference_file": "1000023557.png",
+      "character_and_prop_locks": [
+        "成熟男性官式发冠，红褐官袍和金纹腰佩固定",
+        "一套两片白绿矩形阴阳玉板，非圆盘，数量与纹样不变"
+      ],
+      "video_qa_status": "PENDING"
     }
   ],
   "hard_fail": [
@@ -206,5 +234,7 @@
   ],
   "visual_validation_required": true,
   "note": "BX01 user-approved static source only; all other character assets remain unapproved. Actual PNG binary files not in repository.",
-  "registry_notes": "单角色静态用户批准不代表视觉自动检测或动态视频验证完成，未批准角色保持原有审核状态。"
+  "registry_notes": "单角色静态用户批准不代表视觉自动检测或动态视频验证完成，未批准角色保持原有审核状态。",
+  "group_stage_reference_manifest": "film_audit/assets/baxian_eight_hero_group_reference_manifest.json",
+  "group_stage_status": "GROUP_CONCEPT_PREVISUALIZATION_NOT_APPROVED"
 }
