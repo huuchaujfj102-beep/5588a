@@ -1,6 +1,6 @@
 {
   "project": "八仙过海·沧海证道",
-  "version": "1.0",
+  "version": "1.1",
   "status": "specification_only_not_visual_verified",
   "characters": [
     {
@@ -15,11 +15,35 @@
       "forbidden": [
         "健全双腿行走设定"
       ],
-      "tbd": [
-        "跛足侧别",
-        "铁拐持手",
-        "葫芦佩戴点"
-      ]
+      "tbd": [],
+      "approval_status": "USER_APPROVED_STILL",
+      "approval_date": "2026-11-06",
+      "lock_version": "BX01-USER-LOCK-20261106-V1",
+      "locked_attributes": {
+        "crutch": "single rounded cap iron crutch; character right hand",
+        "gourd": "single purple-gold cloud-pattern gourd with gold curved stopper and purple tassel; character left waist",
+        "limp": "left leg wrapping / limp as in approved still references; verify gait in animation",
+        "face": "match approved hero/turnaround; no redesign",
+        "wardrobe": "match approved hero/turnaround; no redesign"
+      },
+      "approved_sources": [
+        {
+          "file": "1000023536.png",
+          "role": "hero",
+          "sha256": "946944388bbaa3364e745bcafadf58e5872975a832d928c9f76b76f0ea7d6a53"
+        },
+        {
+          "file": "1000023537.png",
+          "role": "turnaround",
+          "sha256": "ac692884cfe704134bbd2f131e34018b525766697adf66cc558f686ee4b61bfa"
+        },
+        {
+          "file": "1000023539.png",
+          "role": "prop",
+          "sha256": "562933ca823b2d29fbec220b05ec5797e6ec0ee33d183a4c3cb5cb14270a90f6"
+        }
+      ],
+      "animation_status": "PENDING_GAIT_I2V"
     },
     {
       "id": "BX02",
@@ -119,5 +143,6 @@
     "invalid_action_physics",
     "unexplained_spatial_flip"
   ],
-  "visual_validation_required": true
+  "visual_validation_required": true,
+  "note": "BX01 user-approved static source only; all other character assets remain unapproved. Actual PNG binary files not in repository."
 }
