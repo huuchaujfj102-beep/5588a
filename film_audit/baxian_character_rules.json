@@ -189,8 +189,9 @@
       "approval_date": "2026-11-06",
       "approved_manifest_path": "film_audit/assets/bx07_hexiangu_approved_manifest.json",
       "identity_lock": [
-        "最新用户批准主图1000023567.png为首要身份、发型、面部、服饰及电影气质基准",
-        "旧多视角、旧主视觉保留为历史角度参考；冲突时最新主图优先，不能混用成同一角色跨镜头"
+        "用户已批准的1000023567.png仍为主要五官、发饰、青绿粉金衣袍及莲花法术外观基准",
+        "新补充1000023574.png和1000023573.png仅为与主图匹配的新多视角/正背面参考，不代表自动批准为独立视频关键帧",
+        "旧多视角不作为新装扮视频镜头身份依据，冲突一律以批准主图为准"
       ],
       "prop_lock": [
         "莲台唯一；结构参照已批准1000023547.png，新的主图1000023567.png定义人物与莲台同框姿态",
@@ -207,7 +208,28 @@
         "何仙姑仙韻蓮華角色設計稿.png",
         "何仙姑莲花仙子六视图服饰设定.png"
       ],
-      "turnaround_candidate_status": "REPAIR_CANDIDATE_PENDING_TECHNICAL_QA_AND_USER_APPROVAL"
+      "turnaround_candidate_status": "REPAIR_CANDIDATE_PENDING_TECHNICAL_QA_AND_USER_APPROVAL",
+      "supplemental_views": [
+        {
+          "filename": "1000023574.png",
+          "role": "updated six-view character reference",
+          "sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8",
+          "status": "REGISTERED_PENDING_FINAL_LOCK"
+        },
+        {
+          "filename": "1000023573.png",
+          "role": "updated front/back reference",
+          "sha256": "b3d380936d72c52af914545e64627a978b76c561051b25155580717d21b90917",
+          "status": "REGISTERED_PENDING_FINAL_LOCK"
+        }
+      ],
+      "reference_priority_order": [
+        "1000023567.png CURRENT_APPROVED_PRIMARY_HERO",
+        "1000023574.png SUPPLEMENT_SIX_VIEW",
+        "1000023573.png SUPPLEMENT_FRONT_BACK",
+        "1000023547.png APPROVED_LOTUS_PLATFORM_GEOMETRY",
+        "OLDER_TURNAROUND_LEGACY_ONLY"
+      ]
     },
     {
       "id": "BX08",
