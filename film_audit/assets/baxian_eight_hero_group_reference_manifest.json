@@ -1,0 +1,116 @@
+{
+  "project": "八仙过海·沧海证道",
+  "stage": "G02_GROUP_PREVISUALIZATION",
+  "date": "2026-11-06",
+  "status": "REFERENCE_LOCKED_GROUP_SCENES_PENDING_USER_APPROVAL",
+  "main_still_references": [
+    {
+      "id": "BX01",
+      "name": "铁拐李",
+      "filename": "1000023536.png",
+      "sha256": "946944388bbaa3364e745bcafadf58e5872975a832d928c9f76b76f0ea7d6a53",
+      "prop": "铁拐＋紫金葫芦",
+      "source": "user-approved in conversation",
+      "static_status": "USER_APPROVED_STILL",
+      "video_status": "PENDING"
+    },
+    {
+      "id": "BX02",
+      "name": "汉钟离",
+      "filename": "1000023540.png",
+      "sha256": "c784ef30c2dedf9ffe6c63f452358915b987aaba15abee3c6d85c60622e588a4",
+      "prop": "巨型破叶芭蕉扇",
+      "source": "user-approved in conversation",
+      "static_status": "USER_APPROVED_STILL",
+      "video_status": "PENDING"
+    },
+    {
+      "id": "BX03",
+      "name": "吕洞宾",
+      "filename": "1000023555.png",
+      "sha256": "6e35033d06f56446ba401e5f678c2a9c6533bfa5b1601f6a26113ba3ffb2efcd",
+      "prop": "唯一纯阳剑＋剑鞘",
+      "source": "user-approved in conversation",
+      "static_status": "USER_APPROVED_STILL",
+      "video_status": "PENDING"
+    },
+    {
+      "id": "BX04",
+      "name": "蓝采和",
+      "filename": "1000023554.png",
+      "sha256": "630ad949adb866f967f1f032b791489e9c21d49996f4214d613a21f6b9cc40f3",
+      "prop": "七宝花篮",
+      "source": "user-approved in conversation",
+      "static_status": "USER_APPROVED_STILL",
+      "video_status": "PENDING"
+    },
+    {
+      "id": "BX05",
+      "name": "张果老",
+      "filename": "1000023552.png",
+      "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
+      "prop": "唯一白仙驴、倒骑",
+      "source": "user-approved in conversation",
+      "static_status": "USER_APPROVED_STILL",
+      "video_status": "PENDING"
+    },
+    {
+      "id": "BX06",
+      "name": "韩湘子",
+      "filename": "1000023556.png",
+      "sha256": "c7372b4b89b7b2bd39a9d484a488323eb30af27061ae49dc7f048b2729d81838",
+      "prop": "紫玉横吹乐器",
+      "source": "user-approved in conversation",
+      "static_status": "USER_APPROVED_STILL",
+      "video_status": "PENDING"
+    },
+    {
+      "id": "BX07",
+      "name": "何仙姑",
+      "filename": "1000023567.png",
+      "sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
+      "prop": "唯一承托莲台＋手持小莲花",
+      "source": "user-approved in conversation",
+      "static_status": "USER_APPROVED_STILL",
+      "video_status": "PENDING"
+    },
+    {
+      "id": "BX08",
+      "name": "曹国舅",
+      "filename": "1000023557.png",
+      "sha256": "73cc28bf6b1eec239a22a9b5e4b353c8e772360c4547dadf32bd99e7973e78cb",
+      "prop": "一对白绿矩形阴阳玉板",
+      "source": "user-approved in conversation",
+      "static_status": "USER_APPROVED_STILL",
+      "video_status": "PENDING"
+    }
+  ],
+  "blocking": {
+    "foreground": [
+      "BX01",
+      "BX03",
+      "BX07",
+      "BX08"
+    ],
+    "midground": [
+      "BX02",
+      "BX04",
+      "BX06",
+      "BX05"
+    ],
+    "sea_direction": "toward background / east",
+    "camera": "on west shore facing east",
+    "sun_direction": "upper-right",
+    "wind_direction": "right-to-left"
+  },
+  "hard_constraints": [
+    "eight characters exactly once, white donkey not a ninth immortal",
+    "only approved faces and costumes; BX07 latest main frame 1000023567.png",
+    "role-specific unique props and state transitions, BX05 backwards riding",
+    "no extra fan, sword, lotus platform, jade boards, or musical instrument",
+    "all new group/sea/battle images must go through P0/P1/P2 QC and explicit user final approval"
+  ],
+  "image_binary_on_github": false,
+  "reference_card_filename": "01_八仙批准角色参考图对照.jpg",
+  "blocking_map_filename": "02_八仙群像前后排站位示意.png"
+}
