@@ -6,7 +6,7 @@
   "approved_by": "user",
   "approval_date": "2026-11-06",
   "approval_status": "USER_APPROVED_STILL",
-  "archive_name": "BX07_何仙姑_用户批准母图_主图更新版_20261106.zip",
+  "archive_name": "BX07_何仙姑_V3_补充视图与主图完整包_20261107.zip",
   "binary_images_in_repository": false,
   "files": [
     {
@@ -49,12 +49,32 @@
       "height": 1536,
       "sha256": "70b59f6d716414e3c61fa47912810f58daa2ffd9ebb30a611b64faf8c282d15e",
       "role": "lotus_platform"
+    },
+    {
+      "original_filename": "1000023574.png",
+      "archive_filename": "BX07_V3_SUPPLEMENT_SIX_VIEW_USER_SUBMITTED.png",
+      "width": 1152,
+      "height": 1536,
+      "sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8",
+      "role": "supplemental six-view character comparison",
+      "status": "REGISTERED_PENDING_USER_FINAL_LOCK"
+    },
+    {
+      "original_filename": "1000023573.png",
+      "archive_filename": "BX07_V3_SUPPLEMENT_FRONT_BACK_USER_SUBMITTED.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "b3d380936d72c52af914545e64627a978b76c561051b25155580717d21b90917",
+      "role": "supplemental front/back character comparison",
+      "status": "REGISTERED_PENDING_USER_FINAL_LOCK"
     }
   ],
   "reference_priority": {
     "primary_cinematic_hero": "1000023567.png",
+    "supplemental_turnaround": "1000023574.png",
+    "supplemental_front_back": "1000023573.png",
     "lotus_platform_geometry": "1000023547.png",
-    "legacy_face_costume_views": [
+    "legacy_costume_references": [
       "1000023564.png",
       "1000023565.png"
     ],
@@ -77,7 +97,7 @@
     "与视频物理相关的验证必须在I2V实际生成后检查"
   ],
   "repository_note": "GitHub only stores reference metadata & SHA256. Original PNG is included in updated downloadable ZIP archive; not uploaded as binary to GitHub.",
-  "revision": "BX07-HERO-UPDATE-20261106-V2",
+  "revision": "BX07-HERO-V2-SUPPLEMENT-V3-20261107",
   "approval_source_latest": "user explicit instruction: 把这张图放入Bx07做主图",
   "primary_hero_file": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
   "reference_conflict_policy": "The newest approved primary hero 1000023567.png takes precedence for face, hair and costume. Earlier turnaround images are historical references where they differ and must not be mixed as interchangeable footage. Geometry of lotus platform remains from approved prop structure 1000023547.png.",
@@ -109,5 +129,15 @@
     "independent_profile_result": "PENDING",
     "report": "docs/reviews/baxian-all-approved-stills-global-qa-2026-11-06.md",
     "approval_rule": "Do not overwrite existing approved hero, user must approve these supplementary views to become final; motion QA separate."
+  },
+  "supplement_note": "The user asked to add two new BX07 character design sheets on 2026-11-07. The already approved 1000023567 hero image remains authoritative and unchanged. Both new sheets are registered supplementary references and not independently approved final production frames.",
+  "supplement_qa": {
+    "identity": "visually close to newer primary main image",
+    "accessories": "generally matching lotus hair ornament, ribbons and green/gold/pink robe",
+    "issues": [
+      "compound contact sheets are not independently validated full-body angle masters",
+      "dynamic cloth/hand and lotus platform support remain untested"
+    ],
+    "status": "SUPPLEMENTARY_REGISTERED_PENDING_FINAL_LOCK"
   }
 }
