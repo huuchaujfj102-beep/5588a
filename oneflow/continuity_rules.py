@@ -6,6 +6,9 @@ STATIC_CONTRACT = (
     "separate fingers from props. Preserve scene perspective, roads, stairs and "
     "surface-attached textures. Light, shadows and reflections must agree with "
     "geometry. Frame required props and feet without accidental cropping. "
+    "For each ordinary human, no extra feet or shoes under hems: each shoe has "
+    "one upper and one sole. Partial toe/heel fragments must belong to that same "
+    "foot, not a third shoe; preserve intentional limb differences in the brief. "
     "User-specified magic, levitation and transformations remain allowed."
 )
 MOTION_CONTRACT = (
@@ -18,7 +21,8 @@ MOTION_CONTRACT = (
 STATIC_NEGATIVE = (
     "interpenetration, disconnected parts, unsupported non-magical props, "
     "wrong prop counts, malformed grips, misaligned rigid parts, warped textures, "
-    "contradictory perspective, mirrored lettering, incoherent shadows"
+    "contradictory perspective, mirrored lettering, incoherent shadows, "
+    "extra shoes under hems, duplicated soles, fused double toes"
 )
 MOTION_NEGATIVE = (
     "unexplained prop morphing, teleportation, contact drift, foot sliding, "
@@ -64,6 +68,10 @@ def negative_constraints(motion=False):
 REVIEW_CHECKLIST = (
     "Check visible prop parts/counts, sword-axis alignment, single-ended whisk hair, "
     "basket attachments, grip/contact and limb chains, scene perspective, stairs, "
+    "feet at enlarged detail: separately count shoe uppers, soles, toe and heel "
+    "fragments under hems, match each to a single foot and check ground contact. "
+    "Do not invent hidden ankles or treat cloth folds as confirmed feet; mark "
+    "unresolved fragments uncertain. "
     "surface textures, shadows and reflections. Respect brief-defined magic and "
     "normal view-dependent changes. Identify frame head/tail and image region in "
     "each supported finding; uncertain occluded details go in uncertainties. "
