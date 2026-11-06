@@ -11,6 +11,7 @@ from pathlib import Path
 
 from .core import create, load_json, save_json, config, FlowError
 from .director import film_prompt
+from .continuity_rules import compile_prompt
 from .platforms import PROFILES, make_package
 
 ALLOWED = re.compile(r"^[a-zA-Z0-9._-]+\.json$")
@@ -139,7 +140,7 @@ def package(request, out_root, cfg=None):
         # Keep character identity lock in every prompt and avoid style drift.
         text += "\n\n全片人物和服装唯一设定（不得改变）：\n" + (
             "; ".join(k + ": " + v for k, v in characters.items()))
-        draft["visual_prompt"] = text
+        draft["visual_prompt"] = compile_prompt(text, stage="video")["prompt"]
         draft["narrative_phase"] = shot["visual"]
         draft["audio_prompt"] = shot["sound"]
         draft["narration"] = shot["narration"]

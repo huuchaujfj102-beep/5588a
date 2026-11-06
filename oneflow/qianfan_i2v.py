@@ -99,6 +99,10 @@ def build_prompt(brief):
                            re.search(r"\b(?:accelerat\w*|racing|speeding)\b", clean, re.I))
     if any(t in clean for t in ("保持静止", "静止不动", "原地不动", "停车", "刹车", "后退", "倒车")):
         vehicle = False
+    if (re.search(r"(?:不(?:要|许|准|需|能|可)?|禁止|避免).{0,6}(?:加速|疾驰|飞驰)", clean)
+            or re.search(r"\b(?:stationary|static|parked|brak\w*|revers\w*|stop\w*|idle)\b", clean, re.I)
+            or re.search(r"\b(?:no|not|without|avoid|don't|do not)\s+(?:\w+\s+){0,3}accelerat\w*\b", clean, re.I)):
+        vehicle = False
     text = (
         "Reference lock: EXACT SAME single vehicle in source frame; preserve "
         "body geometry, wheels, headlights, paint and original camera perspective. "

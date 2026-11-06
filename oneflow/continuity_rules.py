@@ -75,7 +75,7 @@ def negative_constraints(motion=False):
     return STATIC_NEGATIVE + (", " + MOTION_NEGATIVE if motion else "")
 
 
-_BLOCK = re.compile(r"\n\[OneFlow rules v2:(?:image|video):(?:inline|separate)\]\n.*?\n\[/OneFlow rules\]\s*\Z", re.S)
+_BLOCK = re.compile(r"\n\[OneFlow rules v2:(?:image|video):(?:inline|separate)\]\n.*?\n\[/OneFlow rules\]", re.S)
 
 
 def compile_prompt(text, *, stage="image", max_chars=None, separate_negative=False):
@@ -86,6 +86,8 @@ def compile_prompt(text, *, stage="image", max_chars=None, separate_negative=Fal
         raise ValueError("Unknown generation stage")
     if max_chars is not None and (type(max_chars) is not int or max_chars < 4):
         raise ValueError("Invalid prompt character budget")
+    # Remove each owned block separately, including blocks before appended
+    # character notes. A terminal-only match could swallow notes between blocks.
     source = _BLOCK.sub("", text)
     motion = stage == "video"
     mode = "separate" if separate_negative else "inline"

@@ -177,6 +177,16 @@ class QianfanI2VTests(unittest.TestCase):
         self.assertNotIn("accelerates fast", prompt)
         self.assertNotIn("ROTATE", prompt)
 
+    def test_negated_speed_and_english_braking_preserve_requested_action(self):
+        for brief in ("超跑不要加速，保持缓慢行驶",
+                      "The car remains stationary, no acceleration.",
+                      "The car brakes to a stop after accelerating."):
+            with self.subTest(brief=brief):
+                prompt = build_prompt(brief)
+                self.assertIn(brief, prompt)
+                self.assertNotIn("accelerates fast", prompt)
+                self.assertNotIn("ROTATE", prompt)
+
     def test_prompt_preflight_failure_does_not_record_paid_attempt(self):
         job = self._plan()
         from oneflow.core import save_json

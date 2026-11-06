@@ -85,6 +85,22 @@ class ContinuityRulesTests(unittest.TestCase):
         self.assertEqual(extracted, brief)
         self.assertNotIn("OneFlow rules", extracted)
 
+    def test_recompiling_preserves_character_notes_between_rule_blocks(self):
+        prompt = film_prompt("吕洞宾手持拂尘", "站立", None, 1, 1)
+        notes = "\n全片人物设定：独有青玉发簪XYZ；允许造镜者水印。"
+        source = prompt + notes
+        video = compile_prompt(source, stage="video")["prompt"]
+        image = compile_prompt(video, stage="image")["prompt"]
+        for result in (video, image):
+            self.assertIn(notes, result)
+            self.assertEqual(result.count("[OneFlow rules v2:"), 1)
+        # Also recover old duplicate-block artifacts without losing intervening notes.
+        legacy = prompt + notes + compile_prompt("额外场景")["prompt"]
+        repaired = compile_prompt(legacy, stage="image")["prompt"]
+        self.assertIn(notes, repaired)
+        self.assertIn("额外场景", repaired)
+        self.assertEqual(repaired.count("[OneFlow rules v2:"), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

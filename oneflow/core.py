@@ -334,7 +334,7 @@ def produce(job, cfg):
         previous = None
         for shot in manifest["shots"]:
             values = {"prompt": compile_prompt(shot["visual_prompt"], stage="video")["prompt"], "negative_prompt":
-                      "identity drift, continuity errors, extra characters, watermark, " + negative_constraints(motion=True),
+                      "identity drift, continuity errors, unrequested characters or watermarks, " + negative_constraints(motion=True),
                       "seconds": shot["seconds"],
                       "seed": int(hashlib.sha256((manifest["id"] + shot["id"]).encode()).hexdigest()[:8], 16),
                       "image": None}
