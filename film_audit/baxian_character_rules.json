@@ -88,7 +88,21 @@
         "drawing",
         "drawn",
         "returning"
-      ]
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_date": "2026-11-06",
+      "approval_source": "user explicit designation BX03 吕洞宾定型 in this conversation",
+      "approved_manifest_path": "film_audit/assets/bx03_lvdongbin_approved_manifest.json",
+      "identity_lock": [
+        "深蓝金纹层叠长袍/金色腰扣/玉坠、束发簪和深蓝发带",
+        "五官/胡须/发型按批准多视角正面；对照图右侧生成图优先于左侧参考图"
+      ],
+      "prop_lock": [
+        "纯阳仙剑只一柄，剑鞘配套一件",
+        "禁用拂尘、第二把剑；已出鞘时剑鞘必须为空",
+        "剑、鞘、流苏、玉环纹样严格引用批准的剑图"
+      ],
+      "video_qa_status": "PENDING"
     },
     {
       "id": "BX04",
