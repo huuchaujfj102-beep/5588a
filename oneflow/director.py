@@ -1,12 +1,8 @@
 """Director prompt contract: seven ordered modules and user-locked asset truth."""
 import re
-from .continuity_rules import prompt_constraints, negative_constraints
+from .continuity_rules import compile_prompt
 
-NEGATIVE = (
-    "unapproved new actors or props; changed identities; extra wheels or engines; "
-    "backwards action order; inconsistent camera side; deformed anatomy/vehicle; "
-    "teleportation; duplicate characters; unreadable signs; unauthorized logos; watermarks"
-)
+NEGATIVE = "unapproved new actors or props; changed identities; unexplained action resets"
 
 
 def phase_list(brief):
@@ -17,22 +13,15 @@ def phase_list(brief):
 def film_prompt(brief, shot_focus, prior_focus, shot_no, shot_total):
     """A conservative prompt wrapper; no claim that it ensures perfect continuity."""
     parts = [
-        "1. Original image/asset lock: Original approved references, character identities, "
-        "face geometry, clothing, props, vehicle geometry, scene orientation, and aspect "
-        "ratio MUST remain unchanged. User brief is the source of truth: " + brief,
-        "2. Local micro-motion: Render only the requested physical action for this shot, "
-        "with plausible acceleration, forces and object contacts. Shot focus: " + shot_focus,
-        "3. Environment dynamics: Only environmental elements explicitly established "
-        "by the brief may move; preserve geography and object positions.",
-        "4. Single controlled camera move: One coherent deliberate camera movement, "
-        "no sudden contradictory perspective swap.",
-        "5. Lighting: Keep direction, time of day, practical lights and color consistent "
-        "with approved preceding frames.",
-        "6. Video quality: Photorealistic cinematic motion, clear frame, consistent "
-        "subject design, smooth temporal transition. Shot " + str(shot_no) + "/" +
-        str(shot_total) + ". Prior narrative phase: " + (prior_focus or "none") + ".",
-        "7. Negative constraints: " + NEGATIVE + "; " + negative_constraints(motion=True)
+        "1. Original image/asset lock: Approved identity, clothing, props and scene. "
+        "User brief is source of truth: " + brief,
+        "2. Local micro-motion: Requested action only, coherent support/contact. Shot focus: " + shot_focus,
+        "3. Environment dynamics: Preserve layout; allow requested environmental motion.",
+        "4. Single controlled camera move: Follow requested camera, including static; "
+        "default to static if unspecified; no unexplained axis reversal.",
+        "5. Lighting: Coherent sources; allow motivated time/light/view changes.",
+        "6. Video quality: Requested style, readable subjects, smooth transition. Shot " +
+        str(shot_no) + "/" + str(shot_total) + ". Prior narrative phase: " + (prior_focus or "none") + ".",
+        "7. Negative constraints: " + NEGATIVE
     ]
-    # Keep the existing seven-module contract; add missing detail in module two.
-    parts[1] += " " + prompt_constraints(brief + " " + shot_focus, motion=True)
-    return "\n".join(parts)
+    return compile_prompt("\n".join(parts), stage="video")["prompt"]

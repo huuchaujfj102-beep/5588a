@@ -3,7 +3,7 @@ import unittest
 
 from oneflow.director import film_prompt
 from oneflow.image_generation import build_prompt, prompt_from_request
-from oneflow.continuity_rules import specialist_constraints, negative_constraints
+from oneflow.continuity_rules import specialist_constraints, negative_constraints, compile_prompt
 
 
 class ContinuityRulesTests(unittest.TestCase):
@@ -32,7 +32,7 @@ class ContinuityRulesTests(unittest.TestCase):
 
     def test_existing_storyboard_path_gets_generic_structural_rules(self):
         prompt = prompt_from_request("oneflow/requests/snow-white-seven-dwarfs-60s.json", "S01")
-        self.assertIn("straight rigid parts", prompt)
+        self.assertIn("rigid parts collinear", prompt)
         self.assertIn("contradictory perspective", prompt)
 
     def test_traditional_chinese_prop_names(self):
@@ -46,6 +46,44 @@ class ContinuityRulesTests(unittest.TestCase):
             self.assertIn("preserve intentional limb differences", prompt)
             self.assertIn(brief, prompt)
         self.assertIn("duplicated soles", negative_constraints())
+
+    def test_compilation_idempotent_and_stage_modes_replace_one_block(self):
+        source = "二次元横图，招牌文字望花楼，造镜者水印，仙人瞬移"
+        once = compile_prompt(source)["prompt"]
+        self.assertEqual(once, compile_prompt(once)["prompt"])
+        video = compile_prompt(once, stage="video", separate_negative=True)
+        self.assertTrue(video["prompt"].startswith(source))
+        self.assertEqual(video["prompt"].count("[OneFlow rules v2:"), 1)
+        self.assertNotIn(" Avoid: ", video["prompt"])
+        self.assertIn("unexplained teleportation", video["negative_prompt"])
+
+    def test_budget_never_cuts_user_source_or_specialist(self):
+        source = "手持拂尘。" + "甲" * 1300
+        result = compile_prompt(source, max_chars=2048)
+        self.assertTrue(result["prompt"].startswith(source))
+        self.assertIn("hair attached at ONE end only", result["prompt"])
+        self.assertLessEqual(len(result["prompt"]), 2048)
+        with self.assertRaisesRegex(ValueError, "source not truncated"):
+            compile_prompt("甲" * 2048, max_chars=2048)
+
+    def test_carried_non_sword_and_negated_props_do_not_create_swords(self):
+        self.assertNotIn("Back sword:", specialist_constraints("铁拐李背负葫芦"))
+        self.assertEqual(specialist_constraints("不要背剑；不要花篮；without a fly-whisk"), "")
+        self.assertEqual(specialist_constraints("花篮不入镜"), "")
+        self.assertNotIn("donkey", specialist_constraints("倒骑青牛"))
+
+    def test_static_camera_and_requested_framing_are_not_overridden(self):
+        prompt = film_prompt("固定镜头、半身特写，快速挥动拂尘", "挥动", None, 1, 1)
+        self.assertIn("including static", prompt)
+        self.assertNotIn("feet without accidental cropping", prompt)
+        self.assertNotIn("Photorealistic", prompt)
+
+    def test_image_to_video_handoff_extracts_v2_source_not_rule_text(self):
+        from oneflow.handoff import original_brief
+        brief = "  吕洞宾持拂尘。固定镜头。  "
+        extracted = original_brief({"prompt": build_prompt(brief)})
+        self.assertEqual(extracted, brief)
+        self.assertNotIn("OneFlow rules", extracted)
 
 
 if __name__ == "__main__":

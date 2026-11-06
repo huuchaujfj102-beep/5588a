@@ -10,6 +10,7 @@ import tempfile
 import unittest
 
 from oneflow.handoff import HandoffError, assemble_package, digest, original_brief, plan_shots, verify_source
+from oneflow.platforms import PROFILES
 
 HAS_PIL = importlib.util.find_spec("PIL") is not None
 HAS_FFMPEG = bool(shutil.which("ffmpeg") and shutil.which("ffprobe"))
@@ -92,7 +93,7 @@ class HandoffTests(unittest.TestCase):
             self.assertEqual(doc["publisher_requests"], 0)
             self.assertEqual(doc["shots"][0]["status"], "KEYFRAME_EXISTS_REVIEW_REQUIRED")
             self.assertEqual(doc["shots"][1]["status"], "SHOT_PLANNED_NO_IMAGE")
-            self.assertEqual(len(json.loads((out / "publication_drafts.json").read_text())["profiles"]), 6)
+            self.assertEqual(set(json.loads((out / "publication_drafts.json").read_text())["profiles"]), set(PROFILES))
             self.assertIn("STATIC_PREVIEW_NO_AI_MOTION", (out / "README.txt").read_text())
             self.assertTrue((out / "wan_s01_prompt.txt").is_file())
 

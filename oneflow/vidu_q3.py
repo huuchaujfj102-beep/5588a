@@ -19,6 +19,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from .continuity_rules import compile_prompt
 
 API = "https://api.vidu.com"
 MODEL = "viduq3-pro"
@@ -171,7 +172,11 @@ def build_payload(mode, prompt, seconds, resolution, first_frame=None):
         raise ViduError("Choose Vidu Q3 Pro 540p, 720p or 1080p")
     if not isinstance(prompt, str) or not 4 <= len(prompt.strip()) <= 20000:
         raise ViduError("Provide a 4–20000 character prompt")
-    payload = {"model": MODEL, "prompt": prompt.strip(), "duration": seconds,
+    try:
+        prompt = compile_prompt(prompt, stage="video", max_chars=20000)["prompt"]
+    except ValueError as exc:
+        raise ViduError(str(exc)) from None
+    payload = {"model": MODEL, "prompt": prompt, "duration": seconds,
                "seed": 0, "resolution": resolution, "audio": True, "off_peak": False}
     if mode == "text2video":
         if first_frame:

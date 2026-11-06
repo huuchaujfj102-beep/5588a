@@ -37,6 +37,10 @@ class MuseSteamerTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
+        dns = patch("oneflow.qianfan_i2v.socket.getaddrinfo", return_value=[
+            (2, 1, 6, "", ("8.8.8.8", 443))])
+        dns.start()
+        self.addCleanup(dns.stop)
 
     def _plan(self, **kw):
         defaults = dict(
@@ -76,7 +80,11 @@ class MuseSteamerTests(unittest.TestCase):
         self.assertEqual(req.get_method(), "POST")
         payload = json.loads(req.data)
         self.assertEqual(payload["model"], MUSE_MODEL)
-        self.assertEqual(payload["content"][0], {"type": "text", "text": "车轮转动向前冲"})
+        self.assertEqual(payload["content"][0]["type"], "text")
+        self.assertIn("车轮转动向前冲", payload["content"][0]["text"])
+        from oneflow.continuity_rules import compile_prompt
+        self.assertEqual(payload["content"][0]["text"],
+                         compile_prompt("车轮转动向前冲", stage="video", max_chars=2000)["prompt"])
         self.assertEqual(payload["content"][1]["image_url"]["url"], "https://example.com/car.png")
         self.assertEqual(payload["duration"], 5)
         self.assertFalse(payload["watermark"])

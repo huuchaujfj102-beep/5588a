@@ -8,9 +8,25 @@ from pathlib import Path
 from unittest.mock import patch
 
 from oneflow import vidu_q3 as v
+from oneflow.continuity_rules import compile_prompt
 
 
 class ViduQ3Tests(unittest.TestCase):
+    def test_shared_video_rules_are_inline_and_idempotent_without_extra_fields(self):
+        brief = "吕洞宾背剑持拂尘，固定机位，衣摆轻动"
+        payload = v.build_payload("text2video", brief, 10, "720p")
+        expected = compile_prompt(brief, stage="video", max_chars=20000)["prompt"]
+        self.assertEqual(payload["prompt"], expected)
+        self.assertEqual(v.build_payload("text2video", expected, 10, "720p")["prompt"], expected)
+        self.assertIn(brief, payload["prompt"])
+        self.assertNotIn("negative_prompt", payload)
+
+    def test_final_prompt_budget_rejects_without_transport(self):
+        with patch.object(v, "api_request") as network:
+            with self.assertRaises(v.ViduError):
+                v.build_payload("text2video", "x" * 20000, 10, "720p")
+            network.assert_not_called()
+
     def test_text10_and_15(self):
         for sec in (10, 15):
             body = v.build_payload("text2video", "Supercar speeds forwards", sec, "720p")

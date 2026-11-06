@@ -12,6 +12,7 @@ import hashlib
 import ipaddress
 import json
 import os
+import re
 import shutil
 import socket
 import subprocess
@@ -27,6 +28,7 @@ from .core import (
 )
 from .platforms import make_package
 from .qianfan_media import MediaTaskError, submit, task_status
+from .continuity_rules import compile_prompt
 
 PRICES_RMB_FIVE_SECONDS = {
     "VQ2-Turbo": {"720p": 1.25},
@@ -83,21 +85,41 @@ def _image_data_uri(path):
 
 
 def build_prompt(brief):
-    """Ensure motion is unambiguous; preserve exactly the reference vehicle."""
+    """Preserve the reference and action without turning unrelated subjects into cars."""
+    if not isinstance(brief, str):
+        raise FlowError("Brief must be text")
     clean = brief.strip()
     if not 4 <= len(clean) <= 950:
         raise FlowError("Brief length must be between 4 and 950 characters")
-    return (
+    vehicle = (any(token in clean for token in
+                   ("超跑", "赛车", "汽车", "跑车", "车轮", "车辆", "轿车", "辆车")) or
+               re.search(r"\b(?:car|vehicle|supercar|hypercar|racing)\b", clean, re.I))
+    # Retain the established racing pilot only when speed is actually requested.
+    vehicle = vehicle and (any(t in clean for t in ("加速", "飞驰", "疾驰")) or
+                           re.search(r"\b(?:accelerat\w*|racing|speeding)\b", clean, re.I))
+    if any(t in clean for t in ("保持静止", "静止不动", "原地不动", "停车", "刹车", "后退", "倒车")):
+        vehicle = False
+    text = (
         "Reference lock: EXACT SAME single vehicle in source frame; preserve "
         "body geometry, wheels, headlights, paint and original camera perspective. "
         "Action happens immediately, not a still photograph: ignition, wheels "
         "physically ROTATE, the car moves FORWARD along the road, accelerates fast, "
         "background sweeps backward with visible parallax and road motion blur. "
         "One continuous cinematic tracking shot. Original brief: " + clean +
-        ". Keep motion physically coherent; no reset, no new car, no morphing, "
-        "no teleportation, no extra wheels, no new text, no jump back to start. "
-        "Do not add speech or narration."
+        ". Keep motion physically coherent; no reset, no new car, no unrequested morphing, "
+        "no unexplained teleportation, no extra wheels, no unrequested text, no jump back to start. "
+        "Do not add unrequested speech or narration."
+    ) if vehicle else (
+        "Reference lock: preserve the approved subject identities, clothing, props, "
+        "connections and scene from the source frame except the requested changes. "
+        "Perform only the original requested action, with coherent support and contact. "
+        "Original brief: " + clean +
+        ". Do not invent unrequested subjects, props or dialogue."
     )
+    try:
+        return compile_prompt(text, stage="video", max_chars=2000)["prompt"]
+    except ValueError as exc:
+        raise FlowError(str(exc)) from None
 
 
 def _fetch_video(url, path, opener=None):
@@ -269,6 +291,10 @@ def submit_once(job, *, confirm_paid=False):
         raise FlowError("This job has already attempted submission; use resume, never re-POST")
     if not confirm_paid:
         raise FlowError("No billable request without --confirm-paid")
+    # Deterministic prompt/first-frame failures are preflight failures, not an
+    # uncertain paid submission. Keep the attempt marker for the actual POST.
+    prompt = build_prompt(manifest["brief"])
+    source_frame = _source_frame(task["source"])
     # Store attempt marker BEFORE the network call: uncertainty never causes re-POST.
     task["status"] = "SUBMISSION_ATTEMPTED"
     task["consent"] = True
@@ -277,8 +303,8 @@ def submit_once(job, *, confirm_paid=False):
     save_json(root / "manifest.json", manifest)
     try:
         result = submit(
-            "video", prompt=build_prompt(manifest["brief"]), model=task["model"],
-            image_url=_source_frame(task["source"]), duration=manifest["seconds"],
+            "video", prompt=prompt, model=task["model"],
+            image_url=source_frame, duration=manifest["seconds"],
             resolution=task["resolution"], audio=(task["sound"] == "embedded"),
             allow_paid=True,
         )

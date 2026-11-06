@@ -21,6 +21,7 @@ import time
 import urllib.parse
 import urllib.request
 import urllib.error
+from .continuity_rules import compile_prompt
 
 
 IMAGE_ENDPOINT = "https://qianfan.baidubce.com/beta/image/qianfan-image-v1"
@@ -173,6 +174,11 @@ def submit(kind, *, prompt, model, image_url=None, ratio="9:16",
         raise MediaTaskError("Prompt is required")
     if ratio not in ("9:16", "16:9", "1:1"):
         raise MediaTaskError("Unsupported image aspect ratio")
+    try:
+        prompt = compile_prompt(prompt, stage=kind,
+                                max_chars=2500 if kind == "image" else 2000)["prompt"]
+    except ValueError as exc:
+        raise MediaTaskError(str(exc)) from None
     if kind == "image":
         if model not in IMAGE_MODELS or resolution not in ("1k", "2k"):
             raise MediaTaskError("Unsupported image model or resolution")

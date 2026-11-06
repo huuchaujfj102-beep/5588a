@@ -3,7 +3,7 @@
 本仓库是**可运行的基础审核框架**，将 20 个原始审核名称整合成 7 大关卡。当前版本仅自动检查字幕 SRT 时间轴、素材授权台账字段及 FFprobe 视频元数据。其余项目均为待接入的人工/模型审核门禁，**不得把待审核当作通过**。
 
 ## 7 个关卡
-生图与生视频的细分穿帮约束及专项道具检查见 [穿帮防控补充规则](docs/image-video-continuity-rules.md)。规则已接入共享生图提示词、七模块导演提示词和可选抽帧审核；它们是生成约束与审核提示，不代表自动视觉检测已完成。
+两套执行规范：[文字成图V2](docs/text-to-image-rules.md)、[图生视频V2](docs/image-to-video-rules.md)。细分穿帮约束及专项道具检查见 [穿帮防控补充规则](docs/image-video-continuity-rules.md)。规则已接入共享生图、七模块、原生千帆图片/视频、Vidu及可选抽帧审核；它们是生成约束与审核提示，不代表自动视觉检测已完成。
 
 1. 剧本与提示词：Story Audit / Continuity / Prompt Guardian
 2. 内容和版权风控：ByeRisk / BanProof AI / Asset Copyright Audit / Ad Compliance Audit

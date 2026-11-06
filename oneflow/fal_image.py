@@ -123,6 +123,8 @@ def execute(args, token=None, submit=None, download=None):
         "model": "FLUX.1-schnell",
         "provider": "fal.ai",
         "provider_endpoint": FAL_MODEL,
+        "negative_prompt_mode": "inline",
+        "negative_prompt_field_transmitted": False,
         "listed_estimate_usd": estimate_usd(args.width, args.height),
         "cost_is_estimate_not_receipt": True,
     })
