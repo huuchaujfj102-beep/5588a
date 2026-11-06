@@ -138,7 +138,21 @@
       ],
       "forbidden": [
         "多箫"
-      ]
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_source": "user explicit BX06 韩湘子定型 on 2026-11-06",
+      "approval_date": "2026-11-06",
+      "approved_manifest_path": "film_audit/assets/bx06_hanxiangzi_approved_manifest.json",
+      "identity_lock": [
+        "以用户批准白底多视角参考固定五官、黑发半束簪花与紫灰层叠古风衣袍、腰饰",
+        "保持柔和清雅的青年文士神态、同脸跨镜头一致"
+      ],
+      "prop_lock": [
+        "唯一一支紫玉横吹管乐器；紫晶管身金纹及套环、孔位、流苏、莲花和玉珠装饰按批准参考",
+        "传统箫通常竖吹；影片文本沿用‘紫玉箫’时必须保持获批横吹视觉设计，不得横吹/竖吹混用",
+        "禁止新增乐器或替换材质、孔位"
+      ],
+      "video_qa_status": "PENDING_MOUTH_FINGER_CONTACT_AND_CONTINUITY"
     },
     {
       "id": "BX07",
