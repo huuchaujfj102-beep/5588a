@@ -6,9 +6,18 @@
   "approved_by": "user",
   "approval_date": "2026-11-06",
   "approval_status": "USER_APPROVED_STILL",
-  "archive_name": "BX07_何仙姑_用户批准母图_20261106.zip",
+  "archive_name": "BX07_何仙姑_用户批准母图_主图更新版_20261106.zip",
   "binary_images_in_repository": false,
   "files": [
+    {
+      "original_filename": "1000023567.png",
+      "archive_filename": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
+      "width": 864,
+      "height": 1536,
+      "sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
+      "role": "user-approved primary cinematic hero",
+      "is_primary": true
+    },
     {
       "original_filename": "1000023533.png",
       "archive_filename": "BX07_CHARACTER_LOTUS_CINEMATIC_APPROVED.png",
@@ -43,28 +52,33 @@
     }
   ],
   "reference_priority": {
-    "character_face_hair_costume": [
+    "primary_cinematic_hero": "1000023567.png",
+    "lotus_platform_geometry": "1000023547.png",
+    "legacy_face_costume_views": [
       "1000023564.png",
       "1000023565.png"
     ],
-    "cinematic_lotus_scene": "1000023533.png",
-    "lotus_platform_geometry": "1000023547.png"
+    "legacy_cinematic": "1000023533.png"
   },
   "identity_lock": [
-    "清雅年轻女性、深色盘发、青玉簪、温柔宁静神态；五官以用户批准的白底正背/多视角参考固定",
-    "玉白/浅青绿叠层古风长裙、花卉刺绣、大袖、浅青飘带与腰结以批准图为准"
+    "优先锁定最新主图1000023567.png面部、头发和花饰、青绿玉白粉金莲花长裙及细节、主图表情与姿态；不擅自回退旧版",
+    "旧多视角仅作历史方向参考；冲突时不得直接套入同一场次，必须基于新主图同源统一后按一图一审"
   ],
   "prop_lock": [
-    "唯一巨型粉白层瓣莲台，法宝形制参考1000023547.png的金色圆形承重台面、底座、花瓣结构",
-    "双脚站在真实承重莲台台面，莲台变化必须连续，光晕可作淡金白净化防御法术",
-    "1000023533.png的后方巨莲仅作场景法相或同源视觉延伸，不作为第二座独立承托莲台"
+    "莲台只允许一座，结构参照1000023547.png，主图参照1000023567.png",
+    "角色持小型发光莲花为施法手部动作，不视为新增承托莲台",
+    "足底与莲台承重台面合理接触，动态飞行及净化特效仍待视频验证"
   ],
   "technical_scope": "User-approved still image references only. Video support, foot contact, lotus motion and spell physics are untested.",
-  "video_qa_status": "PENDING",
+  "video_qa_status": "PENDING_ACTION_CONTINUITY_QA",
   "review_caveats": [
     "多视角图为合成板，不等同于五张单独校验通过的独立视图",
     "以文件本身尺寸为准，不宣称原生8K",
     "与视频物理相关的验证必须在I2V实际生成后检查"
   ],
-  "repository_note": "PNG binary resides in downloadable archive, NOT in GitHub. GitHub only stores metadata and hashes."
+  "repository_note": "GitHub only stores reference metadata & SHA256. Original PNG is included in updated downloadable ZIP archive; not uploaded as binary to GitHub.",
+  "revision": "BX07-HERO-UPDATE-20261106-V2",
+  "approval_source_latest": "user explicit instruction: 把这张图放入Bx07做主图",
+  "primary_hero_file": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
+  "reference_conflict_policy": "The newest approved primary hero 1000023567.png takes precedence for face, hair and costume. Earlier turnaround images are historical references where they differ and must not be mixed as interchangeable footage. Geometry of lotus platform remains from approved prop structure 1000023547.png."
 }
