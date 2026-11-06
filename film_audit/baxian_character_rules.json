@@ -43,7 +43,13 @@
           "sha256": "562933ca823b2d29fbec220b05ec5797e6ec0ee33d183a4c3cb5cb14270a90f6"
         }
       ],
-      "animation_status": "PENDING_GAIT_I2V"
+      "animation_status": "PENDING_GAIT_I2V",
+      "source_authority_v2": {
+        "hero": "1000023536.png",
+        "turnaround": "1000023537.png",
+        "prop": "1000023539.png"
+      },
+      "source_map_verified_at": "2026-11-07"
     },
     {
       "id": "BX02",
@@ -70,7 +76,13 @@
         "具体叶形/叶脉/破损形状引用 BX02-FAN_STRUCTURE",
         "扇柄缠绳与流苏不可漂移"
       ],
-      "video_qa_status": "PENDING"
+      "video_qa_status": "PENDING",
+      "source_authority_v2": {
+        "hero": "1000023540.png",
+        "turnaround": "1000023549.png",
+        "prop": "1000023542.png"
+      },
+      "source_map_verified_at": "2026-11-07"
     },
     {
       "id": "BX03",
@@ -102,7 +114,13 @@
         "禁用拂尘、第二把剑；已出鞘时剑鞘必须为空",
         "剑、鞘、流苏、玉环纹样严格引用批准的剑图"
       ],
-      "video_qa_status": "PENDING"
+      "video_qa_status": "PENDING",
+      "source_authority_v2": {
+        "hero": "1000023555.png",
+        "turnaround": "1000023559.png",
+        "prop": "1000023543.png"
+      },
+      "source_map_verified_at": "2026-11-07"
     },
     {
       "id": "BX04",
@@ -120,10 +138,16 @@
       "approval_date": "2026-11-06",
       "approved_group_reference_file": "1000023554.png",
       "character_and_prop_locks": [
-        "清朗少年男性，原脸/发带/浅蓝碎花衣袍固定",
-        "唯一七宝藤编花篮，花材和挂件按用户批准原图"
+        "少年男性浅蓝花纹袍服，身份1000023554.png",
+        "唯一花篮道具=1000023544.png，非白仙驴"
       ],
-      "video_qa_status": "PENDING"
+      "video_qa_status": "PENDING",
+      "source_authority_v2": {
+        "hero": "1000023554.png",
+        "turnaround": "1000023562.png",
+        "prop": "1000023544.png"
+      },
+      "source_map_verified_at": "2026-11-07"
     },
     {
       "id": "BX05",
@@ -143,12 +167,17 @@
       "approval_date": "2026-11-06",
       "approved_group_reference_file": "1000023552.png",
       "character_and_prop_locks": [
-        "白发老者、褐色旧袍以批准多视角为准",
-        "唯一白仙驴，张果老倒骑，驴的耳朵/长毛/鞍铃统一",
-        "禁止小鼓与正骑"
+        "白发白须老者褐灰袍；正确多视角1000023558.png",
+        "白仙驴道具1000023545.png，仅一头，倒骑姿态；禁用鼓、禁正骑、禁灰驴"
       ],
       "video_qa_status": "PENDING",
-      "group_riding_constraint": "场景内必须后向倒骑白仙驴，身体朝驴尾，四肢、骑坐接触真实；旧横版站在驴旁构图不能直接批准"
+      "group_riding_constraint": "场景内必须后向倒骑白仙驴，身体朝驴尾，四肢、骑坐接触真实；旧横版站在驴旁构图不能直接批准",
+      "source_authority_v2": {
+        "hero": "1000023552.png",
+        "turnaround": "1000023558.png",
+        "prop": "1000023545.png"
+      },
+      "source_map_verified_at": "2026-11-07"
     },
     {
       "id": "BX06",
@@ -172,7 +201,13 @@
         "传统箫通常竖吹；影片文本沿用‘紫玉箫’时必须保持获批横吹视觉设计，不得横吹/竖吹混用",
         "禁止新增乐器或替换材质、孔位"
       ],
-      "video_qa_status": "PENDING_MOUTH_FINGER_CONTACT_AND_CONTINUITY"
+      "video_qa_status": "PENDING_MOUTH_FINGER_CONTACT_AND_CONTINUITY",
+      "source_authority_v2": {
+        "hero": "1000023556.png",
+        "turnaround": "1000023563.png",
+        "prop": "1000023546.png"
+      },
+      "source_map_verified_at": "2026-11-07"
     },
     {
       "id": "BX07",
@@ -229,7 +264,13 @@
         "1000023573.png SUPPLEMENT_FRONT_BACK",
         "1000023547.png APPROVED_LOTUS_PLATFORM_GEOMETRY",
         "OLDER_TURNAROUND_LEGACY_ONLY"
-      ]
+      ],
+      "source_authority_v2": {
+        "hero": "1000023567.png",
+        "turnaround": "1000023574.png",
+        "prop": "1000023547.png"
+      },
+      "source_map_verified_at": "2026-11-07"
     },
     {
       "id": "BX08",
@@ -246,11 +287,17 @@
       "approval_date": "2026-11-06",
       "approved_group_reference_file": "1000023557.png",
       "character_and_prop_locks": [
-        "成熟男性官式发冠，红褐官袍和金纹腰佩固定",
-        "一套两片白绿矩形阴阳玉板，非圆盘，数量与纹样不变"
+        "赤褐官袍、冠、胡须，正确多视角1000023566.png",
+        "阴阳双玉板1000023548.png，白玉与青绿玉各一片；禁圆扇和额外玉板"
       ],
       "video_qa_status": "PENDING",
-      "group_jade_constraint": "老版群像圆形太极盘错误；必须一对独立白绿矩形阴阳玉板，主图批准形制优先"
+      "group_jade_constraint": "老版群像圆形太极盘错误；必须一对独立白绿矩形阴阳玉板，主图批准形制优先",
+      "source_authority_v2": {
+        "hero": "1000023557.png",
+        "turnaround": "1000023566.png",
+        "prop": "1000023548.png"
+      },
+      "source_map_verified_at": "2026-11-07"
     }
   ],
   "hard_fail": [
@@ -290,5 +337,7 @@
       }
     ],
     "approval_gate": "USER_FINAL_APPROVAL_REQUIRED_BEFORE_REPLACEMENT"
-  }
+  },
+  "source_authority_v2_path": "film_audit/assets/baxian_source_authority_v2_20261107.json",
+  "source_mapping_regression_gate": "New group images must check 8 IDs and unique role-specific prop reference names against source_authority_v2 before generation and after output; rejected group cannot become official."
 }
