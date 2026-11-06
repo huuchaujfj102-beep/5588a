@@ -55,7 +55,22 @@
       ],
       "forbidden": [
         "双扇"
-      ]
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_date": "2026-11-06",
+      "approval_source": "user_explicit_confirmation_current_conversation",
+      "approved_manifest_path": "film_audit/assets/bx02_hanzhongli_approved_manifest.json",
+      "identity_lock": [
+        "user-approved face and facial hair",
+        "袒腹、宽袍、大笑",
+        "体型、服饰裁片和纹样以 BX02 批准图为准"
+      ],
+      "prop_lock": [
+        "唯一巨型芭蕉叶扇",
+        "具体叶形/叶脉/破损形状引用 BX02-FAN_STRUCTURE",
+        "扇柄缠绳与流苏不可漂移"
+      ],
+      "video_qa_status": "PENDING"
     },
     {
       "id": "BX03",
@@ -144,5 +159,6 @@
     "unexplained_spatial_flip"
   ],
   "visual_validation_required": true,
-  "note": "BX01 user-approved static source only; all other character assets remain unapproved. Actual PNG binary files not in repository."
+  "note": "BX01 user-approved static source only; all other character assets remain unapproved. Actual PNG binary files not in repository.",
+  "registry_notes": "单角色静态用户批准不代表视觉自动检测或动态视频验证完成，未批准角色保持原有审核状态。"
 }
