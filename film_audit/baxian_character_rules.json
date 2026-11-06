@@ -169,15 +169,19 @@
       "approval_date": "2026-11-06",
       "approved_manifest_path": "film_audit/assets/bx07_hexiangu_approved_manifest.json",
       "identity_lock": [
-        "以批准白底人物正背/多视角为相貌、发髻、玉簪、玉白浅青绿长裙及花卉绣纹唯一身份参考",
-        "电影主图仅用于莲台场景光影、人物情绪与法术展示"
+        "最新用户批准主图1000023567.png为首要身份、发型、面部、服饰及电影气质基准",
+        "旧多视角、旧主视觉保留为历史角度参考；冲突时最新主图优先，不能混用成同一角色跨镜头"
       ],
       "prop_lock": [
-        "仅一座大型莲台，莲瓣层级、金色承重台面及座体严格以批准法宝图为准",
-        "主视觉背后巨型莲花为同源法相，不得生成为第二座独立承重莲台",
-        "双脚须真实接触承重台面，禁止穿模/悬空，防御净化法术按状态连续"
+        "莲台唯一；结构参照已批准1000023547.png，新的主图1000023567.png定义人物与莲台同框姿态",
+        "手持发光莲花为施法道具/光效，不是第二座莲台；脚在莲台承重面上",
+        "动态莲台承托与水浪互动仍待图生视频物理验证"
       ],
-      "video_qa_status": "PENDING_LOTUS_SUPPORT_AND_VFX_CONTINUITY"
+      "video_qa_status": "PENDING_LOTUS_SUPPORT_AND_VFX_CONTINUITY",
+      "primary_hero_file": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
+      "primary_hero_source": "1000023567.png",
+      "primary_hero_sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
+      "primary_hero_lock_version": "BX07-HERO-UPDATE-20261106-V2"
     },
     {
       "id": "BX08",
