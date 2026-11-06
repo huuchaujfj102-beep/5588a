@@ -1,0 +1,109 @@
+{
+  "project": "八仙过海·沧海证道",
+  "date": "2026-11-07",
+  "version": "SOURCE_AUTHORITY_2",
+  "scope": "user-approved static source identity, not image quality signoff",
+  "priority": "This mapping supersedes previously incorrect role/file references on same review branch. Approved originals remain immutable.",
+  "asset_rows": [
+    {
+      "id": "BX01",
+      "name": "铁拐李",
+      "hero": "1000023536.png",
+      "turnaround": "1000023537.png",
+      "prop": "1000023539.png"
+    },
+    {
+      "id": "BX02",
+      "name": "汉钟离",
+      "hero": "1000023540.png",
+      "turnaround": "1000023549.png",
+      "prop": "1000023542.png"
+    },
+    {
+      "id": "BX03",
+      "name": "吕洞宾",
+      "hero": "1000023555.png",
+      "turnaround": "1000023559.png",
+      "prop": "1000023543.png"
+    },
+    {
+      "id": "BX04",
+      "name": "蓝采和",
+      "hero": "1000023554.png",
+      "turnaround": "1000023562.png",
+      "prop": "1000023544.png"
+    },
+    {
+      "id": "BX05",
+      "name": "张果老",
+      "hero": "1000023552.png",
+      "turnaround": "1000023558.png",
+      "prop": "1000023545.png"
+    },
+    {
+      "id": "BX06",
+      "name": "韩湘子",
+      "hero": "1000023556.png",
+      "turnaround": "1000023563.png",
+      "prop": "1000023546.png"
+    },
+    {
+      "id": "BX07",
+      "name": "何仙姑",
+      "hero": "1000023567.png",
+      "turnaround": "1000023574.png",
+      "prop": "1000023547.png"
+    },
+    {
+      "id": "BX08",
+      "name": "曹国舅",
+      "hero": "1000023557.png",
+      "turnaround": "1000023566.png",
+      "prop": "1000023548.png"
+    }
+  ],
+  "additional_files": {
+    "BX02": [
+      "1000023551.png"
+    ],
+    "BX03": [
+      "1000023560.png"
+    ],
+    "BX07": [
+      "1000023573.png",
+      "1000023564.png",
+      "1000023565.png",
+      "1000023533.png"
+    ]
+  },
+  "reference_lock": {
+    "BX01": "one iron crutch and gourd, limp foot",
+    "BX02": "ONE damaged giant banana-leaf fan; not a round folding fan",
+    "BX03": "ONE Pure Yang sword and matched sheath; no whisk",
+    "BX04": "juvenile male, ONE wicker flower basket",
+    "BX05": "old man backwards-facing on ONE WHITE donkey; no drum",
+    "BX06": "one approved purple transverse flute in image even if screenplay calls it Xiao",
+    "BX07": "latest 1000023567 hero + new 3574/3573 views; ONE lotus platform; new views remain pending final signoff",
+    "BX08": "one set of TWO rectangular white-and-green jade boards"
+  },
+  "known_historical_index_errors": [
+    {
+      "wrong": "BX04 prop=1000023545.png",
+      "correct": "BX04 prop=1000023544.png"
+    },
+    {
+      "wrong": "BX05 view=1000023566.png",
+      "correct": "BX05 view=1000023558.png"
+    },
+    {
+      "wrong": "BX05 prop=1000023553.png",
+      "correct": "BX05 donkey=1000023545.png"
+    },
+    {
+      "wrong": "BX08 view=1000023558.png",
+      "correct": "BX08 view=1000023566.png"
+    }
+  ],
+  "github_scope": "Index and rules only; PNG originals are in user-uploaded conversation files and downloadable package, not committed as binary images",
+  "approval_gate": "The user's 8-character original still references stay approved. New composite/group and replacement images are candidates requiring final user review."
+}
