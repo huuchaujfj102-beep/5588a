@@ -1,5 +1,6 @@
 """Director prompt contract: seven ordered modules and user-locked asset truth."""
 import re
+from .continuity_rules import prompt_constraints, negative_constraints
 
 NEGATIVE = (
     "unapproved new actors or props; changed identities; extra wheels or engines; "
@@ -30,6 +31,8 @@ def film_prompt(brief, shot_focus, prior_focus, shot_no, shot_total):
         "6. Video quality: Photorealistic cinematic motion, clear frame, consistent "
         "subject design, smooth temporal transition. Shot " + str(shot_no) + "/" +
         str(shot_total) + ". Prior narrative phase: " + (prior_focus or "none") + ".",
-        "7. Negative constraints: " + NEGATIVE
+        "7. Negative constraints: " + NEGATIVE + "; " + negative_constraints(motion=True)
     ]
+    # Keep the existing seven-module contract; add missing detail in module two.
+    parts[1] += " " + prompt_constraints(brief + " " + shot_focus, motion=True)
     return "\n".join(parts)

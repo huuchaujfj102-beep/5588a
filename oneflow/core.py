@@ -20,6 +20,7 @@ from urllib.parse import urlencode
 from .providers import ProviderError, exchange, generate, json_call, ollama_shots, endpoint
 from .router import RoutingError, route, preflight
 from .director import film_prompt, phase_list
+from .continuity_rules import negative_constraints
 from .qianfan import storyboard as qianfan_shots
 from .platforms import make_package
 
@@ -333,7 +334,7 @@ def produce(job, cfg):
         previous = None
         for shot in manifest["shots"]:
             values = {"prompt": shot["visual_prompt"], "negative_prompt":
-                      "identity drift, continuity errors, extra characters, physical impossibilities, watermark",
+                      "identity drift, continuity errors, extra characters, watermark, " + negative_constraints(motion=True),
                       "seconds": shot["seconds"],
                       "seed": int(hashlib.sha256((manifest["id"] + shot["id"]).encode()).hexdigest()[:8], 16),
                       "image": None}

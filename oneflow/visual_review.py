@@ -5,6 +5,7 @@ import subprocess
 from pathlib import Path
 
 from .providers import json_call, endpoint, ProviderError
+from .continuity_rules import REVIEW_CHECKLIST
 
 
 class VisualReviewError(ValueError):
@@ -71,7 +72,8 @@ def inspect(root, manifest, cfg):
             "Compare visible identity, number of objects, vehicle structure, text, time-of-day, "
             "lighting and approximate motion plausibility against the stated shot brief. "
             "Give only supported issues; if unsure list uncertainty. "
-            "Never say quality/rights/physics/lip-sync are certified. "
+            "Never say quality/rights/physics/lip-sync are certified. " +
+            REVIEW_CHECKLIST + " " +
             "Return JSON only: "
             '{"findings":[{"severity":"warning","description":"..."}],"uncertainties":["..."]}' +
             "\nBrief: " + manifest["brief"][:2500] +

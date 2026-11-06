@@ -11,11 +11,13 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from .continuity_rules import prompt_constraints, negative_constraints
 
 MODEL = "black-forest-labs/FLUX.1-schnell"
 SHOT = re.compile(r"S(0[1-9]|1[0-2])\Z")
 MODEL_LICENSE = "Apache-2.0 (FLUX.1-schnell checkpoint; review upstream terms)"
-NEGATIVE = "Disney animated design, cartoon, extra actors, duplicate subjects, changed costume, distorted hands, watermark, caption, text, logo"
+NEGATIVE = ("Disney animated design, cartoon, extra actors, duplicate subjects, changed costume, distorted hands, watermark, caption, text, logo, "
+            + negative_constraints())
 
 
 class ImageFlowError(ValueError):
@@ -71,7 +73,8 @@ def prompt_from_request(path, shot_id):
         "in this shot. Character design and wardrobe fixed: " + locked + "\n"
         "2. STILL ACTION: decisive moment in shot; " + shot["visual"] +
         ". Motions implied, not multiple poses: " + shot["motion"] + "\n"
-        "3. ENVIRONMENT: use only explicitly described scene details.\n"
+        "3. ENVIRONMENT: use only explicitly described scene details. " +
+        prompt_constraints(shot["visual"]) + "\n"
         "4. CAMERA: a single stable still frame at: " + shot["camera"] + "\n"
         "5. LIGHTING: physically coherent natural/practical film lighting.\n"
         "6. QUALITY: cinematic live-action fantasy photography, sharp believable details, "
@@ -89,7 +92,8 @@ def build_prompt(brief=None, request_file=None, shot_id="S01"):
         "One single 9:16 photorealistic cinematic still image, intended as an "
         "approved first frame for image-to-video. User brief: " + brief.strip() +
         ". One moment, stable subjects and props, physically plausible composition. "
-        "No captions, logos, watermarks, anatomical mutations or duplicate characters."
+        "No captions, logos, watermarks, anatomical mutations or duplicate characters. " +
+        prompt_constraints(brief)
     )
 
 
