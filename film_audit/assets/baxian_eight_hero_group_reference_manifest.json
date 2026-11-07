@@ -47,12 +47,15 @@
     {
       "id": "BX05",
       "name": "张果老",
-      "filename": "1000023552.png",
-      "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
-      "prop": "唯一白仙驴、倒骑",
-      "source": "user-approved in conversation",
-      "static_status": "USER_APPROVED_STILL",
-      "video_status": "PENDING"
+      "filename": null,
+      "sha256": null,
+      "prop": "唯一白仙驴倒骑＋唯一斑点竹筒鱼鼓（两细杆、贴身斜抱）",
+      "source": "film_audit/assets/bx05_zhangguolao_user_lock_v4_20261107.json",
+      "static_status": "USER_APPROVED_DESIGN_LOCK_HERO_BINDING_PENDING",
+      "video_status": "PENDING",
+      "legacy_filename": "1000023552.png",
+      "legacy_sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
+      "lock_version": "BX05-USER-LOCK-20261107-V4"
     },
     {
       "id": "BX06",
@@ -107,7 +110,7 @@
     "eight characters exactly once, white donkey not a ninth immortal",
     "only approved faces and costumes; BX07 latest main frame 1000023567.png",
     "role-specific unique props and state transitions, BX05 backwards riding",
-    "no extra fan, sword, lotus platform, jade boards, or musical instrument",
+    "no extra fan, sword, lotus platform, jade boards, or musical instrument; BX05 approved yugu is required and belongs only to BX05",
     "all new group/sea/battle images must go through P0/P1/P2 QC and explicit user final approval"
   ],
   "image_binary_on_github": false,

@@ -38,7 +38,9 @@
       "name": "张果老",
       "hero": "1000023552.png",
       "turnaround": "1000023558.png",
-      "prop": "1000023545.png"
+      "prop": "1000023545.png",
+      "source_status": "LEGACY_TRACEABILITY_ONLY_V4_HERO_BINDING_PENDING",
+      "current_lock_version": "BX05-USER-LOCK-20261107-V4"
     },
     {
       "id": "BX06",
@@ -81,7 +83,7 @@
     "BX02": "ONE damaged giant banana-leaf fan; not a round folding fan",
     "BX03": "ONE Pure Yang sword and matched sheath; no whisk",
     "BX04": "juvenile male, ONE wicker flower basket",
-    "BX05": "old man backwards-facing on ONE WHITE donkey; no drum",
+    "BX05": "V4 latest approved face/white hair/long beard/wardrobe; backwards-facing on ONE WHITE donkey; ONE spotted bamboo yugu with TWO thin rods, cradled close to torso. Exact V4 hero bytes pending; old mappings are traceability only.",
     "BX06": "one approved purple transverse flute in image even if screenplay calls it Xiao",
     "BX07": "latest 1000023567 hero + new 3574/3573 views; ONE lotus platform; new views remain pending final signoff",
     "BX08": "one set of TWO rectangular white-and-green jade boards"
@@ -105,7 +107,7 @@
     }
   ],
   "github_scope": "Index and rules only; PNG originals are in user-uploaded conversation files and downloadable package, not committed as binary images",
-  "approval_gate": "The user's 8-character original still references stay approved. New composite/group and replacement images are candidates requiring final user review.",
+  "approval_gate": "The user's 8-character original still references stay approved. New composite/group and replacement images are candidates requiring final user review. BX05 V4 design approval is recorded separately from exact hero binary binding; block V4 production until binding and reference hash verification.",
   "file_hashes": [
     {
       "id": "BX01",
@@ -268,8 +270,56 @@
       "role": "prop",
       "filename": "1000023548.png",
       "sha256": "6224396ee277e3820b41cf5aff5ed135e0afcc9b503bb47a8539e2d664adc485"
+    },
+    {
+      "id": "BX05",
+      "role": "holding_pose_reference",
+      "filename": "t01afa88d400b0bf3c8.jpg",
+      "sha256": "d964817edb6c00e0036a10656ed19ca683db833b93940e73ba427a9bbc91a2a7",
+      "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
+      "binary_on_github": false
+    },
+    {
+      "id": "BX05",
+      "role": "yugu_structure_reference",
+      "filename": "image(2).png",
+      "sha256": "51992887a8bae028e6d1bd156619d7c906a59e146aa0627d4e570999f4e7b7b8",
+      "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
+      "binary_on_github": false
     }
   ],
   "hash_algorithm": "SHA-256",
-  "total_verified_static_files": 27
+  "total_verified_static_files": 27,
+  "character_locks": {
+    "BX05": {
+      "lock_version": "BX05-USER-LOCK-20261107-V4",
+      "approval_status": "USER_APPROVED_DESIGN_LOCK",
+      "manifest_path": "film_audit/assets/bx05_zhangguolao_user_lock_v4_20261107.json",
+      "current_hero": {
+        "filename": null,
+        "sha256": null,
+        "binding_status": "PENDING_EXACT_APPROVED_HERO_BYTES",
+        "binary_on_github": false,
+        "visual_qa_status": "NOT_PERFORMED_ON_REPLACEMENT_HERO"
+      },
+      "references": [
+        {
+          "id": "BX05",
+          "role": "holding_pose_reference",
+          "filename": "t01afa88d400b0bf3c8.jpg",
+          "sha256": "d964817edb6c00e0036a10656ed19ca683db833b93940e73ba427a9bbc91a2a7",
+          "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
+          "binary_on_github": false
+        },
+        {
+          "id": "BX05",
+          "role": "yugu_structure_reference",
+          "filename": "image(2).png",
+          "sha256": "51992887a8bae028e6d1bd156619d7c906a59e146aa0627d4e570999f4e7b7b8",
+          "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
+          "binary_on_github": false
+        }
+      ]
+    }
+  }
 }

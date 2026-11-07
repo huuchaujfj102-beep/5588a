@@ -1,0 +1,87 @@
+{
+  "id": "BX05",
+  "name": "张果老",
+  "lock_version": "BX05-USER-LOCK-20261107-V4",
+  "approval_date": "2026-11-07",
+  "approval_status": "USER_APPROVED_DESIGN_LOCK",
+  "approval_evidence": {
+    "conversation_id": "6aed72b5-9d78-83ec-8e9a-10ef628744b5",
+    "turn_id": "e7c4a2b4-9b94-476d-8938-94559c2b2732",
+    "user_quote": "可以写入张果老人物定型",
+    "scope": "Latest explicitly confirmed BX05 design, including approved yugu; this does not identify or verify unavailable replacement hero bytes."
+  },
+  "locked_attributes": {
+    "face": "保留最新确认角色图的五官、白发长须与神态，不重新设计",
+    "wardrobe": "保留最新确认角色图的服装、裁片、纹样、颜色与配饰",
+    "mount": "唯一白仙驴，身体朝驴尾倒骑；驴耳、四蹄、毛色、鞍具与真实骑坐接触保持一致",
+    "yugu": "唯一斑点竹筒鱼鼓、两根细竹杆，贴身斜抱；筒体依靠前臂/臂弯承托，手与法器接触自然，按姿态参考核验"
+  },
+  "yugu": {
+    "owner": "BX05",
+    "bamboo_tube_count": 1,
+    "bamboo_rod_count": 2,
+    "material": "spotted_bamboo",
+    "holding_pose": "close_to_torso_cradled_diagonal"
+  },
+  "references": [
+    {
+      "id": "BX05",
+      "role": "holding_pose_reference",
+      "filename": "t01afa88d400b0bf3c8.jpg",
+      "sha256": "d964817edb6c00e0036a10656ed19ca683db833b93940e73ba427a9bbc91a2a7",
+      "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
+      "binary_on_github": false
+    },
+    {
+      "id": "BX05",
+      "role": "yugu_structure_reference",
+      "filename": "image(2).png",
+      "sha256": "51992887a8bae028e6d1bd156619d7c906a59e146aa0627d4e570999f4e7b7b8",
+      "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
+      "binary_on_github": false
+    }
+  ],
+  "current_hero": {
+    "filename": null,
+    "sha256": null,
+    "binding_status": "PENDING_EXACT_APPROVED_HERO_BYTES",
+    "binary_on_github": false,
+    "visual_qa_status": "NOT_PERFORMED_ON_REPLACEMENT_HERO"
+  },
+  "legacy_sources": [
+    {
+      "id": "BX05",
+      "role": "hero",
+      "filename": "1000023552.png",
+      "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199"
+    },
+    {
+      "id": "BX05",
+      "role": "views",
+      "filename": "1000023558.png",
+      "sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6"
+    },
+    {
+      "id": "BX05",
+      "role": "prop",
+      "filename": "1000023545.png",
+      "sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64"
+    }
+  ],
+  "mapping_audit": {
+    "base_commit": "86102a2078b28f13ee57eaba52d5b038c8ef0ecd",
+    "status": "REGISTRY_MAPPING_AND_HASH_CROSSCHECKED_ONLY",
+    "originals_rehashed": false,
+    "note": "Legacy PNG binaries are absent from the repository. Existing registered hashes retained verbatim; only the two accessible reference attachments were rehashed."
+  },
+  "supersedes": "Earlier blanket ban on drums/no-drum for BX05 only. Approved yugu is required; small round drums, hand drums and other substitutes remain forbidden.",
+  "source_priority": [
+    "V4 exact approved hero once bound",
+    "V4 yugu structure and holding references",
+    "legacy sources for traceability only; never silently use as V4 hero"
+  ],
+  "immutable_originals": true,
+  "group_approval_status": "PENDING_SEPARATE_VISUAL_QA_AND_USER_APPROVAL",
+  "video_qa_status": "PENDING",
+  "github_scope": "Rules and metadata only; no replacement hero or reference binaries uploaded."
+}

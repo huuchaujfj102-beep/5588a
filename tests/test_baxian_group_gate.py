@@ -71,6 +71,27 @@ class BaxianGroupGateTests(unittest.TestCase):
             actor["locked_layers"] = layers
             self.plan["actors"].append(actor)
 
+        # Synthetic V4 binding is test data, never a claim about production PNGs.
+        aid = "BX05"
+        actor = next(a for a in self.plan["actors"] if a["id"] == aid)
+        version = self.policy["character_lock_versions"][aid]
+        hero = "BX05_v4_synthetic_hero.png"
+        checksum = self.put_png(hero)
+        self.authority["file_hashes"].append(
+            {"id": aid, "role": "current_hero", "filename": hero, "sha256": checksum})
+        references = []
+        for role in ("holding_pose_reference", "yugu_structure_reference"):
+            name = aid + "_" + role + ".png"
+            references.append({"role": role, "filename": name, "sha256": self.put_png(name)})
+            actor["sources"][role] = name
+        self.authority["character_locks"] = {aid: {
+            "lock_version": version, "approval_status": "USER_APPROVED_DESIGN_LOCK",
+            "current_hero": {"filename": hero, "sha256": checksum,
+                             "binding_status": "BOUND_TO_USER_APPROVED_BYTES"},
+            "references": references}}
+        actor.update(lock_version=version, prop_details=copy.deepcopy(self.policy["prop_details"][aid]))
+        actor["sources"]["current_hero"] = hero
+
     def put_png(self, name, color=6):
         p = self.root / name
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -89,6 +110,67 @@ class BaxianGroupGateTests(unittest.TestCase):
         self.assertEqual(result["status"], "PREFLIGHT_PASS")
         self.assertTrue(result["may_generate"])
         self.assertFalse(result["may_merge_final_or_start_i2v"])
+
+    def test_v4_design_approval_without_exact_hero_binding_blocks(self):
+        self.authority["character_locks"]["BX05"]["current_hero"] = {
+            "filename": None, "sha256": None,
+            "binding_status": "PENDING_EXACT_APPROVED_HERO_BYTES"}
+        for phase in ("preflight", "postflight"):
+            result = self.result(phase)
+            self.assertIn("CURRENT_APPROVED_HERO_UNBOUND", self.codes(result))
+            self.assertFalse(result["may_generate"])
+            self.assertFalse(result["may_submit_to_user"])
+
+    def test_legacy_or_reference_cannot_be_relabelled_as_v4_hero(self):
+        lock = self.authority["character_locks"]["BX05"]
+        for filename in ("BX05_hero.png", lock["references"][0]["filename"]):
+            checksum = hashlib.sha256((self.root / filename).read_bytes()).hexdigest()
+            lock["current_hero"].update(filename=filename, sha256=checksum)
+            self.authority["file_hashes"].append(
+                {"id": "BX05", "role": "current_hero", "filename": filename, "sha256": checksum})
+            self.assertIn("CURRENT_APPROVED_HERO_UNBOUND", self.codes(self.result()))
+
+    def test_missing_or_stale_lock_blocks(self):
+        actor = next(a for a in self.plan["actors"] if a["id"] == "BX05")
+        actor.pop("lock_version")
+        self.assertIn("CHARACTER_LOCK_DRIFT", self.codes(self.result()))
+        self.authority.pop("character_locks")
+        self.assertIn("CURRENT_APPROVED_HERO_UNBOUND", self.codes(self.result()))
+
+    def test_yugu_missing_duplicated_or_owned_by_other_actor_blocks(self):
+        actor = next(a for a in self.plan["actors"] if a["id"] == "BX05")
+        yugu = actor["props"].pop()
+        self.assertIn("PROP_OWNER_OR_COUNT", self.codes(self.result()))
+        actor["props"].extend([yugu, yugu])
+        self.assertIn("PROP_OWNER_OR_COUNT", self.codes(self.result()))
+        actor["props"].pop()
+        self.plan["actors"][0]["props"].append(yugu)
+        self.assertIn("PROP_OWNER_OR_COUNT", self.codes(self.result()))
+
+    def test_yugu_shape_rod_count_and_holding_are_required(self):
+        actor = next(a for a in self.plan["actors"] if a["id"] == "BX05")
+        for field, value in (("bamboo_rod_count", 1), ("bamboo_tube_count", 2),
+                             ("material", "round_hand_drum"),
+                             ("holding_pose", "floating"), ("owner", "BX04")):
+            with self.subTest(field=field):
+                actor["prop_details"] = copy.deepcopy(self.policy["prop_details"]["BX05"])
+                actor["prop_details"]["yugu"][field] = value
+                self.assertIn("PROP_STRUCTURE_OR_HOLDING_DRIFT", self.codes(self.result()))
+
+    def test_yugu_reference_and_current_hero_hashes_checked(self):
+        lock = self.authority["character_locks"]["BX05"]
+        for filename in (lock["current_hero"]["filename"], lock["references"][1]["filename"]):
+            original = (self.root / filename).read_bytes()
+            (self.root / filename).write_bytes(b"tampered")
+            self.assertIn("HASH_MISMATCH", self.codes(self.result()))
+            (self.root / filename).write_bytes(original)
+        lock["references"] = []
+        self.assertIn("LOCK_REFERENCES_MISSING", self.codes(self.result()))
+
+    def test_yugu_failed_manual_review_blocks(self):
+        self.plan["review"].update(p0_count=0, p1_count=0,
+            actor_checks={"BX05": {"yugu_holding_contact": "FAIL"}})
+        self.assertIn("ACTOR_REVIEW_FAILED", self.codes(self.result("postflight")))
 
     def test_wrong_prop_ownership_blocks(self):
         actor = next(a for a in self.plan["actors"] if a["id"] == "BX04")
@@ -159,6 +241,7 @@ class BaxianGroupGateTests(unittest.TestCase):
             self.put_png(name)
             self.plan["review"].setdefault("actor_checks", {})[aid] = {
                 **{k: "PASS" for k in self.policy["per_actor_review_required"]},
+                **{k: "PASS" for k in self.policy.get("per_actor_extra_review_required", {}).get(aid, [])},
                 "evidence_file": name,
             }
         result = self.result("postflight")

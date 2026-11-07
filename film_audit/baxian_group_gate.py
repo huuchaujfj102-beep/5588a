@@ -136,6 +136,44 @@ def validate(plan: dict, authority: dict, policy: dict, root: Path,
         sources = actor.get("sources", {})
         if not isinstance(sources, dict):
             sources = {}
+        # Design approval is separate from an exact approved hero byte binding.
+        # Policy requires the lock even if a caller drops it from authority/plan.
+        version = policy.get("character_lock_versions", {}).get(aid)
+        if version:
+            lock = authority.get("character_locks", {}).get(aid, {})
+            if (lock.get("lock_version") != version
+                    or actor.get("lock_version") != version
+                    or lock.get("approval_status") != "USER_APPROVED_DESIGN_LOCK"):
+                errors.append({"code": "CHARACTER_LOCK_DRIFT", "id": aid})
+            hero = lock.get("current_hero", {})
+            filename, checksum = hero.get("filename"), hero.get("sha256")
+            registered = [r for r in authority.get("file_hashes", [])
+                          if r.get("id") == aid and r.get("role") == "current_hero"
+                          and r.get("filename") == filename and r.get("sha256") == checksum]
+            legacy_names = {canonical[k] for k in ("hero", "turnaround", "prop")}
+            reference_names = {r.get("filename") for r in lock.get("references", [])}
+            if (hero.get("binding_status") != "BOUND_TO_USER_APPROVED_BYTES"
+                    or not filename or not checksum or not registered
+                    or filename in legacy_names | reference_names):
+                errors.append({"code": "CURRENT_APPROVED_HERO_UNBOUND", "id": aid})
+            else:
+                if sources.get("current_hero") != filename:
+                    errors.append({"code": "SOURCE_BINDING_DRIFT", "id": aid,
+                                   "role": "current_hero"})
+                _match_hash(root, filename, checksum, errors, aid + " current approved hero")
+            references = lock.get("references", [])
+            if {r.get("role") for r in references} != set(
+                    policy.get("character_reference_roles", {}).get(aid, [])):
+                errors.append({"code": "LOCK_REFERENCES_MISSING", "id": aid})
+            for reference in references:
+                if sources.get(reference["role"]) != reference["filename"]:
+                    errors.append({"code": "SOURCE_BINDING_DRIFT", "id": aid,
+                                   "role": reference["role"]})
+                _match_hash(root, reference["filename"], reference.get("sha256"),
+                            errors, aid + " " + reference["role"])
+            expected_details = policy.get("prop_details", {}).get(aid)
+            if actor.get("prop_details") != expected_details:
+                errors.append({"code": "PROP_STRUCTURE_OR_HOLDING_DRIFT", "id": aid})
         for role, key in (("hero", "hero"), ("views", "turnaround"), ("prop", "prop")):
             filename = canonical[key]
             if sources.get(role) != filename:
@@ -205,7 +243,9 @@ def validate(plan: dict, authority: dict, policy: dict, root: Path,
             if not isinstance(entry, dict):
                 entry = {}
             actor_pass = True
-            for field in policy.get("per_actor_review_required", []):
+            fields = (policy.get("per_actor_review_required", [])
+                      + policy.get("per_actor_extra_review_required", {}).get(aid, []))
+            for field in fields:
                 state = entry.get(field)
                 if state == "FAIL":
                     errors.append({"code": "ACTOR_REVIEW_FAILED", "id": aid, "item": field})

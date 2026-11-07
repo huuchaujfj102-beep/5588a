@@ -76,7 +76,8 @@
       "seven_treasure_flower_basket"
     ],
     "BX05": [
-      "single_white_donkey"
+      "single_white_donkey",
+      "single_spotted_bamboo_yugu_two_thin_rods"
     ],
     "BX06": [
       "single_purple_transverse_flute"
@@ -146,5 +147,29 @@
     "prop_shape_count",
     "anatomy",
     "ground_contact"
-  ]
+  ],
+  "character_lock_versions": {
+    "BX05": "BX05-USER-LOCK-20261107-V4"
+  },
+  "character_reference_roles": {
+    "BX05": ["holding_pose_reference", "yugu_structure_reference"]
+  },
+  "prop_details": {
+    "BX05": {
+      "yugu": {
+        "owner": "BX05",
+        "bamboo_tube_count": 1,
+        "bamboo_rod_count": 2,
+        "material": "spotted_bamboo",
+        "holding_pose": "close_to_torso_cradled_diagonal"
+      }
+    }
+  },
+  "per_actor_extra_review_required": {
+    "BX05": [
+      "yugu_structure",
+      "yugu_holding_contact",
+      "reverse_riding"
+    ]
+  }
 }

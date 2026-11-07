@@ -1,6 +1,6 @@
 {
   "project": "八仙过海·沧海证道",
-  "version": "1.1",
+  "version": "1.2",
   "status": "specification_only_not_visual_verified",
   "characters": [
     {
@@ -153,31 +153,56 @@
       "id": "BX05",
       "name": "张果老",
       "required": [
-        "白仙驴",
+        "白发长须及最新确认脸部",
+        "最新确认服装",
+        "唯一白仙驴",
         "倒骑",
-        "祥云"
+        "祥云",
+        "斑点竹筒鱼鼓",
+        "两根细竹杆",
+        "贴身斜抱鱼鼓"
       ],
       "forbidden": [
-        "小鼓",
-        "手鼓",
-        "正骑"
+        "小圆鼓或手鼓替代鱼鼓",
+        "其他鼓类替代品",
+        "正骑",
+        "灰驴",
+        "额外法器或鱼鼓增殖"
       ],
-      "static_asset_status": "USER_APPROVED_STILL",
-      "approval_source": "user supplied and labeled BX05 定型 / 定版",
-      "approval_date": "2026-11-06",
-      "approved_group_reference_file": "1000023552.png",
+      "static_asset_status": "USER_APPROVED_DESIGN_LOCK_HERO_BINDING_PENDING",
+      "approval_source": {
+        "conversation_id": "6aed72b5-9d78-83ec-8e9a-10ef628744b5",
+        "turn_id": "e7c4a2b4-9b94-476d-8938-94559c2b2732",
+        "user_quote": "可以写入张果老人物定型",
+        "scope": "Latest explicitly confirmed BX05 design, including approved yugu; this does not identify or verify unavailable replacement hero bytes."
+      },
+      "approval_date": "2026-11-07",
+      "approved_group_reference_file": null,
       "character_and_prop_locks": [
-        "白发白须老者褐灰袍；正确多视角1000023558.png",
-        "白仙驴道具1000023545.png，仅一头，倒骑姿态；禁用鼓、禁正骑、禁灰驴"
+        "保留最新确认角色图的五官、白发长须与神态，不重新设计",
+        "保留最新确认角色图的服装、裁片、纹样、颜色与配饰",
+        "唯一白仙驴，身体朝驴尾倒骑；驴耳、四蹄、毛色、鞍具与真实骑坐接触保持一致",
+        "唯一斑点竹筒鱼鼓、两根细竹杆，贴身斜抱；筒体依靠前臂/臂弯承托，手与法器接触自然，按姿态参考核验"
       ],
-      "video_qa_status": "PENDING",
+      "video_qa_status": "PENDING_YUGU_CONTACT_REVERSE_RIDING_AND_CONTINUITY",
       "group_riding_constraint": "场景内必须后向倒骑白仙驴，身体朝驴尾，四肢、骑坐接触真实；旧横版站在驴旁构图不能直接批准",
       "source_authority_v2": {
         "hero": "1000023552.png",
         "turnaround": "1000023558.png",
         "prop": "1000023545.png"
       },
-      "source_map_verified_at": "2026-11-07"
+      "source_map_verified_at": "2026-11-07",
+      "lock_version": "BX05-USER-LOCK-20261107-V4",
+      "approved_manifest_path": "film_audit/assets/bx05_zhangguolao_user_lock_v4_20261107.json",
+      "legacy_group_reference_file": "1000023552.png",
+      "current_hero": {
+        "filename": null,
+        "sha256": null,
+        "binding_status": "PENDING_EXACT_APPROVED_HERO_BYTES",
+        "binary_on_github": false,
+        "visual_qa_status": "NOT_PERFORMED_ON_REPLACEMENT_HERO"
+      },
+      "source_authority_v2_scope": "Legacy mapping retained for traceability only; current V4 hero is not yet bound"
     },
     {
       "id": "BX06",

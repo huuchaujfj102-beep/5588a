@@ -230,23 +230,38 @@
       "sources": {
         "hero": "1000023552.png",
         "views": "1000023558.png",
-        "prop": "1000023545.png"
+        "prop": "1000023545.png",
+        "current_hero": null,
+        "holding_pose_reference": "t01afa88d400b0bf3c8.jpg",
+        "yugu_structure_reference": "image(2).png"
       },
       "props": [
-        "single_white_donkey"
+        "single_white_donkey",
+        "single_spotted_bamboo_yugu_two_thin_rods"
       ],
       "locked_layers": {
         "character": {
           "file": "layers/BX05_character_RGBA.png",
           "sha256": null,
           "mask": "masks/BX05_character_mask.png",
-          "mask_sha256": null
+          "mask_sha256": null,
+          "content_scope": "V4 approved character plus cradled yugu and hands; preserve contact. Separate prop layer contains donkey behind rider. New V4 layers require hash and visual QA."
         },
         "prop": {
           "file": "layers/BX05_props_RGBA.png",
           "sha256": null,
           "mask": "masks/BX05_props_mask.png",
           "mask_sha256": null
+        }
+      },
+      "lock_version": "BX05-USER-LOCK-20261107-V4",
+      "prop_details": {
+        "yugu": {
+          "owner": "BX05",
+          "bamboo_tube_count": 1,
+          "bamboo_rod_count": 2,
+          "material": "spotted_bamboo",
+          "holding_pose": "close_to_torso_cradled_diagonal"
         }
       }
     }
@@ -382,7 +397,10 @@
         "prop_shape_count": "PENDING",
         "anatomy": "PENDING",
         "ground_contact": "PENDING",
-        "evidence_file": null
+        "evidence_file": null,
+        "yugu_structure": "PENDING",
+        "yugu_holding_contact": "PENDING",
+        "reverse_riding": "PENDING"
       }
     }
   },
