@@ -302,7 +302,89 @@
       "scene_geography": "PENDING",
       "no_text_panels": "PENDING"
     },
-    "user_final_approval": false
+    "user_final_approval": false,
+    "actor_checks": {
+      "BX01": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX03": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX07": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX08": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX02": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX04": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX06": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX05": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      }
+    }
   },
   "instructions": "Place approved original PNGs under --asset-root using canonical filenames. Produce per-character/prop RGBA layers and masks with hashes BEFORE rendering. Fill every null hash with actual SHA256. Do not run text-to-image on the whole group. Missing binaries MUST fail preflight."
 }
