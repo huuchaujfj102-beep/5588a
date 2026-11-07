@@ -1,0 +1,198 @@
+{
+  "project": "八仙过海·沧海证道",
+  "archive_version": "2026-11-08_RELATIONSHIPS_V1_CANDIDATE",
+  "archive_date": "2026-11-08",
+  "origin": "User-confirmed previously generated individual photorealistic character scene and user-supplied latest prop, assembled as visual QA boards",
+  "storage": {
+    "google_drive_folder_id": "1SFHy4p8gB0j0UkiJZRWrF7PVo0OAHIA3",
+    "google_drive_folder_url": "https://drive.google.com/drive/folders/1SFHy4p8gB0j0UkiJZRWrF7PVo0OAHIA3",
+    "zip_file_id": "1Bzy90a_XpSkV3ZdGwqHbgqkbJvveKyno",
+    "zip_url": "https://drive.google.com/file/d/1Bzy90a_XpSkV3ZdGwqHbgqkbJvveKyno/view?usp=drivesdk",
+    "zip_sha256": "21f47c063328ea0a329d8a4c9b1cf3e3b6de26c1bf5782e6219248cc0eaab4e0",
+    "library_folder": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核",
+    "github_binary_persisted": false
+  },
+  "preflight_policy": {
+    "required_offline_comparison": [
+      "approved_character_multiview",
+      "approved_prop_anchor",
+      "approved_actor_prop_relationship"
+    ],
+    "must_all_three_be_consistent": true,
+    "inspect": [
+      "identity_face",
+      "hair_and_wardrobe",
+      "view_angle",
+      "prop_owner_count_geometry",
+      "prop_holding_pose",
+      "contact_physics",
+      "light_and_camera_consistency"
+    ],
+    "if_any_fails": "BLOCK",
+    "if_any_pending": "BLOCK",
+    "generation_input_reference_limit": 2,
+    "offline_qa_does_not_count_as_model_input": true,
+    "multi_panel_relationship_sheet_must_never_be_used_as_one_collage_to_bypass_limit": true,
+    "reference_image_selection": "Choose 1 or 2 original image references matching target shot; keep other originals for offline comparison or composite separate approved layers",
+    "post_gen": [
+      "SELF_CHECK",
+      "MASTER_COMPARE",
+      "DOWNSTREAM"
+    ]
+  },
+  "overall_status": "PENDING_VISUAL_QA_BLOCKED_I2V",
+  "critical_blockers": {
+    "BX05": "No reverse-mounted white donkey in actor-scene candidate; fish drum holding pending; V4 exact hero remains unbound",
+    "BX07": "Lotus dais not supporting actor in scene",
+    "BX08": "Two independent rectangular jade tablets appear connected at top"
+  },
+  "source_authority_file": "film_audit/assets/baxian_eight_prop_matching_20261108.json",
+  "relation_qa_report": "docs/reviews/baxian-eight-character-prop-relation-candidates-20261108.md",
+  "approval_status": "NOT_USER_APPROVED_AS_MASTER",
+  "items": [
+    {
+      "id": "BX01",
+      "name": "铁拐李",
+      "filename": "BX01_铁拐李_人物法宝场景关系_待审核.jpg",
+      "sha256": "b2b6482e829cb1decf250fcb64997408a1eb9d7937bf32b3e866206ea4280cb2",
+      "dimensions": [
+        3072,
+        2048
+      ],
+      "drive_id": "1mRAvZ1okhTaC6Asf-7eSUy8UC4cWGiDz",
+      "drive_url": "https://drive.google.com/file/d/1mRAvZ1okhTaC6Asf-7eSUy8UC4cWGiDz/view?usp=drivesdk",
+      "library_path": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核/BX01_铁拐李_人物法宝关系_待审核.jpg",
+      "multiview_file": "1000023586.png",
+      "prop_file": "1000023587.png",
+      "visual_qa_status": "PENDING_DETAIL",
+      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
+      "generated_candidate_not_master": true
+    },
+    {
+      "id": "BX02",
+      "name": "汉钟离",
+      "filename": "BX02_汉钟离_人物法宝场景关系_待审核.jpg",
+      "sha256": "3421eb5228c52a8b4ce57641d15addb98dbe4126527691d6b4622b9f659e628f",
+      "dimensions": [
+        3072,
+        2048
+      ],
+      "drive_id": "1zPLQDJCHH7ttYKyP89kKTcXL11szPXAE",
+      "drive_url": "https://drive.google.com/file/d/1zPLQDJCHH7ttYKyP89kKTcXL11szPXAE/view?usp=drivesdk",
+      "library_path": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核/BX02_汉钟离_人物法宝关系_待审核.jpg",
+      "multiview_file": "1000023596.png",
+      "prop_file": "1000023589.png",
+      "visual_qa_status": "PENDING_DETAIL",
+      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
+      "generated_candidate_not_master": true
+    },
+    {
+      "id": "BX03",
+      "name": "吕洞宾",
+      "filename": "BX03_吕洞宾_人物法宝场景关系_待审核.jpg",
+      "sha256": "92363c1c4304122635fdd9ea59ab0bf1b98577789eb3eff0335432a20b3facc8",
+      "dimensions": [
+        3072,
+        2048
+      ],
+      "drive_id": "1oCNrHhUxaOMXbrmIfXXoqIHo0YxA0FkZ",
+      "drive_url": "https://drive.google.com/file/d/1oCNrHhUxaOMXbrmIfXXoqIHo0YxA0FkZ/view?usp=drivesdk",
+      "library_path": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核/BX03_吕洞宾_人物法宝关系_待审核.jpg",
+      "multiview_file": "1000023603.png",
+      "prop_file": "1000023590.png",
+      "visual_qa_status": "PENDING_DETAIL",
+      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
+      "generated_candidate_not_master": true
+    },
+    {
+      "id": "BX04",
+      "name": "蓝采和",
+      "filename": "BX04_蓝采和_人物法宝场景关系_待审核.jpg",
+      "sha256": "18dfd7c8df068d514cf17297874c549ef702f82be50837d0ddc286072214204e",
+      "dimensions": [
+        3072,
+        2048
+      ],
+      "drive_id": "1aWtJDK-zTW5SkNQXWFBvjqo7VpZa0v-p",
+      "drive_url": "https://drive.google.com/file/d/1aWtJDK-zTW5SkNQXWFBvjqo7VpZa0v-p/view?usp=drivesdk",
+      "library_path": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核/BX04_蓝采和_人物法宝关系_待审核.jpg",
+      "multiview_file": "1000023604.png",
+      "prop_file": "1000023592.png",
+      "visual_qa_status": "PENDING_DETAIL",
+      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
+      "generated_candidate_not_master": true
+    },
+    {
+      "id": "BX05",
+      "name": "张果老",
+      "filename": "BX05_张果老_人物法宝场景关系_待审核.jpg",
+      "sha256": "c00eae260f3ec455480bd135dac44f69cb045544e6911d87029351961b64a18d",
+      "dimensions": [
+        3072,
+        2048
+      ],
+      "drive_id": "1TaIkcp53jPGIlLBObLRawCUD_OAXwV3Y",
+      "drive_url": "https://drive.google.com/file/d/1TaIkcp53jPGIlLBObLRawCUD_OAXwV3Y/view?usp=drivesdk",
+      "library_path": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核/BX05_张果老_人物法宝关系_待审核.jpg",
+      "multiview_file": "1000023602.png",
+      "prop_file": "1000023720.png",
+      "visual_qa_status": "BLOCKED_P0",
+      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
+      "generated_candidate_not_master": true
+    },
+    {
+      "id": "BX06",
+      "name": "韩湘子",
+      "filename": "BX06_韩湘子_人物法宝场景关系_待审核.jpg",
+      "sha256": "4c5614442046a68ddaa4fe1a49f6d1db2248fa1ec632897970ff94f8bde7c0b5",
+      "dimensions": [
+        3072,
+        2048
+      ],
+      "drive_id": "1_xs1y_zRF6AEsStHOLYPuGEJ9Q3T1mVz",
+      "drive_url": "https://drive.google.com/file/d/1_xs1y_zRF6AEsStHOLYPuGEJ9Q3T1mVz/view?usp=drivesdk",
+      "library_path": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核/BX06_韩湘子_人物法宝关系_待审核.jpg",
+      "multiview_file": "1000023605.png",
+      "prop_file": "1000023593.png",
+      "visual_qa_status": "PENDING_DETAIL",
+      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
+      "generated_candidate_not_master": true
+    },
+    {
+      "id": "BX07",
+      "name": "何仙姑",
+      "filename": "BX07_何仙姑_人物法宝场景关系_待审核.jpg",
+      "sha256": "5344d18a7665981255cf20a748dfa9f66488e2b1dd7f491c604d97cdbf235d94",
+      "dimensions": [
+        3072,
+        2048
+      ],
+      "drive_id": "1W5yzLzVrREFEICWF7_xcNgWQh-naIdSu",
+      "drive_url": "https://drive.google.com/file/d/1W5yzLzVrREFEICWF7_xcNgWQh-naIdSu/view?usp=drivesdk",
+      "library_path": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核/BX07_何仙姑_人物法宝关系_待审核.jpg",
+      "multiview_file": "1000023608.png",
+      "prop_file": "1000023594.png",
+      "visual_qa_status": "BLOCKED_P0",
+      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
+      "generated_candidate_not_master": true
+    },
+    {
+      "id": "BX08",
+      "name": "曹国舅",
+      "filename": "BX08_曹国舅_人物法宝场景关系_待审核.jpg",
+      "sha256": "c28f272f237e21db51b572e1f1a4521072fa949cfb15ef946ba8cf147066a8fa",
+      "dimensions": [
+        3072,
+        2048
+      ],
+      "drive_id": "1upwSMubB6VWo6c7B6_Rer9LKZ-JPI1Hz",
+      "drive_url": "https://drive.google.com/file/d/1upwSMubB6VWo6c7B6_Rer9LKZ-JPI1Hz/view?usp=drivesdk",
+      "library_path": "/八仙过海/人物道具关系图/2026-11-08_八仙写实关系图_待审核/BX08_曹国舅_人物法宝关系_待审核.jpg",
+      "multiview_file": "1000023606.png",
+      "prop_file": "1000023595.png",
+      "visual_qa_status": "BLOCKED_P0",
+      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
+      "generated_candidate_not_master": true
+    }
+  ]
+}
