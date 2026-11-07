@@ -3,7 +3,7 @@
   "date": "2026-11-07",
   "shot_id": "S04-01",
   "deliverable": "八仙_V3_八人母图_人物法宝透明分层_海岸群像_待审包_20261107.zip",
-  "sha256_zip": "3f44d026b81f2a1f8a6eb63dec8afc2d0a0177f5c48b97914b0169b8baf372cb",
+  "sha256_zip": "a5d01f005f8196ff24e3ee59c5e24011fa0ba3b2c46b8a70855aedc930b070a9",
   "archive_size_mb": 36.71,
   "asset_origin": "ChatGPT active conversation container; source PNGs not committed to GitHub",
   "source_authority": "film_audit/assets/baxian_source_authority_v2_20261107.json",
@@ -26,7 +26,9 @@
     "github_ci_synthetic_unit_tests": "15/15 PASS",
     "github_real_media_preflight": "NOT_RUN_BINARIES_NOT_IN_GITHUB",
     "cinematic_postflight": "BLOCKED_P0_PRESENT",
-    "passed_for_i2v": false
+    "passed_for_i2v": false,
+    "local_qa_p0_count": 3,
+    "local_qa_p1_actor_count": 5
   },
   "method": "Classical OpenCV GrabCut + bounded hand-trim silhouette; source images RGB pixels cropped/resampled, NOT generative rerendered. Source originals unchanged and SHA verified. Render assembled from character+prop PNG layers, no whole-group AI image regeneration.",
   "visual_issues": [
@@ -55,7 +57,7 @@
       "issue_id": "P1-S04-OTHER-001",
       "asset_id": "BX01,BX02,BX03,BX04,BX06",
       "severity": "P1",
-      "summary": "minor to moderate mask edge spill, cloth/fan/prop overlap require independent evidence review",
+      "summary": "Five remaining actors BX01, BX02, BX03, BX04, BX06 have local matte spills or prop/limb overlaps awaiting QA; not four.",
       "repair": "mask-only trim, verify against original hero+prop images"
     }
   ],
