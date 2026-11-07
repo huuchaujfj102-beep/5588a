@@ -154,6 +154,13 @@ class BaxianGroupGateTests(unittest.TestCase):
                 "status": "PASS", "evidence_file": "qa/evidence.png"}
         for kind in self.policy["post_review_required"]:
             self.plan["review"]["category_checks"][kind] = "PASS"
+        for aid in [row["id"] for row in self.policy["layout"]]:
+            name = "qa/evidence_" + aid + ".png"
+            self.put_png(name)
+            self.plan["review"].setdefault("actor_checks", {})[aid] = {
+                **{k: "PASS" for k in self.policy["per_actor_review_required"]},
+                "evidence_file": name,
+            }
         result = self.result("postflight")
         self.assertEqual(result["status"], "READY_FOR_USER_REVIEW")
         self.assertTrue(result["may_submit_to_user"])
@@ -163,6 +170,12 @@ class BaxianGroupGateTests(unittest.TestCase):
         self.plan["scene"]["background_file"] = "../outside.png"
         self.assertIn("PATH_ESCAPE", self.codes(self.result()))
 
+
+    def test_actor_specific_failure_blocks_release(self):
+        self.plan["review"]["p0_count"] = 0
+        self.plan["review"]["p1_count"] = 0
+        self.plan["review"]["actor_checks"] = {"BX05": {"prop_shape_count": "FAIL"}}
+        self.assertIn("ACTOR_REVIEW_FAILED", self.codes(self.result("postflight")))
 
     def test_composite_preserves_source_layers_and_refuses_overwrite(self):
         try:
