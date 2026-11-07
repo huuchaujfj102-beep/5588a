@@ -4,7 +4,7 @@
   "repository": "huuchaujfj102-beep/5588a",
   "branch": "review/baxian-cg-continuity-v1",
   "base_commit": "d477cd0e0c53d29209a6981bb52864d057876174",
-  "status": "MAPPED_24_ORIGINALS_STORED_VERIFICATION_PENDING_SUPPLEMENTS_AND_V4_MISSING",
+  "status": "24_MAPPED_ORIGINALS_STORED_6_SUPPLEMENTS_AND_BX05_V4_MISSING",
   "counts": {
     "required_primary_sources": 24,
     "primary_sources_uploaded": 24,
@@ -22,16 +22,17 @@
       "sha256": "946944388bbaa3364e745bcafadf58e5872975a832d928c9f76b76f0ea7d6a53",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX01/1000023536.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "946944388bbaa3364e745bcafadf58e5872975a832d928c9f76b76f0ea7d6a53",
       "mapping_role": "hero",
       "size_bytes": 427320,
       "git_blob_sha": "02726b7b2fa50811a5ff6beb35701511edcbe7d7",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023536.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX01",
@@ -40,16 +41,17 @@
       "sha256": "ac692884cfe704134bbd2f131e34018b525766697adf66cc558f686ee4b61bfa",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX01/1000023537.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "ac692884cfe704134bbd2f131e34018b525766697adf66cc558f686ee4b61bfa",
       "mapping_role": "turnaround",
       "size_bytes": 340623,
       "git_blob_sha": "3e420c5b9b9ad110b68b76a327bf4967139e75dd",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023537.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX01",
@@ -58,16 +60,17 @@
       "sha256": "562933ca823b2d29fbec220b05ec5797e6ec0ee33d183a4c3cb5cb14270a90f6",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX01/1000023539.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "562933ca823b2d29fbec220b05ec5797e6ec0ee33d183a4c3cb5cb14270a90f6",
       "mapping_role": "prop",
       "size_bytes": 466608,
       "git_blob_sha": "5d0f2d03dcba000550ea48985081f19414a039dc",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023539.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX02",
@@ -76,16 +79,17 @@
       "sha256": "c784ef30c2dedf9ffe6c63f452358915b987aaba15abee3c6d85c60622e588a4",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX02/1000023540.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "c784ef30c2dedf9ffe6c63f452358915b987aaba15abee3c6d85c60622e588a4",
       "mapping_role": "hero",
       "size_bytes": 428047,
       "git_blob_sha": "a50da3c8f7b479d698f2c6ced77a6410db52ddee",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023540.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX02",
@@ -94,16 +98,17 @@
       "sha256": "67d4f9b59468232c5cdeb8634f7f7fd60c8ff9674c15743704f8cb2903cc3abf",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX02/1000023549.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "67d4f9b59468232c5cdeb8634f7f7fd60c8ff9674c15743704f8cb2903cc3abf",
       "mapping_role": "turnaround",
       "size_bytes": 348302,
       "git_blob_sha": "970847548e25e81bbe25091bd35d53a50a8814f2",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023549.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX02",
@@ -123,16 +128,17 @@
       "sha256": "16ddbb7112e7a12fd5e24f50cb4eddca8f0c4fc16ecec3391e1d9ebc6b36c87c",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX02/1000023542.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "16ddbb7112e7a12fd5e24f50cb4eddca8f0c4fc16ecec3391e1d9ebc6b36c87c",
       "mapping_role": "prop",
       "size_bytes": 493018,
       "git_blob_sha": "988da193b3cc4bcd562135baf445b80921d22879",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023542.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX03",
@@ -141,16 +147,17 @@
       "sha256": "6e35033d06f56446ba401e5f678c2a9c6533bfa5b1601f6a26113ba3ffb2efcd",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX03/1000023555.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "6e35033d06f56446ba401e5f678c2a9c6533bfa5b1601f6a26113ba3ffb2efcd",
       "mapping_role": "hero",
       "size_bytes": 387244,
       "git_blob_sha": "2935a3c321a357a49ce876b79a9f3e47b84cece6",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023555.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX03",
@@ -159,16 +166,17 @@
       "sha256": "d0fa39c51b491aaadd1085cb9c78d766e8e870f63fdb13b22ab2ba0bcf1c57cc",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX03/1000023559.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_GIT_BLOB_AND_SIZE_VERIFIED",
       "expected_sha256": "d0fa39c51b491aaadd1085cb9c78d766e8e870f63fdb13b22ab2ba0bcf1c57cc",
       "mapping_role": "turnaround",
       "size_bytes": 4378016,
       "git_blob_sha": "15946f12e30dfadb2f01b8bee328cc5a42478129",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_GIT_BLOB_SHA1_AND_SIZE_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023559.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX03",
@@ -177,16 +185,17 @@
       "sha256": "597025ca3dd09b20e125fba0058feda6607f56f2d70d26537495a9f85aea8d1d",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX03/1000023543.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "597025ca3dd09b20e125fba0058feda6607f56f2d70d26537495a9f85aea8d1d",
       "mapping_role": "prop",
       "size_bytes": 461420,
       "git_blob_sha": "4b81be8139a0d770ca64a16eca4216cc488015db",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023543.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX03",
@@ -206,16 +215,17 @@
       "sha256": "630ad949adb866f967f1f032b791489e9c21d49996f4214d613a21f6b9cc40f3",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX04/1000023554.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "630ad949adb866f967f1f032b791489e9c21d49996f4214d613a21f6b9cc40f3",
       "mapping_role": "hero",
       "size_bytes": 419219,
       "git_blob_sha": "df8c884c5d167635f977220ad5edf88029afdfb1",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023554.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX04",
@@ -224,16 +234,17 @@
       "sha256": "02a4bc40ec498093193248047e9739c7bd8de94d3c524da7021852a7f47d0362",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX04/1000023562.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "02a4bc40ec498093193248047e9739c7bd8de94d3c524da7021852a7f47d0362",
       "mapping_role": "turnaround",
       "size_bytes": 212902,
       "git_blob_sha": "f6c1e03c92b1a9d5635c4d1f8d79e309b6c32c5e",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023562.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX04",
@@ -242,16 +253,17 @@
       "sha256": "b831dfe60ae4eb3ec4361b38aa7eda0d0a7aa2a8f71eb6243bbedccd402620a6",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX04/1000023544.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "b831dfe60ae4eb3ec4361b38aa7eda0d0a7aa2a8f71eb6243bbedccd402620a6",
       "mapping_role": "prop",
       "size_bytes": 540000,
       "git_blob_sha": "5f49e46a79cbcbc3c41d7a21d374d4ac17268433",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023544.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX05",
@@ -260,18 +272,19 @@
       "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023552.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "source_status": "LEGACY_TRACEABILITY_ONLY",
       "expected_sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
       "mapping_role": "hero",
       "size_bytes": 396133,
       "git_blob_sha": "bec69b1293485d04f17893f26f0600cdabe502ef",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023552.png",
       "storage": "git_blob",
-      "not_current_V4": true
+      "not_current_V4": true,
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX05",
@@ -280,18 +293,19 @@
       "sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023558.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "source_status": "LEGACY_TRACEABILITY_ONLY",
       "expected_sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6",
       "mapping_role": "turnaround",
       "size_bytes": 325232,
       "git_blob_sha": "449a0d126cd7a87c1fcd36fa9679f0611831c669",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023558.png",
       "storage": "git_blob",
-      "not_current_V4": true
+      "not_current_V4": true,
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX05",
@@ -300,18 +314,19 @@
       "sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023545.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "source_status": "LEGACY_TRACEABILITY_ONLY",
       "expected_sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64",
       "mapping_role": "prop",
       "size_bytes": 523897,
       "git_blob_sha": "618a5d8918ceb65d0ed9089a62507e64946a3119",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023545.png",
       "storage": "git_blob",
-      "not_current_V4": true
+      "not_current_V4": true,
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX06",
@@ -320,16 +335,17 @@
       "sha256": "c7372b4b89b7b2bd39a9d484a488323eb30af27061ae49dc7f048b2729d81838",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX06/1000023556.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "c7372b4b89b7b2bd39a9d484a488323eb30af27061ae49dc7f048b2729d81838",
       "mapping_role": "hero",
       "size_bytes": 379306,
       "git_blob_sha": "2ccea8387a3dd410c2108f9fd792207c1b809398",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023556.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX06",
@@ -338,16 +354,17 @@
       "sha256": "fd6dae36e686c7cadb9f0bda9a8ef60d2957bc5f426a934971a2d999952ab9b6",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX06/1000023563.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "fd6dae36e686c7cadb9f0bda9a8ef60d2957bc5f426a934971a2d999952ab9b6",
       "mapping_role": "turnaround",
       "size_bytes": 232777,
       "git_blob_sha": "f27d913b4a576a72b54fcd3eb790abb2d7bd8e8e",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023563.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX06",
@@ -356,16 +373,17 @@
       "sha256": "bde8c0c39f0b373a2bab28e2f5911b305a2a670e0c3666bd9517ea49301d7e20",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX06/1000023546.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "bde8c0c39f0b373a2bab28e2f5911b305a2a670e0c3666bd9517ea49301d7e20",
       "mapping_role": "prop",
       "size_bytes": 445791,
       "git_blob_sha": "4a138373040a4beb82e0ec0bcd4c40bffdc74090",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023546.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX07",
@@ -374,16 +392,17 @@
       "sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX07/1000023567.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
       "mapping_role": "hero",
       "size_bytes": 430068,
       "git_blob_sha": "b2d2cb39738c12554b39f678f916f667c7d8d776",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023567.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX07",
@@ -392,16 +411,17 @@
       "sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX07/1000023574.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8",
       "mapping_role": "turnaround",
       "size_bytes": 394347,
       "git_blob_sha": "409b3a6fbd20a2588b0cf4f1843304da727f9704",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023574.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX07",
@@ -410,16 +430,17 @@
       "sha256": "70b59f6d716414e3c61fa47912810f58daa2ffd9ebb30a611b64faf8c282d15e",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX07/1000023547.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "70b59f6d716414e3c61fa47912810f58daa2ffd9ebb30a611b64faf8c282d15e",
       "mapping_role": "prop",
       "size_bytes": 524049,
       "git_blob_sha": "f80b1f15253e05922ace3d3d194921d0d529d517",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023547.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX07",
@@ -439,16 +460,17 @@
       "sha256": "73cc28bf6b1eec239a22a9b5e4b353c8e772360c4547dadf32bd99e7973e78cb",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX08/1000023557.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "73cc28bf6b1eec239a22a9b5e4b353c8e772360c4547dadf32bd99e7973e78cb",
       "mapping_role": "hero",
       "size_bytes": 401386,
       "git_blob_sha": "952881c2030f9cb3d0e333e95a9ac4c79a9f3856",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023557.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX08",
@@ -457,16 +479,17 @@
       "sha256": "540c05d403a74f108a721dc4a517055329e1152d9fedcbf9f61e0c1c897d25ac",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX08/1000023566.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "540c05d403a74f108a721dc4a517055329e1152d9fedcbf9f61e0c1c897d25ac",
       "mapping_role": "turnaround",
       "size_bytes": 211373,
       "git_blob_sha": "2d9a2e94b9a8710ca4c72e992ad2906537560435",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023566.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX08",
@@ -475,16 +498,17 @@
       "sha256": "6224396ee277e3820b41cf5aff5ed135e0afcc9b503bb47a8539e2d664adc485",
       "binary_on_github": true,
       "repository_path": "film_audit/assets/baxian_sources/BX08/1000023548.png",
-      "availability": "UPLOADED_PENDING_REMOTE_READBACK",
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
       "expected_sha256": "6224396ee277e3820b41cf5aff5ed135e0afcc9b503bb47a8539e2d664adc485",
       "mapping_role": "prop",
       "size_bytes": 526461,
       "git_blob_sha": "cd42495a86e88a1cda4792768ef70c92807e11a0",
-      "binary_verification": "LOCAL_SHA256_MATCH_AUTHORITY",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
       "source_archive": "八仙_V3_实际生产分层_20261107.rar",
       "source_archive_sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
       "source_archive_member": "八仙_V3_实际生产分层_20261107/1000023548.png",
-      "storage": "git_blob"
+      "storage": "git_blob",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "id": "BX05",
@@ -591,35 +615,18 @@
     "documentation": "https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github"
   },
   "verification": {
-    "state": "PENDING_REMOTE_READBACK_FOR_24_ADDED_ORIGINALS",
-    "previous_reference_readback": {
-      "state": "PASS_FOR_TWO_REFERENCE_BINARIES_ONLY",
-      "readback_commit": "e595fc34f588bf9d13b24f7d95136eacc2467d4c",
-      "method": "Downloaded exact bytes from raw.githubusercontent.com at immutable commit; SHA-256 and byte length match; recursive tree non-truncated",
-      "verified_files": [
-        {
-          "filename": "t01afa88d400b0bf3c8.jpg",
-          "repository_path": "film_audit/assets/baxian_sources/BX05/t01afa88d400b0bf3c8.jpg",
-          "sha256": "d964817edb6c00e0036a10656ed19ca683db833b93940e73ba427a9bbc91a2a7",
-          "size_bytes": 77155,
-          "git_blob_sha": "66ca2cc2125cf1b6caff5ef3d9fbf3f1d0c36e58",
-          "binary_on_github": true,
-          "storage": "git_blob",
-          "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
-          "role": "holding_pose_reference"
-        },
-        {
-          "filename": "image(2).png",
-          "repository_path": "film_audit/assets/baxian_sources/BX05/image(2).png",
-          "sha256": "51992887a8bae028e6d1bd156619d7c906a59e146aa0627d4e570999f4e7b7b8",
-          "size_bytes": 1007825,
-          "git_blob_sha": "7f98917e42c070eafdca02b71310b801717b6547",
-          "binary_on_github": true,
-          "storage": "git_blob",
-          "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
-          "role": "yugu_structure_reference"
-        }
-      ]
+    "state": "PASS_REMOTE_TREE_24_REMOTE_BYTES_23",
+    "commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b",
+    "remote_tree_truncated": false,
+    "remote_tree_git_blob_sha1_and_size_matches": 24,
+    "remote_full_byte_readback_matches": 23,
+    "local_sha256_matches_authority": 24,
+    "large_file_readback_limitation": {
+      "filename": "1000023559.png",
+      "size_bytes": 4378016,
+      "local_sha256": "d0fa39c51b491aaadd1085cb9c78d766e8e870f63fdb13b22ab2ba0bcf1c57cc",
+      "remote_git_blob_sha1": "15946f12e30dfadb2f01b8bee328cc5a42478129",
+      "reason": "GitHub Contents API returns empty base64 content for this >1 MiB file; verified remote Git blob identity and size instead."
     },
     "new_originals": [
       {
@@ -628,7 +635,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX01/1000023536.png",
         "size_bytes": 427320,
         "sha256": "946944388bbaa3364e745bcafadf58e5872975a832d928c9f76b76f0ea7d6a53",
-        "git_blob_sha": "02726b7b2fa50811a5ff6beb35701511edcbe7d7"
+        "git_blob_sha": "02726b7b2fa50811a5ff6beb35701511edcbe7d7",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023537.png",
@@ -636,7 +644,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX01/1000023537.png",
         "size_bytes": 340623,
         "sha256": "ac692884cfe704134bbd2f131e34018b525766697adf66cc558f686ee4b61bfa",
-        "git_blob_sha": "3e420c5b9b9ad110b68b76a327bf4967139e75dd"
+        "git_blob_sha": "3e420c5b9b9ad110b68b76a327bf4967139e75dd",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023539.png",
@@ -644,7 +653,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX01/1000023539.png",
         "size_bytes": 466608,
         "sha256": "562933ca823b2d29fbec220b05ec5797e6ec0ee33d183a4c3cb5cb14270a90f6",
-        "git_blob_sha": "5d0f2d03dcba000550ea48985081f19414a039dc"
+        "git_blob_sha": "5d0f2d03dcba000550ea48985081f19414a039dc",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023540.png",
@@ -652,7 +662,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX02/1000023540.png",
         "size_bytes": 428047,
         "sha256": "c784ef30c2dedf9ffe6c63f452358915b987aaba15abee3c6d85c60622e588a4",
-        "git_blob_sha": "a50da3c8f7b479d698f2c6ced77a6410db52ddee"
+        "git_blob_sha": "a50da3c8f7b479d698f2c6ced77a6410db52ddee",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023542.png",
@@ -660,7 +671,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX02/1000023542.png",
         "size_bytes": 493018,
         "sha256": "16ddbb7112e7a12fd5e24f50cb4eddca8f0c4fc16ecec3391e1d9ebc6b36c87c",
-        "git_blob_sha": "988da193b3cc4bcd562135baf445b80921d22879"
+        "git_blob_sha": "988da193b3cc4bcd562135baf445b80921d22879",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023543.png",
@@ -668,7 +680,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX03/1000023543.png",
         "size_bytes": 461420,
         "sha256": "597025ca3dd09b20e125fba0058feda6607f56f2d70d26537495a9f85aea8d1d",
-        "git_blob_sha": "4b81be8139a0d770ca64a16eca4216cc488015db"
+        "git_blob_sha": "4b81be8139a0d770ca64a16eca4216cc488015db",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023544.png",
@@ -676,7 +689,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX04/1000023544.png",
         "size_bytes": 540000,
         "sha256": "b831dfe60ae4eb3ec4361b38aa7eda0d0a7aa2a8f71eb6243bbedccd402620a6",
-        "git_blob_sha": "5f49e46a79cbcbc3c41d7a21d374d4ac17268433"
+        "git_blob_sha": "5f49e46a79cbcbc3c41d7a21d374d4ac17268433",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023545.png",
@@ -684,7 +698,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023545.png",
         "size_bytes": 523897,
         "sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64",
-        "git_blob_sha": "618a5d8918ceb65d0ed9089a62507e64946a3119"
+        "git_blob_sha": "618a5d8918ceb65d0ed9089a62507e64946a3119",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023546.png",
@@ -692,7 +707,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX06/1000023546.png",
         "size_bytes": 445791,
         "sha256": "bde8c0c39f0b373a2bab28e2f5911b305a2a670e0c3666bd9517ea49301d7e20",
-        "git_blob_sha": "4a138373040a4beb82e0ec0bcd4c40bffdc74090"
+        "git_blob_sha": "4a138373040a4beb82e0ec0bcd4c40bffdc74090",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023547.png",
@@ -700,7 +716,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX07/1000023547.png",
         "size_bytes": 524049,
         "sha256": "70b59f6d716414e3c61fa47912810f58daa2ffd9ebb30a611b64faf8c282d15e",
-        "git_blob_sha": "f80b1f15253e05922ace3d3d194921d0d529d517"
+        "git_blob_sha": "f80b1f15253e05922ace3d3d194921d0d529d517",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023548.png",
@@ -708,7 +725,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX08/1000023548.png",
         "size_bytes": 526461,
         "sha256": "6224396ee277e3820b41cf5aff5ed135e0afcc9b503bb47a8539e2d664adc485",
-        "git_blob_sha": "cd42495a86e88a1cda4792768ef70c92807e11a0"
+        "git_blob_sha": "cd42495a86e88a1cda4792768ef70c92807e11a0",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023549.png",
@@ -716,7 +734,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX02/1000023549.png",
         "size_bytes": 348302,
         "sha256": "67d4f9b59468232c5cdeb8634f7f7fd60c8ff9674c15743704f8cb2903cc3abf",
-        "git_blob_sha": "970847548e25e81bbe25091bd35d53a50a8814f2"
+        "git_blob_sha": "970847548e25e81bbe25091bd35d53a50a8814f2",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023552.png",
@@ -724,7 +743,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023552.png",
         "size_bytes": 396133,
         "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
-        "git_blob_sha": "bec69b1293485d04f17893f26f0600cdabe502ef"
+        "git_blob_sha": "bec69b1293485d04f17893f26f0600cdabe502ef",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023554.png",
@@ -732,7 +752,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX04/1000023554.png",
         "size_bytes": 419219,
         "sha256": "630ad949adb866f967f1f032b791489e9c21d49996f4214d613a21f6b9cc40f3",
-        "git_blob_sha": "df8c884c5d167635f977220ad5edf88029afdfb1"
+        "git_blob_sha": "df8c884c5d167635f977220ad5edf88029afdfb1",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023555.png",
@@ -740,7 +761,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX03/1000023555.png",
         "size_bytes": 387244,
         "sha256": "6e35033d06f56446ba401e5f678c2a9c6533bfa5b1601f6a26113ba3ffb2efcd",
-        "git_blob_sha": "2935a3c321a357a49ce876b79a9f3e47b84cece6"
+        "git_blob_sha": "2935a3c321a357a49ce876b79a9f3e47b84cece6",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023556.png",
@@ -748,7 +770,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX06/1000023556.png",
         "size_bytes": 379306,
         "sha256": "c7372b4b89b7b2bd39a9d484a488323eb30af27061ae49dc7f048b2729d81838",
-        "git_blob_sha": "2ccea8387a3dd410c2108f9fd792207c1b809398"
+        "git_blob_sha": "2ccea8387a3dd410c2108f9fd792207c1b809398",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023557.png",
@@ -756,7 +779,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX08/1000023557.png",
         "size_bytes": 401386,
         "sha256": "73cc28bf6b1eec239a22a9b5e4b353c8e772360c4547dadf32bd99e7973e78cb",
-        "git_blob_sha": "952881c2030f9cb3d0e333e95a9ac4c79a9f3856"
+        "git_blob_sha": "952881c2030f9cb3d0e333e95a9ac4c79a9f3856",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023558.png",
@@ -764,7 +788,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023558.png",
         "size_bytes": 325232,
         "sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6",
-        "git_blob_sha": "449a0d126cd7a87c1fcd36fa9679f0611831c669"
+        "git_blob_sha": "449a0d126cd7a87c1fcd36fa9679f0611831c669",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023559.png",
@@ -772,7 +797,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX03/1000023559.png",
         "size_bytes": 4378016,
         "sha256": "d0fa39c51b491aaadd1085cb9c78d766e8e870f63fdb13b22ab2ba0bcf1c57cc",
-        "git_blob_sha": "15946f12e30dfadb2f01b8bee328cc5a42478129"
+        "git_blob_sha": "15946f12e30dfadb2f01b8bee328cc5a42478129",
+        "verification": "REMOTE_GIT_BLOB_AND_SIZE"
       },
       {
         "filename": "1000023562.png",
@@ -780,7 +806,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX04/1000023562.png",
         "size_bytes": 212902,
         "sha256": "02a4bc40ec498093193248047e9739c7bd8de94d3c524da7021852a7f47d0362",
-        "git_blob_sha": "f6c1e03c92b1a9d5635c4d1f8d79e309b6c32c5e"
+        "git_blob_sha": "f6c1e03c92b1a9d5635c4d1f8d79e309b6c32c5e",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023563.png",
@@ -788,7 +815,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX06/1000023563.png",
         "size_bytes": 232777,
         "sha256": "fd6dae36e686c7cadb9f0bda9a8ef60d2957bc5f426a934971a2d999952ab9b6",
-        "git_blob_sha": "f27d913b4a576a72b54fcd3eb790abb2d7bd8e8e"
+        "git_blob_sha": "f27d913b4a576a72b54fcd3eb790abb2d7bd8e8e",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023566.png",
@@ -796,7 +824,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX08/1000023566.png",
         "size_bytes": 211373,
         "sha256": "540c05d403a74f108a721dc4a517055329e1152d9fedcbf9f61e0c1c897d25ac",
-        "git_blob_sha": "2d9a2e94b9a8710ca4c72e992ad2906537560435"
+        "git_blob_sha": "2d9a2e94b9a8710ca4c72e992ad2906537560435",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023567.png",
@@ -804,7 +833,8 @@
         "repository_path": "film_audit/assets/baxian_sources/BX07/1000023567.png",
         "size_bytes": 430068,
         "sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
-        "git_blob_sha": "b2d2cb39738c12554b39f678f916f667c7d8d776"
+        "git_blob_sha": "b2d2cb39738c12554b39f678f916f667c7d8d776",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       },
       {
         "filename": "1000023574.png",
@@ -812,9 +842,11 @@
         "repository_path": "film_audit/assets/baxian_sources/BX07/1000023574.png",
         "size_bytes": 394347,
         "sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8",
-        "git_blob_sha": "409b3a6fbd20a2588b0cf4f1843304da727f9704"
+        "git_blob_sha": "409b3a6fbd20a2588b0cf4f1843304da727f9704",
+        "verification": "REMOTE_EXACT_BYTES_AND_TREE"
       }
-    ]
+    ],
+    "earlier_references_verified_at_commit": "e595fc34f588bf9d13b24f7d95136eacc2467d4c"
   },
   "missing_bytes_do_not_revoke_historical_approval": true,
   "source_archive": {

@@ -106,21 +106,30 @@
       "sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64",
       "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023545.png",
       "status": "LEGACY_TRACEABILITY_ONLY_NOT_CURRENT_V4",
-      "binary_on_github": true
+      "binary_on_github": true,
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "filename": "1000023552.png",
       "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
       "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023552.png",
       "status": "LEGACY_TRACEABILITY_ONLY_NOT_CURRENT_V4",
-      "binary_on_github": true
+      "binary_on_github": true,
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     },
     {
       "filename": "1000023558.png",
       "sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6",
       "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023558.png",
       "status": "LEGACY_TRACEABILITY_ONLY_NOT_CURRENT_V4",
-      "binary_on_github": true
+      "binary_on_github": true,
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
     }
   ]
 }
