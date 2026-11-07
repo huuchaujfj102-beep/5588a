@@ -65,8 +65,14 @@
       "multiview_file": "1000023586.png",
       "prop_file": "1000023587.png",
       "visual_qa_status": "PENDING_DETAIL",
-      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
-      "generated_candidate_not_master": true
+      "pre_generation_gate": "BLOCKED_UNTIL_TRIAD_VERIFIED",
+      "generated_candidate_not_master": true,
+      "triad_visual_review_20261108": {
+        "status": "PENDING_VISUAL",
+        "p0": [],
+        "note": "铁拐/紫金葫芦的纹样、坡足与握持需逐部位精验"
+      },
+      "approved_as_new_master": false
     },
     {
       "id": "BX02",
@@ -83,8 +89,14 @@
       "multiview_file": "1000023596.png",
       "prop_file": "1000023589.png",
       "visual_qa_status": "PENDING_DETAIL",
-      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
-      "generated_candidate_not_master": true
+      "pre_generation_gate": "BLOCKED_UNTIL_TRIAD_VERIFIED",
+      "generated_candidate_not_master": true,
+      "triad_visual_review_20261108": {
+        "status": "PENDING_VISUAL",
+        "p0": [],
+        "note": "破叶芭蕉扇外缘、尺寸与柄部握持待视觉对照"
+      },
+      "approved_as_new_master": false
     },
     {
       "id": "BX03",
@@ -101,8 +113,16 @@
       "multiview_file": "1000023603.png",
       "prop_file": "1000023590.png",
       "visual_qa_status": "PENDING_DETAIL",
-      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
-      "generated_candidate_not_master": true
+      "pre_generation_gate": "BLOCKED_UNTIL_TRIAD_VERIFIED",
+      "generated_candidate_not_master": true,
+      "triad_visual_review_20261108": {
+        "status": "BLOCKED_P0",
+        "p0": [
+          "SWORD_DRAWN_IN_MULTIVIEW_VS_SHEATHED_SCENE"
+        ],
+        "note": "多视图剑出鞘；仙宴须剑完整入鞘，需镜头专属入鞘姿态参考"
+      },
+      "approved_as_new_master": false
     },
     {
       "id": "BX04",
@@ -119,8 +139,16 @@
       "multiview_file": "1000023604.png",
       "prop_file": "1000023592.png",
       "visual_qa_status": "PENDING_DETAIL",
-      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
-      "generated_candidate_not_master": true
+      "pre_generation_gate": "BLOCKED_UNTIL_TRIAD_VERIFIED",
+      "generated_candidate_not_master": true,
+      "triad_visual_review_20261108": {
+        "status": "BLOCKED_P0",
+        "p0": [
+          "FLOWERS_IN_HAIR_VS_NO_WREATH_LOCK"
+        ],
+        "note": "最新多视图发髻有花朵装饰；用户要求去掉头戴花环，需要明确无饰版本"
+      },
+      "approved_as_new_master": false
     },
     {
       "id": "BX05",
@@ -137,8 +165,18 @@
       "multiview_file": "1000023602.png",
       "prop_file": "1000023720.png",
       "visual_qa_status": "BLOCKED_P0",
-      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
-      "generated_candidate_not_master": true
+      "pre_generation_gate": "BLOCKED_UNTIL_TRIAD_VERIFIED",
+      "generated_candidate_not_master": true,
+      "triad_visual_review_20261108": {
+        "status": "BLOCKED_P0",
+        "p0": [
+          "REVERSE_DONKEY_RIDE_MISSING",
+          "YUGU_HOLDING_NOT_DEMONSTRATED",
+          "LATEST_V4_HERO_SHA_UNBOUND"
+        ],
+        "note": "关系候选为步行老人，未倒骑驴，未贴身抱持一筒两杆渔鼓"
+      },
+      "approved_as_new_master": false
     },
     {
       "id": "BX06",
@@ -155,8 +193,14 @@
       "multiview_file": "1000023605.png",
       "prop_file": "1000023593.png",
       "visual_qa_status": "PENDING_DETAIL",
-      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
-      "generated_candidate_not_master": true
+      "pre_generation_gate": "BLOCKED_UNTIL_TRIAD_VERIFIED",
+      "generated_candidate_not_master": true,
+      "triad_visual_review_20261108": {
+        "status": "PENDING_VISUAL",
+        "p0": [],
+        "note": "横笛孔、口型、手指触点及头颈比例待精验"
+      },
+      "approved_as_new_master": false
     },
     {
       "id": "BX07",
@@ -173,8 +217,16 @@
       "multiview_file": "1000023608.png",
       "prop_file": "1000023594.png",
       "visual_qa_status": "BLOCKED_P0",
-      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
-      "generated_candidate_not_master": true
+      "pre_generation_gate": "BLOCKED_UNTIL_TRIAD_VERIFIED",
+      "generated_candidate_not_master": true,
+      "triad_visual_review_20261108": {
+        "status": "BLOCKED_P0",
+        "p0": [
+          "DAIS_SUPPORT_MISSING"
+        ],
+        "note": "关系候选人物立于潮湿地面，未被莲台承托"
+      },
+      "approved_as_new_master": false
     },
     {
       "id": "BX08",
@@ -191,8 +243,31 @@
       "multiview_file": "1000023606.png",
       "prop_file": "1000023595.png",
       "visual_qa_status": "BLOCKED_P0",
-      "pre_generation_gate": "BLOCKED_UNTIL_THREE_SOURCE_MANUAL_QA_PASS",
-      "generated_candidate_not_master": true
+      "pre_generation_gate": "BLOCKED_UNTIL_TRIAD_VERIFIED",
+      "generated_candidate_not_master": true,
+      "triad_visual_review_20261108": {
+        "status": "BLOCKED_P0",
+        "p0": [
+          "JADE_TABLETS_TOP_FUSED"
+        ],
+        "note": "双玉板顶部疑似连接，不满足两块独立矩形玉板"
+      },
+      "approved_as_new_master": false
     }
-  ]
+  ],
+  "audit_20261108": {
+    "phase": "G01_G02_TRIAD_PREFLIGHT",
+    "review_method": "24 actual images read; 8 separate side-by-side QA sheets inspected; metadata test suite 14/14 PASS",
+    "summary": {
+      "total": 8,
+      "p0_blocked": 5,
+      "pending_visual": 3,
+      "approved": 0,
+      "i2v_allowed": 0
+    },
+    "report_zip_sha256": "3828f46f3d187379a696189c733d3c85af52ce2660578fd4a189d67c07088ec0",
+    "zip_library_path": "/八仙过海/质量审核/2026-11-08_三锚图一致性预检/八仙_G01_G02_三锚图逐人预检与硬门禁测试_20261108.zip",
+    "github_code_coverage": "local unit tests passed; not yet integrated into all remote models, no automatic visual identity inference",
+    "visual_qa_evidence": "three-source side-by-side boards in ZIP; these must not be passed as model reference"
+  }
 }
