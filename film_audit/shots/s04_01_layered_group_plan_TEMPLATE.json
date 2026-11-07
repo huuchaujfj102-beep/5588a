@@ -160,7 +160,8 @@
           "mask": "masks/BX02_props_mask.png",
           "mask_sha256": null
         }
-      }
+      },
+      "special_action": "exposed_belly_single_tattered_leaf_fan"
     },
     {
       "id": "BX04",
