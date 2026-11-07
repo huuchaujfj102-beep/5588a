@@ -1,0 +1,65 @@
+{
+  "project": "八仙过海·沧海证道",
+  "date": "2026-11-07",
+  "shot_id": "S04-01",
+  "deliverable": "八仙_V3_八人母图_人物法宝透明分层_海岸群像_待审包_20261107.zip",
+  "sha256_zip": "3f44d026b81f2a1f8a6eb63dec8afc2d0a0177f5c48b97914b0169b8baf372cb",
+  "archive_size_mb": 36.71,
+  "asset_origin": "ChatGPT active conversation container; source PNGs not committed to GitHub",
+  "source_authority": "film_audit/assets/baxian_source_authority_v2_20261107.json",
+  "policy": "film_audit/assets/baxian_group_enforcement_policy_v3.json",
+  "canvas": {
+    "width": 2560,
+    "height": 1440,
+    "ratio": "16:9"
+  },
+  "counts": {
+    "approved_original_files": 24,
+    "actor_ids": 8,
+    "rgba_layers": 16,
+    "grayscale_masks": 16,
+    "per_actor_visual_comparisons": 8
+  },
+  "checks": {
+    "local_source_hash_and_file_layer_format_checks": 56,
+    "local_structural_preflight": "PASS",
+    "github_ci_synthetic_unit_tests": "15/15 PASS",
+    "github_real_media_preflight": "NOT_RUN_BINARIES_NOT_IN_GITHUB",
+    "cinematic_postflight": "BLOCKED_P0_PRESENT",
+    "passed_for_i2v": false
+  },
+  "method": "Classical OpenCV GrabCut + bounded hand-trim silhouette; source images RGB pixels cropped/resampled, NOT generative rerendered. Source originals unchanged and SHA verified. Render assembled from character+prop PNG layers, no whole-group AI image regeneration.",
+  "visual_issues": [
+    {
+      "issue_id": "P0-S04-BX05-001",
+      "asset_id": "BX05",
+      "severity": "P0",
+      "summary": "white donkey lower hooves/shore and rider silhouette still show old sea background fragments; physical support contact uncertain",
+      "repair": "localized alpha-matte cleanup with hoof/ground contact check; do not alter donkey face or owner"
+    },
+    {
+      "issue_id": "P0-S04-BX07-001",
+      "asset_id": "BX07",
+      "severity": "P0",
+      "summary": "lotus platform lower surround retains old-scene rectangular water/rock patch",
+      "repair": "remove background spill and rebuild only platform to new ocean occlusion, preserve approved lotus petals and woman's identity"
+    },
+    {
+      "issue_id": "P0-S04-BX08-001",
+      "asset_id": "BX08",
+      "severity": "P0",
+      "summary": "feet/robe base and scene ground contact remain implausibly pasted",
+      "repair": "refine isolated foot matte, realistic shadow/occlusion on new shoreline, no redrawing white-green jade tablets"
+    },
+    {
+      "issue_id": "P1-S04-OTHER-001",
+      "asset_id": "BX01,BX02,BX03,BX04,BX06",
+      "severity": "P1",
+      "summary": "minor to moderate mask edge spill, cloth/fan/prop overlap require independent evidence review",
+      "repair": "mask-only trim, verify against original hero+prop images"
+    }
+  ],
+  "actor_approval": "ALL ORIGINAL STATIC HERO IMAGES REMAIN USER_APPROVED; S04 new scene NOT APPROVED",
+  "next_gate": "After P0 removed, rerun per-actor character+prop visual review (8 x 7 checks) and seven-role film QA. Only READY_FOR_USER_REVIEW can be sent to user for final decision.",
+  "upload_scope": "GitHub receives QA JSON and documentation only; original and produced binary PNG/mask layers are in downloadable conversation ZIP, not this GitHub branch."
+}
