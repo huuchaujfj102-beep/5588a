@@ -69,5 +69,29 @@
     "Precision segmentation/rotoscope 3 unresolved P0 regions; preserve user-approved 8 individual masters",
     "Run per-character seven-field and full seven-role human visual QA; resolve all P0 and P1",
     "Submit individual clean keyframe to user for explicit approval before any video work"
-  ]
+  ],
+  "precision_matte_tasks": [
+    {
+      "actor": "BX05",
+      "task_id": "a8d1ebc3-25ba-4045-be67-a34be519ba83",
+      "scope": "approved rider+white donkey cutout",
+      "status": "SUBMITTED_PENDING_RESULT_QA",
+      "in_v32_package": false
+    },
+    {
+      "actor": "BX07",
+      "task_id": "1939fdf4-af21-4fab-93ad-51e85c5ac6db",
+      "scope": "approved lotus goddess and platform cutout",
+      "status": "SUBMITTED_PENDING_RESULT_QA",
+      "in_v32_package": false
+    },
+    {
+      "actor": "BX08",
+      "task_id": "54288b79-1802-400f-a36a-eef1b0918738",
+      "scope": "approved royal officer and jade tablets cutout",
+      "status": "SUBMITTED_PENDING_RESULT_QA",
+      "in_v32_package": false
+    }
+  ],
+  "precision_matte_rule": "No external cutout replaces the V3.2 binary until output is actually available, RGB alignment and approved asset visual identity are verified, SHA check passes and per-actor postflight QA is complete."
 }
