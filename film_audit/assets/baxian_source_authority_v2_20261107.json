@@ -106,170 +106,254 @@
       "correct": "BX08 view=1000023566.png"
     }
   ],
-  "github_scope": "Index and rules only; PNG originals are in user-uploaded conversation files and downloadable package, not committed as binary images",
+  "github_scope": "Partial binary ingestion: two exact BX05 reference attachments; zero of the 24 mapped hero/turnaround/prop originals available. No previews substituted. BX05 old sources legacy only; V4 hero bytes pending.",
   "approval_gate": "The user's 8-character original still references stay approved. New composite/group and replacement images are candidates requiring final user review. BX05 V4 design approval is recorded separately from exact hero binary binding; block V4 production until binding and reference hash verification.",
   "file_hashes": [
     {
       "id": "BX01",
       "role": "hero",
       "filename": "1000023536.png",
-      "sha256": "946944388bbaa3364e745bcafadf58e5872975a832d928c9f76b76f0ea7d6a53"
+      "sha256": "946944388bbaa3364e745bcafadf58e5872975a832d928c9f76b76f0ea7d6a53",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX01",
       "role": "views",
       "filename": "1000023537.png",
-      "sha256": "ac692884cfe704134bbd2f131e34018b525766697adf66cc558f686ee4b61bfa"
+      "sha256": "ac692884cfe704134bbd2f131e34018b525766697adf66cc558f686ee4b61bfa",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX01",
       "role": "prop",
       "filename": "1000023539.png",
-      "sha256": "562933ca823b2d29fbec220b05ec5797e6ec0ee33d183a4c3cb5cb14270a90f6"
+      "sha256": "562933ca823b2d29fbec220b05ec5797e6ec0ee33d183a4c3cb5cb14270a90f6",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX02",
       "role": "hero",
       "filename": "1000023540.png",
-      "sha256": "c784ef30c2dedf9ffe6c63f452358915b987aaba15abee3c6d85c60622e588a4"
+      "sha256": "c784ef30c2dedf9ffe6c63f452358915b987aaba15abee3c6d85c60622e588a4",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX02",
       "role": "views",
       "filename": "1000023549.png",
-      "sha256": "67d4f9b59468232c5cdeb8634f7f7fd60c8ff9674c15743704f8cb2903cc3abf"
+      "sha256": "67d4f9b59468232c5cdeb8634f7f7fd60c8ff9674c15743704f8cb2903cc3abf",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX02",
       "role": "prop",
       "filename": "1000023551.png",
-      "sha256": "f54d3b676bbca6b261488d66b679f334e77f03876ac5836fc43499096ad7f35f"
+      "sha256": "f54d3b676bbca6b261488d66b679f334e77f03876ac5836fc43499096ad7f35f",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX02",
       "role": "extra",
       "filename": "1000023542.png",
-      "sha256": "16ddbb7112e7a12fd5e24f50cb4eddca8f0c4fc16ecec3391e1d9ebc6b36c87c"
+      "sha256": "16ddbb7112e7a12fd5e24f50cb4eddca8f0c4fc16ecec3391e1d9ebc6b36c87c",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX03",
       "role": "hero",
       "filename": "1000023555.png",
-      "sha256": "6e35033d06f56446ba401e5f678c2a9c6533bfa5b1601f6a26113ba3ffb2efcd"
+      "sha256": "6e35033d06f56446ba401e5f678c2a9c6533bfa5b1601f6a26113ba3ffb2efcd",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX03",
       "role": "views",
       "filename": "1000023559.png",
-      "sha256": "d0fa39c51b491aaadd1085cb9c78d766e8e870f63fdb13b22ab2ba0bcf1c57cc"
+      "sha256": "d0fa39c51b491aaadd1085cb9c78d766e8e870f63fdb13b22ab2ba0bcf1c57cc",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX03",
       "role": "prop",
       "filename": "1000023543.png",
-      "sha256": "597025ca3dd09b20e125fba0058feda6607f56f2d70d26537495a9f85aea8d1d"
+      "sha256": "597025ca3dd09b20e125fba0058feda6607f56f2d70d26537495a9f85aea8d1d",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX03",
       "role": "extra",
       "filename": "1000023560.png",
-      "sha256": "d557f188ca8bf624424086e6720a91c3c19e68821719512c108b334a7105081e"
+      "sha256": "d557f188ca8bf624424086e6720a91c3c19e68821719512c108b334a7105081e",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX04",
       "role": "hero",
       "filename": "1000023554.png",
-      "sha256": "630ad949adb866f967f1f032b791489e9c21d49996f4214d613a21f6b9cc40f3"
+      "sha256": "630ad949adb866f967f1f032b791489e9c21d49996f4214d613a21f6b9cc40f3",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX04",
       "role": "views",
       "filename": "1000023562.png",
-      "sha256": "02a4bc40ec498093193248047e9739c7bd8de94d3c524da7021852a7f47d0362"
+      "sha256": "02a4bc40ec498093193248047e9739c7bd8de94d3c524da7021852a7f47d0362",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX04",
       "role": "prop",
       "filename": "1000023544.png",
-      "sha256": "b831dfe60ae4eb3ec4361b38aa7eda0d0a7aa2a8f71eb6243bbedccd402620a6"
+      "sha256": "b831dfe60ae4eb3ec4361b38aa7eda0d0a7aa2a8f71eb6243bbedccd402620a6",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX05",
       "role": "hero",
       "filename": "1000023552.png",
-      "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199"
+      "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES",
+      "source_status": "LEGACY_TRACEABILITY_ONLY"
     },
     {
       "id": "BX05",
       "role": "views",
       "filename": "1000023558.png",
-      "sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6"
+      "sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES",
+      "source_status": "LEGACY_TRACEABILITY_ONLY"
     },
     {
       "id": "BX05",
       "role": "prop",
       "filename": "1000023545.png",
-      "sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64"
+      "sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES",
+      "source_status": "LEGACY_TRACEABILITY_ONLY"
     },
     {
       "id": "BX06",
       "role": "hero",
       "filename": "1000023556.png",
-      "sha256": "c7372b4b89b7b2bd39a9d484a488323eb30af27061ae49dc7f048b2729d81838"
+      "sha256": "c7372b4b89b7b2bd39a9d484a488323eb30af27061ae49dc7f048b2729d81838",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX06",
       "role": "views",
       "filename": "1000023563.png",
-      "sha256": "fd6dae36e686c7cadb9f0bda9a8ef60d2957bc5f426a934971a2d999952ab9b6"
+      "sha256": "fd6dae36e686c7cadb9f0bda9a8ef60d2957bc5f426a934971a2d999952ab9b6",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX06",
       "role": "prop",
       "filename": "1000023546.png",
-      "sha256": "bde8c0c39f0b373a2bab28e2f5911b305a2a670e0c3666bd9517ea49301d7e20"
+      "sha256": "bde8c0c39f0b373a2bab28e2f5911b305a2a670e0c3666bd9517ea49301d7e20",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX07",
       "role": "hero",
       "filename": "1000023567.png",
-      "sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e"
+      "sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX07",
       "role": "views",
       "filename": "1000023574.png",
-      "sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8"
+      "sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX07",
       "role": "prop",
       "filename": "1000023547.png",
-      "sha256": "70b59f6d716414e3c61fa47912810f58daa2ffd9ebb30a611b64faf8c282d15e"
+      "sha256": "70b59f6d716414e3c61fa47912810f58daa2ffd9ebb30a611b64faf8c282d15e",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX07",
       "role": "extra",
       "filename": "1000023573.png",
-      "sha256": "b3d380936d72c52af914545e64627a978b76c561051b25155580717d21b90917"
+      "sha256": "b3d380936d72c52af914545e64627a978b76c561051b25155580717d21b90917",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX08",
       "role": "hero",
       "filename": "1000023557.png",
-      "sha256": "73cc28bf6b1eec239a22a9b5e4b353c8e772360c4547dadf32bd99e7973e78cb"
+      "sha256": "73cc28bf6b1eec239a22a9b5e4b353c8e772360c4547dadf32bd99e7973e78cb",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX08",
       "role": "views",
       "filename": "1000023566.png",
-      "sha256": "540c05d403a74f108a721dc4a517055329e1152d9fedcbf9f61e0c1c897d25ac"
+      "sha256": "540c05d403a74f108a721dc4a517055329e1152d9fedcbf9f61e0c1c897d25ac",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX08",
       "role": "prop",
       "filename": "1000023548.png",
-      "sha256": "6224396ee277e3820b41cf5aff5ed135e0afcc9b503bb47a8539e2d664adc485"
+      "sha256": "6224396ee277e3820b41cf5aff5ed135e0afcc9b503bb47a8539e2d664adc485",
+      "binary_on_github": false,
+      "repository_path": null,
+      "availability": "MISSING_ORIGINAL_BYTES"
     },
     {
       "id": "BX05",
@@ -277,7 +361,13 @@
       "filename": "t01afa88d400b0bf3c8.jpg",
       "sha256": "d964817edb6c00e0036a10656ed19ca683db833b93940e73ba427a9bbc91a2a7",
       "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
-      "binary_on_github": false
+      "binary_on_github": true,
+      "repository_path": "film_audit/assets/baxian_sources/BX05/t01afa88d400b0bf3c8.jpg",
+      "size_bytes": 77155,
+      "git_blob_sha": "66ca2cc2125cf1b6caff5ef3d9fbf3f1d0c36e58",
+      "storage": "git_blob",
+      "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
+      "availability": "UPLOADED_PENDING_COMMIT_READBACK"
     },
     {
       "id": "BX05",
@@ -285,11 +375,16 @@
       "filename": "image(2).png",
       "sha256": "51992887a8bae028e6d1bd156619d7c906a59e146aa0627d4e570999f4e7b7b8",
       "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
-      "binary_on_github": false
+      "binary_on_github": true,
+      "repository_path": "film_audit/assets/baxian_sources/BX05/image(2).png",
+      "size_bytes": 1007825,
+      "git_blob_sha": "7f98917e42c070eafdca02b71310b801717b6547",
+      "storage": "git_blob",
+      "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
+      "availability": "UPLOADED_PENDING_COMMIT_READBACK"
     }
   ],
   "hash_algorithm": "SHA-256",
-  "total_verified_static_files": 27,
   "character_locks": {
     "BX05": {
       "lock_version": "BX05-USER-LOCK-20261107-V4",
@@ -309,7 +404,13 @@
           "filename": "t01afa88d400b0bf3c8.jpg",
           "sha256": "d964817edb6c00e0036a10656ed19ca683db833b93940e73ba427a9bbc91a2a7",
           "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
-          "binary_on_github": false
+          "binary_on_github": true,
+          "repository_path": "film_audit/assets/baxian_sources/BX05/t01afa88d400b0bf3c8.jpg",
+          "size_bytes": 77155,
+          "git_blob_sha": "66ca2cc2125cf1b6caff5ef3d9fbf3f1d0c36e58",
+          "storage": "git_blob",
+          "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
+          "availability": "UPLOADED_PENDING_COMMIT_READBACK"
         },
         {
           "id": "BX05",
@@ -317,9 +418,20 @@
           "filename": "image(2).png",
           "sha256": "51992887a8bae028e6d1bd156619d7c906a59e146aa0627d4e570999f4e7b7b8",
           "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
-          "binary_on_github": false
+          "binary_on_github": true,
+          "repository_path": "film_audit/assets/baxian_sources/BX05/image(2).png",
+          "size_bytes": 1007825,
+          "git_blob_sha": "7f98917e42c070eafdca02b71310b801717b6547",
+          "storage": "git_blob",
+          "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
+          "availability": "UPLOADED_PENDING_COMMIT_READBACK"
         }
       ]
     }
-  }
+  },
+  "historical_verified_static_files": 27,
+  "available_source_binary_count": 2,
+  "missing_source_binary_count": 27,
+  "registered_source_file_count": 29,
+  "availability_inventory_path": "film_audit/assets/baxian_source_ingest_manifest_20261107.json"
 }
