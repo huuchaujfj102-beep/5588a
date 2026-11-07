@@ -40,7 +40,9 @@
       "turnaround": "1000023558.png",
       "prop": "1000023545.png",
       "source_status": "LEGACY_TRACEABILITY_ONLY_V4_HERO_BINDING_PENDING",
-      "current_lock_version": "BX05-USER-LOCK-20261107-V4"
+      "current_lock_version": "BX05-USER-LOCK-20261107-V4",
+      "additional_yugu": "1000023719.png",
+      "additional_yugu_manifest": "film_audit/assets/bx05_yugu_additional_anchor_1000023719_20261108.json"
     },
     {
       "id": "BX06",
@@ -644,5 +646,24 @@
     "sha256": "cac3a01e16fc775c874bf2265b66af9c7e9916ee72dee2aada49f64c2aee8e4e",
     "originals_subdirectory": "八仙_V3_实际生产分层_20261107",
     "ingestion_scope": "24 root-level original PNG files only; layers, masks, previews and generated composites do not substitute for originals"
-  }
+  },
+  "supplemental_prop_references": [
+    {
+      "id": "BX05",
+      "role": "additional_yugu_structure_reference",
+      "filename": "1000023719.png",
+      "sha256": "a1785d08d0d2f94423a3f49587a7999e56a21b3fd6576da3a86622f1137a5193",
+      "size_bytes": 154323,
+      "dimensions": [
+        1536,
+        1536
+      ],
+      "binary_on_github": false,
+      "storage": "ChatGPT Library",
+      "library_path": "/八仙过海/BX05_张果老/1000023719_渔鼓一筒两杆_新增母图.png",
+      "library_file_id": "libfile_111b48b2e1b481919c911ff99b191454",
+      "status": "USER_ADDED_PROP_ANCHOR_NOT_HERO",
+      "manifest_path": "film_audit/assets/bx05_yugu_additional_anchor_1000023719_20261108.json"
+    }
+  ]
 }
