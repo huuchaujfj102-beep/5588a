@@ -1,0 +1,139 @@
+{
+  "$schema_version": "3.0",
+  "project": "八仙过海·沧海证道",
+  "enforcement_mode": "fail_closed",
+  "priority": "User-approved hero images and matching prop references remain immutable; never use a regenerated group montage as an identity source.",
+  "canonical_authority": "film_audit/assets/baxian_source_authority_v2_20261107.json",
+  "production_mode": "layered_composite",
+  "image_format": "PNG",
+  "expected_shot_ratio": "16:9",
+  "blocking": {
+    "actor_count": 8,
+    "unique_actor_id": true,
+    "source_files_sha256": true,
+    "separate_rgba_actor_and_prop_layers": true,
+    "per_layer_masks": true,
+    "unchanged_layer_hashes": true,
+    "post_gen_seven_role_review": true,
+    "final_approval_user_only": true
+  },
+  "layout": [
+    {
+      "id": "BX01",
+      "row": "front",
+      "order": 1
+    },
+    {
+      "id": "BX03",
+      "row": "front",
+      "order": 2
+    },
+    {
+      "id": "BX07",
+      "row": "front",
+      "order": 3
+    },
+    {
+      "id": "BX08",
+      "row": "front",
+      "order": 4
+    },
+    {
+      "id": "BX02",
+      "row": "back",
+      "order": 1
+    },
+    {
+      "id": "BX04",
+      "row": "back",
+      "order": 2
+    },
+    {
+      "id": "BX06",
+      "row": "back",
+      "order": 3
+    },
+    {
+      "id": "BX05",
+      "row": "back",
+      "order": 4
+    }
+  ],
+  "props": {
+    "BX01": [
+      "iron_crutch",
+      "purple_gold_gourd"
+    ],
+    "BX02": [
+      "tattered_banana_leaf_fan"
+    ],
+    "BX03": [
+      "pure_yang_sword",
+      "matching_scabbard"
+    ],
+    "BX04": [
+      "seven_treasure_flower_basket"
+    ],
+    "BX05": [
+      "single_white_donkey"
+    ],
+    "BX06": [
+      "single_purple_transverse_flute"
+    ],
+    "BX07": [
+      "single_lotus_platform",
+      "handheld_small_lotus"
+    ],
+    "BX08": [
+      "white_rectangular_jade_tablet",
+      "green_rectangular_jade_tablet"
+    ]
+  },
+  "special_actions": {
+    "BX01": "left_leg_limp_right_hand_crutch",
+    "BX03": "single_sword_with_sheath_state_recorded",
+    "BX04": "young_male",
+    "BX05": "backward_facing_donkey_tail",
+    "BX06": "horizontal_flute",
+    "BX07": "feet_supported_on_one_lotus_platform",
+    "BX08": "exactly_two_rectangular_tablets"
+  },
+  "forbid_modes": [
+    "text_to_image_group_redraw",
+    "full_frame_img2img_regeneration",
+    "single_reference_group_img2img",
+    "contact_sheet_or_poster"
+  ],
+  "review_roles": [
+    "story",
+    "character",
+    "props",
+    "architecture",
+    "cinematography",
+    "physics",
+    "continuity"
+  ],
+  "post_review_required": [
+    "face",
+    "hair",
+    "wardrobe",
+    "body_proportions",
+    "prop_identity",
+    "prop_count",
+    "prop_state",
+    "contact_physics",
+    "occlusion",
+    "lighting",
+    "scene_geography",
+    "no_text_panels"
+  ],
+  "allowed_automation": "Validate filenames, expected hashes, scene layout metadata, alpha layers/masks, layer immutability, reviewer evidence presence; cannot establish visual likeness or movie-quality fidelity on its own.",
+  "status_progression": [
+    "BLOCKED",
+    "PREFLIGHT_PASS",
+    "REVIEW_REQUIRED",
+    "READY_FOR_USER_REVIEW",
+    "USER_APPROVED_FINAL"
+  ],
+  "final_gate": "Automated checks and seven review PASS statuses NEVER set USER_APPROVED_FINAL. A separate explicit user-approved asset version/hash is mandatory."
+}
