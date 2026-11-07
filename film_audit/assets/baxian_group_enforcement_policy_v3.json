@@ -15,7 +15,8 @@
     "per_layer_masks": true,
     "unchanged_layer_hashes": true,
     "post_gen_seven_role_review": true,
-    "final_approval_user_only": true
+    "final_approval_user_only": true,
+    "per_actor_postflight_evidence": true
   },
   "layout": [
     {
@@ -136,5 +137,14 @@
     "READY_FOR_USER_REVIEW",
     "USER_APPROVED_FINAL"
   ],
-  "final_gate": "Automated checks and seven review PASS statuses NEVER set USER_APPROVED_FINAL. A separate explicit user-approved asset version/hash is mandatory."
+  "final_gate": "Automated checks and seven review PASS statuses NEVER set USER_APPROVED_FINAL. A separate explicit user-approved asset version/hash is mandatory.",
+  "per_actor_review_required": [
+    "identity",
+    "face",
+    "hair",
+    "wardrobe",
+    "prop_shape_count",
+    "anatomy",
+    "ground_contact"
+  ]
 }
