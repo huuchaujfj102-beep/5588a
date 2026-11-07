@@ -196,9 +196,37 @@ def validate(plan: dict, authority: dict, policy: dict, root: Path,
                 pending.append({"code": "REVIEW_ROLE_PENDING", "role": role})
             elif not _safe_path(root, entry.get("evidence_file"), errors, "MISSING_REVIEW_EVIDENCE"):
                 pending.append({"code": "REVIEW_EVIDENCE_PENDING", "role": role})
+        individual = review.get("actor_checks", {})
+        if not isinstance(individual, dict):
+            individual = {}
+        used_evidence = set()
+        for aid in sorted(layout):
+            entry = individual.get(aid, {})
+            if not isinstance(entry, dict):
+                entry = {}
+            actor_pass = True
+            for field in policy.get("per_actor_review_required", []):
+                state = entry.get(field)
+                if state == "FAIL":
+                    errors.append({"code": "ACTOR_REVIEW_FAILED", "id": aid, "item": field})
+                    actor_pass = False
+                elif state != "PASS":
+                    pending.append({"code": "ACTOR_REVIEW_PENDING", "id": aid, "item": field})
+                    actor_pass = False
+            if actor_pass:
+                evidence_name = entry.get("evidence_file")
+                evidence_path = _safe_path(root, evidence_name, errors, "MISSING_ACTOR_EVIDENCE")
+                if evidence_path:
+                    if evidence_path in used_evidence:
+                        errors.append({"code": "DUPLICATE_ACTOR_EVIDENCE", "id": aid})
+                    used_evidence.add(evidence_path)
+
         cat_checks = review.get("category_checks", {})
         for name in policy.get("post_review_required", []):
-            if not isinstance(cat_checks, dict) or cat_checks.get(name) != "PASS":
+            value = cat_checks.get(name) if isinstance(cat_checks, dict) else None
+            if value == "FAIL":
+                errors.append({"code": "VISUAL_CHECK_FAILED", "item": name})
+            elif value != "PASS":
                 pending.append({"code": "VISUAL_CHECK_PENDING", "item": name})
         status = "BLOCKED" if errors else ("REVIEW_REQUIRED" if pending else "READY_FOR_USER_REVIEW")
 
@@ -212,7 +240,7 @@ def validate(plan: dict, authority: dict, policy: dict, root: Path,
             "approved_source_sha256", "exact_eight_cast", "role_prop_ownership",
             "fixed_blocking", "scene_orientation", "RGBA_layer_presence_and_hash",
             "mask_presence_and_hash", "layer_canvas"
-        ] + (["render_sha256", "review_record_completeness"] if phase == "postflight" else []),
+        ] + (["render_sha256", "review_record_completeness", "per_actor_evidence_completeness"] if phase == "postflight" else []),
         "visual_identity_verified_automatically": False,
         "may_generate": status == "PREFLIGHT_PASS",
         "may_submit_to_user": status == "READY_FOR_USER_REVIEW",
