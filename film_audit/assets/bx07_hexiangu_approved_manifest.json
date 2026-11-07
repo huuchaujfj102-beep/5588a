@@ -1,0 +1,143 @@
+{
+  "project": "八仙过海·沧海证道",
+  "asset_id": "BX07",
+  "name": "何仙姑",
+  "approval_source": "user explicit statement: BX07定版何仙姑",
+  "approved_by": "user",
+  "approval_date": "2026-11-06",
+  "approval_status": "USER_APPROVED_STILL",
+  "archive_name": "BX07_何仙姑_V3_补充视图与主图完整包_20261107.zip",
+  "binary_images_in_repository": false,
+  "files": [
+    {
+      "original_filename": "1000023567.png",
+      "archive_filename": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
+      "width": 864,
+      "height": 1536,
+      "sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
+      "role": "user-approved primary cinematic hero",
+      "is_primary": true
+    },
+    {
+      "original_filename": "1000023533.png",
+      "archive_filename": "BX07_CHARACTER_LOTUS_CINEMATIC_APPROVED.png",
+      "width": 863,
+      "height": 1536,
+      "sha256": "462688a5eb9af46d8b28d017d27bd190ceeee53bf580899cb638c2885e830767",
+      "role": "lotus_cinematic_scene"
+    },
+    {
+      "original_filename": "1000023564.png",
+      "archive_filename": "BX07_CHARACTER_FRONT_BACK_APPROVED.png",
+      "width": 857,
+      "height": 1536,
+      "sha256": "fd9fc777062ad11633f9453b2ba62c5fc44fd88c657a23589c732b5e85d3fdc1",
+      "role": "front_back_identity"
+    },
+    {
+      "original_filename": "1000023565.png",
+      "archive_filename": "BX07_CHARACTER_MULTIVIEW_APPROVED.png",
+      "width": 857,
+      "height": 1536,
+      "sha256": "7898691c67c9fec43c33d0f8cb1df52a6610f0c680462bcfc597f9b76740f5ce",
+      "role": "character_multiview"
+    },
+    {
+      "original_filename": "1000023547.png",
+      "archive_filename": "BX07_LOTUS_PLATFORM_STRUCTURE_APPROVED.png",
+      "width": 1229,
+      "height": 1536,
+      "sha256": "70b59f6d716414e3c61fa47912810f58daa2ffd9ebb30a611b64faf8c282d15e",
+      "role": "lotus_platform"
+    },
+    {
+      "original_filename": "1000023574.png",
+      "archive_filename": "BX07_V3_SUPPLEMENT_SIX_VIEW_USER_SUBMITTED.png",
+      "width": 1152,
+      "height": 1536,
+      "sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8",
+      "role": "supplemental six-view character comparison",
+      "status": "REGISTERED_PENDING_USER_FINAL_LOCK"
+    },
+    {
+      "original_filename": "1000023573.png",
+      "archive_filename": "BX07_V3_SUPPLEMENT_FRONT_BACK_USER_SUBMITTED.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "b3d380936d72c52af914545e64627a978b76c561051b25155580717d21b90917",
+      "role": "supplemental front/back character comparison",
+      "status": "REGISTERED_PENDING_USER_FINAL_LOCK"
+    }
+  ],
+  "reference_priority": {
+    "primary_cinematic_hero": "1000023567.png",
+    "supplemental_turnaround": "1000023574.png",
+    "supplemental_front_back": "1000023573.png",
+    "lotus_platform_geometry": "1000023547.png",
+    "legacy_costume_references": [
+      "1000023564.png",
+      "1000023565.png"
+    ],
+    "legacy_cinematic": "1000023533.png"
+  },
+  "identity_lock": [
+    "优先锁定最新主图1000023567.png面部、头发和花饰、青绿玉白粉金莲花长裙及细节、主图表情与姿态；不擅自回退旧版",
+    "旧多视角仅作历史方向参考；冲突时不得直接套入同一场次，必须基于新主图同源统一后按一图一审"
+  ],
+  "prop_lock": [
+    "莲台只允许一座，结构参照1000023547.png，主图参照1000023567.png",
+    "角色持小型发光莲花为施法手部动作，不视为新增承托莲台",
+    "足底与莲台承重台面合理接触，动态飞行及净化特效仍待视频验证"
+  ],
+  "technical_scope": "User-approved still image references only. Video support, foot contact, lotus motion and spell physics are untested.",
+  "video_qa_status": "PENDING_ACTION_CONTINUITY_QA",
+  "review_caveats": [
+    "多视角图为合成板，不等同于五张单独校验通过的独立视图",
+    "以文件本身尺寸为准，不宣称原生8K",
+    "与视频物理相关的验证必须在I2V实际生成后检查"
+  ],
+  "repository_note": "GitHub only stores reference metadata & SHA256. Original PNG is included in updated downloadable ZIP archive; not uploaded as binary to GitHub.",
+  "revision": "BX07-HERO-V2-SUPPLEMENT-V3-20261107",
+  "approval_source_latest": "user explicit instruction: 把这张图放入Bx07做主图",
+  "primary_hero_file": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
+  "reference_conflict_policy": "The newest approved primary hero 1000023567.png takes precedence for face, hair and costume. Earlier turnaround images are historical references where they differ and must not be mixed as interchangeable footage. Geometry of lotus platform remains from approved prop structure 1000023547.png.",
+  "repair_qa_2026_11_06": {
+    "origin": "approved primary BX07_MAIN_HERO_USER_APPROVED_20261106.png",
+    "issue": "P0 old front/back and six-view differ substantially in hair and garment from latest hero",
+    "original_turnarounds_preserved": true,
+    "candidates_not_approved": [
+      {
+        "name": "何仙姑仙韻蓮華角色設計稿.png",
+        "sha256": "2b24728c6c0af867dafe50dd8a9882fb08369ba242b700ecf2aee470b6fe9303",
+        "dimensions": [
+          1024,
+          1536
+        ],
+        "status": "CANDIDATE_PENDING_USER"
+      },
+      {
+        "name": "何仙姑莲花仙子六视图服饰设定.png",
+        "sha256": "d3f7d19845ac383606f6320675806c3e35d9ae62da12b0005c5a9c3024ec5409",
+        "dimensions": [
+          1086,
+          1448
+        ],
+        "status": "CANDIDATE_PENDING_USER"
+      }
+    ],
+    "single_right_profile_runway_task": "27aab198-fbaf-4d97-aec3-28f62c705d9c",
+    "independent_profile_result": "PENDING",
+    "report": "docs/reviews/baxian-all-approved-stills-global-qa-2026-11-06.md",
+    "approval_rule": "Do not overwrite existing approved hero, user must approve these supplementary views to become final; motion QA separate."
+  },
+  "supplement_note": "The user asked to add two new BX07 character design sheets on 2026-11-07. The already approved 1000023567 hero image remains authoritative and unchanged. Both new sheets are registered supplementary references and not independently approved final production frames.",
+  "supplement_qa": {
+    "identity": "visually close to newer primary main image",
+    "accessories": "generally matching lotus hair ornament, ribbons and green/gold/pink robe",
+    "issues": [
+      "compound contact sheets are not independently validated full-body angle masters",
+      "dynamic cloth/hand and lotus platform support remain untested"
+    ],
+    "status": "SUPPLEMENTARY_REGISTERED_PENDING_FINAL_LOCK"
+  }
+}

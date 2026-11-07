@@ -1,0 +1,75 @@
+{
+  "project": "八仙过海·沧海证道",
+  "id": "BX02",
+  "name": "汉钟离",
+  "revision": "APPROVED_2026-11-06",
+  "approved_by": "user",
+  "approved_at": "2026-11-06",
+  "status": "USER_APPROVED_STILL",
+  "production_stage": "static_reference_locked",
+  "animation_status": "PENDING_ACTION_AND_CONTINUITY_VALIDATION",
+  "binary_images_in_repository": false,
+  "archive_name": "BX02_汉钟离_用户批准母图_20261106.zip",
+  "files": [
+    {
+      "asset_id": "BX02-CHARACTER_HERO",
+      "original_filename": "1000023540.png",
+      "archive_filename": "BX02_CHARACTER_HERO_APPROVED.png",
+      "width": 864,
+      "height": 1536,
+      "sha256": "c784ef30c2dedf9ffe6c63f452358915b987aaba15abee3c6d85c60622e588a4"
+    },
+    {
+      "asset_id": "BX02-CHARACTER_TURNAROUND",
+      "original_filename": "1000023549.png",
+      "archive_filename": "BX02_CHARACTER_TURNAROUND_APPROVED.png",
+      "width": 1536,
+      "height": 864,
+      "sha256": "67d4f9b59468232c5cdeb8634f7f7fd60c8ff9674c15743704f8cb2903cc3abf"
+    },
+    {
+      "asset_id": "BX02-FAN_STRUCTURE",
+      "original_filename": "1000023551.png",
+      "archive_filename": "BX02_FAN_STRUCTURAL_REFERENCE_APPROVED.png",
+      "width": 1536,
+      "height": 864,
+      "sha256": "f54d3b676bbca6b261488d66b679f334e77f03876ac5836fc43499096ad7f35f"
+    },
+    {
+      "asset_id": "BX02-FAN_CINEMATIC",
+      "original_filename": "1000023542.png",
+      "archive_filename": "BX02_FAN_CINEMATIC_REFERENCE_APPROVED.png",
+      "width": 1229,
+      "height": 1536,
+      "sha256": "16ddbb7112e7a12fd5e24f50cb4eddca8f0c4fc16ecec3391e1d9ebc6b36c87c"
+    }
+  ],
+  "reference_priority": {
+    "character_identity": "BX02-CHARACTER_TURNAROUND",
+    "character_cinematic_appearance": "BX02-CHARACTER_HERO",
+    "fan_structure": "BX02-FAN_STRUCTURE",
+    "fan_lighting_and_magic": "BX02-FAN_CINEMATIC"
+  },
+  "locks": {
+    "character": [
+      "汉钟离，袒腹，豪放大笑，深灰白束发和胡须",
+      "宽大破损紫褐色袍服、金色暗纹",
+      "保持五官比例、年龄、体型、服装层次以及腰间饰物"
+    ],
+    "fan": [
+      "法宝归属汉钟离，单一巨型芭蕉叶扇",
+      "叶片为湿润绿褐色、黄褐风化破损边缘，叶脉和破洞不随镜头改变",
+      "竹木扇柄裹绳、旧红色流苏",
+      "风场出力由扇柄/扇面动作产生；不得瞬变为金属折扇或多把扇"
+    ],
+    "forbidden": [
+      "人物换脸、变装、变体型",
+      "法宝增殖、变种、叶片拓扑随机变化",
+      "无故左右手切换或手指穿模",
+      "跨镜头摇镜逆转无解释",
+      "未经视频检测宣布通过挥扇动作"
+    ]
+  },
+  "approval_notes": "用户明确批准本轮四张原始附件为 BX02 静态定型母图。不等于确认挥扇动作、视频接触物理或跨镜头特效均已通过。若两种扇形参考局部冲突，结构图优先定义叶形与破损位置，其余作为批准的灯光效果参考。",
+  "repository_note": "本文件仅为可审计元数据与 SHA256 锚点。四张PNG原始像素保存在当前对话的 BX02 ZIP 资产包；目前没有将二进制图片上传 GitHub，不能据此声称 GitHub 已存有图片。"
+}

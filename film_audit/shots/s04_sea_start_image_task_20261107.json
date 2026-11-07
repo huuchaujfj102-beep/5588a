@@ -1,0 +1,40 @@
+{
+  "project": "八仙过海·沧海证道",
+  "stage": "第二阶段·八仙过海",
+  "shot_id": "S04-01",
+  "description": "八仙临海起势—独立16:9电影关键帧",
+  "source_ref": "04_八仙风暴海岸群像_批准源图分层定位候选.png",
+  "source_authority": "film_audit/assets/baxian_source_authority_v2_20261107.json",
+  "production_method": "Runway single-reference image edit",
+  "task_id": "4f0d0a33-642d-400d-845e-e201de319503",
+  "task_status": "SUBMITTED_PENDING_RENDER",
+  "result_url": null,
+  "approved_for_video": false,
+  "requested_ratio": "16:9",
+  "requested_size": "2K",
+  "qa_rules": {
+    "hard": [
+      "exactly 8 distinct immortals",
+      "one white donkey, Zhang Guolao rides backward",
+      "Tieguai Li iron crutch and gourd",
+      "Zhongli Quan large tattered banana-leaf fan, not circle fan",
+      "Lü Dongbin one Pure Yang sword and one sheath",
+      "Lan Caihe boy with wicker flowers",
+      "Han Xiangzi one purple transverse flute",
+      "He Xiangu user-approved 1000023567 identity, ONE platform plus handheld flower",
+      "Cao Guojiu exactly two rectangular green and white jade tablets",
+      "single continuous real scene without panels, words or graphic design"
+    ],
+    "style": [
+      "stormy coast and damaged fishing village",
+      "credible character contact, shadows, wind and water",
+      "skin microtexture and aged cloth PBR"
+    ],
+    "process": "PRE-GEN QA intent specified; actual post-generation P0/P1 seven-role QA not yet performed; no final signoff without user's approval"
+  },
+  "next_steps": [
+    "Review output after image task completes in the connected image viewer",
+    "If P0 occurs, freeze defects and prepare a single comprehensive repair prompt, no repeated random remake",
+    "After acceptable sea-start image, create mid-action and battle keyframes only as independently reviewable renders"
+  ]
+}

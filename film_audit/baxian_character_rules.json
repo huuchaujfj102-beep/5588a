@@ -1,0 +1,368 @@
+{
+  "project": "八仙过海·沧海证道",
+  "version": "1.2",
+  "status": "specification_only_not_visual_verified",
+  "characters": [
+    {
+      "id": "BX01",
+      "name": "铁拐李",
+      "required": [
+        "跛足",
+        "铁拐",
+        "紫金葫芦",
+        "破旧麻衣"
+      ],
+      "forbidden": [
+        "健全双腿行走设定"
+      ],
+      "tbd": [],
+      "approval_status": "USER_APPROVED_STILL",
+      "approval_date": "2026-11-06",
+      "lock_version": "BX01-USER-LOCK-20261106-V1",
+      "locked_attributes": {
+        "crutch": "single rounded cap iron crutch; character right hand",
+        "gourd": "single purple-gold cloud-pattern gourd with gold curved stopper and purple tassel; character left waist",
+        "limp": "left leg wrapping / limp as in approved still references; verify gait in animation",
+        "face": "match approved hero/turnaround; no redesign",
+        "wardrobe": "match approved hero/turnaround; no redesign"
+      },
+      "approved_sources": [
+        {
+          "file": "1000023536.png",
+          "role": "hero",
+          "sha256": "946944388bbaa3364e745bcafadf58e5872975a832d928c9f76b76f0ea7d6a53"
+        },
+        {
+          "file": "1000023537.png",
+          "role": "turnaround",
+          "sha256": "ac692884cfe704134bbd2f131e34018b525766697adf66cc558f686ee4b61bfa"
+        },
+        {
+          "file": "1000023539.png",
+          "role": "prop",
+          "sha256": "562933ca823b2d29fbec220b05ec5797e6ec0ee33d183a4c3cb5cb14270a90f6"
+        }
+      ],
+      "animation_status": "PENDING_GAIT_I2V",
+      "source_authority_v2": {
+        "hero": "1000023536.png",
+        "turnaround": "1000023537.png",
+        "prop": "1000023539.png"
+      },
+      "source_map_verified_at": "2026-11-07"
+    },
+    {
+      "id": "BX02",
+      "name": "汉钟离",
+      "required": [
+        "袒腹",
+        "宽袍",
+        "芭蕉扇"
+      ],
+      "forbidden": [
+        "双扇"
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_date": "2026-11-06",
+      "approval_source": "user_explicit_confirmation_current_conversation",
+      "approved_manifest_path": "film_audit/assets/bx02_hanzhongli_approved_manifest.json",
+      "identity_lock": [
+        "user-approved face and facial hair",
+        "袒腹、宽袍、大笑",
+        "体型、服饰裁片和纹样以 BX02 批准图为准"
+      ],
+      "prop_lock": [
+        "唯一巨型芭蕉叶扇",
+        "具体叶形/叶脉/破损形状引用 BX02-FAN_STRUCTURE",
+        "扇柄缠绳与流苏不可漂移"
+      ],
+      "video_qa_status": "PENDING",
+      "source_authority_v2": {
+        "hero": "1000023540.png",
+        "turnaround": "1000023549.png",
+        "prop": "1000023542.png"
+      },
+      "source_map_verified_at": "2026-11-07"
+    },
+    {
+      "id": "BX03",
+      "name": "吕洞宾",
+      "required": [
+        "深蓝纹样衣袍",
+        "纯阳仙剑"
+      ],
+      "forbidden": [
+        "拂尘",
+        "同时出现两把仙剑"
+      ],
+      "states": [
+        "sheathed",
+        "drawing",
+        "drawn",
+        "returning"
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_date": "2026-11-06",
+      "approval_source": "user explicit designation BX03 吕洞宾定型 in this conversation",
+      "approved_manifest_path": "film_audit/assets/bx03_lvdongbin_approved_manifest.json",
+      "identity_lock": [
+        "深蓝金纹层叠长袍/金色腰扣/玉坠、束发簪和深蓝发带",
+        "五官/胡须/发型按批准多视角正面；对照图右侧生成图优先于左侧参考图"
+      ],
+      "prop_lock": [
+        "纯阳仙剑只一柄，剑鞘配套一件",
+        "禁用拂尘、第二把剑；已出鞘时剑鞘必须为空",
+        "剑、鞘、流苏、玉环纹样严格引用批准的剑图"
+      ],
+      "video_qa_status": "PENDING",
+      "source_authority_v2": {
+        "hero": "1000023555.png",
+        "turnaround": "1000023559.png",
+        "prop": "1000023543.png"
+      },
+      "source_map_verified_at": "2026-11-07"
+    },
+    {
+      "id": "BX04",
+      "name": "蓝采和",
+      "required": [
+        "清朗少年男性",
+        "七宝花篮",
+        "繁花"
+      ],
+      "forbidden": [
+        "未经批准的少女化定型"
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_source": "user supplied and labeled BX04 定型 / 定版",
+      "approval_date": "2026-11-06",
+      "approved_group_reference_file": "1000023554.png",
+      "character_and_prop_locks": [
+        "少年男性浅蓝花纹袍服，身份1000023554.png",
+        "唯一花篮道具=1000023544.png，非白仙驴"
+      ],
+      "video_qa_status": "PENDING",
+      "source_authority_v2": {
+        "hero": "1000023554.png",
+        "turnaround": "1000023562.png",
+        "prop": "1000023544.png"
+      },
+      "source_map_verified_at": "2026-11-07"
+    },
+    {
+      "id": "BX05",
+      "name": "张果老",
+      "required": [
+        "白发长须及最新确认脸部",
+        "最新确认服装",
+        "唯一白仙驴",
+        "倒骑",
+        "祥云",
+        "斑点竹筒鱼鼓",
+        "两根细竹杆",
+        "贴身斜抱鱼鼓"
+      ],
+      "forbidden": [
+        "小圆鼓或手鼓替代鱼鼓",
+        "其他鼓类替代品",
+        "正骑",
+        "灰驴",
+        "额外法器或鱼鼓增殖"
+      ],
+      "static_asset_status": "USER_APPROVED_DESIGN_LOCK_HERO_BINDING_PENDING",
+      "approval_source": {
+        "conversation_id": "6aed72b5-9d78-83ec-8e9a-10ef628744b5",
+        "turn_id": "e7c4a2b4-9b94-476d-8938-94559c2b2732",
+        "user_quote": "可以写入张果老人物定型",
+        "scope": "Latest explicitly confirmed BX05 design, including approved yugu; this does not identify or verify unavailable replacement hero bytes."
+      },
+      "approval_date": "2026-11-07",
+      "approved_group_reference_file": null,
+      "character_and_prop_locks": [
+        "保留最新确认角色图的五官、白发长须与神态，不重新设计",
+        "保留最新确认角色图的服装、裁片、纹样、颜色与配饰",
+        "唯一白仙驴，身体朝驴尾倒骑；驴耳、四蹄、毛色、鞍具与真实骑坐接触保持一致",
+        "唯一斑点竹筒鱼鼓、两根细竹杆，贴身斜抱；筒体依靠前臂/臂弯承托，手与法器接触自然，按姿态参考核验"
+      ],
+      "video_qa_status": "PENDING_YUGU_CONTACT_REVERSE_RIDING_AND_CONTINUITY",
+      "group_riding_constraint": "场景内必须后向倒骑白仙驴，身体朝驴尾，四肢、骑坐接触真实；旧横版站在驴旁构图不能直接批准",
+      "source_authority_v2": {
+        "hero": "1000023552.png",
+        "turnaround": "1000023558.png",
+        "prop": "1000023545.png"
+      },
+      "source_map_verified_at": "2026-11-07",
+      "lock_version": "BX05-USER-LOCK-20261107-V4",
+      "approved_manifest_path": "film_audit/assets/bx05_zhangguolao_user_lock_v4_20261107.json",
+      "legacy_group_reference_file": "1000023552.png",
+      "current_hero": {
+        "filename": null,
+        "sha256": null,
+        "binding_status": "PENDING_EXACT_APPROVED_HERO_BYTES",
+        "binary_on_github": false,
+        "visual_qa_status": "NOT_PERFORMED_ON_REPLACEMENT_HERO"
+      },
+      "source_authority_v2_scope": "Legacy mapping retained for traceability only; current V4 hero is not yet bound"
+    },
+    {
+      "id": "BX06",
+      "name": "韩湘子",
+      "required": [
+        "紫玉箫"
+      ],
+      "forbidden": [
+        "多箫"
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_source": "user explicit BX06 韩湘子定型 on 2026-11-06",
+      "approval_date": "2026-11-06",
+      "approved_manifest_path": "film_audit/assets/bx06_hanxiangzi_approved_manifest.json",
+      "identity_lock": [
+        "以用户批准白底多视角参考固定五官、黑发半束簪花与紫灰层叠古风衣袍、腰饰",
+        "保持柔和清雅的青年文士神态、同脸跨镜头一致"
+      ],
+      "prop_lock": [
+        "唯一一支紫玉横吹管乐器；紫晶管身金纹及套环、孔位、流苏、莲花和玉珠装饰按批准参考",
+        "传统箫通常竖吹；影片文本沿用‘紫玉箫’时必须保持获批横吹视觉设计，不得横吹/竖吹混用",
+        "禁止新增乐器或替换材质、孔位"
+      ],
+      "video_qa_status": "PENDING_MOUTH_FINGER_CONTACT_AND_CONTINUITY",
+      "source_authority_v2": {
+        "hero": "1000023556.png",
+        "turnaround": "1000023563.png",
+        "prop": "1000023546.png"
+      },
+      "source_map_verified_at": "2026-11-07"
+    },
+    {
+      "id": "BX07",
+      "name": "何仙姑",
+      "required": [
+        "青莲长裙",
+        "莲台"
+      ],
+      "forbidden": [
+        "莲台不承重"
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_source": "user explicit BX07 定版何仙姑",
+      "approval_date": "2026-11-06",
+      "approved_manifest_path": "film_audit/assets/bx07_hexiangu_approved_manifest.json",
+      "identity_lock": [
+        "用户已批准的1000023567.png仍为主要五官、发饰、青绿粉金衣袍及莲花法术外观基准",
+        "新补充1000023574.png和1000023573.png仅为与主图匹配的新多视角/正背面参考，不代表自动批准为独立视频关键帧",
+        "旧多视角不作为新装扮视频镜头身份依据，冲突一律以批准主图为准"
+      ],
+      "prop_lock": [
+        "莲台唯一；结构参照已批准1000023547.png，新的主图1000023567.png定义人物与莲台同框姿态",
+        "手持发光莲花为施法道具/光效，不是第二座莲台；脚在莲台承重面上",
+        "动态莲台承托与水浪互动仍待图生视频物理验证"
+      ],
+      "video_qa_status": "PENDING_LOTUS_SUPPORT_AND_VFX_CONTINUITY",
+      "primary_hero_file": "BX07_MAIN_HERO_USER_APPROVED_20261106.png",
+      "primary_hero_source": "1000023567.png",
+      "primary_hero_sha256": "d2e782c957e577e93950c230aa8f4ea19165f24debd546f859672fee3abffe0e",
+      "primary_hero_lock_version": "BX07-HERO-UPDATE-20261106-V2",
+      "turnaround_consistency_status": "OLD_VIEW_MISMATCH_REQUIRES_NEW_HERO_CONSISTENT_VIEW",
+      "turnaround_candidate_files": [
+        "何仙姑仙韻蓮華角色設計稿.png",
+        "何仙姑莲花仙子六视图服饰设定.png"
+      ],
+      "turnaround_candidate_status": "REPAIR_CANDIDATE_PENDING_TECHNICAL_QA_AND_USER_APPROVAL",
+      "supplemental_views": [
+        {
+          "filename": "1000023574.png",
+          "role": "updated six-view character reference",
+          "sha256": "2fc4ff901180d166b4bbbd7479d435bd4a01d321a2f5b76c1934a760364cc6f8",
+          "status": "REGISTERED_PENDING_FINAL_LOCK"
+        },
+        {
+          "filename": "1000023573.png",
+          "role": "updated front/back reference",
+          "sha256": "b3d380936d72c52af914545e64627a978b76c561051b25155580717d21b90917",
+          "status": "REGISTERED_PENDING_FINAL_LOCK"
+        }
+      ],
+      "reference_priority_order": [
+        "1000023567.png CURRENT_APPROVED_PRIMARY_HERO",
+        "1000023574.png SUPPLEMENT_SIX_VIEW",
+        "1000023573.png SUPPLEMENT_FRONT_BACK",
+        "1000023547.png APPROVED_LOTUS_PLATFORM_GEOMETRY",
+        "OLDER_TURNAROUND_LEGACY_ONLY"
+      ],
+      "source_authority_v2": {
+        "hero": "1000023567.png",
+        "turnaround": "1000023574.png",
+        "prop": "1000023547.png"
+      },
+      "source_map_verified_at": "2026-11-07"
+    },
+    {
+      "id": "BX08",
+      "name": "曹国舅",
+      "required": [
+        "红褐官袍",
+        "阴阳玉板"
+      ],
+      "forbidden": [
+        "法宝变剑"
+      ],
+      "static_asset_status": "USER_APPROVED_STILL",
+      "approval_source": "user supplied and labeled BX08 定型 / 定版",
+      "approval_date": "2026-11-06",
+      "approved_group_reference_file": "1000023557.png",
+      "character_and_prop_locks": [
+        "赤褐官袍、冠、胡须，正确多视角1000023566.png",
+        "阴阳双玉板1000023548.png，白玉与青绿玉各一片；禁圆扇和额外玉板"
+      ],
+      "video_qa_status": "PENDING",
+      "group_jade_constraint": "老版群像圆形太极盘错误；必须一对独立白绿矩形阴阳玉板，主图批准形制优先",
+      "source_authority_v2": {
+        "hero": "1000023557.png",
+        "turnaround": "1000023566.png",
+        "prop": "1000023548.png"
+      },
+      "source_map_verified_at": "2026-11-07"
+    }
+  ],
+  "hard_fail": [
+    "wrong_character",
+    "wrong_prop_owner",
+    "extra_prop",
+    "missing_signature_feature",
+    "invalid_prop_state",
+    "invalid_action_physics",
+    "unexplained_spatial_flip"
+  ],
+  "visual_validation_required": true,
+  "note": "BX01–BX08 all user-designated static identities are approved in conversation; approved originals remain immutable. This JSON is a visual constraint registry, not proof that animation or new compositions passed QA. See docs/reviews/baxian-all-approved-stills-global-qa-2026-11-06.md.",
+  "registry_notes": "8 characters: user-approved static stills; revised BX07 angles and ensemble edits are candidates only. Actual PNG binary files have NOT been uploaded to this GitHub branch; see user-downloaded ZIP. No video's motion validation inferred from stills.",
+  "group_stage_reference_manifest": "film_audit/assets/baxian_eight_hero_group_reference_manifest.json",
+  "group_stage_status": "GROUP_REPAIR_IN_PROGRESS_NOT_FINAL",
+  "static_qa_audit": {
+    "date": "2026-11-06",
+    "original_png_reviewed": 28,
+    "report": "docs/reviews/baxian-all-approved-stills-global-qa-2026-11-06.md",
+    "issues_open": [
+      "BX07-old-turnaround-vs-new-hero",
+      "GROUP-jade-panels-vs-round-disk",
+      "GROUP-reverse-riding",
+      "GROUP-BX07-old-costume"
+    ],
+    "edit_tasks": [
+      {
+        "id": "27b6ec0d-d9c8-4be7-a079-70fbd29d7f3e",
+        "purpose": "group-scene-p0-repair",
+        "status": "SUBMITTED_PENDING_RESULT_QA"
+      },
+      {
+        "id": "27aab198-fbaf-4d97-aec3-28f62c705d9c",
+        "purpose": "BX07-independent-right-profile",
+        "status": "SUBMITTED_PENDING_RESULT_QA"
+      }
+    ],
+    "approval_gate": "USER_FINAL_APPROVAL_REQUIRED_BEFORE_REPLACEMENT"
+  },
+  "source_authority_v2_path": "film_audit/assets/baxian_source_authority_v2_20261107.json",
+  "source_mapping_regression_gate": "New group images must check 8 IDs and unique role-specific prop reference names against source_authority_v2 before generation and after output; rejected group cannot become official."
+}

@@ -1,0 +1,47 @@
+{
+  "project": "八仙过海·沧海证道",
+  "shot_id": "S04-01",
+  "deliverable_version": "V3.2",
+  "artifact_name": "八仙_S04_01_V3_2_局部精修_人物法宝分层_待审核包_20261107.zip",
+  "artifacts": {
+    "master_zip": {
+      "size_bytes": 39233733,
+      "sha256": "caef2d6553c7cbce4ad94a770c86afc09b48405305ea3f8b4cc9c9a9f3080470",
+      "zip_integrity": "PASS",
+      "count_files": 72,
+      "mime_type": "application/zip"
+    }
+  },
+  "google_drive": {
+    "file_id": "10XWdzozqAWm1Cw8U4V1mhkydPsu6_XlN",
+    "url": "https://drive.google.com/file/d/10XWdzozqAWm1Cw8U4V1mhkydPsu6_XlN/view?usp=drivesdk",
+    "folder_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+    "file_size_readback_bytes": 39233733,
+    "upload_status": "SUCCEEDED_METADATA_READBACK_VERIFIED"
+  },
+  "github": {
+    "storage_mode": "POINTER_AND_SHA256_MANIFEST_ONLY",
+    "zip_binary_committed": false,
+    "note": "GitHub connector supports text-file commits but not uploading this 39MB ZIP as a release asset. This file indexes the exact ZIP stored in Drive."
+  },
+  "content_summary": {
+    "approved_source_png": 24,
+    "rgba_layers": 16,
+    "masks": 16,
+    "per_actor_comparison_images": 8,
+    "scene_render": "2560x1440 candidate",
+    "qa_reports": "included"
+  },
+  "approval": {
+    "status": "CANDIDATE_IN_REVIEW",
+    "pending_p0": [
+      "BX05 rider+donkey hoof-water interaction",
+      "BX07 lotus platform lower edge+water contact",
+      "BX08 foot-ground contact"
+    ],
+    "i2v_allowed": false,
+    "final_master_approved": false
+  },
+  "source_qa_record": "film_audit/shots/s04_01_layered_repair_v32_20261107.json",
+  "next_step": "Repair remaining contact-physics and mattes, rerun actual visual audit, obtain user approval. Never treat this archive as FINAL_LOCKED."
+}

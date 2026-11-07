@@ -1,0 +1,408 @@
+{
+  "schema_version": 3,
+  "project": "八仙过海·沧海证道",
+  "shot_id": "S04-01",
+  "shot_name": "八仙临海起势",
+  "phase": "DRAFT_NOT_EXECUTABLE",
+  "mode": "layered_composite",
+  "ratio": "16:9",
+  "scene": {
+    "background_file": "scene/approved_storm_coast.png",
+    "sha256": null,
+    "world_axis": "west_shore_camera_facing_east",
+    "sun": "upper_right",
+    "wind": "right_to_left"
+  },
+  "actors": [
+    {
+      "id": "BX01",
+      "row": "front",
+      "order": 1,
+      "orientation": "per_approved_source",
+      "special_action": "left_leg_limp_right_hand_crutch",
+      "sources": {
+        "hero": "1000023536.png",
+        "views": "1000023537.png",
+        "prop": "1000023539.png"
+      },
+      "props": [
+        "iron_crutch",
+        "purple_gold_gourd"
+      ],
+      "locked_layers": {
+        "character": {
+          "file": "layers/BX01_character_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX01_character_mask.png",
+          "mask_sha256": null
+        },
+        "prop": {
+          "file": "layers/BX01_props_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX01_props_mask.png",
+          "mask_sha256": null
+        }
+      }
+    },
+    {
+      "id": "BX03",
+      "row": "front",
+      "order": 2,
+      "orientation": "per_approved_source",
+      "special_action": "single_sword_with_sheath_state_recorded",
+      "sources": {
+        "hero": "1000023555.png",
+        "views": "1000023559.png",
+        "prop": "1000023543.png"
+      },
+      "props": [
+        "pure_yang_sword",
+        "matching_scabbard"
+      ],
+      "locked_layers": {
+        "character": {
+          "file": "layers/BX03_character_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX03_character_mask.png",
+          "mask_sha256": null
+        },
+        "prop": {
+          "file": "layers/BX03_props_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX03_props_mask.png",
+          "mask_sha256": null
+        }
+      }
+    },
+    {
+      "id": "BX07",
+      "row": "front",
+      "order": 3,
+      "orientation": "per_approved_source",
+      "special_action": "feet_supported_on_one_lotus_platform",
+      "sources": {
+        "hero": "1000023567.png",
+        "views": "1000023574.png",
+        "prop": "1000023547.png"
+      },
+      "props": [
+        "single_lotus_platform",
+        "handheld_small_lotus"
+      ],
+      "locked_layers": {
+        "character": {
+          "file": "layers/BX07_character_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX07_character_mask.png",
+          "mask_sha256": null
+        },
+        "prop": {
+          "file": "layers/BX07_props_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX07_props_mask.png",
+          "mask_sha256": null
+        }
+      }
+    },
+    {
+      "id": "BX08",
+      "row": "front",
+      "order": 4,
+      "orientation": "per_approved_source",
+      "special_action": "exactly_two_rectangular_tablets",
+      "sources": {
+        "hero": "1000023557.png",
+        "views": "1000023566.png",
+        "prop": "1000023548.png"
+      },
+      "props": [
+        "white_rectangular_jade_tablet",
+        "green_rectangular_jade_tablet"
+      ],
+      "locked_layers": {
+        "character": {
+          "file": "layers/BX08_character_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX08_character_mask.png",
+          "mask_sha256": null
+        },
+        "prop": {
+          "file": "layers/BX08_props_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX08_props_mask.png",
+          "mask_sha256": null
+        }
+      }
+    },
+    {
+      "id": "BX02",
+      "row": "back",
+      "order": 1,
+      "orientation": "per_approved_source",
+      "sources": {
+        "hero": "1000023540.png",
+        "views": "1000023549.png",
+        "prop": "1000023542.png"
+      },
+      "props": [
+        "tattered_banana_leaf_fan"
+      ],
+      "locked_layers": {
+        "character": {
+          "file": "layers/BX02_character_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX02_character_mask.png",
+          "mask_sha256": null
+        },
+        "prop": {
+          "file": "layers/BX02_props_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX02_props_mask.png",
+          "mask_sha256": null
+        }
+      },
+      "special_action": "exposed_belly_single_tattered_leaf_fan"
+    },
+    {
+      "id": "BX04",
+      "row": "back",
+      "order": 2,
+      "orientation": "per_approved_source",
+      "special_action": "young_male",
+      "sources": {
+        "hero": "1000023554.png",
+        "views": "1000023562.png",
+        "prop": "1000023544.png"
+      },
+      "props": [
+        "seven_treasure_flower_basket"
+      ],
+      "locked_layers": {
+        "character": {
+          "file": "layers/BX04_character_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX04_character_mask.png",
+          "mask_sha256": null
+        },
+        "prop": {
+          "file": "layers/BX04_props_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX04_props_mask.png",
+          "mask_sha256": null
+        }
+      }
+    },
+    {
+      "id": "BX06",
+      "row": "back",
+      "order": 3,
+      "orientation": "per_approved_source",
+      "special_action": "horizontal_flute",
+      "sources": {
+        "hero": "1000023556.png",
+        "views": "1000023563.png",
+        "prop": "1000023546.png"
+      },
+      "props": [
+        "single_purple_transverse_flute"
+      ],
+      "locked_layers": {
+        "character": {
+          "file": "layers/BX06_character_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX06_character_mask.png",
+          "mask_sha256": null
+        },
+        "prop": {
+          "file": "layers/BX06_props_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX06_props_mask.png",
+          "mask_sha256": null
+        }
+      }
+    },
+    {
+      "id": "BX05",
+      "row": "back",
+      "order": 4,
+      "orientation": "backward_facing_donkey_tail",
+      "special_action": "backward_facing_donkey_tail",
+      "sources": {
+        "hero": "1000023552.png",
+        "views": "1000023558.png",
+        "prop": "1000023545.png",
+        "current_hero": null,
+        "holding_pose_reference": "t01afa88d400b0bf3c8.jpg",
+        "yugu_structure_reference": "image(2).png"
+      },
+      "props": [
+        "single_white_donkey",
+        "single_spotted_bamboo_yugu_two_thin_rods"
+      ],
+      "locked_layers": {
+        "character": {
+          "file": "layers/BX05_character_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX05_character_mask.png",
+          "mask_sha256": null,
+          "content_scope": "V4 approved character plus cradled yugu and hands; preserve contact. Separate prop layer contains donkey behind rider. New V4 layers require hash and visual QA."
+        },
+        "prop": {
+          "file": "layers/BX05_props_RGBA.png",
+          "sha256": null,
+          "mask": "masks/BX05_props_mask.png",
+          "mask_sha256": null
+        }
+      },
+      "lock_version": "BX05-USER-LOCK-20261107-V4",
+      "prop_details": {
+        "yugu": {
+          "owner": "BX05",
+          "bamboo_tube_count": 1,
+          "bamboo_rod_count": 2,
+          "material": "spotted_bamboo",
+          "holding_pose": "close_to_torso_cradled_diagonal"
+        }
+      }
+    }
+  ],
+  "output": {
+    "file": "outputs/S04-01_group_candidate.png",
+    "sha256": null
+  },
+  "review": {
+    "p0_count": null,
+    "p1_count": null,
+    "roles": {
+      "story": {
+        "status": "PENDING",
+        "evidence_file": null
+      },
+      "character": {
+        "status": "PENDING",
+        "evidence_file": null
+      },
+      "props": {
+        "status": "PENDING",
+        "evidence_file": null
+      },
+      "architecture": {
+        "status": "PENDING",
+        "evidence_file": null
+      },
+      "cinematography": {
+        "status": "PENDING",
+        "evidence_file": null
+      },
+      "physics": {
+        "status": "PENDING",
+        "evidence_file": null
+      },
+      "continuity": {
+        "status": "PENDING",
+        "evidence_file": null
+      }
+    },
+    "category_checks": {
+      "face": "PENDING",
+      "hair": "PENDING",
+      "wardrobe": "PENDING",
+      "body_proportions": "PENDING",
+      "prop_identity": "PENDING",
+      "prop_count": "PENDING",
+      "prop_state": "PENDING",
+      "contact_physics": "PENDING",
+      "occlusion": "PENDING",
+      "lighting": "PENDING",
+      "scene_geography": "PENDING",
+      "no_text_panels": "PENDING"
+    },
+    "user_final_approval": false,
+    "actor_checks": {
+      "BX01": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX03": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX07": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX08": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX02": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX04": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX06": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null
+      },
+      "BX05": {
+        "identity": "PENDING",
+        "face": "PENDING",
+        "hair": "PENDING",
+        "wardrobe": "PENDING",
+        "prop_shape_count": "PENDING",
+        "anatomy": "PENDING",
+        "ground_contact": "PENDING",
+        "evidence_file": null,
+        "yugu_structure": "PENDING",
+        "yugu_holding_contact": "PENDING",
+        "reverse_riding": "PENDING"
+      }
+    }
+  },
+  "instructions": "Place approved original PNGs under --asset-root using canonical filenames. Produce per-character/prop RGBA layers and masks with hashes BEFORE rendering. Fill every null hash with actual SHA256. Do not run text-to-image on the whole group. Missing binaries MUST fail preflight."
+}
