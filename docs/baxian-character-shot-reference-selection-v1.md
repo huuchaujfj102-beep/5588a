@@ -146,3 +146,70 @@ pre_generation_status: PENDING
 - 实际人物六视图与法宝母图均需先在审片阶段逐图核验；向生成模型提交的仍是目标镜头最合适的最多两张参考。
 - 所谓“唯一身份依据”是指**图1锁定该次出图的身份**；完整六视图和角色批准档案依然是验收依据，绝不从整幅群像反推身份。
 - 若出图任务是**修改已批准素材**，把 `generation_mode` 改为 `inpaint` 并提供局部遮罩；不允许整图自由重画。
+
+
+## 8. 三道质量检查门禁（2026-11-07 新增）
+
+| 检查 | 触发时机 | 逐项检查内容 | 放行条件 |
+|---|---|---|---|
+| **自检 SELF_CHECK** | **图片生成后立刻**，任何新图都不得跳过 | ①脸 ②发型 ③服装款式 ④服装配色 ⑤道具形制 ⑥手指/关节 ⑦光位方向 ⑧色温 ⑨画幅 ⑩文字与水印 | 10项逐一有实际图像证据且PASS；禁止仅凭提示词写了“无错误”就打勾 |
+| **比对检 MASTER_COMPARE** | **新生成候选与黄金样张并排**；法宝按批准道具锚图核对 | ①脸型轮廓 ②眉眼间距 ③服装纹样 ④道具比例；同时复核六视图身份/身材尺度和道具唯一归属 | 逐项有并排截图/标注及母图SHA；与黄金样张实质不符即FAIL，禁止自动替换母图 |
+| **下游检 DOWNSTREAM** | **进入I2V前**和**进入剪辑时间线前**分别执行 | ①首帧是否经批准并可实际驱动图生视频 ②前一镜→当前镜→后一镜的角色/衣装/道具状态与空间运动方向是否跳变 ③镜头轴线/光影/色温/首尾帧与动作状态是否承接 | I2V前必须批准首帧与起止动作状态；进剪辑前必须结合相邻实际镜头复看并记录；缺视频素材则保持PENDING |
+
+### 8.1 自检的必填十项 checklist
+
+- [ ] 脸：五官结构、年龄、面型未变，不能换脸
+- [ ] 发型：发际线、发髻、头饰、发色与批准定妆一致
+- [ ] 服装款式：裁片、层次、腰带、袖口、鞋子与黄金样张一致
+- [ ] 服装配色：主辅色、纹样材质与黄金样张一致
+- [ ] 道具形制：只出现本人获批法宝，数量、材质、尺寸、握持、剑鞘状态正确
+- [ ] 手指：双手、手指数、指节、物体接触及遮挡物理正确
+- [ ] 光位方向：脸/衣袍/法宝/地面投影的主光与补光方向一致
+- [ ] 色温：主体、背景、反光和阴影色温可信并衔接前后镜
+- [ ] 画幅：景别、取景范围、横竖比、人物完整性符合分镜
+- [ ] 文字/水印：无多余文字、乱码、模型水印及无授权标识；项目正式要求的水印按版本规范单独验收
+
+### 8.2 机器可读审核记录模板
+
+```yaml
+shot_id: Sxx-yy
+generated_candidate_sha256: null
+golden_character_master_sha256: null
+approved_prop_anchor_sha256: null
+self_check:
+  face: PENDING
+  hair: PENDING
+  wardrobe_style: PENDING
+  wardrobe_color: PENDING
+  prop_geometry: PENDING
+  fingers: PENDING
+  key_light_direction: PENDING
+  color_temperature: PENDING
+  aspect_ratio: PENDING
+  watermark_and_text: PENDING
+master_compare:
+  face_contour: PENDING
+  eye_brow_spacing: PENDING
+  wardrobe_pattern: PENDING
+  prop_scale: PENDING
+  side_by_side_evidence: null
+downstream:
+  i2v_entry_frame_approved: PENDING
+  i2v_first_frame_stable: PENDING
+  previous_current_next_continuity: PENDING
+  timeline_video_review: PENDING
+  continuity_evidence: null
+p0_count: null
+final_user_approved: false
+gate_state: BLOCKED
+```
+
+### 8.3 拦截准则
+
+1. 三道门禁有严格时间顺序：**出图 → 自检 → 黄金样张比对 → 候选批准/锁首帧 → I2V → 实际剪辑前下游复核**；尚未到达下一阶段时该阶段填 `PENDING`，不能虚报完成。
+2. **P0**：人物身份/眉眼或面型显著漂移、法宝错人/换型/复制、关键肢体错误、未批准首帧直接进入视频、视频镜头有重大不连续。任何P0都必须 `BLOCKED`。
+3. **P1**：轻度纹样偏差、可控的布料边缘、局部光温不一致、镜头过渡不稳；必须有明确修复计划、责任与复检记录，不能默认当作通过。
+4. **P2**：仅限小范围可逆后期瑕疵，需在终版前关闭。
+5. **图片自检/并排比对完成 ≠ 视频下游检完成**。不能因为视频尚未生成就给下游打PASS。
+6. 群像需**BX01–BX08每人各自完成自检与比对检**，每件批准法宝分别核对母图；全片前后镜另按镜头级检查。
+7. 审核机制除了文字规范，实际生产程序必须显式调用这些检查；未实装机器视觉的项目不得声称已自动证明脸型相同、道具合格或场景物理正确。
