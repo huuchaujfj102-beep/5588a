@@ -96,7 +96,8 @@
     "BX05": "backward_facing_donkey_tail",
     "BX06": "horizontal_flute",
     "BX07": "feet_supported_on_one_lotus_platform",
-    "BX08": "exactly_two_rectangular_tablets"
+    "BX08": "exactly_two_rectangular_tablets",
+    "BX02": "exposed_belly_single_tattered_leaf_fan"
   },
   "forbid_modes": [
     "text_to_image_group_redraw",
