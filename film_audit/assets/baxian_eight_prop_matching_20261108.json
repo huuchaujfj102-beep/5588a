@@ -62,12 +62,18 @@
       "views": "1000023602.png",
       "props": [
         "1000023591.png",
-        "baxian_v5_work/V4_user_refs/image(2).png"
+        "baxian_v5_work/V4_user_refs/image(2).png",
+        "1000023719.png"
       ],
       "count": "白仙驴1匹＋斑点竹筒渔鼓1根＋细竹杆2根",
-      "hard_lock": "倒骑驴、四蹄接地；渔鼓斜抱且比例正确；V4新主图仍未绑定",
+      "hard_lock": "倒骑唯一白驴，四蹄着地；新渔鼓黄竹筒褐色斑点1根＋两根平行细杆，不得多杆/变鼓；V4新主图仍未绑定",
       "source_matching": "MATCHED",
-      "visual_gate": "BLOCKED_CURRENT_APPROVED_V4_HERO_UNBOUND"
+      "visual_gate": "BLOCKED_CURRENT_APPROVED_V4_HERO_UNBOUND",
+      "preferred_yugu_reference": "1000023719.png",
+      "preferred_yugu_sha256": "a1785d08d0d2f94423a3f49587a7999e56a21b3fd6576da3a86622f1137a5193",
+      "preferred_yugu_storage": "ChatGPT Library",
+      "preferred_yugu_manifest": "film_audit/assets/bx05_yugu_additional_anchor_1000023719_20261108.json",
+      "reference_priority": "New user-supplied yugu design first; old V4 anchors retained for pose and cross-check"
     },
     {
       "id": "BX06",
@@ -105,5 +111,6 @@
       "source_matching": "MATCHED",
       "visual_gate": "PENDING_SELF_AND_MASTER_COMPARE"
     }
-  ]
+  ],
+  "note_20261108": "New 1000023719.png is an additional user-supplied single-yugu anchor stored intact in ChatGPT Library, not on GitHub as image bytes. Gen input images <=2 across character/props/environment. Group/I2V remain blocked."
 }
