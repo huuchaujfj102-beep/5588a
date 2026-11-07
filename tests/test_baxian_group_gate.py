@@ -164,5 +164,49 @@ class BaxianGroupGateTests(unittest.TestCase):
         self.assertIn("PATH_ESCAPE", self.codes(self.result()))
 
 
+    def test_composite_preserves_source_layers_and_refuses_overwrite(self):
+        try:
+            from PIL import Image, ImageDraw
+        except ImportError:
+            self.skipTest("Pillow is not installed")
+        from film_audit.baxian_layered_composite import composite_locked_layers
+
+        for actor in self.plan["actors"]:
+            for kind in ("character", "prop"):
+                layer = actor["locked_layers"][kind]
+                canvas = Image.new("RGBA", (160, 90), (0, 0, 0, 0))
+                draw = ImageDraw.Draw(canvas)
+                draw.rectangle((20, 12, 44, 70), fill=(12, 60, 100, 255))
+                loc = self.root / layer["file"]
+                canvas.save(loc)
+                layer["sha256"] = hashlib.sha256(loc.read_bytes()).hexdigest()
+
+                matte = Image.new("L", (160, 90), 0)
+                draw_mask = ImageDraw.Draw(matte)
+                draw_mask.rectangle((20, 12, 44, 70), fill=255)
+                mloc = self.root / layer["mask"]
+                matte.save(mloc)
+                layer["mask_sha256"] = hashlib.sha256(mloc.read_bytes()).hexdigest()
+
+        before = [(a["id"], a["locked_layers"]["character"]["sha256"])
+                  for a in self.plan["actors"]]
+        result = composite_locked_layers(
+            self.plan, self.authority, self.policy, self.root, "finished.png")
+        self.assertEqual(result["status"], "BLOCKED")  # existing source output protected
+        self.plan["output"]["file"] = "outputs/fresh_group_candidate.png"
+        result = composite_locked_layers(
+            self.plan, self.authority, self.policy, self.root,
+            "outputs/fresh_group_candidate.png")
+        self.assertEqual(result["status"], "CANDIDATE_RENDERED_NOT_APPROVED")
+        self.assertTrue((self.root / "outputs/fresh_group_candidate.png").exists())
+        after = [(a["id"], a["locked_layers"]["character"]["sha256"])
+                 for a in self.plan["actors"]]
+        self.assertEqual(before, after)
+        self.assertFalse(result["may_start_i2v"])
+        again = composite_locked_layers(
+            self.plan, self.authority, self.policy, self.root,
+            "outputs/fresh_group_candidate.png")
+        self.assertEqual(again["status"], "BLOCKED")
+
 if __name__ == "__main__":
     unittest.main()
