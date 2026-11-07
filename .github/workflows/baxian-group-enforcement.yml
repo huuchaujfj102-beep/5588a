@@ -13,6 +13,7 @@ on:
   pull_request:
     paths:
       - 'film_audit/baxian_group_gate.py'
+      - 'film_audit/baxian_layered_composite.py'
       - 'film_audit/assets/baxian_group_enforcement_policy_v3.json'
       - 'film_audit/assets/baxian_source_authority_v2_20261107.json'
       - 'film_audit/shots/s04_01_layered_group_plan_TEMPLATE.json'
