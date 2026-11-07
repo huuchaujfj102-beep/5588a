@@ -73,3 +73,76 @@
 **注意区分**：前置人眼阅读/比对完整六视图和道具三视图不受“生成输入≤2张”的限制；限制的是**一次实际向生成模型发送的全部输入参考图数量（含人物、法宝、环境、姿态等）**。不允许以多图拼贴到一张的方式绕开此限制。
 
 **交付证据**：每次镜头至少登记 `character_master_sha256`、`environment_anchor_sha256`、`prop_anchor_sha256`、`reference_images_sent`、`model_mode`、`shot_type`、`target_angle`、`composite_layer_manifest`、`edit_mask`、`qa_status`、`user_approval`。没有真实素材及逐图QA结果，不得宣称五层全部已实作或验收通过。
+
+
+## 7. 单镜头标准提示词七字段模板（2026-11-07 新增）
+
+此模板适用于**人物已定型后**的参考生成/参考编辑。实际生成只允许1–2张输入参考；并先通过景别/朝向匹配门禁。**图1人物黄金样张+图2环境空镜**仅当人物角度匹配目标镜头时适用。如果目标视角必须用两张人物参考，则场景须使用已审核的环境锚图，通过非生成式分层合成进入，不能作为第三张生成输入。
+
+```text
+【参考】
+图1 = 角色A 正面定妆（唯一身份依据；实际上传的批准原图与SHA256）
+图2 = 场景 L-003 空景（已批准环境锚图及SHA256）
+两张总数上限，不允许第三张输入或把多张参考拼贴绕过上限。
+
+【主体】
+角色A，面部结构、发型轮廓、服装款式与配色严格沿用图1；
+不得由模型推测另一张脸、另一套衣装或无批准的新法宝。
+
+【动作】
+半身，右手持剑斜指地面，肩线放松，视线看向画面右侧；
+先核定该镜头的剑鞘状态（SHEATHED / DRAWING / DRAWN / RETURNING），
+此例为 DRAWN，不能同时显示另一柄剑或仍满装的剑鞘。
+
+【景别】
+中景，85mm，平视略低机位；人物可见范围和镜头方向与输入参考匹配。
+
+【场景】
+沿用图2 L-003 布局与透视，地面材质不变；人物站位、地面接触、
+建筑尺度、镜头轴线和画面风向与空镜一致。
+
+【光】
+左前45°冷调主光，右侧弱暖补光，背景压暗做暗角；
+同一镜头的面部光、道具反光、接地阴影方向必须物理一致。
+
+【禁止】
+不得改变发色/瞳色/服装纹样/道具形制；
+不得出现多余手指、文字、水印、现代物件、镜面反射错位；
+不得换脸、道具增殖、莫名新增人物、错误遮挡或动作时序跳变。
+```
+
+### 7.1 启动前必须写入的机器可读字段
+
+```yaml
+scene_id: L-003
+shot_id: Sxx-yy
+character_id: BX03
+shot_type: medium
+target_angle: front_three_quarter
+generation_mode: reference_generation
+reference_images_sent:
+  - role: approved_character_front
+    filename: approved_character.png
+    sha256: ACTUAL_SOURCE_HASH
+  - role: approved_environment_anchor
+    filename: approved_L-003_empty_scene.png
+    sha256: ACTUAL_SOURCE_HASH
+lens_mm: 85
+camera_height: slightly_low_eye_level
+action: right_hand_sword_downward_relaxed_shoulder_gaze_camera_right
+prop_state: DRAWN
+prop_count: 1
+key_light: cool_front_left_45deg
+fill_light: weak_warm_camera_right
+identity_lock: approved_hero
+hard_negative: no_identity_or_prop_drift
+pre_generation_status: PENDING
+```
+
+### 7.2 状态机覆盖示例，而不是覆盖角色母图
+
+- **仙宴/闲谈镜头**：BX03 吕洞宾默认 `SHEATHED`，剑刃不外露；不得根据本模板擅自拔剑。
+- **战斗/拔剑镜头**：分镜明确有“拔剑”事件后，才允许 `DRAWING`/`DRAWN`；鞘同时变空且总剑数恒1，收剑有单独 `RETURNING` 动作。
+- 实际人物六视图与法宝母图均需先在审片阶段逐图核验；向生成模型提交的仍是目标镜头最合适的最多两张参考。
+- 所谓“唯一身份依据”是指**图1锁定该次出图的身份**；完整六视图和角色批准档案依然是验收依据，绝不从整幅群像反推身份。
+- 若出图任务是**修改已批准素材**，把 `generation_mode` 改为 `inpaint` 并提供局部遮罩；不允许整图自由重画。
