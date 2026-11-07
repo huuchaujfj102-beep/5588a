@@ -1,0 +1,109 @@
+{
+  "project": "八仙过海·沧海证道",
+  "date": "2026-11-08",
+  "version": "EIGHT_ROLE_PROP_BINDING_V1",
+  "scope": "person-view to approved prop reference matching, not visual pass",
+  "prompt_input_image_limit": 2,
+  "multi_image_contact_sheets": "offline QA only; never used as generated references",
+  "global_status": "SOURCE_ASSOCIATIONS_MATCHED_VISUAL_QA_PENDING",
+  "I2V_allowed": false,
+  "entries": [
+    {
+      "id": "BX01",
+      "person": "铁拐李",
+      "views": "1000023586.png",
+      "props": [
+        "1000023587.png"
+      ],
+      "count": "铁质圆头拐杖1根＋紫金葫芦1只",
+      "hard_lock": "跛足受力；腰侧悬挂；禁止木杖/纯金葫芦",
+      "source_matching": "MATCHED",
+      "visual_gate": "PENDING_SELF_AND_MASTER_COMPARE"
+    },
+    {
+      "id": "BX02",
+      "person": "汉钟离",
+      "views": "1000023596.png",
+      "props": [
+        "1000023589.png"
+      ],
+      "count": "破叶芭蕉扇1把",
+      "hard_lock": "大型绿色破叶、单一扇柄；禁止圆扇/折扇",
+      "source_matching": "MATCHED",
+      "visual_gate": "PENDING_SELF_AND_MASTER_COMPARE"
+    },
+    {
+      "id": "BX03",
+      "person": "吕洞宾",
+      "views": "1000023603.png",
+      "props": [
+        "1000023590.png"
+      ],
+      "count": "纯阳剑1柄＋对应剑鞘1只",
+      "hard_lock": "仙宴SHEATHED完全入鞘，单剑不得重影",
+      "source_matching": "MATCHED",
+      "visual_gate": "PENDING_SELF_AND_MASTER_COMPARE"
+    },
+    {
+      "id": "BX04",
+      "person": "蓝采和",
+      "views": "1000023604.png",
+      "props": [
+        "1000023592.png"
+      ],
+      "count": "藤编花篮1只",
+      "hard_lock": "年轻男性面容；去除头戴花环；花篮纹样锁定",
+      "source_matching": "MATCHED",
+      "visual_gate": "PENDING_SELF_AND_MASTER_COMPARE"
+    },
+    {
+      "id": "BX05",
+      "person": "张果老",
+      "views": "1000023602.png",
+      "props": [
+        "1000023591.png",
+        "baxian_v5_work/V4_user_refs/image(2).png"
+      ],
+      "count": "白仙驴1匹＋斑点竹筒渔鼓1根＋细竹杆2根",
+      "hard_lock": "倒骑驴、四蹄接地；渔鼓斜抱且比例正确；V4新主图仍未绑定",
+      "source_matching": "MATCHED",
+      "visual_gate": "BLOCKED_CURRENT_APPROVED_V4_HERO_UNBOUND"
+    },
+    {
+      "id": "BX06",
+      "person": "韩湘子",
+      "views": "1000023605.png",
+      "props": [
+        "1000023593.png"
+      ],
+      "count": "紫金横吹笛1支",
+      "hard_lock": "横向吹奏，口唇、指孔和头颈衔接一致",
+      "source_matching": "MATCHED",
+      "visual_gate": "PENDING_SELF_AND_MASTER_COMPARE"
+    },
+    {
+      "id": "BX07",
+      "person": "何仙姑",
+      "views": "1000023608.png",
+      "props": [
+        "1000023594.png"
+      ],
+      "count": "莲台1座＋手持粉莲1朵",
+      "hard_lock": "青绿色衣裙为主，莲台真实承托，手持粉莲",
+      "source_matching": "MATCHED",
+      "visual_gate": "PENDING_SELF_AND_MASTER_COMPARE"
+    },
+    {
+      "id": "BX08",
+      "person": "曹国舅",
+      "views": "1000023606.png",
+      "props": [
+        "1000023595.png"
+      ],
+      "count": "独立青玉板1块＋白玉板1块",
+      "hard_lock": "双手各持矩形玉板、纹饰与红穗一致，禁止圆盘合并",
+      "source_matching": "MATCHED",
+      "visual_gate": "PENDING_SELF_AND_MASTER_COMPARE"
+    }
+  ]
+}
