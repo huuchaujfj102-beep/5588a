@@ -326,9 +326,10 @@
       "git_blob_sha": "66ca2cc2125cf1b6caff5ef3d9fbf3f1d0c36e58",
       "storage": "git_blob",
       "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
-      "availability": "UPLOADED_PENDING_COMMIT_READBACK",
+      "availability": "PRESENT_REMOTE_SHA256_VERIFIED",
       "expected_sha256": "d964817edb6c00e0036a10656ed19ca683db833b93940e73ba427a9bbc91a2a7",
-      "mapping_role": "holding_pose_reference"
+      "mapping_role": "holding_pose_reference",
+      "binary_verification": "REMOTE_BYTES_SHA256_AND_SIZE_MATCH"
     },
     {
       "id": "BX05",
@@ -342,9 +343,10 @@
       "git_blob_sha": "7f98917e42c070eafdca02b71310b801717b6547",
       "storage": "git_blob",
       "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
-      "availability": "UPLOADED_PENDING_COMMIT_READBACK",
+      "availability": "PRESENT_REMOTE_SHA256_VERIFIED",
       "expected_sha256": "51992887a8bae028e6d1bd156619d7c906a59e146aa0627d4e570999f4e7b7b8",
-      "mapping_role": "yugu_structure_reference"
+      "mapping_role": "yugu_structure_reference",
+      "binary_verification": "REMOTE_BYTES_SHA256_AND_SIZE_MATCH"
     },
     {
       "id": "BX07",
@@ -416,8 +418,10 @@
     "documentation": "https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github"
   },
   "verification": {
-    "state": "PENDING_COMMIT_READBACK",
-    "expected_binary_files": [
+    "state": "PASS_FOR_TWO_REFERENCE_BINARIES_ONLY",
+    "readback_commit": "e595fc34f588bf9d13b24f7d95136eacc2467d4c",
+    "method": "Downloaded exact bytes from raw.githubusercontent.com at immutable commit; SHA-256 and byte length match; recursive tree non-truncated",
+    "verified_files": [
       {
         "filename": "t01afa88d400b0bf3c8.jpg",
         "repository_path": "film_audit/assets/baxian_sources/BX05/t01afa88d400b0bf3c8.jpg",

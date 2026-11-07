@@ -36,7 +36,9 @@
       "git_blob_sha": "66ca2cc2125cf1b6caff5ef3d9fbf3f1d0c36e58",
       "storage": "git_blob",
       "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
-      "availability": "UPLOADED_PENDING_COMMIT_READBACK"
+      "availability": "PRESENT_REMOTE_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BYTES_SHA256_AND_SIZE_MATCH",
+      "verified_at_commit": "e595fc34f588bf9d13b24f7d95136eacc2467d4c"
     },
     {
       "id": "BX05",
@@ -50,7 +52,9 @@
       "git_blob_sha": "7f98917e42c070eafdca02b71310b801717b6547",
       "storage": "git_blob",
       "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
-      "availability": "UPLOADED_PENDING_COMMIT_READBACK"
+      "availability": "PRESENT_REMOTE_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BYTES_SHA256_AND_SIZE_MATCH",
+      "verified_at_commit": "e595fc34f588bf9d13b24f7d95136eacc2467d4c"
     }
   ],
   "current_hero": {
