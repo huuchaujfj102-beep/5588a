@@ -202,7 +202,17 @@
         "binary_on_github": false,
         "visual_qa_status": "NOT_PERFORMED_ON_REPLACEMENT_HERO"
       },
-      "source_authority_v2_scope": "Legacy mapping retained for traceability only; current V4 hero is not yet bound"
+      "source_authority_v2_scope": "Legacy mapping retained for traceability only; current V4 hero is not yet bound",
+      "additional_yugu_source": "1000023719.png",
+      "additional_yugu_sha256": "a1785d08d0d2f94423a3f49587a7999e56a21b3fd6576da3a86622f1137a5193",
+      "additional_yugu_manifest": "film_audit/assets/bx05_yugu_additional_anchor_1000023719_20261108.json",
+      "additional_prop_structural_constraints": [
+        "黄底褐色斑点竹筒一根",
+        "同端伸出细竹杆恰好两根",
+        "筒体直径/长度参照图保持细长",
+        "与人物手掌及臂弯接触自然",
+        "一张新渔鼓参考不得取代V4身份母图"
+      ]
     },
     {
       "id": "BX06",
