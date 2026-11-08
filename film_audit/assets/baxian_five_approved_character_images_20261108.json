@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-08",
+  "approval": "user approved five images",
+  "scope": "five approved character-prop relationship images",
+  "storage": "/八仙过海/人物定装审核通过/2026-11-08",
+  "note": "Archive approved candidate images, preserve prior six-view and prop reference masters. No replacement of original master image bytes without explicit validation.",
+  "items": [
+    {
+      "id": "BX01",
+      "name": "铁拐李",
+      "source_filename": "1000023750.png",
+      "sha256": "0faf03b56a76122ac48d49de4b36d05eb0d8ad51961332a41a97ce38975f8f19",
+      "library_path": "/八仙过海/人物定装审核通过/2026-11-08/BX01_铁拐李_审核通过.png",
+      "review": "approved",
+      "note": "跛态可后续优化"
+    },
+    {
+      "id": "BX02",
+      "name": "汉钟离",
+      "source_filename": "1000023752.png",
+      "sha256": "e79d2d63812aae7c8f29049431152243c0c1115249cbaf996655c9b36717ab86",
+      "library_path": "/八仙过海/人物定装审核通过/2026-11-08/BX02_汉钟离_审核通过.png",
+      "review": "approved",
+      "note": "芭蕉扇"
+    },
+    {
+      "id": "BX03",
+      "name": "吕洞宾",
+      "source_filename": "1000023754.png",
+      "sha256": "2d49594a0af2f76833b9390ac29d18b0795d205647db819b2cb392f69732c6b1",
+      "library_path": "/八仙过海/人物定装审核通过/2026-11-08/BX03_吕洞宾_审核通过.png",
+      "review": "approved",
+      "note": "纯阳剑入鞘"
+    },
+    {
+      "id": "BX07",
+      "name": "何仙姑",
+      "source_filename": "1000023760.png",
+      "sha256": "9364a524c97801fb14e81c7801a26ae62b9a0bb662eaad4046b19056ee5ab072",
+      "library_path": "/八仙过海/人物定装审核通过/2026-11-08/BX07_何仙姑_审核通过.png",
+      "review": "approved",
+      "note": "莲花和莲台"
+    },
+    {
+      "id": "BX04",
+      "name": "蓝采和",
+      "source_filename": "1000023756.png",
+      "sha256": "8d2d281c1fdb4bf7878a34cccc116bb24232172f58589fd3b4dbaa32fb1b292f",
+      "library_path": "/八仙过海/人物定装审核通过/2026-11-08/BX04_蓝采和_审核通过.png",
+      "review": "approved",
+      "note": "藤编花篮"
+    }
+  ]
+}
