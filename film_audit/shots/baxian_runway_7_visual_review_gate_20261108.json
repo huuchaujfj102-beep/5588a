@@ -1,0 +1,77 @@
+{
+  "project": "八仙过海·沧海证道",
+  "date": "2026-11-08",
+  "scope": "Seven Runway actor-specific refinement tasks submitted in current chat, BX08 separately not submitted",
+  "review_type": "GATE_VALIDATION_NOT_FULL_PIXEL_VISUAL_QA",
+  "status": "7_RENDERED_0_VISUAL_APPROVED",
+  "summary": {
+    "task_success": 7,
+    "source_inputs_verified": 7,
+    "latest_outputs_local_bytes_available": 0,
+    "three_anchor_pre_generation_approvals": 0,
+    "visual_final_approved": 0,
+    "master_replacements_approved": 0
+  },
+  "items": [
+    {
+      "id": "BX01",
+      "task_id": "75d18477-a3af-4b7a-832b-b1d190b9109b",
+      "status": "QA_BLOCKED_MISSING_RENDER_PIXELS_AND_PREFLIGHT",
+      "source": "風暴海岸的瘸腿仙翁.png",
+      "multiview": "1000023586.png",
+      "prop": "1000023587.png"
+    },
+    {
+      "id": "BX02",
+      "task_id": "e1adf58e-9db3-4da5-950e-701d86e7fc7f",
+      "status": "QA_BLOCKED_MISSING_RENDER_PIXELS_AND_PREFLIGHT",
+      "source": "風雨海岸上的漢鍾離.png",
+      "multiview": "1000023596.png",
+      "prop": "1000023589.png"
+    },
+    {
+      "id": "BX03",
+      "task_id": "1cfb49c1-1b6e-4f11-8dc8-b727ad0c6a3b",
+      "status": "QA_BLOCKED_MISSING_RENDER_PIXELS_AND_PREFLIGHT",
+      "source": "風暴海岸上的呂洞賓.png",
+      "multiview": "1000023603.png",
+      "prop": "1000023590.png"
+    },
+    {
+      "id": "BX04",
+      "task_id": "09accb4f-650f-4509-ad1d-5999bee3617c",
+      "status": "QA_BLOCKED_MISSING_RENDER_PIXELS_AND_PREFLIGHT",
+      "source": "風暴海岸上的蘭采和.png",
+      "multiview": "1000023604.png",
+      "prop": "1000023592.png"
+    },
+    {
+      "id": "BX05",
+      "task_id": "74871258-ac86-49ec-8df5-ac8ec00af31c",
+      "status": "QA_BLOCKED_MISSING_RENDER_PIXELS_AND_PREFLIGHT",
+      "source": "逆行潮岸的白驢仙翁.png",
+      "multiview": "1000023602.png",
+      "prop": "1000023720.png"
+    },
+    {
+      "id": "BX06",
+      "task_id": "b52797bf-07d1-48fd-adc6-976737307192",
+      "status": "QA_BLOCKED_MISSING_RENDER_PIXELS_AND_PREFLIGHT",
+      "source": "風雨海崖上的紫笛仙音.png",
+      "multiview": "1000023605.png",
+      "prop": "1000023593.png"
+    },
+    {
+      "id": "BX07",
+      "task_id": "9897e4d1-1835-4ec5-959c-24c41db3101e",
+      "status": "QA_BLOCKED_MISSING_RENDER_PIXELS_AND_PREFLIGHT",
+      "source": "暴雨海岸上的蓮華仙子.png",
+      "multiview": "1000023608.png",
+      "prop": "1000023594.png"
+    }
+  ],
+  "missing_BX08": "NOT_RENDERED_DUE_TO_RUNWAY_CREDITS",
+  "reference_limit": "Each of 7 editing calls used 1 original scene image, formally within <=2; missing offline pre-generation triad check still blocks production.",
+  "binary_evidence": "Current ChatGPT container QA pack 八仙_7张新图_三重一致性审核状态_20261108.zip contains old-source/multiview/prop comparison sheets only, not the latest 7 generated PNGs",
+  "key_disclaimer": "SUCCESS indicates output exists in provider workspace; new outputs not accessible as local pixels in this session; no visual fidelity assertions or approved inventory replacements."
+}
