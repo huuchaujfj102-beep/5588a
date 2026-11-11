@@ -366,6 +366,17 @@ def credits_preflight():
 
 
 def run(args):
+    if args.action == "generate" and (getattr(args, "protected_project", False) or
+        any(w in args.prompt for w in ("八仙", "张果老", "韩湘子", "吕洞宾", "何仙姑", "铁拐李", "汉钟离", "蓝采和", "曹国舅"))):
+        if not getattr(args, "qa_manifest", None):
+            raise ViduError("QA_GATE_BLOCKED: protected video requires QA manifest")
+        try:
+            from .production_qa_gate import check_manifest
+            check_manifest(args.qa_manifest, root=getattr(args, "qa_root", "."))
+        except (ValueError, OSError, TypeError) as exc:
+            raise ViduError("QA_GATE_BLOCKED: " + str(exc)) from None
+        if args.mode != "img2video" or not args.first_frame:
+            raise ViduError("QA_GATE_BLOCKED: locked characters require approved image-to-video first frame")
     if args.action == "preflight":
         credits_preflight()
         return
@@ -478,6 +489,9 @@ def main(argv=None):
     parser.add_argument("--resolution", choices=["540p", "720p", "1080p"], default="720p")
     parser.add_argument("--first-frame")
     parser.add_argument("--task-id")
+    parser.add_argument("--qa-manifest")
+    parser.add_argument("--qa-root", default=".")
+    parser.add_argument("--protected-project", action="store_true")
     parser.add_argument("--confirm-paid", action="store_true")
     parser.add_argument("--poll-attempts", type=int, default=60)
     parser.add_argument("--poll-seconds", type=int, default=15)

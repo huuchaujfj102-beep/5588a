@@ -375,6 +375,9 @@ def main(argv=None):
     start.add_argument("--platform", action="append", default=[])
     start.add_argument("--out", default="private-inputs/oneflow-jobs")
     start.add_argument("--no-watermark", action="store_true")
+    start.add_argument("--qa-manifest")
+    start.add_argument("--qa-root", default=".")
+    start.add_argument("--protected-project", action="store_true")
     start.add_argument("--confirm-paid", action="store_true")
     start.add_argument("--skip-poll", action="store_true")
     follow = sub.add_parser("resume", help="Poll existing task, download, audit; no paid POST")
@@ -384,6 +387,16 @@ def main(argv=None):
     args = p.parse_args(argv)
     try:
         if args.cmd == "run":
+            if getattr(args, "protected_project", False) or any(
+                w in args.brief for w in ("八仙", "张果老", "韩湘子", "吕洞宾", "何仙姑", "铁拐李", "汉钟离", "蓝采和", "曹国舅")
+            ):
+                if not getattr(args, "qa_manifest", None):
+                    raise FlowError("QA_GATE_BLOCKED: protected video requires QA manifest")
+                try:
+                    from .production_qa_gate import check_manifest
+                    check_manifest(args.qa_manifest, root=getattr(args, "qa_root", "."))
+                except (ValueError, OSError, TypeError) as exc:
+                    raise FlowError("QA_GATE_BLOCKED: " + str(exc)) from None
             root = plan(args.brief, args.first_frame_file or args.first_frame_url,
                         seconds=args.seconds, ratio=args.ratio,
                         model=args.model, resolution=args.resolution,

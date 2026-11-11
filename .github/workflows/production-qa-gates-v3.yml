@@ -1,0 +1,50 @@
+name: Production QA Gate V3 (offline, no model calls)
+on:
+  pull_request:
+    paths:
+      - 'oneflow/production_qa_gate.py'
+      - 'oneflow/baxian_scene_gate.py'
+      - 'tests/test_baxian_scene_gate.py'
+      - 'oneflow/image_generation.py'
+      - 'oneflow/qianfan_i2v.py'
+      - 'oneflow/vidu_q3.py'
+      - 'tests/test_production_qa_gate.py'
+      - 'tests/test_oneflow_image_generation.py'
+      - '.github/workflows/production-qa-gates-v3.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  qa-preflight-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Gate test suite without provider credentials
+        run: |
+          python -m unittest discover -s tests -p 'test_production_qa_gate.py' -v
+          python -m unittest discover -s tests -p 'test_baxian_scene_gate.py' -v
+          python -m unittest discover -s tests -p 'test_oneflow_image_generation.py' -v
+          python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
+          python -m unittest discover -s tests -p 'test_vidu_q3.py' -v
+      - name: Negative integration - protected image fails BEFORE any model request
+        run: |
+          if python -m oneflow.image_generation --brief '八仙 张果老与韩湘子' --shot S01 --dry-run; then
+            echo "ERROR: fail-open protected brief"
+            exit 1
+          fi
+      - name: Protected video negative integration tests
+        run: |
+          if python -m oneflow.vidu_q3 --action generate --prompt '八仙 张果老 韩湘子' --confirm-paid; then
+            echo "ERROR: Vidu gate failed open"; exit 1
+          fi
+          if python -m oneflow.qianfan_i2v run --brief '八仙 张果老 韩湘子' --first-frame-file /tmp/no-image.png --confirm-paid; then
+            echo "ERROR: Qianfan gate failed open"; exit 1
+          fi
+      - name: No inference artifacts
+        run: test ! -d private-inputs/generated-images
