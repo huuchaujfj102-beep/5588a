@@ -388,7 +388,7 @@ def main(argv=None):
     try:
         if args.cmd == "run":
             if getattr(args, "protected_project", False) or any(
-                w in args.brief for w in ("八仙", "张果老", "韩湘子", "吕洞宾", "何仙姑")
+                w in args.brief for w in ("八仙", "张果老", "韩湘子", "吕洞宾", "何仙姑", "铁拐李", "汉钟离", "蓝采和", "曹国舅")
             ):
                 if not getattr(args, "qa_manifest", None):
                     raise FlowError("QA_GATE_BLOCKED: protected video requires QA manifest")
