@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'oneflow/production_qa_gate.py'
+      - 'oneflow/baxian_scene_gate.py'
+      - 'tests/test_baxian_scene_gate.py'
       - 'oneflow/image_generation.py'
       - 'oneflow/qianfan_i2v.py'
       - 'oneflow/vidu_q3.py'
@@ -26,6 +28,7 @@ jobs:
       - name: Gate test suite without provider credentials
         run: |
           python -m unittest discover -s tests -p 'test_production_qa_gate.py' -v
+          python -m unittest discover -s tests -p 'test_baxian_scene_gate.py' -v
           python -m unittest discover -s tests -p 'test_oneflow_image_generation.py' -v
           python -m unittest discover -s tests -p 'test_qianfan_i2v.py' -v
           python -m unittest discover -s tests -p 'test_vidu_q3.py' -v
