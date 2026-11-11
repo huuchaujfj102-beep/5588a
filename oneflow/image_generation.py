@@ -179,6 +179,8 @@ def execute(args, token=None, client_cls=None):
             check_manifest(args.qa_manifest, root=getattr(args, 'qa_root', '.'))
         except (QAGateError, OSError, ValueError, TypeError) as exc:
             raise ImageFlowError('QA_GATE_BLOCKED: ' + str(exc)) from None
+        # This adapter is text-to-image and cannot preserve locked source pixels.
+        raise ImageFlowError('LOCKED_CHARACTER_TEXT_TO_IMAGE_UNSUPPORTED: use an approved source-image compositing route')
     plan = build_plan(prompt, args.shot, args.seed, args.width, args.height)
     root = Path(args.output).resolve()
     if args.dry_run:
