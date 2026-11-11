@@ -168,15 +168,15 @@ def image_generation(plan, token, output_path, client_cls=None):
 
 def execute(args, token=None, client_cls=None):
     prompt = build_prompt(args.brief, args.request_file, args.shot)
-    protected = args.protected_project or any(
+    protected = getattr(args, 'protected_project', False) or any(
         word in prompt for word in ('八仙', '张果老', '韓湘子', '韩湘子',
                                    '吕洞宾', '铁拐李', '何仙姑', '曹国舅',
                                    '汉钟离', '蓝采和'))
     if protected:
-        if not args.qa_manifest:
+        if not getattr(args, 'qa_manifest', None):
             raise ImageFlowError('QA_GATE_BLOCKED: protected character shot requires --qa-manifest')
         try:
-            check_manifest(args.qa_manifest, root=args.qa_root)
+            check_manifest(args.qa_manifest, root=getattr(args, 'qa_root', '.'))
         except (QAGateError, OSError, ValueError, TypeError) as exc:
             raise ImageFlowError('QA_GATE_BLOCKED: ' + str(exc)) from None
     plan = build_plan(prompt, args.shot, args.seed, args.width, args.height)
