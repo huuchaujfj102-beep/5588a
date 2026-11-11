@@ -1,0 +1,50 @@
+{
+  "project": "八仙过海·沧海证道",
+  "asset_id": "BX05-YUGU-20261108-1000023719",
+  "character_id": "BX05",
+  "character_name": "张果老",
+  "prop_type": "渔鼓",
+  "update_type": "ADDITIVE_NOT_REPLACEMENT",
+  "reference_priority": "NEWEST_USER_SUPPLIED_YUGU_DESIGN_REFERENCE",
+  "attached_original": {
+    "filename": "1000023719.png",
+    "sha256": "a1785d08d0d2f94423a3f49587a7999e56a21b3fd6576da3a86622f1137a5193",
+    "width": 1536,
+    "height": 1536,
+    "bytes": 154323,
+    "storage": "ChatGPT Library",
+    "library_path": "/八仙过海/BX05_张果老/1000023719_渔鼓一筒两杆_新增母图.png",
+    "library_file_id": "libfile_111b48b2e1b481919c911ff99b191454",
+    "binary_on_github": false,
+    "role": "additional_yugu_structure_reference",
+    "status": "USER_SUPPLIED_ADDITIONAL_PROP_ANCHOR",
+    "note": "图片是独立道具参考，不是角色V4新主图；一节斑点黄色竹筒和两根竹杆；不可由该物件自动推断握持与镜头已经验收。"
+  },
+  "physical_locks": {
+    "bamboo_tube_count": 1,
+    "bamboo_rod_count": 2,
+    "material": "黄色斑点竹筒／木竹色细杆",
+    "surface": "黄底褐色不规则斑点；两道分段环形束箍；前端圆形封面",
+    "bamboo_rods": "同一端伸出、平行偏向同侧，数量恰好两根",
+    "shape": "细长圆柱筒身，不得换为手鼓、圆鼓或金属法器",
+    "pose": "实际入镜时贴身斜抱、手与竹筒及竹杆接触真实",
+    "donkey": "唯一白仙驴，人物按场景倒骑驴朝尾"
+  },
+  "generation_rules": {
+    "all_input_reference_images_per_call_at_most": 2,
+    "reference_choice": "镜头景别/角度符合时，角色图1张＋本渔鼓图1张；场景用已批准独立环境锚图非生成式合成",
+    "never_fuse_multiview_into_one_input": true
+  },
+  "linked_existing_refs": [
+    "image(2).png",
+    "t01afa88d400b0bf3c8.jpg"
+  ],
+  "scope": "专属道具参考登记，非人物图身份批准，非角色合成合格证据",
+  "character_hero_V4_status": "PENDING_EXACT_APPROVED_HERO_BYTES",
+  "quality_gate": {
+    "self_check": "PENDING",
+    "master_compare": "PENDING",
+    "downstream": "BLOCKED",
+    "i2v_allowed": false
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "project": "八仙过海·沧海证道",
+  "shot_id": "S04-01",
+  "version": "V3.2",
+  "date": "2026-11-07",
+  "status": "BLOCKED_POSTFLIGHT_P0_AND_BX05_V4_PENDING",
+  "image": "S04_01_八仙海岸分层精修V3_2_待终审.png",
+  "image_sha256": "f085e59efc217f995ceec08d9513109dbec805c38f6fad55ac4709fae1ffcc9b",
+  "canvas": "2560x1440",
+  "package": "八仙_S04_01_V3_2_局部精修_人物法宝分层_待审核包_20261107.zip",
+  "package_sha256": "caef2d6553c7cbce4ad94a770c86afc09b48405305ea3f8b4cc9c9a9f3080470",
+  "package_size_mb": 37.42,
+  "records": {
+    "original_images": 24,
+    "original_sha_matches": 24,
+    "rgba_layers": 16,
+    "masks": 16,
+    "layer_mask_hard_checks": 32,
+    "independent_actor_review_images": 8,
+    "total_manifest_integrity_checks": 56
+  },
+  "method": "Non-generative alpha-matte trimming and source layer compositing; no full-image text-to-image, no approved character/prop redraw",
+  "composition_change": {
+    "BX05": "shifted left exactly 230px in back-right row to avoid severe occlusion by BX08; other actors unchanged; user final approval still pending"
+  },
+  "defect_review": {
+    "BX05": {
+      "severity": "P0",
+      "state": "OPEN",
+      "detail": "Horse hoof water-edge, tail hair fragmentation and physical ground contact; V4 spotted-bamboo yugu with 2 thin rods is not verified in the delivered V3.2 character/prop cutout, and exact V4 approved hero still requires SHA256 binding."
+    },
+    "BX07": {
+      "severity": "P0",
+      "state": "OPEN",
+      "detail": "Lotus platform-water interaction, natural reflection and underside matte still not film-ready"
+    },
+    "BX08": {
+      "severity": "P0",
+      "state": "OPEN",
+      "detail": "Shoes and ground support physics still unclear"
+    },
+    "BX01": {
+      "severity": "P1",
+      "state": "OPEN"
+    },
+    "BX02": {
+      "severity": "P1",
+      "state": "OPEN"
+    },
+    "BX03": {
+      "severity": "P1",
+      "state": "OPEN"
+    },
+    "BX04": {
+      "severity": "P1",
+      "state": "OPEN"
+    },
+    "BX06": {
+      "severity": "P1",
+      "state": "OPEN"
+    }
+  },
+  "automatic_checks": "Source SHA-256, layer/mask paths and alpha equality; do not prove visual identity or authentic motion",
+  "visual_review": "Preliminary on actual rendered frame; full seven-role and per-character detailed signoff not completed",
+  "may_start_i2v": false,
+  "may_replace_user_approved_master": false,
+  "github_binary_scope": "QA metadata only; original PNG and V3.2 layers/masks delivered in downloadable ZIP and NOT committed to GitHub",
+  "next_steps": [
+    "Bind the exact user-approved BX05 V4 hero and spotted-bamboo yugu; regenerate only BX05 layered asset after review, no group redraw",
+    "Precision segmentation/rotoscope 3 unresolved P0 regions; preserve user-approved 8 individual masters",
+    "Run per-character seven-field and full seven-role human visual QA; resolve all P0 and P1",
+    "Submit individual clean keyframe to user for explicit approval before any video work"
+  ],
+  "precision_matte_tasks": [
+    {
+      "actor": "BX05",
+      "task_id": "a8d1ebc3-25ba-4045-be67-a34be519ba83",
+      "scope": "approved rider+white donkey cutout",
+      "status": "FAILED_NO_DETECTIONS_FOUND_VERIFIED_2026_11_07",
+      "in_v32_package": false,
+      "error": "No detections found"
+    },
+    {
+      "actor": "BX07",
+      "task_id": "1939fdf4-af21-4fab-93ad-51e85c5ac6db",
+      "scope": "approved lotus goddess and platform cutout",
+      "status": "FAILED_NO_DETECTIONS_FOUND_VERIFIED_2026_11_07",
+      "in_v32_package": false,
+      "error": "No detections found"
+    },
+    {
+      "actor": "BX08",
+      "task_id": "54288b79-1802-400f-a36a-eef1b0918738",
+      "scope": "approved royal officer and jade tablets cutout",
+      "status": "FAILED_NO_DETECTIONS_FOUND_VERIFIED_2026_11_07",
+      "in_v32_package": false,
+      "error": "No detections found"
+    }
+  ],
+  "precision_matte_rule": "No external cutout replaces the V3.2 binary until output is actually available, RGB alignment and approved asset visual identity are verified, SHA check passes and per-actor postflight QA is complete.",
+  "bx05_current_v4_yugu": {
+    "design_rule": "UPDATED_AND_USER_APPROVED",
+    "yugu_reference_images": "REGISTERED_AND_GITHUB_BINARIES_PRESENT",
+    "exact_approved_v4_hero_png": "PENDING_EXACT_BINDING",
+    "v32_rgba_yugu_layer": "NOT_VERIFIED_NOT_INTEGRATED",
+    "v32_cast_conformity": "BLOCKED_LEGACY_BX05",
+    "i2v_allowed": false
+  }
+}

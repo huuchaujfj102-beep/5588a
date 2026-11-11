@@ -1,0 +1,50 @@
+{
+  "project": "八仙过海·沧海证道",
+  "asset_id": "BX06",
+  "name": "韩湘子",
+  "status": "USER_DESIGNATED_LOCKED_STILL",
+  "approved_by": "user",
+  "approved_at": "2026-11-06",
+  "approval_source": "user explicitly stated BX06韩湘子定型",
+  "archive_name": "BX06_韩湘子_用户定型母图_20261106.zip",
+  "binary_images_in_repository": false,
+  "video_motion_status": "PENDING",
+  "assets": [
+    {
+      "original_filename": "1000023563.png",
+      "archive_filename": "BX06_CHARACTER_TURNAROUND_APPROVED.png",
+      "width": 857,
+      "height": 1536,
+      "sha256": "fd6dae36e686c7cadb9f0bda9a8ef60d2957bc5f426a934971a2d999952ab9b6"
+    },
+    {
+      "original_filename": "1000023556.png",
+      "archive_filename": "BX06_CHARACTER_CINEMATIC_APPROVED.png",
+      "width": 864,
+      "height": 1536,
+      "sha256": "c7372b4b89b7b2bd39a9d484a488323eb30af27061ae49dc7f048b2729d81838"
+    },
+    {
+      "original_filename": "1000023546.png",
+      "archive_filename": "BX06_PURPLE_JADE_INSTRUMENT_APPROVED.png",
+      "width": 1229,
+      "height": 1536,
+      "sha256": "a2bab28e2f5911b305a2a670e0c3666bd9517ea49301d7e20"
+    }
+  ],
+  "reference_priority": {
+    "face_hair_costume": "BX06_CHARACTER_TURNAROUND_APPROVED.png",
+    "film_light_pose": "BX06_CHARACTER_CINEMATIC_APPROVED.png",
+    "prop_detail": "BX06_PURPLE_JADE_INSTRUMENT_APPROVED.png"
+  },
+  "locked_design": {
+    "person": "清雅青年文士，半束长黑发和簪花，淡紫与浅灰层叠衣袍，纱质袖、绣花、腰间玉佩，不换脸换款",
+    "prop": "唯一紫玉管乐器，紫色半透明管体、金纹套环、均匀管孔、紫流苏、莲花和玉珠饰件；按批准图锁定；禁止重复乐器"
+  },
+  "caveats": [
+    "静态参考图采用横吹方式；传统箫通常竖吹，影片内术语‘紫玉箫’需与用户定型视觉一致，不得混用演奏方式",
+    "尚未完成口形、手指、指孔接触、吹奏动作和视频首中末帧检验",
+    "仅GitHub登记文字和SHA256；PNG在用户可下载压缩包，尚未上传GitHub"
+  ],
+  "final_approval_policy": "用户本人最终拍板；本次静态定型按用户明示生效，图生视频需独立QA"
+}

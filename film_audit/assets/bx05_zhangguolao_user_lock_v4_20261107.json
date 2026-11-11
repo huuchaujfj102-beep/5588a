@@ -1,0 +1,159 @@
+{
+  "id": "BX05",
+  "name": "张果老",
+  "lock_version": "BX05-USER-LOCK-20261107-V4",
+  "approval_date": "2026-11-07",
+  "approval_status": "USER_APPROVED_DESIGN_LOCK",
+  "approval_evidence": {
+    "conversation_id": "6aed72b5-9d78-83ec-8e9a-10ef628744b5",
+    "turn_id": "e7c4a2b4-9b94-476d-8938-94559c2b2732",
+    "user_quote": "可以写入张果老人物定型",
+    "scope": "Latest explicitly confirmed BX05 design, including approved yugu; this does not identify or verify unavailable replacement hero bytes."
+  },
+  "locked_attributes": {
+    "face": "保留最新确认角色图的五官、白发长须与神态，不重新设计",
+    "wardrobe": "保留最新确认角色图的服装、裁片、纹样、颜色与配饰",
+    "mount": "唯一白仙驴，身体朝驴尾倒骑；驴耳、四蹄、毛色、鞍具与真实骑坐接触保持一致",
+    "yugu": "唯一斑点竹筒鱼鼓、两根细竹杆，贴身斜抱；筒体依靠前臂/臂弯承托，手与法器接触自然，按姿态参考核验"
+  },
+  "yugu": {
+    "owner": "BX05",
+    "bamboo_tube_count": 1,
+    "bamboo_rod_count": 2,
+    "material": "spotted_bamboo",
+    "holding_pose": "close_to_torso_cradled_diagonal",
+    "additional_user_prop_ref": "1000023719.png",
+    "latest_reference_sha256": "a1785d08d0d2f94423a3f49587a7999e56a21b3fd6576da3a86622f1137a5193",
+    "latest_reference_manifest": "film_audit/assets/bx05_yugu_additional_anchor_1000023719_20261108.json"
+  },
+  "references": [
+    {
+      "id": "BX05",
+      "role": "holding_pose_reference",
+      "filename": "t01afa88d400b0bf3c8.jpg",
+      "sha256": "d964817edb6c00e0036a10656ed19ca683db833b93940e73ba427a9bbc91a2a7",
+      "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
+      "binary_on_github": true,
+      "repository_path": "film_audit/assets/baxian_sources/BX05/t01afa88d400b0bf3c8.jpg",
+      "size_bytes": 77155,
+      "git_blob_sha": "66ca2cc2125cf1b6caff5ef3d9fbf3f1d0c36e58",
+      "storage": "git_blob",
+      "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
+      "availability": "PRESENT_REMOTE_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BYTES_SHA256_AND_SIZE_MATCH",
+      "verified_at_commit": "e595fc34f588bf9d13b24f7d95136eacc2467d4c"
+    },
+    {
+      "id": "BX05",
+      "role": "yugu_structure_reference",
+      "filename": "image(2).png",
+      "sha256": "51992887a8bae028e6d1bd156619d7c906a59e146aa0627d4e570999f4e7b7b8",
+      "status": "USER_DESIGNATED_REFERENCE_NOT_CHARACTER_HERO",
+      "binary_on_github": true,
+      "repository_path": "film_audit/assets/baxian_sources/BX05/image(2).png",
+      "size_bytes": 1007825,
+      "git_blob_sha": "7f98917e42c070eafdca02b71310b801717b6547",
+      "storage": "git_blob",
+      "source": "Exact attachment bytes recovered from referenced ChatGPT conversation; original filenames retained",
+      "availability": "PRESENT_REMOTE_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BYTES_SHA256_AND_SIZE_MATCH",
+      "verified_at_commit": "e595fc34f588bf9d13b24f7d95136eacc2467d4c"
+    }
+  ],
+  "current_hero": {
+    "filename": null,
+    "sha256": null,
+    "binding_status": "PENDING_EXACT_APPROVED_HERO_BYTES",
+    "binary_on_github": false,
+    "visual_qa_status": "NOT_PERFORMED_ON_REPLACEMENT_HERO"
+  },
+  "legacy_sources": [
+    {
+      "id": "BX05",
+      "role": "hero",
+      "filename": "1000023552.png",
+      "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199"
+    },
+    {
+      "id": "BX05",
+      "role": "views",
+      "filename": "1000023558.png",
+      "sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6"
+    },
+    {
+      "id": "BX05",
+      "role": "prop",
+      "filename": "1000023545.png",
+      "sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64"
+    }
+  ],
+  "mapping_audit": {
+    "base_commit": "86102a2078b28f13ee57eaba52d5b038c8ef0ecd",
+    "status": "REGISTRY_MAPPING_AND_HASH_CROSSCHECKED_ONLY",
+    "originals_rehashed": false,
+    "note": "Legacy PNG binaries are absent from the repository. Existing registered hashes retained verbatim; only the two accessible reference attachments were rehashed."
+  },
+  "supersedes": "Earlier blanket ban on drums/no-drum for BX05 only. Approved yugu is required; small round drums, hand drums and other substitutes remain forbidden.",
+  "source_priority": [
+    "V4 exact approved hero once bound",
+    "2026-11-08 user-supplied yugu addition 1000023719.png; image exact bytes in ChatGPT Library",
+    "Earlier V4 yugu structure and holding references",
+    "Legacy sources for traceability only; never silently use as V4 hero"
+  ],
+  "immutable_originals": true,
+  "group_approval_status": "PENDING_SEPARATE_VISUAL_QA_AND_USER_APPROVAL",
+  "video_qa_status": "PENDING",
+  "github_scope": "24 original PNGs from user-supplied RAR plus 2 earlier BX05 reference attachments stored in baxian_sources. BX05 3 historical originals stored under legacy; exact latest V4 hero remains pending. 6 supplemental originals remain absent. No original replaced and no preview substituted.",
+  "legacy_source_binaries": [
+    {
+      "filename": "1000023545.png",
+      "sha256": "0073ab42efa02c2a631648355ff235690ca4008c0185a476582a2129be038e64",
+      "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023545.png",
+      "status": "LEGACY_TRACEABILITY_ONLY_NOT_CURRENT_V4",
+      "binary_on_github": true,
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
+    },
+    {
+      "filename": "1000023552.png",
+      "sha256": "0bef1029b7687df4c5a728bce3c61f5349b918dc16ae2e3e598ea1b04ccb9199",
+      "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023552.png",
+      "status": "LEGACY_TRACEABILITY_ONLY_NOT_CURRENT_V4",
+      "binary_on_github": true,
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
+    },
+    {
+      "filename": "1000023558.png",
+      "sha256": "be61023f2b51a0346f81bab7c6ceff956e4fe79a9293a3260b5941fa34774ac6",
+      "repository_path": "film_audit/assets/baxian_sources/BX05/legacy/1000023558.png",
+      "status": "LEGACY_TRACEABILITY_ONLY_NOT_CURRENT_V4",
+      "binary_on_github": true,
+      "availability": "PRESENT_REMOTE_BYTES_SHA256_VERIFIED",
+      "binary_verification": "REMOTE_BASE64_BYTES_EXACTLY_EQUAL_LOCAL_SHA256_VERIFIED_ORIGINAL",
+      "verified_at_commit": "63f901de82b2c2cfd412b9ea61805a89f9d3c89b"
+    }
+  ],
+  "additional_yugu_references": [
+    {
+      "id": "BX05",
+      "role": "additional_yugu_structure_reference",
+      "filename": "1000023719.png",
+      "sha256": "a1785d08d0d2f94423a3f49587a7999e56a21b3fd6576da3a86622f1137a5193",
+      "size_bytes": 154323,
+      "dimensions": [
+        1536,
+        1536
+      ],
+      "binary_on_github": false,
+      "storage": "ChatGPT Library",
+      "library_path": "/八仙过海/BX05_张果老/1000023719_渔鼓一筒两杆_新增母图.png",
+      "library_file_id": "libfile_111b48b2e1b481919c911ff99b191454",
+      "status": "USER_ADDED_PROP_ANCHOR_NOT_HERO",
+      "manifest_path": "film_audit/assets/bx05_yugu_additional_anchor_1000023719_20261108.json"
+    }
+  ],
+  "note_on_gate": "This file is additive as additional_yugu_references, not in existing required references. The group validator currently accepts two required legacy V4 ref roles and must not claim binary-on-GitHub verification for the new reference."
+}

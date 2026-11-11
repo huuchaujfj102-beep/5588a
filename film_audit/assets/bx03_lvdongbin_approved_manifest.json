@@ -1,0 +1,45 @@
+{
+  "asset_id": "BX03",
+  "character": "吕洞宾",
+  "status": "USER_DESIGNATED_LOCKED_STILL",
+  "date": "2026-11-06",
+  "archive": "BX03_吕洞宾_用户批准母图_20261106.zip",
+  "files": [
+    {
+      "file": "1000023560.png",
+      "role": "reference_comparison",
+      "sha256": "d557f188ca8bf624424086e6720a91c3c19e68821719512c108b334a7105081e"
+    },
+    {
+      "file": "1000023559.png",
+      "role": "six_view_sheet",
+      "sha256": "d0fa39c51b491aaadd1085cb9c78d766e8e870f63fdb13b22ab2ba0bcf1c57cc"
+    },
+    {
+      "file": "1000023555.png",
+      "role": "cinematic_hero",
+      "sha256": "6e35033d06f56446ba401e5f678c2a9c6533bfa5b1601f6a26113ba3ffb2efcd"
+    },
+    {
+      "file": "1000023543.png",
+      "role": "pure_yang_sword",
+      "sha256": "597025ca3dd09b20e125fba0058feda6607f56f2d70d26537495a9f85aea8d1d"
+    }
+  ],
+  "locked": [
+    "面部五官、发须、体型及深蓝金纹道袍",
+    "唯一纯阳仙剑，不得持拂尘",
+    "剑柄剑身剑鞘护手吊饰依据批准道具图",
+    "剑出鞘与入鞘必须连续镜头状态管理"
+  ],
+  "video_motion_status": "NOT_TESTED",
+  "note": "用户指定定型；原始图像在对话压缩包，GitHub只存校验值与规则，不代表上传PNG。",
+  "reference_priority": {
+    "identity": "1000023559.png 白底多视角人物",
+    "facial_comparison": "1000023560.png 右侧生成角色身份为准，左侧原参考用于对照",
+    "cinematic": "1000023555.png 电影级风暴海岸及出鞘持剑状态",
+    "prop": "1000023543.png 纯阳剑与剑鞘结构"
+  },
+  "review_caveat": "对照图左侧与右侧面部存在差异，以生成图及五视角中的已批准脸为身份锁；多视角组合图不代表独立五张原生视图。",
+  "binary_images_in_repository": false
+}

@@ -1,0 +1,99 @@
+{
+  "project": "八仙过海·沧海证道",
+  "version": "approved_actor_prop_scene_20261108_batch1",
+  "date": "2026-11-08",
+  "status": "USER_ACCEPTED_SCENE_STILLS",
+  "scope": "Actor+prop cinematic scene stills only. This release does NOT replace locked turnaround/multiview identity source, individual prop anchors, or independently approved actor-prop relational reference. Keep all old scene history.",
+  "approval": "User explicitly approved BX01 BX02 BX03 and requested archiving five after visual pass on BX04 BX07; visual approval is not a claim of computational pixel-exact identity validation or native 4K.",
+  "image_width": 1147,
+  "image_height": 1536,
+  "image_format": "PNG",
+  "github_binary_stored": false,
+  "drive_folder": "https://drive.google.com/drive/folders/1dyRGjfmGrn9ZOWmyUDtGFXRXTcfxWV_V",
+  "library_folder": "/八仙过海/人物道具场景定版图/2026-11-08_第一批5位已通过",
+  "zip_file": "八仙_五位人物道具场景图_正式入库备份_20261108.zip",
+  "zip_sha256": "c5c7343bb404ebc76ce4224cf379f761bc61d733116a2b44a13e92dfee08fb9d",
+  "drive_zip": "https://drive.google.com/file/d/157IaJ_7qxMj43e41dRWhb-OWya19BpwN/view?usp=drivesdk",
+  "remaining": {
+    "BX05": "P0 reverse white donkey/yugu pose still blocked",
+    "BX06": "P0 flute mouth finger alignment pending",
+    "BX08": "no approved updated image; two jade tablets pending"
+  },
+  "images": [
+    {
+      "id": "BX01",
+      "name": "铁拐李",
+      "source_filename": "1000023750.png",
+      "sha256": "0faf03b56a76122ac48d49de4b36d05eb0d8ad51961332a41a97ce38975f8f19",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "status": "USER_APPROVED_SCENE_STILL",
+      "library_path": "/八仙过海/人物道具场景定版图/2026-11-08_第一批5位已通过/BX01_铁拐李_人物道具场景定版.png",
+      "drive_id": "1YdZryK7MpQW_L0gUK6UImqmrqB_EyiIi",
+      "drive_url": "https://drive.google.com/file/d/1YdZryK7MpQW_L0gUK6UImqmrqB_EyiIi/view?usp=drivesdk",
+      "generation_rule": "Future new shots must pre-check multiview+prop+actor-prop relationship three anchors; at most 2 reference inputs; postgen check separate."
+    },
+    {
+      "id": "BX02",
+      "name": "汉钟离",
+      "source_filename": "1000023752.png",
+      "sha256": "e79d2d63812aae7c8f29049431152243c0c1115249cbaf996655c9b36717ab86",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "status": "USER_APPROVED_SCENE_STILL",
+      "library_path": "/八仙过海/人物道具场景定版图/2026-11-08_第一批5位已通过/BX02_汉钟离_人物道具场景定版.png",
+      "drive_id": "1nWXXETRPjYFz0Eg7hEkkQcFO7Shw7QyI",
+      "drive_url": "https://drive.google.com/file/d/1nWXXETRPjYFz0Eg7hEkkQcFO7Shw7QyI/view?usp=drivesdk",
+      "generation_rule": "Future new shots must pre-check multiview+prop+actor-prop relationship three anchors; at most 2 reference inputs; postgen check separate."
+    },
+    {
+      "id": "BX03",
+      "name": "吕洞宾",
+      "source_filename": "1000023754.png",
+      "sha256": "2d49594a0af2f76833b9390ac29d18b0795d205647db819b2cb392f69732c6b1",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "status": "USER_APPROVED_SCENE_STILL",
+      "library_path": "/八仙过海/人物道具场景定版图/2026-11-08_第一批5位已通过/BX03_吕洞宾_人物道具场景定版.png",
+      "drive_id": "1mHPEayniSGTbvEwhXoJHqxfjtRiaXM4T",
+      "drive_url": "https://drive.google.com/file/d/1mHPEayniSGTbvEwhXoJHqxfjtRiaXM4T/view?usp=drivesdk",
+      "generation_rule": "Future new shots must pre-check multiview+prop+actor-prop relationship three anchors; at most 2 reference inputs; postgen check separate."
+    },
+    {
+      "id": "BX04",
+      "name": "蓝采和",
+      "source_filename": "1000023756.png",
+      "sha256": "8d2d281c1fdb4bf7878a34cccc116bb24232172f58589fd3b4dbaa32fb1b292f",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "status": "USER_APPROVED_SCENE_STILL",
+      "library_path": "/八仙过海/人物道具场景定版图/2026-11-08_第一批5位已通过/BX04_蓝采和_人物道具场景定版.png",
+      "drive_id": "1n7Kfl_fdp7U4ZpyZWA1SmIJwljWlNJOO",
+      "drive_url": "https://drive.google.com/file/d/1n7Kfl_fdp7U4ZpyZWA1SmIJwljWlNJOO/view?usp=drivesdk",
+      "generation_rule": "Future new shots must pre-check multiview+prop+actor-prop relationship three anchors; at most 2 reference inputs; postgen check separate."
+    },
+    {
+      "id": "BX07",
+      "name": "何仙姑",
+      "source_filename": "1000023760.png",
+      "sha256": "9364a524c97801fb14e81c7801a26ae62b9a0bb662eaad4046b19056ee5ab072",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "status": "USER_APPROVED_SCENE_STILL",
+      "library_path": "/八仙过海/人物道具场景定版图/2026-11-08_第一批5位已通过/BX07_何仙姑_人物道具场景定版.png",
+      "drive_id": "1a5kfDMj4dcBd7-aXoT7-4UTfalVGhRAp",
+      "drive_url": "https://drive.google.com/file/d/1a5kfDMj4dcBd7-aXoT7-4UTfalVGhRAp/view?usp=drivesdk",
+      "generation_rule": "Future new shots must pre-check multiview+prop+actor-prop relationship three anchors; at most 2 reference inputs; postgen check separate."
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "version": "2026-11-09_CastV2_provisional3",
+  "project": "八仙过海·沧海证道",
+  "branch": "review/baxian-cg-continuity-v1",
+  "scope": "eight individual character-scene selected frames; original multiview masters unchanged",
+  "counts": {
+    "approved": 5,
+    "user_provisional": 3,
+    "final_qa_provisional": 0
+  },
+  "master_policy": "keep original approved 6-view, prop and relationship masters; only append new scene-frame version",
+  "pre_generation_requirement": "all three anchor categories must be reviewed offline and consistent before every image generation. Actual image inputs must be <=2 shot-angle matching originals; never use audit collage as input",
+  "files_library": "/八仙过海/人物定型审核/2026-11-09_三人暂过锁定",
+  "items": [
+    {
+      "id": "BX01",
+      "name": "铁拐李",
+      "scene_asset_filename": "1000023750.png",
+      "sha256": "0faf03b56a76122ac48d49de4b36d05eb0d8ad51961332a41a97ce38975f8f19",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "approval": "APPROVED",
+      "prop_requirements": {
+        "prop": "iron crutch exactly one, purple-gold gourd exactly one",
+        "must": "weight bearing true metal crutch; one gourd at left waist"
+      },
+      "can_use_as_identity_master": false,
+      "can_use_as_shot_previsualization": true,
+      "eligible_for_final_i2v": "REQUIRES_FIRSTFRAME_QA"
+    },
+    {
+      "id": "BX02",
+      "name": "汉钟离",
+      "scene_asset_filename": "1000023752.png",
+      "sha256": "e79d2d63812aae7c8f29049431152243c0c1115249cbaf996655c9b36717ab86",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "approval": "APPROVED",
+      "prop_requirements": {
+        "prop": "one broad torn green banana leaf fan",
+        "must": "real ripped banana leaf not folding fan"
+      },
+      "can_use_as_identity_master": false,
+      "can_use_as_shot_previsualization": true,
+      "eligible_for_final_i2v": "REQUIRES_FIRSTFRAME_QA"
+    },
+    {
+      "id": "BX03",
+      "name": "吕洞宾",
+      "scene_asset_filename": "1000023754.png",
+      "sha256": "2d49594a0af2f76833b9390ac29d18b0795d205647db819b2cb392f69732c6b1",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "approval": "APPROVED",
+      "prop_requirements": {
+        "prop": "Pure Yang sword one, fully sheathed",
+        "must": "no drawn blade nor duplicate sword"
+      },
+      "can_use_as_identity_master": false,
+      "can_use_as_shot_previsualization": true,
+      "eligible_for_final_i2v": "REQUIRES_FIRSTFRAME_QA"
+    },
+    {
+      "id": "BX04",
+      "name": "蓝采和",
+      "scene_asset_filename": "1000023756.png",
+      "sha256": "8d2d281c1fdb4bf7878a34cccc116bb24232172f58589fd3b4dbaa32fb1b292f",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "approval": "APPROVED",
+      "prop_requirements": {
+        "prop": "one wicker flower basket",
+        "must": "male youth, no flower wreath"
+      },
+      "can_use_as_identity_master": false,
+      "can_use_as_shot_previsualization": true,
+      "eligible_for_final_i2v": "REQUIRES_FIRSTFRAME_QA"
+    },
+    {
+      "id": "BX05",
+      "name": "张果老",
+      "scene_asset_filename": "风雨海岸上的张果老仙人.png",
+      "sha256": "fe32af38fcde583e9c71e9b746ea7798e5d2b08a254e5e21c613cc47fbe57960",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "approval": "USER_PROVISIONAL",
+      "prop_requirements": {
+        "prop": "one white donkey and one yellow spotted bamboo yugu tube plus two sticks",
+        "must": "authentic reverse riding, axis aligned; two sticks not extra pipes"
+      },
+      "can_use_as_identity_master": false,
+      "can_use_as_shot_previsualization": true,
+      "eligible_for_final_i2v": "BLOCKED_PROVISIONAL"
+    },
+    {
+      "id": "BX06",
+      "name": "韩湘子",
+      "scene_asset_filename": "暴雨海村中的紫玉笛仙.png",
+      "sha256": "5f5df6cbe19ba60c42f16b4080b1e363f385025c4421b0339ef5921b44a942df",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "approval": "USER_PROVISIONAL",
+      "prop_requirements": {
+        "prop": "one purple transverse flute",
+        "must": "embouchure at mouth and finger holes covered naturally"
+      },
+      "can_use_as_identity_master": false,
+      "can_use_as_shot_previsualization": true,
+      "eligible_for_final_i2v": "BLOCKED_PROVISIONAL"
+    },
+    {
+      "id": "BX07",
+      "name": "何仙姑",
+      "scene_asset_filename": "1000023760.png",
+      "sha256": "9364a524c97801fb14e81c7801a26ae62b9a0bb662eaad4046b19056ee5ab072",
+      "dimensions": [
+        1147,
+        1536
+      ],
+      "approval": "APPROVED",
+      "prop_requirements": {
+        "prop": "one handheld pink lotus and one lotus platform",
+        "must": "feet physically resting on lotus dais"
+      },
+      "can_use_as_identity_master": false,
+      "can_use_as_shot_previsualization": true,
+      "eligible_for_final_i2v": "REQUIRES_FIRSTFRAME_QA"
+    },
+    {
+      "id": "BX08",
+      "name": "曹国舅",
+      "scene_asset_filename": "风雨海岸上的双玉仙官.png",
+      "sha256": "84fd5faaebcaa2b5475cc4f333d1932bb0bb688fe7413bfb52908515850c16c1",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "approval": "USER_PROVISIONAL",
+      "prop_requirements": {
+        "prop": "two physically independent rectangular jade tablets (white and green)",
+        "must": "separate crown and tassel, fingers support each"
+      },
+      "can_use_as_identity_master": false,
+      "can_use_as_shot_previsualization": true,
+      "eligible_for_final_i2v": "BLOCKED_PROVISIONAL"
+    }
+  ]
+}

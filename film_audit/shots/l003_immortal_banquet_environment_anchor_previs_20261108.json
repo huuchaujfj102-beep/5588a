@@ -1,0 +1,106 @@
+{
+  "project": "八仙过海·沧海证道",
+  "scene_id": "L-003",
+  "scene_name": "海上鎏金盛宴露台",
+  "source_image": "八仙海上鎏金盛宴露台.png",
+  "source_image_sha256": "1d1912371d13207cb5390cbe1a106364e8830cf5b61b31962587a2775619bdf3",
+  "resolution": [
+    1672,
+    941
+  ],
+  "ratio": "16:9",
+  "source_image_binary_in_repo": false,
+  "approval": "CANDIDATE_NOT_APPROVED",
+  "process": "AI_ONLY_FIVE_LAYER_PIPELINE",
+  "reference_images_per_generation_max": 2,
+  "character_slots": [
+    {
+      "id": "BX01",
+      "point": [
+        265,
+        840
+      ],
+      "role": "front left crutch/gourd"
+    },
+    {
+      "id": "BX02",
+      "point": [
+        520,
+        656
+      ],
+      "role": "left rear fan/wine"
+    },
+    {
+      "id": "BX03",
+      "point": [
+        1165,
+        650
+      ],
+      "role": "rear sheathed sword",
+      "status": "BLOCKED_DRAWN_SWORD"
+    },
+    {
+      "id": "BX04",
+      "point": [
+        635,
+        904
+      ],
+      "role": "front flower basket, no floral wreath",
+      "status": "MASK_DRAFT_ONLY"
+    },
+    {
+      "id": "BX05",
+      "point": [
+        167,
+        755
+      ],
+      "role": "backward donkey yugu",
+      "status": "BLOCKED_V4_HERO_UNBOUND"
+    },
+    {
+      "id": "BX06",
+      "point": [
+        840,
+        643
+      ],
+      "role": "rear transverse flute"
+    },
+    {
+      "id": "BX07",
+      "point": [
+        1392,
+        895
+      ],
+      "role": "front lotus dais",
+      "status": "BLOCKED_DAIS_CONTACT"
+    },
+    {
+      "id": "BX08",
+      "point": [
+        1492,
+        699
+      ],
+      "role": "rear two separate jade tablets"
+    }
+  ],
+  "preflight_local_tests": "12/12 PASS",
+  "single_actor_generation_preflight": {
+    "pass": [
+      "BX01",
+      "BX02",
+      "BX06",
+      "BX08"
+    ],
+    "blocked": [
+      "BX03",
+      "BX04",
+      "BX05",
+      "BX07"
+    ]
+  },
+  "actual_model_generation_calls": 0,
+  "experimental_pixel_staging": "REJECTED_NOT_CINEMATIC",
+  "final_i2v_allowed": false,
+  "binary_delivery": "八仙_L003_仙宴空镜人物布局_局部修复遮罩及参考预检_20261108.zip",
+  "binary_delivery_sha256": "7ab995108c37a343441f6f41927f5b169c44984f1f2a658049b72ef262f84b82"
+}
