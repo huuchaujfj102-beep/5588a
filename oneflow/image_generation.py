@@ -12,6 +12,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from .production_qa_gate import check_manifest, QAGateError
+
 MODEL = "black-forest-labs/FLUX.1-schnell"
 SHOT = re.compile(r"S(0[1-9]|1[0-2])\Z")
 MODEL_LICENSE = "Apache-2.0 (FLUX.1-schnell checkpoint; review upstream terms)"
@@ -166,6 +168,17 @@ def image_generation(plan, token, output_path, client_cls=None):
 
 def execute(args, token=None, client_cls=None):
     prompt = build_prompt(args.brief, args.request_file, args.shot)
+    protected = args.protected_project or any(
+        word in prompt for word in ('八仙', '张果老', '韓湘子', '韩湘子',
+                                   '吕洞宾', '铁拐李', '何仙姑', '曹国舅',
+                                   '汉钟离', '蓝采和'))
+    if protected:
+        if not args.qa_manifest:
+            raise ImageFlowError('QA_GATE_BLOCKED: protected character shot requires --qa-manifest')
+        try:
+            check_manifest(args.qa_manifest, root=args.qa_root)
+        except (QAGateError, OSError, ValueError, TypeError) as exc:
+            raise ImageFlowError('QA_GATE_BLOCKED: ' + str(exc)) from None
     plan = build_plan(prompt, args.shot, args.seed, args.width, args.height)
     root = Path(args.output).resolve()
     if args.dry_run:
@@ -198,6 +211,9 @@ def main(argv=None):
     p.add_argument("--width", type=int, default=768)
     p.add_argument("--height", type=int, default=1344)
     p.add_argument("--output", default="private-inputs/generated-images")
+    p.add_argument("--qa-manifest", help="Review manifest for protected character shots")
+    p.add_argument("--qa-root", default=".", help="Root for locked asset paths")
+    p.add_argument("--protected-project", action="store_true", help="Require QA manifest")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--approve-one-image", action="store_true")
     args = p.parse_args(argv)
