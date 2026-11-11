@@ -63,9 +63,16 @@ def check_manifest(manifest_path, *, root="."):
         raise QAGateError("REVIEW_REQUIRED: unresolved P0/P1 issues")
     if doc.get("human_approval") != "APPROVED" or not doc.get("reviewer_id") or not doc.get("reviewed_utc"):
         raise QAGateError("REVIEW_REQUIRED: traceable human approval missing")
+    supplemental = None
+    if doc.get("project_id") == "baxian" or any(
+        str(asset.get("asset_id", "")).startswith("BX0") for asset in assets
+    ):
+        from .baxian_scene_gate import check_baxian_scene
+        supplemental = check_baxian_scene(doc)
     return {"status": "PREFLIGHT_PASS_METADATA_ONLY", "shot_id": doc["shot_id"],
             "asset_count": len(assets), "paid_task_created": False,
-            "visual_identity_verified_by_code": False}
+            "visual_identity_verified_by_code": False,
+            "supplemental": supplemental}
 
 
 def main(argv=None):
