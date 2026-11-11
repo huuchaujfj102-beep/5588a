@@ -15,7 +15,7 @@ class ProductionGates(unittest.TestCase):
         (self.root / "asset.png").write_bytes(b"approved mother pixels")
         self.doc = {
             "schema": "oneflow-qa-v3", "shot_id": "BXDG_G11",
-            "assets": [{"asset_id": "BX05", "path": "asset.png",
+            "assets": [{"asset_id": "GENERIC_01", "path": "asset.png",
                         "sha256": hashlib.sha256(b"approved mother pixels").hexdigest()}],
             "scene_id": "STORM_COAST", "camera_id": "CAM_01",
             "lighting_id": "LIGHT_01", "palette_id": "COL_01",
