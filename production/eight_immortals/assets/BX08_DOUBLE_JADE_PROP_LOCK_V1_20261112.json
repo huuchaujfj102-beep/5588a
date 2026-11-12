@@ -1,0 +1,27 @@
+{
+  "version": "BX08_PROP_LOCK_V1_20261112",
+  "owner": "BX08",
+  "approval": "user approved prop visual anchor on 2026-11-12",
+  "mother": "BX08 LOCK V2 unchanged",
+  "prop_ids": [
+    "BX08_PROP_WHITE_JADE",
+    "BX08_PROP_GREEN_JADE"
+  ],
+  "quantity": 2,
+  "primary_sha256": "6224396ee277e3820b41cf5aff5ed135e0afcc9b503bb47a8539e2d664adc485",
+  "grip_ref_sha256": "73cc28bf6b1eec239a22a9b5e4b353c8e772360c4547dadf32bd99e7973e78cb",
+  "turnaround_ref_sha256": "540c05d403a74f108a721dc4a517055329e1152d9fedcbf9f61e0c1c897d25ac",
+  "library_path": "/八仙过海/人物道具场景定版图/BX08_曹国舅_双玉板_法器CURRENT_20261112",
+  "invariants": [
+    "one white-cloud-jade plate and one green-dragon-jade plate",
+    "golden borders, top crest, two bead-and-dark-red-tassel pendants",
+    "preserve position, dimensions, decoration and ownership",
+    "multiple views are not additional physical plates"
+  ],
+  "S02_03": {
+    "G3S": "BLOCK_PENDING_REFERENCES_AND_INPUT_ATTESTATION",
+    "G4": "NOT_RUN",
+    "generation_allowed": false
+  },
+  "notes": "Approved prop anchor is not a completed shot. No production image adapter attestation supplied."
+}
