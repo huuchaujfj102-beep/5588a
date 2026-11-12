@@ -385,6 +385,8 @@ def run(args):
                 root_dir = getattr(args, "style_root", ".")
                 verify(args.style_manifest, root_dir, "video")
                 m = _json.loads(_Path(args.style_manifest).read_text(encoding="utf-8"))
+                from .storyboard_gate_v353 import verify_storyboard
+                verify_storyboard(m, root_dir, expected_shot=m["shot_id"])
                 expected = (_Path(root_dir) / m["approved_first_frame_path"]).resolve()
                 if _Path(args.first_frame).resolve() != expected:
                     raise ViduError("STYLE_GATE_BLOCKED: provider input differs from approved frame")
