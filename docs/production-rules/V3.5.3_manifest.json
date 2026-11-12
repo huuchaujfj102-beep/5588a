@@ -1,0 +1,33 @@
+{
+  "version": "V3.5.3",
+  "source_sha256": "27d7adcf3154362ef500851d1beccec811fb5088b56f08503feed4607620ae9f",
+  "parent": [
+    "V3.5.1",
+    "V3.5.2"
+  ],
+  "enforcement": "documented_only_not_integrated_with_all_generators",
+  "short_drama": {
+    "segment_seconds": 15,
+    "shot_min_seconds": 1,
+    "shot_max_seconds": 3
+  },
+  "epic_live_action": {
+    "timing": "from_source_screenplay",
+    "shot_count_reference": 48
+  },
+  "G3S_required": [
+    "source_script_ref",
+    "shot_id",
+    "scene_asset_sha256",
+    "subject_asset_sha256",
+    "prop_asset_sha256",
+    "style_asset_sha256",
+    "camera_axis",
+    "spatial_anchors",
+    "action_trajectory",
+    "physical_contact",
+    "lighting_contract",
+    "continuity_to_prior",
+    "director_approval"
+  ]
+}
