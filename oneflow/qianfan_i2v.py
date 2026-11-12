@@ -400,8 +400,8 @@ def main(argv=None):
                     root_dir = getattr(args, "style_root", ".")
                     verify(args.style_manifest, root_dir, "video")
                     m = _json.loads(_Path(args.style_manifest).read_text(encoding="utf-8"))
-                from .storyboard_gate_v353 import verify_storyboard
-                verify_storyboard(m, root_dir, expected_shot=m["shot_id"])
+                    from .storyboard_gate_v353 import verify_storyboard
+                    verify_storyboard(m, root_dir, expected_shot=m["shot_id"])
                     if _Path(args.first_frame_file).resolve() != (_Path(root_dir) / m["approved_first_frame_path"]).resolve():
                         raise FlowError("STYLE_GATE_BLOCKED: submitted frame differs from approved asset")
                 except (ValueError, OSError, TypeError, KeyError) as exc:
