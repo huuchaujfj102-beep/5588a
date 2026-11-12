@@ -1,0 +1,22 @@
+{
+  "shot": "S03-01",
+  "version": "V3.8.0",
+  "gate": "G3-S",
+  "result": "BLOCK",
+  "reasons": [
+    "BASE_NOT_LOCKED",
+    "NO_PROTECTED_REGIONS",
+    "LAYERS_NOT_APPROVED",
+    "ADAPTER_MISSING_model_revision",
+    "ADAPTER_MISSING_request_id",
+    "ADAPTER_MISSING_reference_receipt",
+    "ADAPTER_MISSING_capabilities_verified",
+    "NO_VERIFIED_LAYER_COMPOSITE_SUPPORT"
+  ],
+  "images_generated": 0,
+  "negative_tests": {
+    "tested": 10,
+    "passed": 10
+  },
+  "deployment": "OFFLINE_VALIDATED_NOT_PROVIDER_ENFORCED"
+}
