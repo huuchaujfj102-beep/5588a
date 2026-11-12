@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'oneflow/style_gate_v352.py'
+      - 'oneflow/storyboard_gate_v353.py'
+      - 'tests/test_storyboard_gate_v353.py'
       - 'oneflow/image_generation.py'
       - 'oneflow/vidu_q3.py'
       - 'oneflow/qianfan_i2v.py'
@@ -23,7 +25,9 @@ jobs:
         with:
           python-version: '3.11'
       - name: Run local, no-network V3.5.2 tests
-        run: python -m unittest discover -s tests -p 'test_style_gate_v352.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_style_gate_v352.py' -v
+          python -m unittest discover -s tests -p 'test_storyboard_gate_v353.py' -v
       - name: Verify protected image generation blocked
         run: |
           if python -m oneflow.image_generation --brief '八仙 古装真人电影' --shot S01 --dry-run; then
