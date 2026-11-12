@@ -375,6 +375,9 @@ def main(argv=None):
     start.add_argument("--platform", action="append", default=[])
     start.add_argument("--out", default="private-inputs/oneflow-jobs")
     start.add_argument("--no-watermark", action="store_true")
+    start.add_argument("--style-manifest")
+    start.add_argument("--style-root", default=".")
+    start.add_argument("--ancient-live-action", action="store_true")
     start.add_argument("--confirm-paid", action="store_true")
     start.add_argument("--skip-poll", action="store_true")
     follow = sub.add_parser("resume", help="Poll existing task, download, audit; no paid POST")
@@ -384,6 +387,23 @@ def main(argv=None):
     args = p.parse_args(argv)
     try:
         if args.cmd == "run":
+            protected = getattr(args, "ancient_live_action", False) or bool(getattr(args, "style_manifest", None)) or any(
+                word in args.brief for word in ("八仙", "吕洞宾", "张果老", "韩湘子", "古装真人", "仿古真人", "古代渔村")
+            )
+            if protected:
+                if not args.first_frame_file or not getattr(args, "style_manifest", None):
+                    raise FlowError("STYLE_GATE_BLOCKED: local approved first frame and style manifest required")
+                try:
+                    from .style_gate_v352 import verify
+                    from pathlib import Path as _Path
+                    import json as _json
+                    root_dir = getattr(args, "style_root", ".")
+                    verify(args.style_manifest, root_dir, "video")
+                    m = _json.loads(_Path(args.style_manifest).read_text(encoding="utf-8"))
+                    if _Path(args.first_frame_file).resolve() != (_Path(root_dir) / m["approved_first_frame_path"]).resolve():
+                        raise FlowError("STYLE_GATE_BLOCKED: submitted frame differs from approved asset")
+                except (ValueError, OSError, TypeError, KeyError) as exc:
+                    raise FlowError("STYLE_GATE_BLOCKED: " + str(exc)) from None
             root = plan(args.brief, args.first_frame_file or args.first_frame_url,
                         seconds=args.seconds, ratio=args.ratio,
                         model=args.model, resolution=args.resolution,
