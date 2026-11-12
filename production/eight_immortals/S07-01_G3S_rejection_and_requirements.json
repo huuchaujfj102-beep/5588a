@@ -1,0 +1,33 @@
+{
+  "version": "V3.5.3",
+  "shot_id": "S07-01",
+  "title": "巨涡断路",
+  "status": "G3S_BLOCKED_SOURCE_ONLY__NO_APPROVED_FRAME",
+  "mode": "epic_live_action",
+  "frame_type": "single_environment_frame",
+  "original_script_summary": "海中出现巨大漩涡，将原有救援通道截成三段",
+  "required": {
+    "cast": [],
+    "new_cast_prohibited": true,
+    "animals_prohibited": true,
+    "props_in_frame": [],
+    "camera": "16:9 aerial wide establishing shot",
+    "stage": "stormy ancient coast as previously locked",
+    "action": "sea whirlpool interrupts evacuation route into three visible disjoint segments",
+    "lighting": "cold grey natural diffuse daylight and realistic storm spray",
+    "style": "V3.5.2 live-action historic realism",
+    "words_in_image": false,
+    "collage": false
+  },
+  "preflight_missing": [
+    "reference coastline frame input path and SHA-256 binding in generation adapter",
+    "complete G3-S asset manifest",
+    "single-shot image-conditioned editing endpoint",
+    "G4 visual review"
+  ],
+  "latest_attempt": {
+    "result": "REJECTED_P0",
+    "reason": "unrelated eight-immortal sunny mountain group portrait instead of no-person coastal aerial vortex"
+  },
+  "release_rule": "No accepted image before G3-S + V3.5.2 + G4-C + director approval. Do not overwrite prior approved frames."
+}
