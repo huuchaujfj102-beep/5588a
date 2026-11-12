@@ -1,0 +1,22 @@
+{
+  "version": "V3.7.1",
+  "date": "2026-11-12",
+  "previous": "V3.7.0",
+  "status": "DOCUMENTED_AND_OFFLINE_TESTED_NOT_DEPLOYED_TO_ALL_IMAGE_ENDPOINTS",
+  "requirements": [
+    "immutable_character_environment_prop_style_blocks",
+    "approved_visual_reference_and_sha_binding",
+    "model_revision_and_seed_capability",
+    "strict_schema_no_extra_fields",
+    "independently_attested_reference_submission",
+    "G3S_fail_closed",
+    "G4_visual_comparison_and_director_approval",
+    "localized_inpainting_when_supported"
+  ],
+  "seed_is_identity_guarantee": false,
+  "prompt_weight_syntax_universally_supported": false,
+  "claimed_failure_rate_reduction_verified": false,
+  "shot": "S02-02",
+  "G3S": "BLOCK",
+  "next_shot_unlocked": false
+}
