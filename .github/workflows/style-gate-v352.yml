@@ -1,0 +1,45 @@
+name: V3.5.2 Style Gate Offline
+on:
+  pull_request:
+    paths:
+      - 'oneflow/style_gate_v352.py'
+      - 'oneflow/storyboard_gate_v353.py'
+      - 'tests/test_storyboard_gate_v353.py'
+      - 'oneflow/image_generation.py'
+      - 'oneflow/vidu_q3.py'
+      - 'oneflow/qianfan_i2v.py'
+      - 'tests/test_style_gate_v352.py'
+      - '.github/workflows/style-gate-v352.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run local, no-network V3.5.2 tests
+        run: |
+          python -m unittest discover -s tests -p 'test_style_gate_v352.py' -v
+          python -m unittest discover -s tests -p 'test_storyboard_gate_v353.py' -v
+      - name: Verify protected image generation blocked
+        run: |
+          if python -m oneflow.image_generation --brief '八仙 古装真人电影' --shot S01 --dry-run; then
+            echo "PROTECTED IMAGE FAIL-OPEN"; exit 1
+          fi
+      - name: Verify protected Vidu generation blocked before paid API
+        run: |
+          if python -m oneflow.vidu_q3 --action generate --prompt '八仙 古装真人电影' --confirm-paid; then
+            echo "VIDU FAIL-OPEN"; exit 1
+          fi
+      - name: Verify protected Qianfan generation blocked before paid API
+        run: |
+          if python -m oneflow.qianfan_i2v run --brief '八仙 古装真人电影' --first-frame-url https://example.com/frame.png --confirm-paid; then
+            echo "QIANFAN FAIL-OPEN"; exit 1
+          fi

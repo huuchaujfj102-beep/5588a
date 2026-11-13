@@ -166,6 +166,13 @@ def image_generation(plan, token, output_path, client_cls=None):
 
 def execute(args, token=None, client_cls=None):
     prompt = build_prompt(args.brief, args.request_file, args.shot)
+    # V3.5.2 fail-closed: this adapter is TEXT-ONLY. It cannot consume a
+    # locked style/character image, so reject protected ancient-film tasks.
+    protected = getattr(args, "ancient_live_action", False) or bool(getattr(args, "style_manifest", None)) or any(
+        word in prompt for word in ("八仙", "吕洞宾", "张果老", "韩湘子", "古装真人", "仿古真人", "古代渔村")
+    )
+    if protected:
+        raise ImageFlowError("STYLE_GATE_BLOCKED: text-only adapter cannot bind V3.5.2 reference image; use approved image-conditioned/compositing workflow")
     plan = build_plan(prompt, args.shot, args.seed, args.width, args.height)
     root = Path(args.output).resolve()
     if args.dry_run:
@@ -198,6 +205,8 @@ def main(argv=None):
     p.add_argument("--width", type=int, default=768)
     p.add_argument("--height", type=int, default=1344)
     p.add_argument("--output", default="private-inputs/generated-images")
+    p.add_argument("--ancient-live-action", action="store_true")
+    p.add_argument("--style-manifest")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--approve-one-image", action="store_true")
     args = p.parse_args(argv)

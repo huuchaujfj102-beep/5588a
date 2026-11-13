@@ -1,0 +1,31 @@
+{
+  "shot_id": "S02-03",
+  "title": "曹国舅·双玉镇界",
+  "status": "GENERATED_PENDING_VISUAL_QA",
+  "provider": "HeyGen",
+  "generation_id": "tpi_dd47a3b52417c6f739893ac4a3d74adcd12cca5bbf1ce1774ad09e6b1d",
+  "reference_asset_ids": {
+    "actor": "e8e9d941b95f40ed8ad8a6e88a9cec2f",
+    "jade": "9f5db73268a74a1b8d9a0a2a13c4c860",
+    "coast": "210ad85d06cc4b6ba4d78506a306de3a"
+  },
+  "model": "nano-banana-2.1",
+  "output": {
+    "width": 1376,
+    "height": 768,
+    "format": "png",
+    "accessible_in_container": false
+  },
+  "charged": {
+    "amount": 1,
+    "pool": "free_images"
+  },
+  "qa": {
+    "schema": "V3.7.1",
+    "metadata_reference_submission": "PASS",
+    "pixel_level_g4": "NOT_VERIFIED",
+    "director": "PENDING",
+    "archive_as_approved": false
+  },
+  "note": "Tool completion verified. Signed image link returned; image bytes not accessible in current container, so pixel-level quality cannot be claimed. User must view source and confirm."
+}

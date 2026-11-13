@@ -372,6 +372,26 @@ def run(args):
     root = Path(args.out).resolve()
     manifest_path = root / "vidu-status.json"
     if args.action == "generate":
+        protected = getattr(args, "ancient_live_action", False) or bool(getattr(args, "style_manifest", None)) or any(
+            word in args.prompt for word in ("八仙", "吕洞宾", "张果老", "韩湘子", "古装真人", "仿古真人", "古代渔村")
+        )
+        if protected:
+            if args.mode != "img2video" or not args.first_frame or not getattr(args, "style_manifest", None):
+                raise ViduError("STYLE_GATE_BLOCKED: approved image-to-video first frame and style manifest required")
+            try:
+                from .style_gate_v352 import verify
+                import json as _json
+                from pathlib import Path as _Path
+                root_dir = getattr(args, "style_root", ".")
+                verify(args.style_manifest, root_dir, "video")
+                m = _json.loads(_Path(args.style_manifest).read_text(encoding="utf-8"))
+                from .storyboard_gate_v353 import verify_storyboard
+                verify_storyboard(m, root_dir, expected_shot=m["shot_id"])
+                expected = (_Path(root_dir) / m["approved_first_frame_path"]).resolve()
+                if _Path(args.first_frame).resolve() != expected:
+                    raise ViduError("STYLE_GATE_BLOCKED: provider input differs from approved frame")
+            except (ValueError, OSError, TypeError, KeyError) as exc:
+                raise ViduError("STYLE_GATE_BLOCKED: " + str(exc)) from None
         payload = build_payload(args.mode, args.prompt, args.seconds, args.resolution, args.first_frame)
         manifest = {"provider": "vidu", "model": MODEL, "mode": args.mode,
                     "seconds": args.seconds, "resolution": args.resolution,
@@ -478,6 +498,9 @@ def main(argv=None):
     parser.add_argument("--resolution", choices=["540p", "720p", "1080p"], default="720p")
     parser.add_argument("--first-frame")
     parser.add_argument("--task-id")
+    parser.add_argument("--style-manifest")
+    parser.add_argument("--style-root", default=".")
+    parser.add_argument("--ancient-live-action", action="store_true")
     parser.add_argument("--confirm-paid", action="store_true")
     parser.add_argument("--poll-attempts", type=int, default=60)
     parser.add_argument("--poll-seconds", type=int, default=15)
