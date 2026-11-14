@@ -1,0 +1,1507 @@
+{
+  "created_local": "2026-11-14 Asia/Shanghai",
+  "project": "八仙",
+  "records": [
+    {
+      "asset_key": "BX01",
+      "category": "locked_mother",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "原有母图批准登记；不被后续候选自动覆盖",
+      "library_file_id": "libfile_ef6d08a40e4481918854544dae923ee1",
+      "archive_file": "images/7e1161ba93e9fe28cab0.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/CURRENT_八仙8人定型_LOCK_V2_20261111/BX01_铁拐李_现行锁版.png",
+      "sha256": "7e1161ba93e9fe28cab0aa9d27ab8fcbe5ebea0e660fa2513f712482094093fa",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX02",
+      "category": "locked_mother",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "原有母图批准登记；不被后续候选自动覆盖",
+      "library_file_id": "libfile_3d6b784e7abc8191936196bcdd80020e",
+      "archive_file": "images/e9bffd07b60c546b998a.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/CURRENT_八仙8人定型_LOCK_V2_20261111/BX02_汉钟离_现行锁版.png",
+      "sha256": "e9bffd07b60c546b998a670e6a0ddc0d2802513a44f043096dd385131ed71aee",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX03",
+      "category": "locked_mother",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "原有母图批准登记；不被后续候选自动覆盖",
+      "library_file_id": "libfile_66ca4e9c750c81919eef86be7c234df9",
+      "archive_file": "images/959c4e7d8cc75f3e478a.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/CURRENT_八仙8人定型_LOCK_V2_20261111/BX03_吕洞宾_现行锁版.png",
+      "sha256": "959c4e7d8cc75f3e478ad561de4ce2db8a4283af0142428087eadaea673f12af",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX04",
+      "category": "locked_mother",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "原有母图批准登记；不被后续候选自动覆盖",
+      "library_file_id": "libfile_c32fd7d0f2648191a8286d4dd659ae1a",
+      "archive_file": "images/c208978cd88a68f8d108.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/CURRENT_八仙8人定型_LOCK_V2_20261111/BX04_蓝采和_现行锁版.png",
+      "sha256": "c208978cd88a68f8d1089130eb51e6f00921b8ba78178315b940972676efff8b",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX05",
+      "category": "locked_mother",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "原有母图批准登记；不被后续候选自动覆盖",
+      "library_file_id": "libfile_5d89ad9609f88191bdf35f0aeedda95f",
+      "archive_file": "images/ffdb980270e40c8ca48f.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/CURRENT_八仙8人定型_LOCK_V2_20261111/BX05_张果老_现行锁版.png",
+      "sha256": "ffdb980270e40c8ca48f8c730c7dc07ad7b616a6b9837a5a16d841067a905b2f",
+      "actual_pixels": [
+        1199,
+        1312
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX06",
+      "category": "locked_mother",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "原有母图批准登记；不被后续候选自动覆盖",
+      "library_file_id": "libfile_34999196dd688191a25c9b6f87e01ce3",
+      "archive_file": "images/7dc62ebdae359fefc318.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/CURRENT_八仙8人定型_LOCK_V2_20261111/BX06_韩湘子_现行锁版.png",
+      "sha256": "7dc62ebdae359fefc318ce91392688c031203147a26b97def06f47bc55330395",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX07",
+      "category": "locked_mother",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "原有母图批准登记；不被后续候选自动覆盖",
+      "library_file_id": "libfile_246e7cfbfacc8191bb3cf99117b6a36f",
+      "archive_file": "images/a4a23b0607cbd5e10a6e.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/CURRENT_八仙8人定型_LOCK_V2_20261111/BX07_何仙姑_现行锁版.png",
+      "sha256": "a4a23b0607cbd5e10a6eb6cb14fb4364a3dfffdd30891dd2e1ce90372c10042f",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX08",
+      "category": "locked_mother",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "原有母图批准登记；不被后续候选自动覆盖",
+      "library_file_id": "libfile_588880cace188191a3050d7e03d3aee0",
+      "archive_file": "images/bd06b4064584cfb722ae.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/CURRENT_八仙8人定型_LOCK_V2_20261111/BX08_曹国舅_现行锁版.png",
+      "sha256": "bd06b4064584cfb722aeac5725bba9b1e59f945bc158a5c7267916d7b8730bbf",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S02-04_B_汉钟离挥扇推潮_DIRECTOR_APPROVED",
+      "category": "approved_reference",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "既有导演批准档案；仅批准历史/参考，不自动替换角色母图",
+      "library_file_id": null,
+      "archive_file": "images/ffe41182a1b462df434f.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/正式关键帧_CURRENT/S02-04_汉钟离双图导演批准_20261112/S02-04_B_汉钟离挥扇推潮_DIRECTOR_APPROVED.png",
+      "sha256": "ffe41182a1b462df434f45e73dcf05ac8921cdf3f3c1fe35db88a34e3f16b878",
+      "actual_pixels": [
+        1672,
+        941
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S02-04_A_汉钟离举扇分潮_DIRECTOR_APPROVED",
+      "category": "approved_reference",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "既有导演批准档案；仅批准历史/参考，不自动替换角色母图",
+      "library_file_id": null,
+      "archive_file": "images/68c1d958937e4df84aa3.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/正式关键帧_CURRENT/S02-04_汉钟离双图导演批准_20261112/S02-04_A_汉钟离举扇分潮_DIRECTOR_APPROVED.png",
+      "sha256": "68c1d958937e4df84aa3225068f93894d67af4f9f0274426cf72a84db7f3b513",
+      "actual_pixels": [
+        1672,
+        941
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S02-01_铁拐李落杖抵礁吸煞救民_CURRENT_DIRECTOR_APPROVED",
+      "category": "approved_reference",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "既有导演批准档案；仅批准历史/参考，不自动替换角色母图",
+      "library_file_id": null,
+      "archive_file": "images/28b741e9ae634fc1e1ae.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/正式关键帧_CURRENT/S02-01_铁拐李落杖抵礁_20261112/S02-01_铁拐李落杖抵礁吸煞救民_CURRENT_DIRECTOR_APPROVED.png",
+      "sha256": "28b741e9ae634fc1e1ae90e20b2fad62d0d2614a50ca437f2d3679fdd7184760",
+      "actual_pixels": [
+        1672,
+        941
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX04_DIRECTOR_APPROVED_风暴海岸的花篮仙行者",
+      "category": "approved_reference",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "既有导演批准档案；仅批准历史/参考，不自动替换角色母图",
+      "library_file_id": null,
+      "archive_file": "images/25c2ab5fde30ddd38ce1.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/制作储备库_八仙大显神通_20261111/27_S03-01_四张导演批准与后续预检_20261112/BX04_DIRECTOR_APPROVED_风暴海岸的花篮仙行者.png",
+      "sha256": "25c2ab5fde30ddd38ce16933195b56180ecbe2e20780894a39928f2309d7fdee",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX06_DIRECTOR_APPROVED_风雨海崖上的紫笛仙君",
+      "category": "approved_reference",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "既有导演批准档案；仅批准历史/参考，不自动替换角色母图",
+      "library_file_id": null,
+      "archive_file": "images/7787d405af4823801f46.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/制作储备库_八仙大显神通_20261111/27_S03-01_四张导演批准与后续预检_20261112/BX06_DIRECTOR_APPROVED_风雨海崖上的紫笛仙君.png",
+      "sha256": "7787d405af4823801f46f5cfc1038140f33ee1d6596c679e80ad31b6e9bec765",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX05_DIRECTOR_APPROVED_张果老与白驴踏浪海岸",
+      "category": "approved_reference",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "既有导演批准档案；仅批准历史/参考，不自动替换角色母图",
+      "library_file_id": null,
+      "archive_file": "images/64b43c71e05e6466d531.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/制作储备库_八仙大显神通_20261111/27_S03-01_四张导演批准与后续预检_20261112/BX05_DIRECTOR_APPROVED_张果老与白驴踏浪海岸.png",
+      "sha256": "64b43c71e05e6466d5311e0118c88c0e6cef9d166014d0e4acd07a5e5f4535fe",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX08_DIRECTOR_APPROVED_风雨海岸中的曹国舅",
+      "category": "approved_reference",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "既有导演批准档案；仅批准历史/参考，不自动替换角色母图",
+      "library_file_id": null,
+      "archive_file": "images/a6dbd86ab1a3bf632f6a.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/制作储备库_八仙大显神通_20261111/27_S03-01_四张导演批准与后续预检_20261112/BX08_DIRECTOR_APPROVED_风雨海岸中的曹国舅.png",
+      "sha256": "a6dbd86ab1a3bf632f6ab3c45f303cefeba3959c1a7dcfeaa76ffaf305fd8b4a",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "BX08_PROP",
+      "category": "approved_prop",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "BX08法器专门批准登记",
+      "library_file_id": null,
+      "archive_file": "images/6224396ee277e3820b41.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/audit_inputs/八仙过海/人物道具场景定版图/BX08_曹国舅_双玉板_法器CURRENT_20261112/BX08_PROP_PRIMARY_白玉板青玉板_原图.png",
+      "sha256": "6224396ee277e3820b41cf5aff5ed135e0afcc9b503bb47a8539e2d664adc485",
+      "actual_pixels": [
+        1229,
+        1536
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-01_BX01_铁拐李",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/5a6ae57a8afde7e4c34c.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/01_BX01_铁拐李_2160x3840_待审核.jpg",
+      "sha256": "5a6ae57a8afde7e4c34c52ef80cfedc54e214b6f4f36edd8e02f8ad1c89576a6",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-02_BX02_汉钟离",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/84c46baddc5a5861ddbe.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/02_BX02_汉钟离_2160x3840_待审核.jpg",
+      "sha256": "84c46baddc5a5861ddbede722751b8a7a8be4d205fcdde32ee70b793f108eb38",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-03_BX03_吕洞宾",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/24cf5e408d7739eee3d2.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/03_BX03_吕洞宾_2160x3840_待审核.jpg",
+      "sha256": "24cf5e408d7739eee3d26c9f6a25a82dfcf62e84611b246c8dc86457be33bd41",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-04_BX04_蓝采和",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/10d3fd32dcf7a8209a09.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/04_BX04_蓝采和_2160x3840_待审核.jpg",
+      "sha256": "10d3fd32dcf7a8209a0925f83d19818547c02cb82185a65b7e0dceeef88f52dc",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-05_BX05_张果老",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/32315726ec45190372dc.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/05_BX05_张果老_2160x3840_待审核.jpg",
+      "sha256": "32315726ec45190372dce9004f42918fef77a0dbb1094f0dc1a34ef3b7f462e5",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-06_BX06_韩湘子",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/af81eef046e20d83b0c3.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/06_BX06_韩湘子_2160x3840_待审核.jpg",
+      "sha256": "af81eef046e20d83b0c32d05f56613e14dd126d0b912095060066018b254621f",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-07_BX07_何仙姑",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/53fa3a82538137915b9f.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/07_BX07_何仙姑_2160x3840_待审核.jpg",
+      "sha256": "53fa3a82538137915b9f0b1a0b323c124ed0216fcaa673dcc02ed65de4da6e7d",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-08_BX08_曹国舅",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/5b7aebdbbf026e0dca07.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/08_BX08_曹国舅_2160x3840_待审核.jpg",
+      "sha256": "5b7aebdbbf026e0dca077233c71284444f42a715f9ec980c93e45dc841d8b849",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-09_S03-01_群像候选A",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/ba44df867875e00abd12.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/09_S03-01_群像候选A_2160x3840_待审核.jpg",
+      "sha256": "ba44df867875e00abd1211743c95c08ead870fb8b220abaf952ee80c4b1d3d95",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B01-10_S03-01_群像候选B",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/86efeaf3a72776de031e.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B01_上批10张竖版规格补齐_待导演复核/10_S03-01_群像候选B_2160x3840_待审核.jpg",
+      "sha256": "86efeaf3a72776de031e6109826234eb801eba31823ca3018e839451a78fc233",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-01_S01-01_封海前夜",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/441aefb0ba754ffbbb36.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/01_S01-01_封海前夜_2160x3840_待审核.jpg",
+      "sha256": "441aefb0ba754ffbbb3683c24e5b6c68bdc5a5bdeb9d255698499dbea39c99ef",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-02_S01-02_风中护灯",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/d0ec40258014fa3e75f4.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/02_S01-02_风中护灯_2160x3840_待审核.jpg",
+      "sha256": "d0ec40258014fa3e75f44f1954bc107375d64f721236842811b62f1bd117a25b",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-03_S01-03_海底封印",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/6374ae538cf596483443.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/03_S01-03_海底封印_2160x3840_待审核.jpg",
+      "sha256": "6374ae538cf59648344324bd6e0697247fbffd47b38b0bf81c47a7a9d10a92b6",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-04_S01-04_巨浪越堤",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/00b06441853d641af19a.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/04_S01-04_巨浪越堤_2160x3840_待审核.jpg",
+      "sha256": "00b06441853d641af19acf7d7f44c4ff153d313f1869bec91e19f74c70817574",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-05_S02-01_铁拐李落杖",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/e728c50c82d1102f1c89.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/05_S02-01_铁拐李落杖_2160x3840_待审核.jpg",
+      "sha256": "e728c50c82d1102f1c89552f1a0673d96fcf161e09936f76fbaf922ca66f9017",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-06_S02-02_蓝采和藤桥",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/1f9e0ef2ba6ad138b36c.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/06_S02-02_蓝采和藤桥_2160x3840_待审核.jpg",
+      "sha256": "1f9e0ef2ba6ad138b36c4e9a89230ced9e8e01c8c7ec5896904a01bbbffc05d6",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-07_S02-03_曹国舅玉盾",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/9a0d12e6f24ea1b2d876.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/07_S02-03_曹国舅玉盾_2160x3840_待审核.jpg",
+      "sha256": "9a0d12e6f24ea1b2d87680619acb4fe3b2f88b40c4682ac7715b12b80f1c67f6",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-08_S02-04_汉钟离分潮",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/83effcd843fbdb928a1a.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/08_S02-04_汉钟离分潮_2160x3840_待审核.jpg",
+      "sha256": "83effcd843fbdb928a1ac2ea1078d8b56cedfbd49b0cc0780111ee4b7738481a",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-09_S03-01_八仙集结预演",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/8bb0ba0870377f936b7a.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/09_S03-01_八仙集结预演_2160x3840_待审核.jpg",
+      "sha256": "8bb0ba0870377f936b7aa25e7957502cb932d12f5c1442120d05698a9e745614",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "B02-10_S03-04_黑潮巨幕",
+      "category": "approved_history",
+      "director_status": "APPROVED_HISTORY_NOT_PRODUCTION_CURRENT",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "批准台账：前两批20张已通过；旧安全适配不等于正式满幅竖构图",
+      "library_file_id": null,
+      "archive_file": "images/00b06441853d641af19a.jpg",
+      "source_path": "/workspace/scratch/4d6fde86998e/archive_inputs/legacy20/B02_下批10张横图竖版重排_待导演复核/10_S03-04_黑潮巨幕_2160x3840_待审核.jpg",
+      "sha256": "00b06441853d641af19acf7d7f44c4ff153d313f1869bec91e19f74c70817574",
+      "actual_pixels": [
+        2160,
+        3840
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S04-02",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：吕洞宾和铁拐李不过，其他全部过",
+      "library_file_id": null,
+      "archive_file": "images/76e60263001670bb5f57.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-be3d9bc1-4d2a-4b6d-8f98-81b6707a90c1.png",
+      "sha256": "76e60263001670bb5f57b3be7c0ad76522b69ee604fed8508dd05d335d9e9c7e",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S04-03",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：吕洞宾和铁拐李不过，其他全部过",
+      "library_file_id": null,
+      "archive_file": "images/293b96521448358f284b.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-f3f6e0bb-2b8f-4c0c-897d-ed4e00438685.png",
+      "sha256": "293b96521448358f284b831c2c3b6b2cd5de3e4b3868346fc27a33b88f0ab8e9",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S04-04",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：吕洞宾和铁拐李不过，其他全部过",
+      "library_file_id": null,
+      "archive_file": "images/b6269de95b459972feca.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-6679efb9-87f1-4bdc-a628-5da70c052b38.png",
+      "sha256": "b6269de95b459972feca9519ad39e2e9952db46bf1997d4bc2c1018f3f9cb085",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S05-02",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：吕洞宾和铁拐李不过，其他全部过",
+      "library_file_id": null,
+      "archive_file": "images/053235c38f382ba0f7b6.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-4a65a240-0110-4350-b353-0465c21bc25d.png",
+      "sha256": "053235c38f382ba0f7b663fec1b477467f4791c9c5244790ceb5c06595c75d29",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S05-04",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：吕洞宾和铁拐李不过，其他全部过",
+      "library_file_id": null,
+      "archive_file": "images/949f72b21e34e8502edc.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-38ec9191-e14c-4b43-a7b5-67a9aadf29e2.png",
+      "sha256": "949f72b21e34e8502edcff89aed10a65a5e22d4b30216f8bb92ead31e084ab3b",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S06-01",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：吕洞宾和铁拐李不过，其他全部过",
+      "library_file_id": null,
+      "archive_file": "images/a36c1b7c9e897dc7e44f.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-1f259469-cd5b-4be0-ae1c-3d5523c6474a.png",
+      "sha256": "a36c1b7c9e897dc7e44f8da7941991e593e6949f1185787f5b53d48d037a8870",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S06-02",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：吕洞宾和铁拐李不过，其他全部过",
+      "library_file_id": null,
+      "archive_file": "images/a52399d33282b45250fb.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-bae4d056-86c2-4e40-94c9-21ccef596868.png",
+      "sha256": "a52399d33282b45250fb75ca414ceabeb821688ec75cfc3b30c6940f1fb51c94",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S06-03",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：吕洞宾和铁拐李不过，其他全部过",
+      "library_file_id": null,
+      "archive_file": "images/fa98c5878b7dd6fa0d91.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-a105d657-dac8-4871-9567-f4fee415cb39.png",
+      "sha256": "fa98c5878b7dd6fa0d9187903ed3dbe1aa37b8ef7955f4b83eed7af0783bee57",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S07-01",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；8张明确批次",
+      "library_file_id": null,
+      "archive_file": "images/9b3d096216a57e9e6f79.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-0bc1528b-6b29-42a2-a9f6-5d3e5afcb4b3.png",
+      "sha256": "9b3d096216a57e9e6f7942bf7de7a40d5455bd5b1782015998517f90acd09a14",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S07-02",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；8张明确批次",
+      "library_file_id": null,
+      "archive_file": "images/3d884cd6192eb0f5b69a.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-f2f9e86c-a148-43f8-9fe7-902aa3126bb0.png",
+      "sha256": "3d884cd6192eb0f5b69a84f71be17848f2ba51be3555ecfef4d76d5d7765745d",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S07-03",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；8张明确批次",
+      "library_file_id": null,
+      "archive_file": "images/69299c85a8ecf8feab12.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-d40e4695-5757-421f-8101-dea6d184ff5c.png",
+      "sha256": "69299c85a8ecf8feab12842699e8f5f2b25b867f16b4765bf1cf73c22f1d2e8c",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S07-04",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；8张明确批次",
+      "library_file_id": null,
+      "archive_file": "images/8cd5755621eab6637d91.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-09920a35-9faf-4251-951b-dad403b00cc1.png",
+      "sha256": "8cd5755621eab6637d9173c06c431bbd227b5d035547b01fdca1f1e8a59e3bc6",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S08-02",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；8张明确批次",
+      "library_file_id": null,
+      "archive_file": "images/6d01c837c850536ab282.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-3b07dd45-8b2d-4dcc-8cda-e8eb78f2ce04.png",
+      "sha256": "6d01c837c850536ab282300ccbf6e8daed74d14be86a59632593f1e1d6679fe2",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S08-03",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；8张明确批次",
+      "library_file_id": null,
+      "archive_file": "images/8e9bc0e48e4a34f04f6c.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-d9eb18f0-322c-4e26-9544-194389bab838.png",
+      "sha256": "8e9bc0e48e4a34f04f6ca64718c84bdc1d0d19cc6f5ab52dffa19e9207800610",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S08-04",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；8张明确批次",
+      "library_file_id": null,
+      "archive_file": "images/d5c3364b2ab629af63d0.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-926bd848-7998-4f44-9349-ccf6c0b3806b.png",
+      "sha256": "d5c3364b2ab629af63d00a28a2dbb9da025230c41e3bc3d558bc4055fb580ddc",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S09-01",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；8张明确批次",
+      "library_file_id": null,
+      "archive_file": "images/80cfc2c2255009f865b1.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-8b37922c-bccb-4d1e-b0e4-a75afd5746a0.png",
+      "sha256": "80cfc2c2255009f865b17385d72057f4214d9e6770de62e32b2c7732baca47eb",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S09-02",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/0531e6cbcec5ec9c1112.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-4a2b5e81-6375-4d1f-a867-5591ef35fa09.png",
+      "sha256": "0531e6cbcec5ec9c11128b59c66264464cb2d383c38150cbc21d3381255a02a7",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S09-03",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/d3cd70cc95afbf4f4105.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-fa167415-70a6-4653-be87-410f20dd2f7e.png",
+      "sha256": "d3cd70cc95afbf4f41057523c80805f59b6116bf5cdf8c0bc2b8e0306f9a2446",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S09-04",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/26c1dd2617e7f44e9cfc.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-4ea0155b-b749-41af-9b5b-c0d19c126a37.png",
+      "sha256": "26c1dd2617e7f44e9cfc9bf56d06ddeb17b0605aca3a305f083dff52aab19950",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S10-02",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/03cb1cbcef124f37ffc5.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-70b4be3a-c345-4a4d-b0cf-02516b969dd7.png",
+      "sha256": "03cb1cbcef124f37ffc5a3e14e2e55497833bacb4b06d43642a08ec98c1b7369",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S10-03",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/80b56b52e32a5f5d72db.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-0880889a-5faa-47c1-a3bb-bbe8a83c7a60.png",
+      "sha256": "80b56b52e32a5f5d72db474031d13a413555f2a5c0c27adf81e204dae94e7087",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S10-04",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/ac734902ffd0eefddd3d.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-d28d30b4-1946-4aab-80d2-bbb6ff0d694d.png",
+      "sha256": "ac734902ffd0eefddd3d086065eecab4e8cabe44d4b49f45101b8bb0aac084c7",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S11-01",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/fe834128a67e3496c004.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-e2807b4c-8f2c-4c33-8c10-18fb10f527db.png",
+      "sha256": "fe834128a67e3496c004190a97557f4292b2c3a346ae669dedcc23991bcb6632",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S11-03",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/a5d4aef7991b5ccdf883.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-16c8ae94-4d88-4aaa-a52b-82e6902c545f.png",
+      "sha256": "a5d4aef7991b5ccdf883661653f66fe8f286eab3f5f71c9c566287e3c0a39bff",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S11-04",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/71e7bcbec5c4738bd6a9.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-ceefecde-5481-4d8c-ba3b-dbf60818bf77.png",
+      "sha256": "71e7bcbec5c4738bd6a9b6c7427901821a50ceb05eb0546c8cd5478d1a20bb4a",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S12-01",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，存，继续；S09至S12十张",
+      "library_file_id": null,
+      "archive_file": "images/a63f55d71a14659e8c3a.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-81765757-d582-427c-9865-96c70ad3fc73.png",
+      "sha256": "a63f55d71a14659e8c3afb598dc341e45ab92594f0717952a1a3a72f47a62b06",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S12-04",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：过，继续；结尾三张中未退修镜",
+      "library_file_id": null,
+      "archive_file": "images/2ca7fdbe8d05079a916d.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-190a0660-f609-4871-8e66-9b859da9ec70.png",
+      "sha256": "2ca7fdbe8d05079a916dafd1e7b07ff65cdc53f8dd1e6c428ce76c2e2a64d6ed",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S05-03_PORTRAIT_REPAIR",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：附件这张重新生成，其他全过；该附件为S05-01",
+      "library_file_id": null,
+      "archive_file": "images/cba30a24b835fc5172af.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-6dd3835f-e269-44c5-9aea-6d3492a7b3f9.png",
+      "sha256": "cba30a24b835fc5172af4e77434e827c41cccd5840929d0ec13b8eda232b8e5d",
+      "actual_pixels": [
+        940,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S12-02_PORTRAIT_REPAIR",
+      "category": "story_frame",
+      "director_status": "APPROVED_HISTORY_SUPERSEDED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：附件这张重新生成，其他全过；该附件为S05-01",
+      "library_file_id": null,
+      "archive_file": "images/4f9d74ebd05bb9d1401b.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-c3be6139-51b2-4dd8-9781-9af53f83e1b9.png",
+      "sha256": "4f9d74ebd05bb9d1401b42ce93babed104a8d15990f3b3b74624c93013282d08",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S03-02_PORTRAIT_REPAIR",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：附件这张重新生成，其他全过；该附件为S05-01",
+      "library_file_id": null,
+      "archive_file": "images/a4cc7011f440c4bc46c8.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-e4902e8b-d2ab-4923-b718-e78cd8b08d34.png",
+      "sha256": "a4cc7011f440c4bc46c89885d1ca230041d22e87e962369afc9d451441123ae2",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S03-03_PORTRAIT_REPAIR",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：附件这张重新生成，其他全过；该附件为S05-01",
+      "library_file_id": null,
+      "archive_file": "images/d75bb58ef9124dcc4ff3.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-582e4a69-6f30-4f6a-ae9e-ea102eb1ac7a.png",
+      "sha256": "d75bb58ef9124dcc4ff322d42c763ff9c201dbdfc96ef405a22a80750290915c",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S06-04_PORTRAIT_REPAIR",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：附件这张重新生成，其他全过；该附件为S05-01",
+      "library_file_id": null,
+      "archive_file": "images/4a1fd733d73dd02b611e.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-c71e6205-151b-46eb-99bc-64a516c9a0fc.png",
+      "sha256": "4a1fd733d73dd02b611ecdacc9a09762af42fb1edc17e711d7e6fae02d3f4783",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S10-01_PORTRAIT_REPAIR",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：附件这张重新生成，其他全过；该附件为S05-01",
+      "library_file_id": null,
+      "archive_file": "images/629281e8bad2c1d853db.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-a04f5709-234c-4614-9081-7e39c3e1e9ae.png",
+      "sha256": "629281e8bad2c1d853db35b04541211b9729be22c5cdde644a2aadfa54128112",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S03-04_PORTRAIT_REPAIR",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：附件这张重新生成，其他全过；该附件为S05-01",
+      "library_file_id": null,
+      "archive_file": "images/b37423d83028a2e47470.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-70fdbb96-d499-47fa-a2d6-af2de66e9046.png",
+      "sha256": "b37423d83028a2e47470da4b950a75dbe168b8d81ff419e85fc925b92074d17e",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S04-01_PORTRAIT_REPAIR",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：附件这张重新生成，其他全过；该附件为S05-01",
+      "library_file_id": null,
+      "archive_file": "images/70b7bac09a647e1868ba.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-ad373aca-8943-47f2-a1fe-163b69c93072.png",
+      "sha256": "70b7bac09a647e1868ba9e14f92fc89910f54e4af886b23aeff74c3e5db2a1bf",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S05-01_FINAL",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户对最新后侧拔剑图：过",
+      "library_file_id": "libfile_84ee72c9e6e08191b767453d2119b556",
+      "archive_file": "images/7e29e43b032ecd10d730.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-175b7304-4151-4c95-b6bc-ec295c4093ee.png",
+      "sha256": "7e29e43b032ecd10d730ea320c00e321d6ffa1152ce14bb7bf61cf3dd6983c73",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "CH01-E01",
+      "category": "extension_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户在该前三张之后回复：过",
+      "library_file_id": null,
+      "archive_file": "images/34e008ac758443afb328.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-8d2be88c-d55e-41a4-ad5c-7a2560e90bc7.png",
+      "sha256": "34e008ac758443afb32889eb324bc7c5ad1411d21fdae52bba4f4f8874af50f7",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "CH01-E02",
+      "category": "extension_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户在该前三张之后回复：过",
+      "library_file_id": null,
+      "archive_file": "images/442bd1469998a46886f1.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-034aaee6-c5dd-4bbc-a7ee-a8ff47e5341e.png",
+      "sha256": "442bd1469998a46886f14efe341befd600d78313127c24c6a262a2ca41dae18d",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "CH01-E03",
+      "category": "extension_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户在该前三张之后回复：过",
+      "library_file_id": null,
+      "archive_file": "images/2c4d2ac842006bec8a70.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-761cb17d-1ed9-4567-96a8-52daffe6a126.png",
+      "sha256": "2c4d2ac842006bec8a708e4026aa143355cbb0ca304abafa6f41e978972cf15a",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "CH01-E04_ATTACHED",
+      "category": "user_locked_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：先补这三张在附件，分辨后归档定图",
+      "library_file_id": "libfile_ad98480d01788191a7125ece7a2ebd6b",
+      "archive_file": "images/12bb6be2fce4b70b0175.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/Baxian_Attached3_LOCK_20261114/CH01-E04_雨夜双手扶门框_USER_LOCK.png",
+      "sha256": "12bb6be2fce4b70b0175195e806af6dc67ad070f28f78de9635a67a4801895da",
+      "actual_pixels": [
+        1152,
+        2048
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "CH01-E09_ATTACHED",
+      "category": "user_locked_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：先补这三张在附件，分辨后归档定图",
+      "library_file_id": "libfile_f7dddd0308bc8191835e7fc185012f9d",
+      "archive_file": "images/ab86d4893c865e67e6ef.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/Baxian_Attached3_LOCK_20261114/CH01-E09_雨夜三人登阶撤离_USER_LOCK.png",
+      "sha256": "ab86d4893c865e67e6ef7932c59da6346c33b83d13721d61c95ba5f55c2f532d",
+      "actual_pixels": [
+        1152,
+        2048
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S12-02_ATTACHED",
+      "category": "user_locked_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：先补这三张在附件，分辨后归档定图",
+      "library_file_id": "libfile_e928060515b48191a9861e1011601d96",
+      "archive_file": "images/263de5ff4aee6d633e10.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/Baxian_Attached3_LOCK_20261114/S12-02_灾后双人护灯_USER_LOCK.png",
+      "sha256": "263de5ff4aee6d633e1015a1ecdddb646738fe11654eb5d6883b5d970fe35fcf",
+      "actual_pixels": [
+        1152,
+        2048
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S01-03_END",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：这两张不过重生，其他过；排除两附件",
+      "library_file_id": null,
+      "archive_file": "images/fd17c5b4dfee8c8dc7a7.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-7d875201-ccb5-45a0-9185-7e0782925680.png",
+      "sha256": "fd17c5b4dfee8c8dc7a7bc1602e26a07f61fdcd4f2ab77d438d393b604dbfc2d",
+      "actual_pixels": [
+        941,
+        1671
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S01-04_END",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：这两张不过重生，其他过；排除两附件",
+      "library_file_id": null,
+      "archive_file": "images/ac6f718fabf3daa7e394.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-3eafc12c-1e56-4dca-80ba-4a3c70c86c95.png",
+      "sha256": "ac6f718fabf3daa7e394e9fd1c362970adf1f2ca00b27555137fc94be8d099df",
+      "actual_pixels": [
+        941,
+        1671
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S02-02_END",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：这两张不过重生，其他过；排除两附件",
+      "library_file_id": null,
+      "archive_file": "images/6f8457c6fb44118c19e7.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-e578af47-6200-4a60-9bf1-015e83b22bca.png",
+      "sha256": "6f8457c6fb44118c19e784e180a838e80309927b8e623edfa29e629c4a930edb",
+      "actual_pixels": [
+        941,
+        1671
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S04-02_END",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：这两张不过重生，其他过；排除两附件",
+      "library_file_id": null,
+      "archive_file": "images/d6dbdd691a819f82c7f3.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-07968048-96c1-40f1-ab6f-38b693c6b3f4.png",
+      "sha256": "d6dbdd691a819f82c7f3f6f46e4043fe3cc8d1f7a51e3f60befad2c2d6833ee4",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S04-03_END",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：这两张不过重生，其他过；排除两附件",
+      "library_file_id": null,
+      "archive_file": "images/1cfdc2d5942c34b2c332.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-a83ab190-8274-4baa-882a-56867b071ba7.png",
+      "sha256": "1cfdc2d5942c34b2c3322562f667ccbfe86b0f5c1ee81bf2c802d241abca2bdc",
+      "actual_pixels": [
+        941,
+        1671
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S04-04_END",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：这两张不过重生，其他过；排除两附件",
+      "library_file_id": null,
+      "archive_file": "images/5180789c891d6e39022a.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-16b2ad44-0e1e-4704-94b1-8453920c5d10.png",
+      "sha256": "5180789c891d6e39022ade6c1ddab4b87c8dbe4a764991388ad448ead31ffd0a",
+      "actual_pixels": [
+        941,
+        1671
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S06-03_END",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：这两张不过重生，其他过；排除两附件",
+      "library_file_id": null,
+      "archive_file": "images/a72fc73720131be947c4.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-ea065d04-5365-42f3-876f-bf1b24bc0e5c.png",
+      "sha256": "a72fc73720131be947c46822d35cde9e5e63a03f83662b36d83cb68083547772",
+      "actual_pixels": [
+        941,
+        1671
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S06-01_END",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户：这两张不过重生，其他过；排除两附件",
+      "library_file_id": null,
+      "archive_file": "images/83506e6a4250396cb9f6.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-3ff3d69b-4883-49d7-a09b-4c604682509a.png",
+      "sha256": "83506e6a4250396cb9f69cc15a2a7bb81301f23b85224a2e878501e2e3c550bc",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S12-03_FACE_SEA_FINAL",
+      "category": "story_frame",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户最新对面海与收毒烟两张：过",
+      "library_file_id": "libfile_5b927ae5e344819193f84b8c56f7798a",
+      "archive_file": "images/6400dd2cae9154815a7f.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-cc8fcac6-7c34-4597-8510-759383b8d602.png",
+      "sha256": "6400dd2cae9154815a7f3d950d06d8a6fe62bfc12dc3187d0a839734b40d6f38",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    },
+    {
+      "asset_key": "S02-01_END_FINAL",
+      "category": "end_control",
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "NOT_REVALIDATED_FOR_VIDEO",
+      "approval_evidence": "用户最新对面海与收毒烟两张：过",
+      "library_file_id": "libfile_aabe5561d3c48191ae3893d5e1fbc58c",
+      "archive_file": "images/1689eda41089e2b09e4f.png",
+      "source_path": "/workspace/scratch/4d6fde86998e/generated_images/exec-b81c71c9-60cb-483e-8081-6bff46c7cf13.png",
+      "sha256": "1689eda41089e2b09e4f4576ba28442b7aedb35e9ddf8dcac994770b39d47d5b",
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "regeneration_allowed": false,
+      "native_4k_claim": false
+    }
+  ],
+  "logical_approved_records": 88,
+  "unique_image_files": 87,
+  "missing_sources": [],
+  "excluded": "点名退修与未获批候选不收录；其他项目不收录",
+  "scope": "可追溯的八仙导演获批版本含历史批准稿，不代表全片全部镜头完成或视频技术验收"
+}

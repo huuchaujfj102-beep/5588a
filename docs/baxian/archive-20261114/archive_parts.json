@@ -1,0 +1,26 @@
+[
+  {
+    "file": "/workspace/scratch/4d6fde86998e/Baxian_Approved_All_20261114_Part01.zip",
+    "images": 27,
+    "bytes": 80308200,
+    "sha256": "a6cb6ea8b3cdfae1cbce844f89aab24dfb7a7404809f6d8dce7eaddf260dd3d0"
+  },
+  {
+    "file": "/workspace/scratch/4d6fde86998e/Baxian_Approved_All_20261114_Part02.zip",
+    "images": 29,
+    "bytes": 81547958,
+    "sha256": "6389b2421eb216df7aad287c31f4f3c4b5618753a509b674a8e89511e8f4fb63"
+  },
+  {
+    "file": "/workspace/scratch/4d6fde86998e/Baxian_Approved_All_20261114_Part03.zip",
+    "images": 26,
+    "bytes": 80353969,
+    "sha256": "87fd8360dedfe1f03c5d86d74046daa812f4787eb89471da6453d936329c993e"
+  },
+  {
+    "file": "/workspace/scratch/4d6fde86998e/Baxian_Approved_All_20261114_Part04.zip",
+    "images": 5,
+    "bytes": 16360538,
+    "sha256": "09cfadb9b7c1e2a7e7ee36e90e0d1206046b6b8969437c0956f2622e08d408d4"
+  }
+]
