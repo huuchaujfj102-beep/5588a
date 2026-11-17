@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-17 Asia/Shanghai",
+  "approval_evidence": "用户：第一张附件补四龙化金龙前补一张关键帧。第二张太上老君应该手指金龙和大阵眼，没有体现出来。其他都过",
+  "scope": "新增三张导演通过，用户附件指定补入一帧；DB-10-07旧版退修，新版尚未获批",
+  "order": [
+    "DB-10-01",
+    "DB-10-02",
+    "DB-10-02B",
+    "DB-10-03",
+    "DB-10-04"
+  ],
+  "transition_note": "四色过渡龙保留附件独有多色角与异色眼，仅作变身中间态，不替换最终金龙GD-01的绿眼、双角与双翼造型。",
+  "rejected_current": "DB-10-07原老君图指向不明确，保留历史但不作为现行通过图",
+  "records": [
+    {
+      "shot_id": "DB-10-01",
+      "filename": "DB-10-01_四龙集结.png",
+      "library_file_id": "libfile_7d20233565e481919b14a47fa9993c76",
+      "sha256": "420ed49a76cfae6531019cae59f694eefd15bac5fa74dfc3251e79fb9de44c40",
+      "bytes": 3373844,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "SEPARATE_QA_PENDING"
+    },
+    {
+      "shot_id": "DB-10-02",
+      "filename": "DB-10-02_四龙向心汇聚.png",
+      "library_file_id": "libfile_d3667e5fea8081918a8c9110728fd928",
+      "sha256": "f64089eafab033a2cf2b470010eed94c85097e925f8b4cd9a67263d26df51fa5",
+      "bytes": 3092568,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "SEPARATE_QA_PENDING"
+    },
+    {
+      "shot_id": "DB-10-03",
+      "filename": "DB-10-03_雾中金龙初现.png",
+      "library_file_id": "libfile_7eb84b9d58a08191b9bd81bc0b6925a0",
+      "sha256": "aeb8388098b4243217f8b608477918307562d1308c25108253f6a210194d9cc5",
+      "bytes": 2724636,
+      "actual_pixels": [
+        941,
+        1671
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "technical_status": "SEPARATE_QA_PENDING"
+    },
+    {
+      "shot_id": "DB-10-02B",
+      "filename": "DB-10-02B_四色融合过渡_用户补交原图.png",
+      "library_file_id": "libfile_b80c8c2966b48191a41a5a067c02439c",
+      "sha256": "ea4eb8b32cbd60240b5d0a7fdc798cc593f1f92ff2c50191f3017daf1a31dfc7",
+      "bytes": 5147243,
+      "actual_pixels": [
+        1152,
+        2048
+      ],
+      "director_status": "USER_DESIGNATED_INSERT",
+      "technical_status": "SEPARATE_QA_PENDING"
+    }
+  ],
+  "cloud_bundle": "https://drive.google.com/file/d/1gcVepv37NjegK0F90jCfi7RwMIUy1w55/view",
+  "pending_revisions": [
+    {
+      "shot_id": "DB-10-07_R2",
+      "source_filename": "exec-daf6aa58-6f24-4790-87fa-8bdbf84e7108.png",
+      "status": "CANDIDATE_PENDING_REVIEW",
+      "change": "老君斜向下指示金龙与大阵眼；新版本不因其他过自动获批"
+    },
+    {
+      "asset_id": "GD-01_R2_HEAVY",
+      "source_filename": "exec-898621d9-f366-434a-8394-2efa6c02fa04.png",
+      "status": "CANDIDATE_PENDING_REVIEW",
+      "change": "用户要求最终合体金龙更大厚重威严；原GD-01保留历史，新候选未自动替换"
+    }
+  ]
+}
