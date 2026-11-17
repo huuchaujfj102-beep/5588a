@@ -10,7 +10,7 @@ A022,H,材质,PASS_SCOPED,可见皮肤/须发、湿织物、甲玉木石水的�
 A022,I,背景物理,PASS_SCOPED,水柱根、水台回流与海面相连；没有把支撑改虚空。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A022,J,光学,PASS_SCOPED,整图可见无标题水印/拼板/黑边，人物与长杆未见明显非等比拉伸；合理景深保留。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A022,K,画幅像素,PASS_MEASURED,941×1672，9:16相对误差0.053163%，非原生8K。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
-A022,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,沿原镜剧情功能保留；太子两镜复用同一图。新图未经用户过，未替换批准执行版；动态图像接续未测试。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
+A022,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,用户已回复过，六张选定修正版已正式替换七镜；当前尚未生成视频，相邻动态接续仍待验收。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A003,A,身份,NEEDS_EVIDENCE_REMAINDER,八仙背向/侧背的服色法器与原图对应；正脸大多不见，面部骨相不在本图可认证范围。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A003,B,数量物种,PASS_SCOPED,前景可数八仙、对岸四王；不添加白驴或第九仙。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A003,C,姿态支撑,PASS_SCOPED,近处铁拐两足与拐尖、汉两足、何巨莲台承托可辨；部分远侧足遮挡。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
@@ -22,7 +22,7 @@ A003,H,材质,PASS_SCOPED,可见皮肤/须发、湿织物、甲玉木石水的�
 A003,I,背景物理,PASS_SCOPED,黑礁与海面间距、四水柱、左岸古村保持纵深，不以裁左右丢人。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A003,J,光学,PASS_SCOPED,整图可见无标题水印/拼板/黑边，人物与长杆未见明显非等比拉伸；合理景深保留。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A003,K,画幅像素,PASS_MEASURED,941×1672，9:16相对误差0.053163%，非原生8K。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
-A003,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,沿原镜剧情功能保留；太子两镜复用同一图。新图未经用户过，未替换批准执行版；动态图像接续未测试。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
+A003,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,用户已回复过，六张选定修正版已正式替换七镜；当前尚未生成视频，相邻动态接续仍待验收。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A009,A,身份,PASS_SCOPED,同年轻太子左向侧脸、黑发金角冠与青蓝金甲，未改为四王之一。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A009,B,数量物种,PASS_SCOPED,一人一杆长枪、两臂可见。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A009,C,姿态支撑,NA_OFFFRAME_LEGS_WITH_LIMIT,中近景按原裁线不强造膝下腿脚；画外支撑不可由本图证明。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
@@ -34,7 +34,7 @@ A009,H,材质,PASS_SCOPED,可见皮肤/须发、湿织物、甲玉木石水的�
 A009,I,背景物理,PASS_SCOPED,背景海水与水柱层次延续；不新增人物船只。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A009,J,光学,PASS_SCOPED,整图可见无标题水印/拼板/黑边，人物与长杆未见明显非等比拉伸；合理景深保留。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A009,K,画幅像素,PASS_MEASURED,941×1672，9:16相对误差0.053163%，非原生8K。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
-A009,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,沿原镜剧情功能保留；太子两镜复用同一图。新图未经用户过，未替换批准执行版；动态图像接续未测试。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
+A009,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,用户已回复过，六张选定修正版已正式替换七镜；当前尚未生成视频，相邻动态接续仍待验收。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A029,A,身份,PASS_SCOPED,近层铜红刀将、中央蓝金太子、银白叉将及第二层虾叉蟹锤龟扇沿原身份。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A029,B,数量物种,PASS_SCOPED,六位主要角色可辨，后层保持鲨章龟蟹虾差异；远兵没有逐个计数认证。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A029,C,姿态支撑,PASS_SCOPED,前排三人各两靴可辨，接浪面；枪叉杆尾与脚分开，不把杆尾误判第三鞋。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
@@ -46,7 +46,7 @@ A029,H,材质,PASS_SCOPED,可见皮肤/须发、湿织物、甲玉木石水的�
 A029,I,背景物理,NEEDS_EVIDENCE_REMAINDER,近中旗船两艘的船首、甲板、帆桅、绳索与吃水层次可见；最远舰索端未逐一认证。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A029,J,光学,PASS_SCOPED,整图可见无标题水印/拼板/黑边，人物与长杆未见明显非等比拉伸；合理景深保留。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A029,K,画幅像素,PASS_MEASURED,941×1672，9:16相对误差0.053163%，非原生8K。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
-A029,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,沿原镜剧情功能保留；太子两镜复用同一图。新图未经用户过，未替换批准执行版；动态图像接续未测试。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
+A029,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,用户已回复过，六张选定修正版已正式替换七镜；当前尚未生成视频，相邻动态接续仍待验收。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A044,A,身份,PASS_SCOPED,青赤白黑四位原龙王归位，年龄须色冠角对应原图。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A044,B,数量物种,PASS_SCOPED,四人四台四股金光；上空只是透光金粒翼胸残影，无第五实体龙。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A044,C,姿态支撑,PASS_SCOPED,四王可见靴站原台，部分袍下腿遮；不把遮挡判断腿。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
@@ -58,7 +58,7 @@ A044,H,材质,PASS_SCOPED,可见皮肤/须发、湿织物、甲玉木石水的�
 A044,I,背景物理,PASS_SCOPED,四台回流与渐缓海面连通，原海门村屋保留；中央不是新灾害源。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A044,J,光学,PASS_SCOPED,整图可见无标题水印/拼板/黑边，人物与长杆未见明显非等比拉伸；合理景深保留。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A044,K,画幅像素,PASS_MEASURED,941×1672，9:16相对误差0.053163%，非原生8K。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
-A044,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,沿原镜剧情功能保留；太子两镜复用同一图。新图未经用户过，未替换批准执行版；动态图像接续未测试。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
+A044,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,用户已回复过，六张选定修正版已正式替换七镜；当前尚未生成视频，相邻动态接续仍待验收。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A056,A,身份,NEEDS_EVIDENCE_REMAINDER,四王前景与八仙后景身份服色保持；后排面孔小，只认证可辨轮廓和法器不逐毛孔签核。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A056,B,数量物种,PASS_SCOPED,前四王、后八仙、一白驴可数，未加实体金龙。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A056,C,姿态支撑,PASS_SCOPED,青赤黑三王已跪低、白王站立俯身；前景靴膝与礁关系可辨，不统一改四站或四跪。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
@@ -70,4 +70,4 @@ A056,H,材质,PASS_SCOPED,可见皮肤/须发、湿织物、甲玉木石水的�
 A056,I,背景物理,NEEDS_EVIDENCE_REMAINDER,后白驴四腿大关系与驮具可辨，最远人物细手和船索未全检；海面已缓、古村与门未换。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A056,J,光学,PASS_SCOPED,整图可见无标题水印/拼板/黑边，人物与长杆未见明显非等比拉伸；合理景深保留。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
 A056,K,画幅像素,PASS_MEASURED,941×1672，9:16相对误差0.053163%，非原生8K。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
-A056,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,沿原镜剧情功能保留；太子两镜复用同一图。新图未经用户过，未替换批准执行版；动态图像接续未测试。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
+A056,L,相邻接续,NEEDS_EVIDENCE_REMAINDER,用户已回复过，六张选定修正版已正式替换七镜；当前尚未生成视频，相邻动态接续仍待验收。,assistant_visual_review,整图+原尺寸重点选区；选区坐标随包,NOT_TESTED
