@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-17",
+  "user_instruction": "归到这个镜头：金龙翼展压海，八仙承受冲击",
+  "scene_title": "金龙翼展压海，八仙承受冲击",
+  "sequence": [
+    "DB-10-05 金龙双翼压海",
+    "DB-10-06 八仙承受冲击",
+    "DB-10-06 落水后续关键帧"
+  ],
+  "keyframe": {
+    "library_file_id": "libfile_828d8b998ce481919a773ea84e798931",
+    "generated_file": "exec-3d439efc-6045-4a1a-be27-2fb48289c609.png",
+    "role": "冲击导致八仙被掀落海的后续关键帧",
+    "former_provisional_id": "DB-10-06B",
+    "independent_shot": false,
+    "approval_status": "PENDING_EXPLICIT_IMAGE_APPROVAL"
+  },
+  "continuity": "金龙合体后；太上老君出场前。取消独立新增镜头计数，归属现有翼展压海与八仙承压段落。"
+}
