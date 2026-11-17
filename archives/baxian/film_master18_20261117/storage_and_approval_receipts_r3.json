@@ -1,0 +1,712 @@
+{
+  "version": "R3",
+  "date": "2026-11-17",
+  "full_master": {
+    "library_file_id": "libfile_5b7f70c4c3d48191b395af2b01200448",
+    "bytes": 473151745,
+    "sha256": "95c5e5c8d500ed769e20571f67705a80f16151ab620c439cede2a197498ab01b"
+  },
+  "approved_package": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "accepted_input": "file_uri",
+      "success": true,
+      "id": "1vOgdZGDZCfeIuLCrE4PQaTnMu3ZvOvy6",
+      "title": "八仙_R3_本批17张通过与补帧_20261117.zip",
+      "file_name": "八仙_R3_本批17张通过与补帧_20261117.zip",
+      "mime_type": "application/zip",
+      "url": "https://drive.google.com/file/d/1vOgdZGDZCfeIuLCrE4PQaTnMu3ZvOvy6/view?usp=drivesdk",
+      "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+      "structuredContent": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1vOgdZGDZCfeIuLCrE4PQaTnMu3ZvOvy6",
+        "title": "八仙_R3_本批17张通过与补帧_20261117.zip",
+        "file_name": "八仙_R3_本批17张通过与补帧_20261117.zip",
+        "mime_type": "application/zip",
+        "url": "https://drive.google.com/file/d/1vOgdZGDZCfeIuLCrE4PQaTnMu3ZvOvy6/view?usp=drivesdk",
+        "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+      }
+    },
+    "isError": false
+  },
+  "volumes": [
+    {
+      "success": true,
+      "accepted_input": "file_uri",
+      "id": "1Lw4Iisg6mUEvTpdhGzOnsdKdEkQi23xd",
+      "title": "八仙_18章总档R3_第1卷_20261117.zip",
+      "mime_type": "application/zip",
+      "url": "https://drive.google.com/file/d/1Lw4Iisg6mUEvTpdhGzOnsdKdEkQi23xd/view?usp=drivesdk",
+      "parent_ids": [
+        "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+      ],
+      "modified_time": "2026-11-17T08:41:22.406Z",
+      "size": "75938312"
+    },
+    {
+      "success": true,
+      "accepted_input": "file_uri",
+      "id": "1-zsJfP0S7u-tyBzsCGm8LyD-OAKeb9zW",
+      "title": "八仙_18章总档R3_第2卷_20261117.zip",
+      "mime_type": "application/zip",
+      "url": "https://drive.google.com/file/d/1-zsJfP0S7u-tyBzsCGm8LyD-OAKeb9zW/view?usp=drivesdk",
+      "parent_ids": [
+        "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+      ],
+      "modified_time": "2026-11-17T08:42:04.849Z",
+      "size": "75938496"
+    },
+    {
+      "success": true,
+      "accepted_input": "file_uri",
+      "id": "1UELSZYR7olmLLaFIW6_YeCl1uwAgLGfb",
+      "title": "八仙_18章总档R3_第3卷_20261117.zip",
+      "mime_type": "application/zip",
+      "url": "https://drive.google.com/file/d/1UELSZYR7olmLLaFIW6_YeCl1uwAgLGfb/view?usp=drivesdk",
+      "parent_ids": [
+        "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+      ],
+      "modified_time": "2026-11-17T08:42:49.048Z",
+      "size": "74875842"
+    },
+    {
+      "success": true,
+      "accepted_input": "file_uri",
+      "id": "1fX5nv4to80j56jM-VPVfMMYWqROjYobU",
+      "title": "八仙_18章总档R3_第4卷_20261117.zip",
+      "mime_type": "application/zip",
+      "url": "https://drive.google.com/file/d/1fX5nv4to80j56jM-VPVfMMYWqROjYobU/view?usp=drivesdk",
+      "parent_ids": [
+        "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+      ],
+      "modified_time": "2026-11-17T08:44:10.414Z",
+      "size": "74060529"
+    },
+    {
+      "success": true,
+      "accepted_input": "file_uri",
+      "id": "1Fqe2McmiSLvWl2YZ2_nqizx5ITUsXIKz",
+      "title": "八仙_18章总档R3_第5卷_20261117.zip",
+      "mime_type": "application/zip",
+      "url": "https://drive.google.com/file/d/1Fqe2McmiSLvWl2YZ2_nqizx5ITUsXIKz/view?usp=drivesdk",
+      "parent_ids": [
+        "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+      ],
+      "modified_time": "2026-11-17T08:45:03.876Z",
+      "size": "75023843"
+    },
+    {
+      "success": true,
+      "accepted_input": "file_uri",
+      "id": "1_NpiJ7Yw1XBkROZC0T_FR_4-qqKKQcoh",
+      "title": "八仙_18章总档R3_第6卷_20261117.zip",
+      "mime_type": "application/zip",
+      "url": "https://drive.google.com/file/d/1_NpiJ7Yw1XBkROZC0T_FR_4-qqKKQcoh/view?usp=drivesdk",
+      "parent_ids": [
+        "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+      ],
+      "modified_time": "2026-11-17T08:46:13.703Z",
+      "size": "74769993"
+    },
+    {
+      "success": true,
+      "accepted_input": "file_uri",
+      "id": "1BO-4GxZO0vaTnAgynxM6XwX5udAOdWK6",
+      "title": "八仙_18章总档R3_第7卷_20261117.zip",
+      "mime_type": "application/zip",
+      "url": "https://drive.google.com/file/d/1BO-4GxZO0vaTnAgynxM6XwX5udAOdWK6/view?usp=drivesdk",
+      "parent_ids": [
+        "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+      ],
+      "modified_time": "2026-11-17T08:46:33.580Z",
+      "size": "23762478"
+    }
+  ],
+  "volume_metadata_checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "id": "1Lw4Iisg6mUEvTpdhGzOnsdKdEkQi23xd",
+          "title": "八仙_18章总档R3_第1卷_20261117.zip",
+          "mime_type": null,
+          "size": "75938312",
+          "url": null,
+          "file_or_folder": null,
+          "created_time": null,
+          "modified_time": null,
+          "parent_ids": [
+            "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+          ],
+          "drive_id": null,
+          "current_user_can_share": null,
+          "has_augmented_permissions": null,
+          "shared": null,
+          "permissions": null,
+          "source_visibility_status": "access_not_verified"
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "id": "1-zsJfP0S7u-tyBzsCGm8LyD-OAKeb9zW",
+          "title": "八仙_18章总档R3_第2卷_20261117.zip",
+          "mime_type": null,
+          "size": "75938496",
+          "url": null,
+          "file_or_folder": null,
+          "created_time": null,
+          "modified_time": null,
+          "parent_ids": [
+            "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+          ],
+          "drive_id": null,
+          "current_user_can_share": null,
+          "has_augmented_permissions": null,
+          "shared": null,
+          "permissions": null,
+          "source_visibility_status": "access_not_verified"
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "id": "1UELSZYR7olmLLaFIW6_YeCl1uwAgLGfb",
+          "title": "八仙_18章总档R3_第3卷_20261117.zip",
+          "mime_type": null,
+          "size": "74875842",
+          "url": null,
+          "file_or_folder": null,
+          "created_time": null,
+          "modified_time": null,
+          "parent_ids": [
+            "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+          ],
+          "drive_id": null,
+          "current_user_can_share": null,
+          "has_augmented_permissions": null,
+          "shared": null,
+          "permissions": null,
+          "source_visibility_status": "access_not_verified"
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "id": "1fX5nv4to80j56jM-VPVfMMYWqROjYobU",
+          "title": "八仙_18章总档R3_第4卷_20261117.zip",
+          "mime_type": null,
+          "size": "74060529",
+          "url": null,
+          "file_or_folder": null,
+          "created_time": null,
+          "modified_time": null,
+          "parent_ids": [
+            "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+          ],
+          "drive_id": null,
+          "current_user_can_share": null,
+          "has_augmented_permissions": null,
+          "shared": null,
+          "permissions": null,
+          "source_visibility_status": "access_not_verified"
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "id": "1Fqe2McmiSLvWl2YZ2_nqizx5ITUsXIKz",
+          "title": "八仙_18章总档R3_第5卷_20261117.zip",
+          "mime_type": null,
+          "size": "75023843",
+          "url": null,
+          "file_or_folder": null,
+          "created_time": null,
+          "modified_time": null,
+          "parent_ids": [
+            "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+          ],
+          "drive_id": null,
+          "current_user_can_share": null,
+          "has_augmented_permissions": null,
+          "shared": null,
+          "permissions": null,
+          "source_visibility_status": "access_not_verified"
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "id": "1_NpiJ7Yw1XBkROZC0T_FR_4-qqKKQcoh",
+          "title": "八仙_18章总档R3_第6卷_20261117.zip",
+          "mime_type": null,
+          "size": "74769993",
+          "url": null,
+          "file_or_folder": null,
+          "created_time": null,
+          "modified_time": null,
+          "parent_ids": [
+            "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+          ],
+          "drive_id": null,
+          "current_user_can_share": null,
+          "has_augmented_permissions": null,
+          "shared": null,
+          "permissions": null,
+          "source_visibility_status": "access_not_verified"
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "id": "1BO-4GxZO0vaTnAgynxM6XwX5udAOdWK6",
+          "title": "八仙_18章总档R3_第7卷_20261117.zip",
+          "mime_type": null,
+          "size": "23762478",
+          "url": null,
+          "file_or_folder": null,
+          "created_time": null,
+          "modified_time": null,
+          "parent_ids": [
+            "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+          ],
+          "drive_id": null,
+          "current_user_can_share": null,
+          "has_augmented_permissions": null,
+          "shared": null,
+          "permissions": null,
+          "source_visibility_status": "access_not_verified"
+        },
+        "isError": false
+      }
+    }
+  ],
+  "director_approval": "用户：全部过，铁拐李葫芦2张不过，修正后通过。选用17份最终图，两张葫芦按母图返修后锁版，失败中间稿不入包。",
+  "deletions": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "results": [
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/风暴海岸的金龙.png",
+            "destination_path": null,
+            "file_id": "file_0000000031908211a10e43891c596f76",
+            "library_file_id": "libfile_dcbfb309d59c8191885d851570d2daaf",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/金龙翼展压海.png",
+            "destination_path": null,
+            "file_id": "file_0000000007808211bba2f82fd0877e72",
+            "library_file_id": "libfile_8b95f320a37c81919cb5bc696be12baf",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/八仙抵御金龙冲击.png",
+            "destination_path": null,
+            "file_id": "file_000000009a9c821183c14043dd7e0577",
+            "library_file_id": "libfile_af3c87d7e94c8191a8e9619b316c371f",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/老君指引金龙与海上阵眼.png",
+            "destination_path": null,
+            "file_id": "file_00000000627c8211bf4031ee059c3f81",
+            "library_file_id": "libfile_b12d2fe3aae88191a0516dae355e8203",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          }
+        ],
+        "warnings": [],
+        "external_connectors_accessed": false
+      },
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "results": [
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/风暴海上巨型金龙.png",
+            "destination_path": null,
+            "file_id": "file_000000009ea48211a6d3187f8ad3f5f1",
+            "library_file_id": "libfile_9da00164b87881918e9a94c4d508295d",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/三宝离手，合阵初启.png",
+            "destination_path": null,
+            "file_id": "file_00000000280482119f3a9d001678bc88",
+            "library_file_id": "libfile_e4e0974152e88191876f580f55ead40d",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          }
+        ],
+        "warnings": [],
+        "external_connectors_accessed": false
+      },
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "results": [
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/S02-04_B_汉钟离挥扇推潮_DIRECTOR_APPROVED.png",
+            "destination_path": null,
+            "file_id": "file_0000000043388211b58a58c8663d9b0d",
+            "library_file_id": "libfile_89addefad89c819180ace637f1fcab73",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/八仙过海/正式关键帧_CURRENT/S02-04_汉钟离双图导演批准_20261112/S02-04_B_汉钟离挥扇推潮_DIRECTOR_APPROVED.png",
+            "destination_path": null,
+            "file_id": "file_00000000e3188211b6f07785f9fff3a7",
+            "library_file_id": "libfile_674dc6f520008191a7b41343ef25061b",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/汉钟离挥扇劈海迎曙光.png",
+            "destination_path": null,
+            "file_id": "file_000000005fec82078c0eefe95aeba7f5",
+            "library_file_id": "libfile_6178049aedb88191afb2312b7cb71213",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/S02-04_A_汉钟离举扇分潮_DIRECTOR_APPROVED.png",
+            "destination_path": null,
+            "file_id": "file_0000000077348211b660051b68b827b6",
+            "library_file_id": "libfile_5db808645ab88191b0d0d903ecdea8b7",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          }
+        ],
+        "warnings": [],
+        "external_connectors_accessed": false
+      },
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "results": [
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/八仙过海/正式关键帧_CURRENT/S02-04_汉钟离双图导演批准_20261112/S02-04_A_汉钟离举扇分潮_DIRECTOR_APPROVED.png",
+            "destination_path": null,
+            "file_id": "file_000000005b048211838469f72a5020f6",
+            "library_file_id": "libfile_d4adb4fed7688191b6be2c1014b6d48a",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/S02-01_铁拐李落杖抵礁吸煞救民_CURRENT_DIRECTOR_APPROVED.png",
+            "destination_path": null,
+            "file_id": "file_0000000062948211943a8ee87adbbd19",
+            "library_file_id": "libfile_86e5cfbc43b48191bc8cb56cc32a84c4",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/八仙过海/正式关键帧_CURRENT/S02-01_铁拐李落杖抵礁_20261112/S02-01_铁拐李落杖抵礁吸煞救民_CURRENT_DIRECTOR_APPROVED.png",
+            "destination_path": null,
+            "file_id": "file_00000000925c8211b46c6821860905d4",
+            "library_file_id": "libfile_de4944883ad08191b71f42e80f9935d3",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/暴雨礁石上的铁拐李吸煞救民.png",
+            "destination_path": null,
+            "file_id": "file_00000000579482119588f909e8cc3c46",
+            "library_file_id": "libfile_c38f5828febc81919b6c43a0a3ce59a7",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          }
+        ],
+        "warnings": [],
+        "external_connectors_accessed": false
+      },
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "results": [
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/阿宁直言，小满护灯.png",
+            "destination_path": null,
+            "file_id": "file_00000000602882118183c48963138d87",
+            "library_file_id": "libfile_d786b551ccd48191b80fc6b7b3cff3dd",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          },
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/换笔记本和手机 (2).png",
+            "destination_path": null,
+            "file_id": "file_000000000c648211879abf349a8784dd",
+            "library_file_id": "libfile_e928060515b48191a9861e1011601d96",
+            "mime_type": "image/png",
+            "library_artifact_type": null,
+            "directory_id": null
+          }
+        ],
+        "warnings": [],
+        "external_connectors_accessed": false
+      },
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "results": [
+          {
+            "operation": "delete",
+            "status": "succeeded",
+            "message": "File moved to trash.",
+            "error_code": null,
+            "path": "/老君驾鹤指向归墟裂口.png",
+            "destination_path": null,
+            "file_id": "file_0000000033648207962093ef74917431",
+            "library_file_id": "libfile_9ea75d69ece8819191322d6a8bf9eb9e",
+            "mime_type": "image/png",
+            "library_artifact_type": "image",
+            "directory_id": null
+          }
+        ],
+        "warnings": [],
+        "external_connectors_accessed": false
+      },
+      "isError": false
+    }
+  ],
+  "old_r1_drive_volumes_deleted": [
+    {
+      "id": "12gCh31TxhlJH3VL4Qlqvp-K1oCaSlMZj",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "success": true
+        },
+        "isError": false
+      }
+    },
+    {
+      "id": "1n50XO4Mwya1ap-1fqNMOuTb-PMZ-f7Em",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "success": true
+        },
+        "isError": false
+      }
+    },
+    {
+      "id": "1SZmoNI8KQyhkVlNfTpC6_ZXUKizTRxnL",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "success": true
+        },
+        "isError": false
+      }
+    }
+  ],
+  "limitations": "17张本批通过；10张补齐指定静态剧情接点。当前151份图片、128任务99绑定29无准确专属绑定。未做动态认证。已知总包当前内容已清理；不声称未知备份/自动历史版本永久擦除。GitHub保存索引与回执，不包含图片二进制。"
+}
