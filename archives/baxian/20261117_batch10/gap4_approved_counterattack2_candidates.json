@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-17",
+  "approval": "过，继续",
+  "approved": [
+    {
+      "shot": "DB-04-02",
+      "library_file_id": "libfile_b96b6637977881918fc281fb7f66712b",
+      "status": "APPROVED_LOCKED",
+      "upload": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1J7K4SizbKXYOEKFfBEPW2Zr_DiNWcnN4",
+        "title": "DB-04-02_补帧_通过锁版_20261117.png",
+        "file_name": "DB-04-02_补帧_通过锁版_20261117.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1J7K4SizbKXYOEKFfBEPW2Zr_DiNWcnN4/view?usp=drivesdk",
+        "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1J7K4SizbKXYOEKFfBEPW2Zr_DiNWcnN4",
+          "title": "DB-04-02_补帧_通过锁版_20261117.png",
+          "file_name": "DB-04-02_补帧_通过锁版_20261117.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1J7K4SizbKXYOEKFfBEPW2Zr_DiNWcnN4/view?usp=drivesdk",
+          "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+        }
+      }
+    },
+    {
+      "shot": "DB-09-03",
+      "library_file_id": "libfile_55eeac9628c481918e49b7460d4566cc",
+      "status": "APPROVED_LOCKED",
+      "upload": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1yPZ7M9iBh9ggSStdpP2BiuZWgHBVaPU7",
+        "title": "DB-09-03_补帧_通过锁版_20261117.png",
+        "file_name": "DB-09-03_补帧_通过锁版_20261117.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1yPZ7M9iBh9ggSStdpP2BiuZWgHBVaPU7/view?usp=drivesdk",
+        "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1yPZ7M9iBh9ggSStdpP2BiuZWgHBVaPU7",
+          "title": "DB-09-03_补帧_通过锁版_20261117.png",
+          "file_name": "DB-09-03_补帧_通过锁版_20261117.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1yPZ7M9iBh9ggSStdpP2BiuZWgHBVaPU7/view?usp=drivesdk",
+          "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+        }
+      }
+    },
+    {
+      "shot": "DB-09-06",
+      "library_file_id": "libfile_1c4edb1698c881919ad8e6c0593ffd89",
+      "status": "APPROVED_LOCKED",
+      "upload": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1jaObegG5nzGTuwI0GytVSSCpzhWfIjbK",
+        "title": "DB-09-06_补帧_通过锁版_20261117.png",
+        "file_name": "DB-09-06_补帧_通过锁版_20261117.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1jaObegG5nzGTuwI0GytVSSCpzhWfIjbK/view?usp=drivesdk",
+        "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1jaObegG5nzGTuwI0GytVSSCpzhWfIjbK",
+          "title": "DB-09-06_补帧_通过锁版_20261117.png",
+          "file_name": "DB-09-06_补帧_通过锁版_20261117.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1jaObegG5nzGTuwI0GytVSSCpzhWfIjbK/view?usp=drivesdk",
+          "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+        }
+      }
+    },
+    {
+      "shot": "DB-12-03",
+      "library_file_id": "libfile_bc5d654c96208191a6988dfcc0ae6901",
+      "status": "APPROVED_LOCKED",
+      "upload": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "11ywZ8Ke2Be3dbI2YtgEAYl9HxmB2QI2W",
+        "title": "DB-12-03_补帧_通过锁版_20261117.png",
+        "file_name": "DB-12-03_补帧_通过锁版_20261117.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/11ywZ8Ke2Be3dbI2YtgEAYl9HxmB2QI2W/view?usp=drivesdk",
+        "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "11ywZ8Ke2Be3dbI2YtgEAYl9HxmB2QI2W",
+          "title": "DB-12-03_补帧_通过锁版_20261117.png",
+          "file_name": "DB-12-03_补帧_通过锁版_20261117.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/11ywZ8Ke2Be3dbI2YtgEAYl9HxmB2QI2W/view?usp=drivesdk",
+          "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+        }
+      }
+    }
+  ],
+  "new_candidates": [
+    {
+      "shot": "DB-08-03",
+      "title": "吕洞宾剑气截断龙火",
+      "file": "exec-613c6ccf-affd-4089-92da-c0c8a100b7f7.png",
+      "status": "PENDING_USER_REVIEW"
+    },
+    {
+      "shot": "DB-08-04",
+      "title": "汉钟离巨扇推开火浪",
+      "file": "exec-60939710-0cff-4746-a657-e29226b9179f.png",
+      "status": "PENDING_USER_REVIEW"
+    }
+  ],
+  "policy": "New action keyframes supplement partial coverage. Existing approved solo power images retained unchanged. Four approved gap frames use selected portrait, not superseded landscape. Still-image approval is separate from temporal video QA."
+}
