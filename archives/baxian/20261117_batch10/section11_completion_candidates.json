@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-17",
+  "approved": {
+    "shot": "DB-10-06 continuation keyframe",
+    "title": "金龙掀海，八仙落水",
+    "library_file_id": "libfile_828d8b998ce481919a773ea84e798931",
+    "status": "APPROVED_LOCKED",
+    "approval": "过，按规则继续生成需要补的图片。",
+    "drive_url": "https://drive.google.com/file/d/1aRYB1hoC8mDHOjWuo8GZq0t3jHaulFwO/view",
+    "independent_shot": false
+  },
+  "new_candidates": [
+    {
+      "shot": "DB-11-04",
+      "title": "八宝合阵全貌",
+      "file": "exec-0e47f8ac-ca76-43a7-8a98-f03d304d1fbf.png",
+      "status": "PENDING_USER_REVIEW",
+      "video_tested": false
+    },
+    {
+      "shot": "DB-11-05",
+      "title": "老君施符，八宝接令",
+      "file": "exec-eae3852e-ba1a-433c-a20b-4c4a40d04321.png",
+      "status": "PENDING_USER_REVIEW",
+      "video_tested": false
+    },
+    {
+      "shot": "DB-11-06",
+      "title": "八宝镇龙，归墟收口",
+      "file": "exec-d4ef582c-abf0-4e90-87d3-4f9217160aaa.png",
+      "status": "PENDING_USER_REVIEW",
+      "video_tested": false
+    },
+    {
+      "shot": "DB-11-07",
+      "title": "金龙解体，四王归位",
+      "file": "exec-6fb86e7c-5b1a-4144-b148-ab37d971af25.png",
+      "status": "PENDING_USER_REVIEW",
+      "video_tested": false
+    },
+    {
+      "shot": "DB-11-08",
+      "title": "八宝归主，归墟闭合",
+      "file": "exec-635f8e2b-725a-497e-8f24-2c6b69df7791.png",
+      "status": "PENDING_USER_REVIEW",
+      "video_tested": false
+    }
+  ],
+  "scope": "Five clearly missing section11 keyframes generated. This does not establish completion of all 12 sections. Existing approved images not regenerated.",
+  "qa_notes": [
+    "No native8K or temporal QA claims.",
+    "04 uses luminous decorative nodes in addition to eight prop sets; these are not extra treasures.",
+    "07 is the final dissolution state: four human kings and fading wing light, not a complete transformation sequence.",
+    "08 uses return-completed pose, not a continuous return flight; dynamic control frames may be required."
+  ]
+}
