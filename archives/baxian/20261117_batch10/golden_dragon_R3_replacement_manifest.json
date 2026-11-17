@@ -5,26 +5,87 @@
     "status": "USER_APPROVED",
     "drive_id": "1jzG2cArSbWcK0-GVx45yx9hCHcHagPuH"
   },
-  "rule": "Use thick R3 golden dragon for all three scenes; four visible limbs; old files retained as history. New scene approval pending.",
+  "rule": "User approved all three renders and replacement. R3 thick four-limbed golden dragon supersedes previous slender GD-01 for future production; previous three images are historical, not current.",
   "replacements": [
     {
       "shot": "DB-10-04",
       "old_library_id": "libfile_dcbfb309d59c8191885d851570d2daaf",
       "new_generated_file": "exec-5e3254bf-b1ec-48bc-828c-5dd570018ef6.png",
-      "status": "REPLACEMENT_PENDING_USER_REVIEW"
+      "status": "APPROVED_LOCKED_CURRENT",
+      "drive": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1DExnEJzEvZ0W44YfjZR1ks5iscphLUAw",
+        "title": "DB-10-04_厚重四爪金龙_R3_通过替换_20261117.png",
+        "file_name": "DB-10-04_厚重四爪金龙_R3_通过替换_20261117.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1DExnEJzEvZ0W44YfjZR1ks5iscphLUAw/view?usp=drivesdk",
+        "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1DExnEJzEvZ0W44YfjZR1ks5iscphLUAw",
+          "title": "DB-10-04_厚重四爪金龙_R3_通过替换_20261117.png",
+          "file_name": "DB-10-04_厚重四爪金龙_R3_通过替换_20261117.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1DExnEJzEvZ0W44YfjZR1ks5iscphLUAw/view?usp=drivesdk",
+          "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+        }
+      }
     },
     {
       "shot": "DB-10-05",
       "old_library_id": "libfile_8b95f320a37c81919cb5bc696be12baf",
       "new_generated_file": "exec-3c02a038-fdf1-4751-85ab-93a0f245ad91.png",
-      "status": "REPLACEMENT_PENDING_USER_REVIEW"
+      "status": "APPROVED_LOCKED_CURRENT",
+      "drive": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1JvC64MbDFuZ_05ns8_Mf5nFYWHLwHTvc",
+        "title": "DB-10-05_厚重四爪金龙_R3_通过替换_20261117.png",
+        "file_name": "DB-10-05_厚重四爪金龙_R3_通过替换_20261117.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1JvC64MbDFuZ_05ns8_Mf5nFYWHLwHTvc/view?usp=drivesdk",
+        "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1JvC64MbDFuZ_05ns8_Mf5nFYWHLwHTvc",
+          "title": "DB-10-05_厚重四爪金龙_R3_通过替换_20261117.png",
+          "file_name": "DB-10-05_厚重四爪金龙_R3_通过替换_20261117.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1JvC64MbDFuZ_05ns8_Mf5nFYWHLwHTvc/view?usp=drivesdk",
+          "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+        }
+      }
     },
     {
       "shot": "DB-10-06",
       "old_library_id": "libfile_af3c87d7e94c8191a8e9619b316c371f",
       "new_generated_file": "exec-e161877e-6d29-4e78-9806-353640c7eab0.png",
-      "status": "REPLACEMENT_PENDING_USER_REVIEW"
+      "status": "APPROVED_LOCKED_CURRENT",
+      "drive": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1QQYTKbdxnXPT0sRXbOfwQLJysTZ066Vx",
+        "title": "DB-10-06_厚重四爪金龙_R3_通过替换_20261117.png",
+        "file_name": "DB-10-06_厚重四爪金龙_R3_通过替换_20261117.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1QQYTKbdxnXPT0sRXbOfwQLJysTZ066Vx/view?usp=drivesdk",
+        "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1QQYTKbdxnXPT0sRXbOfwQLJysTZ066Vx",
+          "title": "DB-10-06_厚重四爪金龙_R3_通过替换_20261117.png",
+          "file_name": "DB-10-06_厚重四爪金龙_R3_通过替换_20261117.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1QQYTKbdxnXPT0sRXbOfwQLJysTZ066Vx/view?usp=drivesdk",
+          "parent_id": "1INUBxoXs538im-35ZnHvGmjP-Fxih5ua"
+        }
+      }
     }
   ],
-  "qa_note": "Four feet visually readable. Wing outlines reach/crop frame edges; do not claim all silhouettes fully inside frame. No video readiness certification."
+  "qa_note": "Four feet visually readable. Wing outlines reach/crop frame edges; do not claim all silhouettes fully inside frame. No video readiness certification.",
+  "approval_text": "过，并替换原来的金龙"
 }
