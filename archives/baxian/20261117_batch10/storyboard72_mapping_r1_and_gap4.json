@@ -1,0 +1,490 @@
+{
+  "date": "2026-11-17",
+  "scope": "72条首轮语义映射和批准证据对应；不是全库逐像素验收或全片完成证明",
+  "source": "libfile_88821705dd7c81919b528277c11aa3c2",
+  "inventory": "2026-11-14起相关文件元数据两页，共全部返回；另查既有批准记录与7张附件原图。文件名匹配只记候选，不自动批准。",
+  "status_definitions": {
+    "APPROVED_RECORD": "有批准记录或本会话明确批准，镜号语义对应；接续与技术另核",
+    "APPROVED_VISUAL_MATCH": "本轮看过批准附件原件后对应镜号",
+    "PARTIAL_ASSET": "有相关素材但未完全覆盖动作",
+    "PARTIAL_APPROVED": "有已过相关图，只覆盖该镜一部分，不能自动当作整镜齐",
+    "CANDIDATE": "有同题材生成图，未核精确选用与批准",
+    "LEGACY_CANDIDATE": "旧剧情结尾可复用线索，需核镜号与当前空间",
+    "PROP_SCRIPT_CONFLICT": "定型兵器与旧脚本文字冲突，保留定型不擅自换兵器",
+    "ORDER_REVISED_NOT_GENERATE": "原分镜顺序与用户最新要求冲突，暂不按过时顺序补图",
+    "MOVED_TO_AFTER_DB10_06": "用户要求老君在金龙掀翻八仙后出现，归入现行抵达段",
+    "SOURCE_UNRESOLVED": "毒雾源头未锁，不杜撰新反派",
+    "NEW_PENDING_REVIEW": "本轮新生成，待导演批准，不自动存入通过区"
+  },
+  "rows": [
+    {
+      "shot": "DB-01-01",
+      "title": "渔村发现异常",
+      "status": "CANDIDATE",
+      "asset": "libfile_83c2c2a1da8c8191bfbeabf115c8a321"
+    },
+    {
+      "shot": "DB-01-02",
+      "title": "四柱升起",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_b78e1770ef8c8191b1b485b67e0b24d6"
+    },
+    {
+      "shot": "DB-01-03",
+      "title": "四王现身",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_d12707c8c7a88191bf23d896ef38a281"
+    },
+    {
+      "shot": "DB-01-04",
+      "title": "双方对峙",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_d9b02314f25c8191a4e03a92e089b0e0"
+    },
+    {
+      "shot": "DB-02-01",
+      "title": "四王后排太子前排",
+      "status": "PARTIAL_ASSET",
+      "asset": "libfile_9b64fe1f6cec8191a04611c0db0fb57f"
+    },
+    {
+      "shot": "DB-02-02",
+      "title": "太子宣战",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_3334c74e4bb88191a1eb03af4666f46a"
+    },
+    {
+      "shot": "DB-02-03",
+      "title": "双表兄登场",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_9bd083fe6ef48191a058f5504db94bdf"
+    },
+    {
+      "shot": "DB-02-04",
+      "title": "水军同框",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_97c0c5a646a081918c36be431cb93e9f"
+    },
+    {
+      "shot": "DB-03-01",
+      "title": "虾蟹阵列",
+      "status": "CANDIDATE",
+      "asset": "libfile_e87e950717308191837bbb6ff6866d1a"
+    },
+    {
+      "shot": "DB-03-02",
+      "title": "虾兵问话",
+      "status": "PROP_SCRIPT_CONFLICT",
+      "asset": "libfile_4d1715e0083c819198c843ee4f62b821"
+    },
+    {
+      "shot": "DB-03-03",
+      "title": "蟹将答话",
+      "status": "PROP_SCRIPT_CONFLICT",
+      "asset": "libfile_7941a354dd2481918abb1968555f71d4"
+    },
+    {
+      "shot": "DB-03-04",
+      "title": "纠正兵器",
+      "status": "CANDIDATE",
+      "asset": "libfile_292b959ba3148191afef80b21569a755"
+    },
+    {
+      "shot": "DB-03-05",
+      "title": "蟹将挥令",
+      "status": "CANDIDATE",
+      "asset": "libfile_6486f98e68dc8191b0f628d781b8597d"
+    },
+    {
+      "shot": "DB-04-01",
+      "title": "八仙布防",
+      "status": "APPROVED_VISUAL_MATCH",
+      "asset": "libfile_c85b118241988191918d43fde33c7f3a"
+    },
+    {
+      "shot": "DB-04-02",
+      "title": "开始化龙",
+      "status": "NEW_PENDING_REVIEW",
+      "asset": "exec-fc6d655e-2a6a-4f02-bbf4-93534d2ac657.png"
+    },
+    {
+      "shot": "DB-04-03",
+      "title": "四龙列开",
+      "status": "CANDIDATE",
+      "asset": "libfile_d18c327816f0819198800f9150dd1bf7"
+    },
+    {
+      "shot": "DB-04-04",
+      "title": "龙口喷火",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_4a291e74550881918223532d8069383e"
+    },
+    {
+      "shot": "DB-04-05",
+      "title": "虾兵见龙焰",
+      "status": "CANDIDATE",
+      "asset": "libfile_11551d3db0d481918b5c5de577bb1dae"
+    },
+    {
+      "shot": "DB-04-06",
+      "title": "蟹将挡热",
+      "status": "CANDIDATE",
+      "asset": "libfile_304f167bb4dc8191b6ff02119bd4849d"
+    },
+    {
+      "shot": "DB-05-01",
+      "title": "太子发令",
+      "status": "CANDIDATE",
+      "asset": "libfile_d0644a5ddd748191b41b0674be1a8a8d"
+    },
+    {
+      "shot": "DB-05-02",
+      "title": "太子冲锋",
+      "status": "APPROVED_VISUAL_MATCH",
+      "asset": "libfile_bf978a7c19a8819184e74841c3950ec5"
+    },
+    {
+      "shot": "DB-05-03",
+      "title": "侧翼推进",
+      "status": "PARTIAL_ASSET",
+      "asset": "libfile_9bd083fe6ef48191a058f5504db94bdf"
+    },
+    {
+      "shot": "DB-05-04",
+      "title": "虾蟹冲锋",
+      "status": "CANDIDATE",
+      "asset": "libfile_70dd5f34caa08191b9bdc2cf6cb57c17"
+    },
+    {
+      "shot": "DB-05-05",
+      "title": "兵器接战",
+      "status": "APPROVED_VISUAL_MATCH",
+      "asset": "libfile_c6832961b9b08191b9f6350aa1b67f04"
+    },
+    {
+      "shot": "DB-05-06",
+      "title": "战场远景",
+      "status": "APPROVED_VISUAL_MATCH",
+      "asset": "libfile_e028227239fc8191a4127ebe1e71bb6b"
+    },
+    {
+      "shot": "DB-06-01",
+      "title": "四龙掀浪",
+      "status": "CANDIDATE",
+      "asset": "libfile_800bb62254f88191a2239196d9bd06a8"
+    },
+    {
+      "shot": "DB-06-02",
+      "title": "巨扇抵浪",
+      "status": "PARTIAL_APPROVED",
+      "asset": "libfile_d7b303c83568819181b77c1c1af0d287"
+    },
+    {
+      "shot": "DB-06-03",
+      "title": "莲膜护撤",
+      "status": "CANDIDATE",
+      "asset": "libfile_d8cbf34b2d40819185e225f76d3ef24d"
+    },
+    {
+      "shot": "DB-06-04",
+      "title": "防线破口",
+      "status": "CANDIDATE",
+      "asset": "libfile_9103060a04a08191aaebbfdb1c8b4b17"
+    },
+    {
+      "shot": "DB-06-05",
+      "title": "护送后撤",
+      "status": "APPROVED_VISUAL_MATCH",
+      "asset": "libfile_b494c566bfbc81919ff8a0efdf4e4502"
+    },
+    {
+      "shot": "DB-06-06",
+      "title": "退守高处",
+      "status": "CANDIDATE",
+      "asset": "libfile_fa8d4f29eb18819195ba17293c83aabe"
+    },
+    {
+      "shot": "DB-07-01",
+      "title": "商议请援",
+      "status": "ORDER_REVISED_NOT_GENERATE",
+      "asset": null
+    },
+    {
+      "shot": "DB-07-02",
+      "title": "离场请援",
+      "status": "ORDER_REVISED_NOT_GENERATE",
+      "asset": null
+    },
+    {
+      "shot": "DB-07-03",
+      "title": "老君道场",
+      "status": "ORDER_REVISED_NOT_GENERATE",
+      "asset": null
+    },
+    {
+      "shot": "DB-07-04",
+      "title": "说明危局",
+      "status": "ORDER_REVISED_NOT_GENERATE",
+      "asset": null
+    },
+    {
+      "shot": "DB-07-05",
+      "title": "驾鹤启程",
+      "status": "ORDER_REVISED_NOT_GENERATE",
+      "asset": null
+    },
+    {
+      "shot": "DB-07-06",
+      "title": "老君抵达",
+      "status": "MOVED_TO_AFTER_DB10_06",
+      "asset": "libfile_2107fd9784a08191ac8a3e23cf607c5c"
+    },
+    {
+      "shot": "DB-08-01",
+      "title": "重整反攻",
+      "status": "ORDER_REVISED_NOT_GENERATE",
+      "asset": null
+    },
+    {
+      "shot": "DB-08-02",
+      "title": "吕洞宾拔剑",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_84ee72c9e6e08191b767453d2119b556"
+    },
+    {
+      "shot": "DB-08-03",
+      "title": "剑气破火",
+      "status": "PARTIAL_APPROVED",
+      "asset": "libfile_e27333024c448191a62de30b06e19aa6"
+    },
+    {
+      "shot": "DB-08-04",
+      "title": "巨扇开路",
+      "status": "PARTIAL_APPROVED",
+      "asset": "libfile_d7b303c83568819181b77c1c1af0d287"
+    },
+    {
+      "shot": "DB-08-05",
+      "title": "鱼鼓水纹",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_75981b301f6c8191af6ed85cd3804a98"
+    },
+    {
+      "shot": "DB-08-06",
+      "title": "横笛屏障",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_d5174ce240fc819180f56df522cd2321"
+    },
+    {
+      "shot": "DB-08-07",
+      "title": "莲膜护堤",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_b29247ab6e408191b47d8ff4fba61d50"
+    },
+    {
+      "shot": "DB-08-08",
+      "title": "双玉定界",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_0ace2334f14881919a0da98eddea90ca"
+    },
+    {
+      "shot": "DB-08-09",
+      "title": "举葫芦收雾",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_9c18c26159108191b6d98eb6459915c1"
+    },
+    {
+      "shot": "DB-08-10",
+      "title": "花篮打开收摄",
+      "status": "PARTIAL_APPROVED",
+      "asset": "libfile_a9cf369265648191ab1617ac01d6aad4"
+    },
+    {
+      "shot": "DB-09-01",
+      "title": "毒雾来袭源头",
+      "status": "SOURCE_UNRESOLVED",
+      "asset": null
+    },
+    {
+      "shot": "DB-09-02",
+      "title": "葫芦收雾",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_9c18c26159108191b6d98eb6459915c1"
+    },
+    {
+      "shot": "DB-09-03",
+      "title": "葫芦口特写",
+      "status": "NEW_PENDING_REVIEW",
+      "asset": "exec-52eae13f-17ab-42c0-94ec-73f98cdc8f15.png"
+    },
+    {
+      "shot": "DB-09-04",
+      "title": "花篮对阵",
+      "status": "PARTIAL_APPROVED",
+      "asset": "libfile_b59930486244819195fa18306e06b4c0"
+    },
+    {
+      "shot": "DB-09-05",
+      "title": "收兵",
+      "status": "APPROVED_USER_VARIANT",
+      "asset": "libfile_3d3e6bf41f3c8191bce7399102bec3de"
+    },
+    {
+      "shot": "DB-09-06",
+      "title": "雾消军退",
+      "status": "NEW_PENDING_REVIEW",
+      "asset": "exec-6b170c49-8f2d-4c67-ba08-c2dc8e7cefb3.png"
+    },
+    {
+      "shot": "DB-10-01",
+      "title": "四龙盘旋",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_7d20233565e481919b14a47fa9993c76"
+    },
+    {
+      "shot": "DB-10-02",
+      "title": "四龙汇聚",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_d3667e5fea8081918a8c9110728fd928"
+    },
+    {
+      "shot": "DB-10-03",
+      "title": "融合控制",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_7eb84b9d58a08191b9bd81bc0b6925a0"
+    },
+    {
+      "shot": "DB-10-04",
+      "title": "金龙现身",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_d39df1d8db3c8191bca7509c0aaab8d4"
+    },
+    {
+      "shot": "DB-10-05",
+      "title": "金翼压海",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_c77144b559d4819195ac48bba3f18dd4"
+    },
+    {
+      "shot": "DB-10-06",
+      "title": "八仙承压含落水补帧",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_187e217d0e4881919b47382926087a33"
+    },
+    {
+      "shot": "DB-10-07",
+      "title": "老君指点阵眼",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_2107fd9784a08191ac8a3e23cf607c5c"
+    },
+    {
+      "shot": "DB-11-01",
+      "title": "围阵",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_a15cfa14ff6481918e7e46a8b9800b18"
+    },
+    {
+      "shot": "DB-11-02",
+      "title": "核心",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_5c3d16fd28848191bdbea2cf5d3e7e43"
+    },
+    {
+      "shot": "DB-11-03",
+      "title": "法器入位",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_2b0e9f4066f081918235cf229f53b973"
+    },
+    {
+      "shot": "DB-11-04",
+      "title": "合阵全貌",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_c22a088032d88191b4c42063a06a5d55"
+    },
+    {
+      "shot": "DB-11-05",
+      "title": "施符",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_ceb0b0bc02b88191a04bafe964cba18e"
+    },
+    {
+      "shot": "DB-11-06",
+      "title": "镇龙封墟",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_01efeb65c6d08191bc390d7ca8d20441"
+    },
+    {
+      "shot": "DB-11-07",
+      "title": "四王归位含认败补帧",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_62e37a1f7008819181e18a73f82ee156"
+    },
+    {
+      "shot": "DB-11-08",
+      "title": "八宝归主",
+      "status": "APPROVED_RECORD",
+      "asset": "libfile_86dab98383008191a7b5b7222a15d3e3"
+    },
+    {
+      "shot": "DB-12-01",
+      "title": "余浪渐平",
+      "status": "PARTIAL_APPROVED",
+      "asset": "libfile_86dab98383008191a7b5b7222a15d3e3"
+    },
+    {
+      "shot": "DB-12-02",
+      "title": "修堤修船",
+      "status": "LEGACY_CANDIDATE",
+      "asset": "libfile_423ae413fed48191bb0256613d3bffbf"
+    },
+    {
+      "shot": "DB-12-03",
+      "title": "归航晾网",
+      "status": "NEW_PENDING_REVIEW",
+      "asset": "exec-6e3176e7-0a58-4ef4-8a2c-acc93a9794ae.png"
+    },
+    {
+      "shot": "DB-12-04",
+      "title": "灯火收尾",
+      "status": "LEGACY_CANDIDATE",
+      "asset": "libfile_9630e7784c88819184dc4798ec9deaa0"
+    }
+  ],
+  "continuity_decisions": [
+    "用户最新时序优先：四龙合体→金翼掀海八仙落水→老君抵达指点→八宝合阵镇墟。旧第7章提前抵达及第8章老君督战不能直接套用。",
+    "虾兵持三叉戟、蟹将持方锤，以批准母图为准。旧刀叉对白需协调，不擅改台词。",
+    "八位单人神通批准记录不自动证明完整反攻段接续已通过。",
+    "同一已过图片映射多处只代表复用，不重复计为多个生成文件。"
+  ],
+  "new_files": [
+    {
+      "shot": "DB-04-02",
+      "title": "开始化龙",
+      "status": "NEW_PENDING_REVIEW",
+      "asset": "exec-fc6d655e-2a6a-4f02-bbf4-93534d2ac657.png"
+    },
+    {
+      "shot": "DB-09-03",
+      "title": "葫芦口特写",
+      "status": "NEW_PENDING_REVIEW",
+      "asset": "exec-52eae13f-17ab-42c0-94ec-73f98cdc8f15.png"
+    },
+    {
+      "shot": "DB-09-06",
+      "title": "雾消军退",
+      "status": "NEW_PENDING_REVIEW",
+      "asset": "exec-6b170c49-8f2d-4c67-ba08-c2dc8e7cefb3.png"
+    },
+    {
+      "shot": "DB-12-03",
+      "title": "归航晾网",
+      "status": "NEW_PENDING_REVIEW",
+      "asset": "exec-6e3176e7-0a58-4ef4-8a2c-acc93a9794ae.png"
+    }
+  ],
+  "discarded_candidate": {
+    "file": "exec-9173eb94-dfde-4083-97ed-c02c392a5ebe.png",
+    "reason": "wrong landscape aspect; superseded by portrait, not selected"
+  },
+  "limits": "未列剩余精确总数；未把首轮对应升级为完整静态或动态通过。"
+}
