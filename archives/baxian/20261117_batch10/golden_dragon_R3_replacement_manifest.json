@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-17",
+  "master": {
+    "library_file_id": "libfile_026ff392945c8191a6161a447cf668c2",
+    "status": "USER_APPROVED",
+    "drive_id": "1jzG2cArSbWcK0-GVx45yx9hCHcHagPuH"
+  },
+  "rule": "Use thick R3 golden dragon for all three scenes; four visible limbs; old files retained as history. New scene approval pending.",
+  "replacements": [
+    {
+      "shot": "DB-10-04",
+      "old_library_id": "libfile_dcbfb309d59c8191885d851570d2daaf",
+      "new_generated_file": "exec-5e3254bf-b1ec-48bc-828c-5dd570018ef6.png",
+      "status": "REPLACEMENT_PENDING_USER_REVIEW"
+    },
+    {
+      "shot": "DB-10-05",
+      "old_library_id": "libfile_8b95f320a37c81919cb5bc696be12baf",
+      "new_generated_file": "exec-3c02a038-fdf1-4751-85ab-93a0f245ad91.png",
+      "status": "REPLACEMENT_PENDING_USER_REVIEW"
+    },
+    {
+      "shot": "DB-10-06",
+      "old_library_id": "libfile_af3c87d7e94c8191a8e9619b316c371f",
+      "new_generated_file": "exec-e161877e-6d29-4e78-9806-353640c7eab0.png",
+      "status": "REPLACEMENT_PENDING_USER_REVIEW"
+    }
+  ],
+  "qa_note": "Four feet visually readable. Wing outlines reach/crop frame edges; do not claim all silhouettes fully inside frame. No video readiness certification."
+}
