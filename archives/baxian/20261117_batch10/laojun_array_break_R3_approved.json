@@ -1,0 +1,19 @@
+{
+  "shot": "DB-10-07",
+  "title": "老君点破海上阵眼",
+  "version": "R3",
+  "status": "APPROVED_LOCKED_CURRENT",
+  "approval": "过",
+  "date": "2026-11-17",
+  "library_file_id": "libfile_2107fd9784a08191ac8a3e23cf607c5c",
+  "file": "exec-70c51198-a19a-4771-b2c8-45fc1b5cf582.png",
+  "bytes": 3401037,
+  "sha256": "63209188d1826e85eefe223d4298f96ea4ce3063ec9c88cd734b91d6cf5276af",
+  "drive_url": "https://drive.google.com/file/d/1JKajO2mSObWuFvwsZOtObP1q-Dee47ch/view",
+  "supersedes": [
+    "libfile_9ea75d69ece8819191322d6a8bf9eb9e",
+    "libfile_b12d2fe3aae88191a0516dae355e8203"
+  ],
+  "selection_rule": "This approved R3 is current for DB-10-07. Previous versions retained only as history. Uses approved heavy four-limbed golden dragon; finger ray hits array weak point, array ring fractures and water flow splits.",
+  "github_scope": "Approval index and cloud original link; image bytes stored on Drive. Director approval does not certify video temporal QA."
+}
