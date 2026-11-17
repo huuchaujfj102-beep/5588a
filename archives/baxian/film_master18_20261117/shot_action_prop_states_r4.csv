@@ -26,12 +26,12 @@ F06-05,6,古代封印由牺牲记忆换来安宁，壁画刻痕可辨,G01-03,APP
 F06-06,6,阿宁要求先救人，小满护住铜灯,N005,APPROVED_LOCKED,母护孩子孩子守灯,阿宁示意先救人、小满继续护灯,同母子唯一铜灯留桌,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/e0041dada5133c56760f.png,,
 F06-07,6,玄溟黑影映出八仙各自失败的幻象,L050,APPROVED_LOCKED,水影未定形,玄溟映出八仙失败幻象,道具影仅幻象，不代表实体离主,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/d5c3364b2ab629af63d0.png,,
 F07-02,7,四柱升起,A032,APPROVED_LOCKED,四处海面隆起,四柱各自升高封海,四柱四方位，非八门,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/531d779195522e3d812b.png,,
-F07-03,7,四王现身,A022,APPROVED_LOCKED,四王被雨雾遮,四人形王在各水台现身,青赤白黑四王空手，尚未化龙,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/0b0c447aef3ddb7fe274.png,,
-F07-04,7,双方对峙,A003,APPROVED_LOCKED,两阵营隔浪对峙,视线交锋救援受阻,海族右八仙左，八套归主,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/29dec116f6e1668f2e07.png,,
+F07-03,7,四王现身,AS_A022,APPROVED_LOCKED,四王被雨雾遮,四人形王在各水台现身,青赤白黑四王空手，尚未化龙,DESIGN_LOCKED,NOT_TESTED,aspect_fix_R1/images/AS_A022_四王现身_9x16候选.png,用户对7镜6图画幅修正版明确回复：过（2026-11-17）,
+F07-04,7,双方对峙,AS_A003,APPROVED_LOCKED,两阵营隔浪对峙,视线交锋救援受阻,海族右八仙左，八套归主,DESIGN_LOCKED,NOT_TESTED,aspect_fix_R1/images/AS_A003_八仙四王对峙_9x16候选.png,用户对7镜6图画幅修正版明确回复：过（2026-11-17）,
 F08-01,8,四王后排太子前排,G01-04,APPROVED_LOCKED,四王各立后排水台，太子前排未发令,太子向画左，四王仍在后，五人不增殖,太子一青杆长枪，四王空手；青赤白黑冠甲各锁,DESIGN_LOCKED,NOT_TESTED,group_01/images/G01-04_F08-01_四王后阵太子前阵.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
-F08-02,8,太子宣战,A009,APPROVED_LOCKED,太子朝左握枪未示令,朝左宣战示令,年轻蓝金甲太子一青杆枪,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/b8ff37f4437525d9bbad.png,,
+F08-02,8,太子宣战,AS_A009,APPROVED_LOCKED,太子朝左握枪未示令,朝左宣战示令,年轻蓝金甲太子一青杆枪,DESIGN_LOCKED,NOT_TESTED,aspect_fix_R1/images/AS_A009_太子左向宣战发令_9x16候选.png,用户对7镜6图画幅修正版明确回复：过（2026-11-17）,
 F08-03,8,双表兄登场,A034,APPROVED_LOCKED,双表兄并立武器收束,转向左前敌阵蓄势,铜甲一大刀、银甲一三叉戟,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/7fc12f697f335000ece6.png,,
-F08-04,8,水军同框,A029,APPROVED_LOCKED,水军在太子后分层,同向整队回应,虾叉蟹锤龟羽扇各归主,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/92a3ae4cb9cfb1c3c3ec.png,,
+F08-04,8,水军同框,AS_A029,APPROVED_LOCKED,水军在太子后分层,同向整队回应,虾叉蟹锤龟羽扇各归主,DESIGN_LOCKED,NOT_TESTED,aspect_fix_R1/images/AS_A029_海族水军同框_9x16候选.png,用户对7镜6图画幅修正版明确回复：过（2026-11-17）,
 F09-01,9,虾蟹阵列,G01-05,APPROVED_LOCKED,虾左蟹右在同船甲板列阵,二人互看，海岸仍在画左，后队同向,红铜甲主虾一三叉戟，主蟹一八角方锤,DESIGN_LOCKED,NOT_TESTED,group_01/images/G01-05_F09-01_虾蟹实景阵列.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
 F09-02,9,虾兵问话,G01-06,APPROVED_LOCKED,虾兵握杆叉朝左上，身体朝左前,转脸问右侧蟹将，叉须分离,虾右手一叉，蟹锤在右画边，武器不交换,DESIGN_LOCKED,NOT_TESTED,group_01/images/G01-06_F09-02_虾兵问话.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
 F09-03,9,蟹将答话,G01-07,APPROVED_LOCKED,蟹将右手持锤，左空手准备答话,成图空手误指画右后列，接下一镜纠正,一方锤仍右手；本帧不是正确冲锋令,DESIGN_LOCKED,NOT_TESTED,group_01/images/G01-07_F09-03_蟹将答话误指.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
@@ -39,13 +39,13 @@ F09-04,9,纠正兵器,G01-08,APPROVED_LOCKED,蟹将误指右；先放低锤右�
 F09-05,9,蟹将挥令,G01-09,APPROVED_LOCKED,蟹左手锤下垂，空右手收在身前,空右手朝左挥令，脚在甲板踏稳,左手唯一方锤，后虾双手唯一三叉戟,DESIGN_LOCKED,NOT_TESTED,group_01/images/G01-09_F09-05_蟹将挥令.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
 F10-01,10,八仙布防,A026,APPROVED_LOCKED,八仙海岸布防,扇莲玉主持防线未离手,八套归主，银剑接上一镜状态,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/970edafb16f59cfd87b6.png,,
 F10-02,10,开始化龙,A041,APPROVED_LOCKED,四人形王各在水台,四人身化青赤白黑四龙，不留人身副本,四独立无翼四足龙无金龙,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/0bafc20394f56011d993.png,,
-F10-03,10,四龙列开,A064,UNBOUND,四独立无翼龙列开,四龙各自抬首向岸,复用A064，青赤白黑各一头尾,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/420ed49a76cfae653101.png,,
+F10-03,10,四龙列开,A064,APPROVED_LOCKED,四独立无翼龙列开,四龙各自抬首向岸,复用A064，青赤白黑各一头尾,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/420ed49a76cfae653101.png,R3批准资产记录,
 F10-04,10,龙口喷火,A008,APPROVED_LOCKED,四龙口内蓄热,火由原龙口向海岸推出升蒸汽,四龙无翼、火有源不从尾喷,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/5f3503333f6bd2ddf3bd.png,,
 F10-05,10,虾兵见龙焰,G01-10,APPROVED_LOCKED,龙焰尚远，两须自然弯,虾缩颈后仰看左前，热浪吹须向右,唯一三叉戟仍双手握，火只在远海不烧人物,DESIGN_LOCKED,NOT_TESTED,group_01/images/G01-10_F10-05_虾兵见龙焰.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
 F10-06,10,蟹将挡热,G02-01,APPROVED_LOCKED,蟹左手持锤，右臂尚未遮面,空右前臂遮额、脚后撤半步踏稳,唯一方锤在左手垂身体外侧，不能变盾,DESIGN_LOCKED,NOT_TESTED,group_02/images/G02-01_F10-06_蟹将挡热.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
-F11-01,11,太子发令,A009,UNBOUND,太子朝左握枪未发令,向左发冲锋令,复用A009起势；一人一青枪,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/b8ff37f4437525d9bbad.png,,
+F11-01,11,太子发令,AS_A009,APPROVED_LOCKED,太子朝左握枪未发令,向左发冲锋令,复用A009起势；一人一青枪,DESIGN_LOCKED,NOT_TESTED,aspect_fix_R1/images/AS_A009_太子左向宣战发令_9x16候选.png,用户对7镜6图画幅修正版明确回复：过（2026-11-17）,
 F11-02,11,太子冲锋,A012,APPROVED_LOCKED,太子右侧蓄势,沿右至左路径冲锋,一人一枪不穿水军,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/b0f8c46ee4b891396ca1.png,,
-F11-03,11,侧翼推进,A034,UNBOUND,双表兄在原侧翼起势,右至左沿外侧路推进并接接战镜,复用A034起势；铜刀银叉不换主,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/7fc12f697f335000ece6.png,,
+F11-03,11,侧翼推进,A034,APPROVED_LOCKED,双表兄在原侧翼起势,右至左沿外侧路推进并接接战镜,复用A034起势；铜刀银叉不换主,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/7fc12f697f335000ece6.png,R3批准资产记录,
 F11-04,11,虾蟹冲锋,G02-02,APPROVED_LOCKED,虾左蟹右在船跳板末端朝左蓄势,前脚踏低礁浅水、后脚刚离跳板，后队跟进,虾双手一叉、蟹左手一锤，真实低礁支撑非站深海,DESIGN_LOCKED,NOT_TESTED,group_02/images/G02-02_F11-04_虾蟹踏浪冲锋.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
 F11-05,11,兵器接战,A010,APPROVED_LOCKED,原兵器接近未碰,原刃杆交接回弹,武器刚性不熔接或易主,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/2f333ca058bb8c9933e0.png,,
 F11-06,11,战场远景,A004,APPROVED_LOCKED,冲锋入岸前战区,全景确认海族右、八仙左、撤路在后,远景不作逐人动作证据,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/35449ca9d32b9eb2a6a9.png,,
@@ -62,7 +62,7 @@ F13-04,13,何仙姑莲台接应断路处村民,G02-09,APPROVED_LOCKED,两灾民�
 F13-05,13,汉钟离与曹国舅稳住后方护壁,G02-10,APPROVED_LOCKED,右侧来浪压撤离通道,汉双手稳扇侧推浪，曹双玉定界，通道保住,汉一巨绿扇，曹双手一白一青两玉板；双臂无第三腰牌,DESIGN_LOCKED,NOT_TESTED,group_02/images/G02-10_F13-05_巨扇双玉护后方.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
 F13-06,13,吕洞宾、韩湘子、张果老商议协同反攻,G03-01,APPROVED_LOCKED,吕背剑入鞘，韩笛已贴唇，张鼓双棒就位,吕指左下浪隙，韩起奏、张双棒待击,吕一背剑一拂尘、韩一紫横笛、张一长鱼鼓两棒,DESIGN_LOCKED,NOT_TESTED,group_03/images/G03-01_F13-06_三仙商议协同反攻.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
 F14-01,14,八仙重整反攻，老君尚未出现,G03-02,APPROVED_LOCKED,八仙高岩三层蓄势，八套各自主持,迈下左侧海堤协同反攻，未离手入阵,八仙八套无重复；白驴留安全高岩画外；老君未到,DESIGN_LOCKED,NOT_TESTED,group_03/images/G03-02_F14-01_八仙重整反攻.png,用户在本聊天明确回复：30张过,2026-11-17 Asia/Shanghai
-F14-02,14,吕洞宾拔剑,L071,UNBOUND,唯一银剑入背鞘,沿轴拔出接飞剑路线,复用L071；一剑空鞘一拂尘,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/7e29e43b032ecd10d730.png,,
+F14-02,14,吕洞宾拔剑,L071,APPROVED_LOCKED,唯一银剑入背鞘,沿轴拔出接飞剑路线,复用L071；一剑空鞘一拂尘,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/7e29e43b032ecd10d730.png,R3批准资产记录,
 F14-03,14,剑气破火,A053,APPROVED_LOCKED,银剑已出鞘，火幕未断,沿原路切开火幕,一实体剑，剑气非第二剑,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/76dcfe2bd3601d750669.png,,
 F14-04,14,巨扇开路,A054,APPROVED_LOCKED,汉持扇对火浪,巨扇开出侧风路,一绿扇不变盾不离手,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/3a5a2478b219cca7a7e5.png,,
 F14-05,14,鱼鼓水纹,A028,APPROVED_LOCKED,张鱼鼓双棒待击,双棒交替引水纹节拍,一长筒两短棒非圆鼓,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/c282d35b000409d587f8.png,,
@@ -87,7 +87,7 @@ F17-03,17,法器入位,A040,APPROVED_LOCKED,八套已离主但外五未定点,�
 F17-04,17,合阵全貌,A060,APPROVED_LOCKED,八套刚成阵,全阵稳定主手腰无副本,八套非八件、双玉两板鼓带双棒,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/e246a17295bca4517151.png,,
 F17-05,17,施符,A062,APPROVED_LOCKED,老君未施符，金龙受阵牵制,符锁暂缚金龙稳眼争取归印时间,拂尘一支，符非永久封墟结果,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/c748a37593e8daf67b69.png,,
 F17-06,17,镇龙封墟,A061,APPROVED_LOCKED,归印断源内坍已完成,八宝镇余波封墟稳定,八宝仍阵中、金龙后接C04解体,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/f4ac42c62f4b71851a1f.png,,
-F17-07,17,四王归位含认败补帧,A044,APPROVED_LOCKED,金粒散、四王回各水台,四人形王站稳低头,四王各一无实体第五金龙,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/4c2a357a9bd8e0228ad7.png,,
+F17-07,17,四王归位含认败补帧,AS_A044,APPROVED_LOCKED,金粒散、四王回各水台,四人形王站稳低头,四王各一无实体第五金龙,DESIGN_LOCKED,NOT_TESTED,aspect_fix_R1/images/AS_A044_四王归位_9x16候选.png,用户对7镜6图画幅修正版明确回复：过（2026-11-17）,
 F17-08,17,八宝归主,A049,APPROVED_LOCKED,三核心五外围已归、银剑已回鞘,八仙握稳原法器阵光息,八套归主、铁拐拂尘巨莲台白驴不计节点,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/b654ee384c8fd3aafca2.png,,
 F18-01,18,余浪渐平,L061,APPROVED_LOCKED,归墟已封海尚余浪,浪退露海堤,退潮非玄溟内坍，可取L061海侧环境,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/a63f55d71a14659e8c3a.png,,
 F18-02,18,修堤修船,L061,APPROVED_LOCKED,村民在受损木架与船边就位,修木人低幅一敲，拉船人同向收绳半步,复用L061，不增船绳不换工位,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/a63f55d71a14659e8c3a.png,,
@@ -100,7 +100,7 @@ F16-X04,16,四龙融合中间控制帧,A046,APPROVED_LOCKED,四色身入同一�
 F16-X05,16,金翼掀海，八仙落水,A058,APPROVED_LOCKED,八仙受冲击离原支撑,八人落海抓牢法器白驴需救,不得第九仙或自动成阵,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/187a4cf7a56460231baa.png,,
 F16-X06,16,浪中互助攀礁,A068,APPROVED_LOCKED,近侧仙在浪中抓礁,互扶向礁靠拢,只锁本图可见人，余者R01R02接齐,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/0e18e2ce9f8791d1ae5f.png,,
 F17-X07,17,三宝离手，合阵初启,A050,APPROVED_LOCKED,剑莲双玉仍在本人附近,三套核心离主悬起,吕空鞘何曹空手、巨莲台不入阵,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/38025d6225b29077c5d7.png,,
-F17-X08,17,四王低首认败,A056,APPROVED_LOCKED,四王复人形未认错,四王低首认败解除海禁,四王空手无第五王,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/67abbac687470846991c.png,,
+F17-X08,17,四王低首认败,AS_A056,APPROVED_LOCKED,四王复人形未认错,四王低首认败解除海禁,四王空手；八仙与白驴在左后，八套法器仍在画外阵中，原主人对应手腰空；铁拐拂尘巨莲台白驴保留，吕空背鞘,DESIGN_LOCKED,NOT_TESTED,aspect_fix_R1/images/AS_A056_四王低首认败_9x16候选.png,用户对7镜6图画幅修正版明确回复：过（2026-11-17）,
 F17-X09,17,八座古海门从海底依次显露，形成可读空间拓扑,L051,APPROVED_LOCKED,古门被水遮,八古海门显露建立中轴四角,八门非八宝位置不跳,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/80cfc2c2255009f865b1.png,,
 F17-X10,17,BX01定礁与BX02推潮联动，建立第一条安全通路,L052,APPROVED_LOCKED,拐未定裂点潮挡路,拐定礁扇推潮接力开路,一拐一扇、葫芦仍铁腰侧,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/0531e6cbcec5ec9c1112.png,,
 F17-X11,17,BX04藤桥搭接BX07莲台，护送渔民穿过风眼,L053,APPROVED_LOCKED,藤桥莲台渡口有间隙,主藤接台灾民依次过,篮主藤、小莲巨台仍归主,DESIGN_LOCKED,NOT_TESTED,base_R3/assets/d3cd70cc95afbf4f4105.png,,
