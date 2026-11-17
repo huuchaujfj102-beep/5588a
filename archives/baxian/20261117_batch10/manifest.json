@@ -1,0 +1,149 @@
+{
+  "date": "2026-11-17 Asia/Shanghai",
+  "image_count": 10,
+  "approved_count": 6,
+  "new_candidates_count": 4,
+  "approved_cloud_bundle": "https://drive.google.com/file/d/112BvP97TP37JCq-sRZwxX8gK4t5jVk-j/view",
+  "records": [
+    {
+      "shot_id": "DB-10-01",
+      "filename": "DB-10-01_四龙集结_待审.png",
+      "source_filename": "exec-38697f63-a7ba-4712-9c39-c76e353af271.png",
+      "sha256": "420ed49a76cfae6531019cae59f694eefd15bac5fa74dfc3251e79fb9de44c40",
+      "bytes": 3373844,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "CANDIDATE_PENDING_REVIEW",
+      "technical_status": "SEPARATE_QA_PENDING",
+      "approval_note": "本轮新生，不在用户上一句过的范围"
+    },
+    {
+      "shot_id": "DB-10-02",
+      "filename": "DB-10-02_四龙向心汇聚_待审.png",
+      "source_filename": "exec-d91b3e57-930a-4970-a497-b77b37a2662b.png",
+      "sha256": "f64089eafab033a2cf2b470010eed94c85097e925f8b4cd9a67263d26df51fa5",
+      "bytes": 3092568,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "CANDIDATE_PENDING_REVIEW",
+      "technical_status": "SEPARATE_QA_PENDING",
+      "approval_note": "本轮新生，不在用户上一句过的范围"
+    },
+    {
+      "shot_id": "DB-10-03",
+      "filename": "DB-10-03_水雾融合遮接_待审.png",
+      "source_filename": "exec-9cc103aa-1c71-45a7-97cd-6164de91ac24.png",
+      "sha256": "aeb8388098b4243217f8b608477918307562d1308c25108253f6a210194d9cc5",
+      "bytes": 2724636,
+      "actual_pixels": [
+        941,
+        1671
+      ],
+      "director_status": "CANDIDATE_PENDING_REVIEW",
+      "technical_status": "SEPARATE_QA_PENDING",
+      "approval_note": "本轮新生，不在用户上一句过的范围"
+    },
+    {
+      "shot_id": "DB-10-04",
+      "filename": "风暴海岸的金龙.png",
+      "library_file_id": "libfile_dcbfb309d59c8191885d851570d2daaf",
+      "sha256": "205dec00b078bac070bf3185a40d1d70f444b06ae126dc104517f183b916fb97",
+      "bytes": 2874924,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "approval_evidence": "用户对上一轮六张回复：过，继续",
+      "technical_status": "SEPARATE_QA_PENDING"
+    },
+    {
+      "shot_id": "DB-10-05",
+      "filename": "金龙翼展压海.png",
+      "library_file_id": "libfile_8b95f320a37c81919cb5bc696be12baf",
+      "sha256": "9a18ee89af47d8d4c4925ea11b546ef49d55c71b1923997166410caf4996b0f4",
+      "bytes": 2979500,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "approval_evidence": "用户对上一轮六张回复：过，继续",
+      "technical_status": "SEPARATE_QA_PENDING"
+    },
+    {
+      "shot_id": "DB-10-06",
+      "filename": "八仙抵御金龙冲击.png",
+      "library_file_id": "libfile_af3c87d7e94c8191a8e9619b316c371f",
+      "sha256": "d1f2ccb2aef610b4dd354883c291957ae034930a457cff2d1261cf129cb48ab2",
+      "bytes": 3432516,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "approval_evidence": "用户对上一轮六张回复：过，继续",
+      "technical_status": "SEPARATE_QA_PENDING"
+    },
+    {
+      "shot_id": "DB-10-07",
+      "filename": "DB-10-07_老君示意合阵_待审.png",
+      "source_filename": "exec-fc9443e6-408d-4764-aaec-5fe481a444e2.png",
+      "sha256": "616c2ebc81d621c453dc11bb30c9e5933af7bb6f4cc6285e2b0741b3a7aaeace",
+      "bytes": 3056036,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "CANDIDATE_PENDING_REVIEW",
+      "technical_status": "SEPARATE_QA_PENDING",
+      "approval_note": "本轮新生，不在用户上一句过的范围"
+    },
+    {
+      "shot_id": "DB-11-01",
+      "filename": "八仙归墟海岸围阵.png",
+      "library_file_id": "libfile_a15cfa14ff6481918e7e46a8b9800b18",
+      "sha256": "597db17f202aab81f253634da23d219575864c9eefb99cc0eb73b633d905b96c",
+      "bytes": 3475845,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "approval_evidence": "用户对上一轮六张回复：过，继续",
+      "technical_status": "SEPARATE_QA_PENDING"
+    },
+    {
+      "shot_id": "DB-11-02",
+      "filename": "风暴海岸四宝核心初立.png",
+      "library_file_id": "libfile_5c3d16fd28848191bdbea2cf5d3e7e43",
+      "sha256": "ffcc7d66d90b0022817ff80da6dc12bbc8dc752d9d2eef6a9a2350d2c181a2ba",
+      "bytes": 2438213,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "approval_evidence": "用户对上一轮六张回复：过，继续",
+      "technical_status": "SEPARATE_QA_PENDING"
+    },
+    {
+      "shot_id": "DB-11-03",
+      "filename": "八宝法器与出鞘直剑.png",
+      "library_file_id": "libfile_2b0e9f4066f081918235cf229f53b973",
+      "sha256": "4a580c2af687126f49f210c411148c2bcbbb1286030eafd98497c135f462bfc9",
+      "bytes": 2722723,
+      "actual_pixels": [
+        941,
+        1672
+      ],
+      "director_status": "APPROVED_LOCKED",
+      "approval_evidence": "用户对上一轮六张回复：过，继续",
+      "technical_status": "SEPARATE_QA_PENDING"
+    }
+  ]
+}
