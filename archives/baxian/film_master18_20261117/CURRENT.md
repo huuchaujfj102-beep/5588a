@@ -1,11 +1,11 @@
-# R4补缺候选更新｜2026-11-17
+# R4补缺已批准锁定｜2026-11-17
 
-R3继续作为已批准基础版。R4新增30张待审图，三组各10张；131条活动任务已有绑定，去重122张主/控制帧（92旧选图＋30新候选）。已知R3A静态缺口已补候选，动态验收0镜。下方R3历史统计不代表R4现状。
+R3继续作为已批准基础版。用户明确回复“30张过”。R4本轮30张修正版已全部批准锁定，三组各10张；131条活动任务已有绑定，去重122张主/控制帧（92旧选图＋30新批准）。已知R3A静态缺口已补并批准，动态验收0镜。下方R3历史统计不代表R4现状。
 
-- [R4补缺总档](../../../docs/baxian-film-gap30-r4-candidate-20261117.md)
-- [R4逐镜绑定](shot_asset_mapping_r4_candidate.csv)
-- [131镜首尾动作与法器状态](shot_action_prop_states_r4.csv)
-- [30张候选与逐镜状态总包](https://chatgpt.com/library?file_id=libfile_cd6299bf32b88191bee1a6ba6faa4536&account_id=personal)
+- [R4补缺总档](https://github.com/huuchaujfj102-beep/5588a/blob/archive/baxian-approved-20261115/docs/baxian-film-gap30-r4-candidate-20261117.md)
+- [R4逐镜绑定](https://github.com/huuchaujfj102-beep/5588a/blob/archive/baxian-approved-20261115/archives/baxian/film_master18_20261117/shot_asset_mapping_r4_candidate.csv)
+- [131镜首尾动作与法器状态](https://github.com/huuchaujfj102-beep/5588a/blob/archive/baxian-approved-20261115/archives/baxian/film_master18_20261117/shot_action_prop_states_r4.csv)
+- [30张已批准补图与逐镜状态总包](https://chatgpt.com/library?file_id=libfile_cd6299bf32b88191bee1a6ba6faa4536&account_id=personal)
 - [云盘第1组10张](https://drive.google.com/file/d/1ogerPcDrfRPuLg7VUtdcFJu-ep9vLRwR/view)
 - [云盘第2组10张](https://drive.google.com/file/d/1s5_-Yw5q6YfAQ9m3sleMW-rgvqp-GNFG/view)
 - [云盘第3组10张](https://drive.google.com/file/d/12449AfTwxMKQYvQKFRYPnw9o_TISiAxR/view)
