@@ -1,0 +1,61 @@
+name: Ark Seedance image to video
+
+on:
+  workflow_dispatch:
+    inputs:
+      first_frame:
+        description: 首帧 HTTPS 地址或 asset:// 素材 ID
+        type: string
+      last_frame:
+        description: 尾帧 HTTPS 地址或 asset:// 素材 ID
+        type: string
+      prompt:
+        description: 图生视频提示词
+        type: string
+      seconds:
+        description: 时长（4–15 秒）
+        type: number
+        default: 5
+      task_id:
+        description: 续查已有任务时填写任务 ID
+        type: string
+      submit:
+        description: 提交一次可能计费的视频生成任务
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  seedance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dry-run, submit or resume
+        env:
+          ARK_API_KEY: ${{ secrets.ARK_API_KEY }}
+          FIRST_FRAME: ${{ inputs.first_frame }}
+          LAST_FRAME: ${{ inputs.last_frame }}
+          PROMPT: ${{ inputs.prompt }}
+          VIDEO_SECONDS: ${{ inputs.seconds }}
+          TASK_ID: ${{ inputs.task_id }}
+          SUBMIT: ${{ inputs.submit }}
+        run: |
+          args=(--out "$RUNNER_TEMP/seedance.mp4")
+          if [[ -n "$TASK_ID" ]]; then
+            args+=(--task-id "$TASK_ID")
+          else
+            args+=(--first-frame "$FIRST_FRAME" --last-frame "$LAST_FRAME" --prompt="$PROMPT" --seconds "$VIDEO_SECONDS")
+            if [[ "$SUBMIT" == true ]]; then
+              args+=(--submit)
+            fi
+          fi
+          python3 -m oneflow.ark_seedance "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: inputs.submit || inputs.task_id != ''
+        with:
+          name: seedance-i2v
+          path: ${{ runner.temp }}/seedance.mp4
+          if-no-files-found: error
