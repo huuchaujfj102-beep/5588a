@@ -213,3 +213,12 @@
 `line_id | shot_id | speaker | final_text | voice_take_id | in_timecode | out_timecode | emotion | volume | pace | accent_intensity | on_screen | lip_sync_status | breath_sync_status | ambience_bridge | reviewer | pass_status`
 
 在实际视频与配音完成前，`in_timecode/out_timecode/lip_sync_status/pass_status` 保持待验收，不得预填通过。
+
+
+## R6.3龙宫群像对白补充
+
+为避免四王、太子、双表兄、虾兵蟹将与龟丞相沦为背景群演，新增独立补缺对白镜头包：`docs/baxian-r6-dragon-palace-dialogue-gap-image-prompts.md`。
+
+新增建议镜头ID及对白行ID均在该文件逐条列出，覆盖：四王首次分别表达立场、龟丞相报告船底黑潮并劝谏、太子向双表兄传令、双表兄分歧、虾兵蟹将前线问答、四王发现龙息反控、太子冲锋前犹豫、四王争执、太子与表兄见证救援、四王被迫合体前挣扎、四王恢复人形后认责、龟丞相传令解除海禁。
+
+**状态说明：** GAP镜头为建议新增编号，尚未并入原始140镜头表；静帧未生成、未审核，I2V与配音口型未完成。新镜头需在补图审核通过后正式登记，不能将提示词准备标记为视频完成。
