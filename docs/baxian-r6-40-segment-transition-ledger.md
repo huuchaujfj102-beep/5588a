@@ -129,3 +129,8 @@ C01—C20共40个ZIP已实物下载、解压并通过CRC检查；130条NEW_PROMP
 ## 第十五轮：100分钟扩展分场节拍稿
 
 已建立 [20章100分钟扩展分场节拍稿](baxian-r6-100min-expanded-beat-sheet-20chapters.md)，逐章明确时间、场景动作、情绪因果与出口接点。新增节拍尚待拆成逐镜任务、关键帧与I2V提示词；动态视频仍未生成/验收。
+
+
+## 第十六轮：前10章电影级I2V连续性覆盖（2026-11-22）
+
+新增 [第01—10章电影级图生视频连续性覆盖指令](baxian-r6-ch01-10-cinematic-i2v-continuity-overlay.md)，对F01-02/03/04跨空间交叉剪辑、F06五镜平行剪辑链、F07-M01太子封船污染证据、F09-03/04蟹将方锤单次交接作出动作起止与摄影/声音桥约束。前15章实物包审计见 [第01—15章实物包连续性审计](baxian-r6-ch01-15-source-package-continuity-audit.md)。这些是生成前导演覆盖规则，不代表镜头已生成或动态通过；所有未生成接点保持BLOCKED/NOT_GENERATED_NOT_REVIEWED。
