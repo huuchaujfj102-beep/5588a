@@ -337,3 +337,8 @@
 ## R6第七轮：140任务映射加入第18—20章实物核验覆盖字段（2026-11-22）
 
 已在R6 140任务映射副本新增5个可机读覆盖字段：r6_start_override、r6_end_override、r6_reference_role、r6_action_override、r6_gate_note。对F16-X05、F16-R01、F17-X19、F17-06、F17-C04、F18-C01、F18-X20共7项写入实物帧核验后的起止状态与动作修订。140行任务数保持不变，未将孤立的F17-X19a伪装成已登记任务；该镜仍需补图并正式登记或明确用声桥占位。完整文字提示词见 [第18—20章I2V提示词纠错补丁](baxian-r6-ch18-20-i2v-prompt-corrections.md)。
+
+
+## R6第八轮：四条条件式尾帧边静态对照（2026-11-22）
+
+已查看第35—38段原始关键帧，对R5-C090、C093、C113、C118做静态构图/空间/法器状态对照，四条均继续保留CONDITIONAL_TAIL_CONTINUATION，没有仅凭静帧改判动态通过或硬切。新增 [四条条件式尾帧接续静态对照复核](baxian-r6-four-conditional-seams-static-review.md)，并在137条审计覆盖CSV新增r6_static_pair_review与r6_actual_tail_gate字段。真实视频尾帧尚不存在，四条仍须待生成后核验。
